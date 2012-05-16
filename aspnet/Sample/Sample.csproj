@@ -64,6 +64,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Images.aspx.cs">
+      <DependentUpon>Images.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Images.aspx.designer.cs">
+      <DependentUpon>Images.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OverridenHandler.ashx.cs">
       <DependentUpon>OverridenHandler.ashx</DependentUpon>
     </Compile>
@@ -76,6 +83,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images.aspx" />
     <Content Include="OverridenHandler.ashx" />
   </ItemGroup>
   <ItemGroup>
