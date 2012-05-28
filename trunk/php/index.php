@@ -15,7 +15,7 @@ if (count($_POST) > 0)
 </head>
 <body>
 <h1>GrabzIt Demo</h1>
-<form method="post" handler="index.php">
+<form method="post" action="index.php">
 <p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the <a href="images/">images directory</a>. It may take a few seconds for it to appear!</p>
 <p>If nothing is happening check the <a href="http://grabz.it/account/diagnostics">diagnostics panel</a> to see if there is an error.</p>
 <label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/>
