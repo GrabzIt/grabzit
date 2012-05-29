@@ -10,23 +10,23 @@ class GrabzItClient
 	{
 		$this->applicationKey = $applicationKey;
 		$this->applicationSecret = $applicationSecret;
-  }
+    }
 
-  /*
-  This method calls the GrabzIt web service to take the screenshot.
-  
-  url - The URL that the screenshot should be made of
-  callback - The handler the GrabzIt web service should call after it has completed its work
-  browserWidth - The width of the browser in pixels
-  browserHeight - The height of the browser in pixels
-  outputHeight - The height of the resulting thumbnail in pixels
-  outputWidth - The width of the resulting thumbnail in pixels
-  customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
-  format - The format the screenshot should be in: jpg, gif, png
-  delay - The number of milliseconds to wait before taking the screenshot
-  
-  This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
-  */
+	/*
+	This method calls the GrabzIt web service to take the screenshot.
+
+	url - The URL that the screenshot should be made of
+	callback - The handler the GrabzIt web service should call after it has completed its work
+	browserWidth - The width of the browser in pixels
+	browserHeight - The height of the browser in pixels
+	outputHeight - The height of the resulting thumbnail in pixels
+	outputWidth - The width of the resulting thumbnail in pixels
+	customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
+	format - The format the screenshot should be in: jpg, gif, png
+	delay - The number of milliseconds to wait before taking the screenshot
+
+	This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
+	*/
 	public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null)
 	{
 		$qs = "key=" .$this->applicationKey."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".urlencode($callback)."&customid=".urlencode($customId)."&delay=".$delay;
@@ -43,13 +43,13 @@ class GrabzItClient
 		return $obj->ID;
 	}
 
-  /*
-  This method returns the image itself. If nothing is returned then something has gone wrong or the image is not ready yet.
+	/*
+	This method returns the image itself. If nothing is returned then something has gone wrong or the image is not ready yet.
 
-  id - The unique identifier of the screenshot, returned by the callback handler or the TakePicture method
-       
-  This function returns the screenshot
-  */
+	id - The unique identifier of the screenshot, returned by the callback handler or the TakePicture method
+
+	This function returns the screenshot
+	*/
 	public function GetPicture($id)
 	{
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getpicture.ashx?id=" . $id);
