@@ -12,7 +12,7 @@ the third parameter is the location you have placed the GrabzItHandler.py on you
 
 applicationKey=APPLICATION KEY
 applicationSecret=APPLICATION SECRET
-handlerUrl=http://www.example.com/grabzit/GrabzItHandler.php
+handlerUrl=http://www.example.com/grabzit/GrabzItHandler.py
 
 
 Ensure your application has read and write access to the "images" directory.
