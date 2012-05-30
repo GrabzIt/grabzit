@@ -19,4 +19,4 @@ foreach($images as $image)
 ?>
 </div>
 </body>
-<html>
+</html>

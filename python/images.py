@@ -22,4 +22,4 @@ for infile in glob.glob("images" + os.sep + "*.*"):
     
 print "</div>"
 print "</body>"
-print "<html>"
+print "</html>"
