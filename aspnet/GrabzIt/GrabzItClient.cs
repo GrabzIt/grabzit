@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Xml.Serialization;
+using System.Collections.Generic;
+using GrabzIt.Result;
+using GrabzIt.Cookies;
 
 namespace GrabzIt
 {
@@ -41,7 +44,7 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url)
         {
-            return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, string.Empty, 0);
+            return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, ScreenShotFormat.jpg, 0);
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url, string callback)
         {
-            return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, string.Empty, 0);
+            return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, ScreenShotFormat.jpg, 0);
         }
 
         /// <summary>
@@ -64,7 +67,7 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url, string callback, string customId)
         {
-            return TakePicture(url, callback, 0, 0, 0, 0, customId, string.Empty, 0);
+            return TakePicture(url, callback, 0, 0, 0, 0, customId, ScreenShotFormat.jpg, 0);
         }
 
         /// <summary>
@@ -77,10 +80,10 @@ namespace GrabzIt
         /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
         /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
         /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
-        /// <param name="format">The format the screenshot should be in: jpg, gif, png</param>
+        /// <param name="format">The format the screenshot should be in.</param>
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
-        public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, string format, int delay)
+        public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ScreenShotFormat format, int delay)
         {
             string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}", applicationSecret, url, callback, format, outputHeight, outputWidth, browserHeight, browserWidth, customId, delay));
 
@@ -90,9 +93,9 @@ namespace GrabzIt
                                                       BaseURL, HttpUtility.UrlEncode(callback), HttpUtility.UrlEncode(url), applicationKey, outputWidth, outputHeight,
                                                       browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(sig)));
 
-            XmlSerializer serializer = new XmlSerializer(typeof(WebResult));
+            XmlSerializer serializer = new XmlSerializer(typeof(TakePictureResult));
             MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            WebResult webResult = (WebResult)serializer.Deserialize(memStream);
+            TakePictureResult webResult = (TakePictureResult)serializer.Deserialize(memStream);
 
             if (!string.IsNullOrEmpty(webResult.Message))
             {
@@ -100,6 +103,178 @@ namespace GrabzIt
             }
 
             return webResult.ID;
+        }
+
+        /// <summary>
+        /// Get the current status of a GrabzIt screenshot
+        /// </summary>
+        /// <param name="id">The id of the screenshot</param>
+        /// <returns>A Status object representing the screenshot</returns>
+        public ScreenShotStatus GetStatus(string id)
+        {
+            WebClient client = new WebClient();
+            string result = client.DownloadString(string.Format(
+                                                      "{0}getstatus.ashx?id={1}",
+                                                      BaseURL, id));
+            
+            XmlSerializer serializer = new XmlSerializer(typeof(ScreenShotStatus));
+            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            ScreenShotStatus status = (ScreenShotStatus)serializer.Deserialize(memStream);
+
+            return status;
+        }
+
+        /// <summary>
+        /// Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
+        /// </summary>
+        /// <param name="domain">The domain to return cookies for.</param>
+        /// <returns>A array of cookies</returns>
+        public GrabzItCookie[] GetCookies(string domain)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}", applicationSecret, domain));
+
+            WebClient client = new WebClient();
+            string result = client.DownloadString(string.Format(
+                                                      "{0}getcookies.ashx?domain={1}&key={2}&sig={3}",
+                                                      BaseURL, domain, applicationKey, sig));
+
+            XmlSerializer serializer = new XmlSerializer(typeof(GetCookiesResult));
+            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            GetCookiesResult getCookiesResult = (GetCookiesResult)serializer.Deserialize(memStream);
+
+            if (!string.IsNullOrEmpty(getCookiesResult.Message))
+            {
+                throw new Exception(getCookiesResult.Message);
+            }
+
+            return getCookiesResult.Cookies;
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool SetCookie(string name, string domain)
+        {
+            return SetCookie(name, domain, string.Empty, string.Empty, false, null);
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <param name="value">The value of the cookie.</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool SetCookie(string name, string domain, string value)
+        {
+            return SetCookie(name, domain, value, string.Empty, false, null);
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <param name="value">The value of the cookie.</param>
+        /// <param name="path">The website path the cookie relates to.</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool SetCookie(string name, string domain, string value, string path)
+        {
+            return SetCookie(name, domain, value, path, false, null);
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <param name="value">The value of the cookie.</param>
+        /// <param name="path">The website path the cookie relates to.</param>
+        /// <param name="httponly">Is the cookie only used on HTTP</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool SetCookie(string name, string domain, string value, string path, bool httponly)
+        {
+            return SetCookie(name, domain, value, path, httponly, null);
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <param name="value">The value of the cookie.</param>
+        /// <param name="path">The website path the cookie relates to.</param>
+        /// <param name="httponly">Is the cookie only used on HTTP</param>
+        /// <param name="expires">When the cookie expires. Pass a null value if it does not expire.</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime? expires)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", applicationSecret, name, domain,
+                                          value, path, (httponly ? 1 : 0), expires, 0));
+ 
+            WebClient client = new WebClient();
+            string result = client.DownloadString(string.Format(
+                                                      "{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
+                                                      BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), expires, applicationKey, sig));
+
+            XmlSerializer serializer = new XmlSerializer(typeof(SetCookiesResult));
+            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            SetCookiesResult setCookiesResult = (SetCookiesResult)serializer.Deserialize(memStream);
+
+            if (!string.IsNullOrEmpty(setCookiesResult.Message))
+            {
+                throw new Exception(setCookiesResult.Message);
+            }
+
+            return Convert.ToBoolean(setCookiesResult.Result);
+        }
+
+        /// <summary>
+        /// Delete a custom cookie or block a global cookie from being used.
+        /// </summary>
+        /// <param name="name">The name of the cookie to delete</param>
+        /// <param name="domain">The website the cookie belongs to</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool DeleteCookie(string name, string domain)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", applicationSecret, name, domain, 1));
+
+            WebClient client = new WebClient();
+
+            string url = string.Format(
+                                                      "{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
+                                                      BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), applicationKey, sig);
+
+            string result = client.DownloadString(url);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(SetCookiesResult));
+            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            SetCookiesResult setCookiesResult = (SetCookiesResult)serializer.Deserialize(memStream);
+
+            if (!string.IsNullOrEmpty(setCookiesResult.Message))
+            {
+                throw new Exception(setCookiesResult.Message);
+            }
+
+            return Convert.ToBoolean(setCookiesResult.Result);
         }
 
         /// <summary>
