@@ -48,13 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Results\GetCookiesResult.cs" />
+    <Compile Include="Cookies\GrabzItCookie.cs" />
     <Compile Include="GrabzItClient.cs" />
     <Compile Include="handler.ashx.cs">
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\SetCookiesResult.cs" />
     <Compile Include="ScreenShotEventArgs.cs" />
-    <Compile Include="WebResult.cs" />
+    <Compile Include="ScreenShotFormat.cs" />
+    <Compile Include="ScreenShotStatus.cs" />
+    <Compile Include="Results\TakePictureResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="handler.ashx" />
