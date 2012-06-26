@@ -9,7 +9,7 @@ $images = glob("images" . DIRECTORY_SEPARATOR . "*.*");
 //print each file name
 foreach($images as $image)
 {
-    if (strpos($image, ".txt.") !== false)
+    if (strpos($image, ".txt") !== false)
     {
         continue;
     }
