@@ -33,7 +33,7 @@ class GrabzItClient
 	*/
 	public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null)
 	{
-		$qs = "key=" .$this->applicationKey."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".urlencode($callback)."&customid=".urlencode($customId)."&delay=".$delay;
+		$qs = "key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".urlencode($callback)."&customid=".urlencode($customId)."&delay=".$delay;
 		$sig =  md5($this->applicationSecret."|".$url."|".$callback."|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay);
 		$qs .= "&sig=".$sig;
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "takepicture.ashx?" . $qs);
@@ -99,7 +99,7 @@ class GrabzItClient
 	{
 		$sig =  md5($this->applicationSecret."|".$domain);
 
-		$qs = "key=" .$this->applicationKey."&domain=".urlencode($domain)."&sig=".$sig;
+		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&sig=".$sig;
 
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getcookies.ashx?" . $qs);
 
@@ -148,7 +148,7 @@ class GrabzItClient
 	{
 		$sig =  md5($this->applicationSecret."|".$name."|".$domain."|".$value."|".$path."|".((int)$httponly)."|".$expires."|0");
 
-		$qs = "key=" .$this->applicationKey."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".$expires."&sig=".$sig;
+		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".$expires."&sig=".$sig;
 
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs);
 
@@ -174,7 +174,7 @@ class GrabzItClient
 	{
 		$sig =  md5($this->applicationSecret."|".$name."|".$domain."|1");
 
-		$qs = "key=" .$this->applicationKey."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
+		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
 
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs);
 
