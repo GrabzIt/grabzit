@@ -15,7 +15,7 @@ if (count($_POST) > 0)
 	catch (Exception $e)
 	{
 	    $message =  $e->getMessage();
-	}	
+	}
 }
 ?>
 <html>
