@@ -47,7 +47,7 @@ class GrabzItClient
 		return $obj->ID;
 	}
    
-  /*
+	/*
 	This method calls the takes the screenshot and then saves the result to a file.
 
 	url - The URL that the screenshot should be made of
@@ -70,19 +70,19 @@ class GrabzItClient
 		{
 		    $status = $this->GetStatus($id);
 		
-        if (!$status->Cached && !$status->Processing)
-        {
-             throw new Exception("The screenshot did not complete with the error:" . $status->Message);
-             break;
-        }
+                    if (!$status->Cached && !$status->Processing)
+                    {
+                        throw new Exception("The screenshot did not complete with the error:" . $status->Message);
+                        break;
+                    }
 		    else if ($status->Cached)
 		    {
-            $result = $this->GetPicture($id);
-            if (!$result)
-            {
-                throw new Exception("The screenshot image could not be found on GrabzIt.");
-                break;
-            }
+                        $result = $this->GetPicture($id);
+                        if (!$result)
+                        {
+                            throw new Exception("The screenshot image could not be found on GrabzIt.");
+                            break;
+                        }
 		        file_put_contents($saveToFile, $result);
 		        break;
 		    }
