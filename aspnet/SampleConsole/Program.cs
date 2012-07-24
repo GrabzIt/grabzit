@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Drawing;
-using System.Net.Mime;
-using System.Threading;
 using System.Windows.Forms;
 using GrabzIt;
 
@@ -16,25 +13,16 @@ namespace SampleConsole
             {
                 Console.WriteLine("Please specify a URL to take picture of. For example http://www.google.com");
                 string url = Console.ReadLine();
-                GrabzItClient grabzIt = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"],
-                                                             ConfigurationManager.AppSettings["ApplicationSecret"]);
+                GrabzItClient grabzIt = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], 
+                                                                ConfigurationManager.AppSettings["ApplicationSecret"]);
                 try
                 {
-                    string id = grabzIt.TakePicture(url);
-                    bool completed = false;
-                    while (!completed)
+                    string filename = url.Substring(url.IndexOf("://") + 3) + ".jpg";
+
+                    if (grabzIt.SavePicture(url, filename))
                     {
-                        Image image = grabzIt.GetPicture(id);
-                        if (image != null)
-                        {
-                            string filename = url.Substring(url.IndexOf("://") + 3) + ".jpg";
-                            Console.WriteLine("Screenshot has been saved to: " + filename);
-                            image.Save(filename);
-                            completed = true;
-                        }
-                        Thread.Sleep(1000);
-                        Application.DoEvents();
-                    }
+                        Console.WriteLine("Screenshot has been saved to: " + filename);
+                    }                    
                 }
                 catch (Exception ex)
                 {

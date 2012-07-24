@@ -4,11 +4,12 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
 using System.Collections.Generic;
-using GrabzIt.Result;
 using GrabzIt.Cookies;
+using GrabzIt.Results;
 
 namespace GrabzIt
 {
@@ -106,6 +107,62 @@ namespace GrabzIt
         }
 
         /// <summary>
+        /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
+        /// </summary>
+        /// <param name="url">The URL that the screenshot should be made of</param>
+        /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
+        /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
+        public bool SavePicture(string url, string saveToFile)
+        {
+            return SavePicture(url, saveToFile, 0, 0, 0, 0, ScreenShotFormat.jpg, 0);
+        }
+
+
+        /// <summary>
+        /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
+        /// </summary>
+        /// <param name="url">The URL that the screenshot should be made of</param>
+        /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
+        /// <param name="browserWidth">The width of the browser in pixels</param>
+        /// <param name="browserHeight">The height of the browser in pixels</param>
+        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
+        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
+        /// <param name="format">The format the screenshot should be in.</param>
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
+        public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ScreenShotFormat format, int delay)
+        {
+            string id = TakePicture(url, null, browserWidth, browserHeight, outputHeight, outputWidth, null, format, delay);
+
+            //Wait for it to be ready.
+            while (true)
+            {
+                ScreenShotStatus status = GetStatus(id);
+                
+                if (!status.Cached && !status.Processing)
+                {
+                    throw new Exception("The screenshot did not complete with the error: " + status.Message);
+                }
+
+                if (status.Cached)
+                {
+                    Image result = GetPicture(id);
+                    
+                    if (result == null)
+                    {
+                        throw new Exception("The screenshot image could not be found on GrabzIt.");
+                    }
+                    result.Save(saveToFile);
+                    break;
+                }
+
+                Thread.Sleep(1);                
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Get the current status of a GrabzIt screenshot
         /// </summary>
         /// <param name="id">The id of the screenshot</param>
@@ -116,12 +173,17 @@ namespace GrabzIt
             string result = client.DownloadString(string.Format(
                                                       "{0}getstatus.ashx?id={1}",
                                                       BaseURL, id));
-            
-            XmlSerializer serializer = new XmlSerializer(typeof(ScreenShotStatus));
-            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            ScreenShotStatus status = (ScreenShotStatus)serializer.Deserialize(memStream);
 
-            return status;
+            XmlSerializer serializer = new XmlSerializer(typeof(GetStatusResult));
+            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+            GetStatusResult status = (GetStatusResult)serializer.Deserialize(memStream);
+
+            if (status == null)
+            {
+                return null;
+            }
+
+            return status.GetStatus();
         }
 
         /// <summary>

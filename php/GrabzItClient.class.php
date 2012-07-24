@@ -46,12 +46,12 @@ class GrabzItClient
 
 		return $obj->ID;
 	}
-   
+
 	/*
-	This method calls the takes the screenshot and then saves the result to a file.
+	This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
 
 	url - The URL that the screenshot should be made of
-	saveToFile- The file path that the screenshot should saved to
+	saveToFile - The file path that the screenshot should saved to: e.g. images/test.jpg
 	browserWidth - The width of the browser in pixels
 	browserHeight - The height of the browser in pixels
 	outputHeight - The height of the resulting thumbnail in pixels
@@ -59,7 +59,7 @@ class GrabzItClient
 	format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	delay - The number of milliseconds to wait before taking the screenshot
 
-	This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
+	This function returns the true if it is successfull otherwise it throws an exception.
 	*/
 	public function SavePicture($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null)
 	{
@@ -68,27 +68,29 @@ class GrabzItClient
 		//Wait for it to be ready.
 		while(true)
 		{
-		    $status = $this->GetStatus($id);
-		
-                    if (!$status->Cached && !$status->Processing)
-                    {
-                        throw new Exception("The screenshot did not complete with the error:" . $status->Message);
-                        break;
-                    }
-		    else if ($status->Cached)
-		    {
-                        $result = $this->GetPicture($id);
-                        if (!$result)
-                        {
-                            throw new Exception("The screenshot image could not be found on GrabzIt.");
-                            break;
-                        }
-		        file_put_contents($saveToFile, $result);
-		        break;
-		    }
-		
-		    sleep(1);
+			$status = $this->GetStatus($id);
+
+			if (!$status->Cached && !$status->Processing)
+			{
+				throw new Exception("The screenshot did not complete with the error: " . $status->Message);
+				break;
+			}
+			else if ($status->Cached)
+			{
+				$result = $this->GetPicture($id);
+				if (!$result)
+				{
+					throw new Exception("The screenshot image could not be found on GrabzIt.");
+					break;
+				}
+				file_put_contents($saveToFile, $result);
+				break;
+			}
+
+			sleep(1);
 		}
+
+		return true;
 	}
 
     /*

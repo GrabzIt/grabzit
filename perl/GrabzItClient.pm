@@ -6,6 +6,7 @@ use Digest::MD5  qw(md5_hex);
 use LWP::Simple;
 use URI::Escape;
 use XML::Simple;
+use File::Spec;
 use ScreenShotStatus;
 use GrabzItCookie;
 
@@ -58,7 +59,7 @@ sub TakePicture($;$$$$$$$$)
 	$sig =  md5_hex($self->{_applicationSecret}."|".$url."|".$callback."|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay);
 	$qs .= "&sig=".$sig;
 	
-	my $url = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?" . $qs;
+	$url = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?" . $qs;
 	
 	my $result = get $url;
 	die "Could not contact GrabzIt" unless defined $result;
@@ -66,13 +67,70 @@ sub TakePicture($;$$$$$$$$)
 	my $xml = XML::Simple->new();
 	$data = $xml->XMLin($result);
 	
-	my $message = $data->{Message};
+	$message = $data->{Message};	
 	if(!$message)
-	{
+	{		
 		die $message;
 	}
 
 	return $data->{ID};
+}
+
+#
+#This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
+#
+#url - The URL that the screenshot should be made of
+#saveToFile - The file path that the screenshot should saved to: e.g. images/test.jpg
+#browserWidth - The width of the browser in pixels
+#browserHeight - The height of the browser in pixels
+#outputHeight - The height of the resulting thumbnail in pixels
+#outputWidth - The width of the resulting thumbnail in pixels
+#format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
+#delay - The number of milliseconds to wait before taking the screenshot
+#
+#This function returns the true if it is successfull otherwise it throws an exception.
+#
+sub SavePicture($$;$$$$$$)
+{	
+	my ($self, $url, $saveToFile, $browserWidth, $browserHeight, $width, $height, $format, $delay) = @_;	
+	
+	$browserWidth ||= 0;
+	$browserHeight ||= 0;
+	$width ||= 0;
+	$height ||= 0;
+	$format ||= "";
+	$delay ||= 0;		
+	
+	$id = $self->TakePicture($url, "", "", $browserWidth, $browserHeight, $width, $height, $format, $delay);
+	#Wait for it to be ready.
+	while(1)
+	{
+		$status = $self->GetStatus($id);
+
+		if (!$status->getCached() && !$status->getProcessing())
+		{
+			die "The screenshot did not complete with the error: " . $status->Message;
+			last;
+		}
+		elsif ($status->getCached())
+		{
+			$result = $self->GetPicture($id);
+			if (!$result)
+			{
+				die "The screenshot image could not be found on GrabzIt.";
+				last;
+			}
+			open FILE, ">".File::Spec->catfile($saveToFile) or die $!; 
+			binmode FILE;
+			print FILE $result; 
+			close FILE;
+			last;
+		}
+
+		sleep(1);
+	}
+	
+	return 1;
 }
 
 #
