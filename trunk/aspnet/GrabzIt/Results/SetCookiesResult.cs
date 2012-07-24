@@ -1,8 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Xml.Serialization;
 
-namespace GrabzIt.Result
+namespace GrabzIt.Results
 {
     [Serializable]
     [XmlType(TypeName = "WebResult")]

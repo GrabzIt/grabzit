@@ -55,6 +55,7 @@
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\GetStatusResult.cs" />
     <Compile Include="Results\SetCookiesResult.cs" />
     <Compile Include="ScreenShotEventArgs.cs" />
     <Compile Include="ScreenShotFormat.cs" />

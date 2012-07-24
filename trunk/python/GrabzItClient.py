@@ -2,6 +2,7 @@ import md5
 import urllib
 import cStringIO
 from xml.dom import minidom
+from time import sleep
 import GrabzItCookie
 import ScreenShotStatus
 
@@ -63,8 +64,49 @@ class GrabzItClient:
 			raise Exception(message)
 			
 		return id
-		
-		
+	
+	#
+	#This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
+	#
+	#url - The URL that the screenshot should be made of
+	#saveToFile - The file path that the screenshot should saved to: e.g. images/test.jpg
+	#browserWidth - The width of the browser in pixels
+	#browserHeight - The height of the browser in pixels
+	#outputHeight - The height of the resulting thumbnail in pixels
+	#outputWidth - The width of the resulting thumbnail in pixels
+	#format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
+	#delay - The number of milliseconds to wait before taking the screenshot
+	#
+	#This function returns the true if it is successfull otherwise it throws an exception.
+	#
+	def SavePicture(self, url, saveToFile, browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0):
+		id = self.TakePicture(url, '', '', browserWidth, browserHeight, width, height, format, delay)
+                
+		#Wait for it to be ready.
+		while(1):
+		    status = self.GetStatus(id)
+		    if not(status.Cached) and not(status.Processing):
+			raise Exception("The screenshot did not complete with the error: " + status.Message)
+			break
+			
+		    elif status.Cached:
+			result = self.GetPicture(id)
+			
+			if result == None:
+				raise Exception("The screenshot image could not be found on GrabzIt.")
+            			break
+            			
+			fo = open(saveToFile, "wb")
+			fo.write(result)
+			fo.close()
+			
+			break
+
+		    sleep(1)
+		    
+		return 1
+	
+	
 	#
 	#Get the current status of a GrabzIt screenshot
 	#
