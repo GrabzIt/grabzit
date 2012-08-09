@@ -17,8 +17,6 @@ class HandlerController < ApplicationController
 	  #Ensure that the application has the correct rights for this directory.  
 	  screenshot = File.new("public/screenshots/"+filename, "wb")
 	  screenshot.write(result)
-	  screenshot.close  
-	  
-	  redirect_to root_path
+	  screenshot.close  	  
   end
 end
