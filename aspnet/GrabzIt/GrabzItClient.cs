@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
-using System.Collections.Generic;
 using GrabzIt.Cookies;
 using GrabzIt.Results;
 
@@ -45,7 +44,7 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url)
         {
-            return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, ScreenShotFormat.jpg, 0);
+            return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, ScreenShotFormat.jpg, 0, string.Empty);
         }
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url, string callback)
         {
-            return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, ScreenShotFormat.jpg, 0);
+            return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, ScreenShotFormat.jpg, 0, string.Empty);
         }
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url, string callback, string customId)
         {
-            return TakePicture(url, callback, 0, 0, 0, 0, customId, ScreenShotFormat.jpg, 0);
+            return TakePicture(url, callback, 0, 0, 0, 0, customId, ScreenShotFormat.jpg, 0, string.Empty);
         }
 
         /// <summary>
@@ -86,13 +85,32 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ScreenShotFormat format, int delay)
         {
-            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}", applicationSecret, url, callback, format, outputHeight, outputWidth, browserHeight, browserWidth, customId, delay));
+            return TakePicture(url, callback, browserWidth, browserHeight, outputHeight, outputWidth, customId, format, delay, string.Empty);
+        }
+
+        /// <summary>
+        /// This method calls the GrabzIt web service to take the screenshot.
+        /// </summary>
+        /// <param name="url">The URL that the screenshot should be made of</param>
+        /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
+        /// <param name="browserWidth">The width of the browser in pixels</param>
+        /// <param name="browserHeight">The height of the browser in pixels</param>
+        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
+        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="format">The format the screenshot should be in.</param>
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
+        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
+        public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ScreenShotFormat format, int delay, string targetElement)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}", applicationSecret, url, callback, format, outputHeight, outputWidth, browserHeight, browserWidth, customId, delay, targetElement));
 
             WebClient client = new WebClient();
             string result = client.DownloadString(string.Format(
-                                                      "{0}takepicture.ashx?callback={1}&url={2}&key={3}&width={4}&height={5}&bwidth={6}&bheight={7}&format={8}&customid={9}&delay={10}&sig={11}",
+                                                      "{0}takepicture.ashx?callback={1}&url={2}&key={3}&width={4}&height={5}&bwidth={6}&bheight={7}&format={8}&customid={9}&delay={10}&target={11}&sig={12}",
                                                       BaseURL, HttpUtility.UrlEncode(callback), HttpUtility.UrlEncode(url), applicationKey, outputWidth, outputHeight,
-                                                      browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(sig)));
+                                                      browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(sig)));
 
             XmlSerializer serializer = new XmlSerializer(typeof(TakePictureResult));
             MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
@@ -114,9 +132,8 @@ namespace GrabzIt
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
         public bool SavePicture(string url, string saveToFile)
         {
-            return SavePicture(url, saveToFile, 0, 0, 0, 0, ScreenShotFormat.jpg, 0);
+            return SavePicture(url, saveToFile, 0, 0, 0, 0, ScreenShotFormat.jpg, 0, string.Empty);
         }
-
 
         /// <summary>
         /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
@@ -132,7 +149,26 @@ namespace GrabzIt
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ScreenShotFormat format, int delay)
         {
-            string id = TakePicture(url, null, browserWidth, browserHeight, outputHeight, outputWidth, null, format, delay);
+            return SavePicture(url, saveToFile, browserWidth, browserHeight, outputHeight, outputWidth, format, delay, string.Empty);
+        }
+
+
+        /// <summary>
+        /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
+        /// </summary>
+        /// <param name="url">The URL that the screenshot should be made of</param>
+        /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
+        /// <param name="browserWidth">The width of the browser in pixels</param>
+        /// <param name="browserHeight">The height of the browser in pixels</param>
+        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
+        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
+        /// <param name="format">The format the screenshot should be in.</param>
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
+        /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
+        public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ScreenShotFormat format, int delay, string targetElement)
+        {
+            string id = TakePicture(url, null, browserWidth, browserHeight, outputHeight, outputWidth, null, format, delay, targetElement);
 
             //Wait for it to be ready.
             while (true)

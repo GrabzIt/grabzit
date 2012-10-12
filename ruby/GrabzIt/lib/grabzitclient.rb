@@ -29,12 +29,13 @@ class GrabzItClient
 	#customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 	#format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	#delay - The number of milliseconds to wait before taking the screenshot
+	#targetElement - The id of the only HTML element in the web page to turn into a screenshot
 	#
 	#This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
 	#
-	def take_picture(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil)
-		qs = "key=" + URI.escape(@applicationKey) + "&url=" + URI.escape(url) + "&width=" + nil_check(width) + "&height=" + nil_check(height) + "&format=" + nil_check(format) + "&bwidth=" + nil_check(browserWidth) + "&bheight=" + nil_check(browserHeight) + "&callback=" + URI.escape(nil_check(callback)) + "&customid=" + URI.escape(nil_check(customId)) + "&delay=" + nil_check(delay)
-		sig =  Digest::MD5.hexdigest(@applicationSecret+"|"+url+"|"+nil_check(callback)+"|"+nil_check(format)+"|"+nil_check(height)+"|"+nil_check(width)+"|"+nil_check(browserHeight)+"|"+nil_check(browserWidth)+"|"+nil_check(customId)+"|"+nil_check(delay))
+	def take_picture(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
+		qs = "key=" + URI.escape(@applicationKey) + "&url=" + URI.escape(url) + "&width=" + nil_check(width) + "&height=" + nil_check(height) + "&format=" + nil_check(format) + "&bwidth=" + nil_check(browserWidth) + "&bheight=" + nil_check(browserHeight) + "&callback=" + URI.escape(nil_check(callback)) + "&customid=" + URI.escape(nil_check(customId)) + "&delay=" + nil_check(delay) + "&target=" + URI.escape(nil_check(targetElement))
+		sig =  Digest::MD5.hexdigest(@applicationSecret+"|"+url+"|"+nil_check(callback)+"|"+nil_check(format)+"|"+nil_check(height)+"|"+nil_check(width)+"|"+nil_check(browserHeight)+"|"+nil_check(browserWidth)+"|"+nil_check(customId)+"|"+nil_check(delay)+"|"+nil_check(targetElement))
 		qs = qs + "&sig=" + sig
 
 		result = get(WebServicesBaseURL + "takepicture.ashx?" + qs)
@@ -62,11 +63,12 @@ class GrabzItClient
 	#outputWidth - The width of the resulting thumbnail in pixels
 	#format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	#delay - The number of milliseconds to wait before taking the screenshot
+	#targetElement - The id of the only HTML element in the web page to turn into a screenshot
 	#
 	#This function returns the true if it is successfull otherwise it throws an exception.
 	#
-	def save_picture(url, saveToFile, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil)
-		id = take_picture(url, nil, nil, browserWidth, browserHeight, width, height, format, delay)
+	def save_picture(url, saveToFile, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
+		id = take_picture(url, nil, nil, browserWidth, browserHeight, width, height, format, delay, targetElement)
 
 		#Wait for it to be ready.
 		while true do

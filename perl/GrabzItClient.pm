@@ -39,12 +39,13 @@ sub new
 #customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 #format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 #delay - The number of milliseconds to wait before taking the screenshot
+#targetElement - The id of the only HTML element in the web page to turn into a screenshot
 #
 #This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
 #
-sub TakePicture($;$$$$$$$$)
+sub TakePicture($;$$$$$$$$$)
 {	
-	my ($self, $url, $callback, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay) = @_;	
+	my ($self, $url, $callback, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement) = @_;	
 
 	$callback ||= "";
 	$customId ||= "";
@@ -54,9 +55,10 @@ sub TakePicture($;$$$$$$$$)
 	$height ||= 0;
 	$format ||= "";
 	$delay ||= 0;	
+	$targetElement ||= "";
 	
-	$qs = "key=" .$self->{_applicationKey}."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".uri_escape($callback)."&customid=".uri_escape($customId)."&delay=".$delay;
-	$sig =  md5_hex($self->{_applicationSecret}."|".$url."|".$callback."|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay);
+	$qs = "key=" .$self->{_applicationKey}."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".uri_escape($callback)."&customid=".uri_escape($customId)."&delay=".$delay."&target=".uri_escape($targetElement);
+	$sig =  md5_hex($self->{_applicationSecret}."|".$url."|".$callback."|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement);
 	$qs .= "&sig=".$sig;
 	
 	$url = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?" . $qs;
@@ -64,11 +66,11 @@ sub TakePicture($;$$$$$$$$)
 	my $result = get $url;
 	die "Could not contact GrabzIt" unless defined $result;
 	
-	my $xml = XML::Simple->new();
+	my $xml = XML::Simple->new(suppressempty => '');
 	$data = $xml->XMLin($result);
 	
-	$message = $data->{Message};	
-	if(!$message)
+	$message = $data->{Message};		
+	if($message != '')
 	{		
 		die $message;
 	}
@@ -87,21 +89,24 @@ sub TakePicture($;$$$$$$$$)
 #outputWidth - The width of the resulting thumbnail in pixels
 #format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 #delay - The number of milliseconds to wait before taking the screenshot
+#targetElement - The id of the only HTML element in the web page to turn into a screenshot
 #
 #This function returns the true if it is successfull otherwise it throws an exception.
 #
-sub SavePicture($$;$$$$$$)
-{	
-	my ($self, $url, $saveToFile, $browserWidth, $browserHeight, $width, $height, $format, $delay) = @_;	
+sub SavePicture($$;$$$$$$$)
+{		
+	my ($self, $url, $saveToFile, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement) = @_;	
 	
 	$browserWidth ||= 0;
 	$browserHeight ||= 0;
 	$width ||= 0;
 	$height ||= 0;
 	$format ||= "";
-	$delay ||= 0;		
+	$delay ||= 0;	
+	$targetElement ||= "";
 	
-	$id = $self->TakePicture($url, "", "", $browserWidth, $browserHeight, $width, $height, $format, $delay);
+	$id = $self->TakePicture($url, "", "", $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
+	
 	#Wait for it to be ready.
 	while(1)
 	{
@@ -109,7 +114,7 @@ sub SavePicture($$;$$$$$$)
 
 		if (!$status->getCached() && !$status->getProcessing())
 		{
-			die "The screenshot did not complete with the error: " . $status->Message;
+			die "The screenshot did not complete with the error: " . $status->getMessage();
 			last;
 		}
 		elsif ($status->getCached())
@@ -149,9 +154,9 @@ sub GetStatus($)
 	my $result = get $url;	
 	die "Could not contact GrabzIt" unless defined $result;
 
-	my $xml = XML::Simple->new();
+	my $xml = XML::Simple->new(suppressempty => '');
 	$data = $xml->XMLin($result);
-
+	
 	return new ScreenShotStatus(($data->{Processing} eq GrabzItClient::TrueString), ($data->{Cached} eq GrabzItClient::TrueString), ($data->{Expired} eq GrabzItClient::TrueString), $data->{Message});
 }
 
@@ -192,11 +197,11 @@ sub GetCookies($)
 	my $result = get $url;	
 	die "Could not contact GrabzIt" unless defined $result;
 
-	my $xml = XML::Simple->new();
+	my $xml = XML::Simple->new(suppressempty => '');
 	$data = $xml->XMLin($result);
 
 	my $message = $data->{Message};
-	if(!$message)
+	if($message != '')
 	{
 		die $message;
 	}
@@ -247,11 +252,11 @@ sub SetCookie($$;$$$$)
 	my $result = get $url;	
 	die "Could not contact GrabzIt" unless defined $result;
 
-	my $xml = XML::Simple->new();
+	my $xml = XML::Simple->new(suppressempty => '');
 	$data = $xml->XMLin($result);
 
 	my $message = $data->{Message};
-	if(!$message)
+	if($message != '')
 	{
 		die $message;
 	}
@@ -280,11 +285,11 @@ sub DeleteCookie($$)
 	my $result = get $url;	
 	die "Could not contact GrabzIt" unless defined $result;
 
-	my $xml = XML::Simple->new();
+	my $xml = XML::Simple->new(suppressempty => '');
 	$data = $xml->XMLin($result);
 
 	my $message = $data->{Message};
-	if(!$message)
+	if($message != '')
 	{
 		die $message;
 	}
