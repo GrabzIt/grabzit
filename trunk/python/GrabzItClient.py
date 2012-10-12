@@ -28,13 +28,14 @@ class GrabzItClient:
 	#customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 	#format - The format the screenshot should be in: bmp, gif, jpg, png
 	#delay - The number of milliseconds to wait before taking the screenshot
+	#targetElement - The id of the only HTML element in the web page to turn into a screenshot
 	#
 	#This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
 	#		
-	def TakePicture(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0):	
-		qs = {"key":self.applicationKey, "url":url, "width":width,"height":height,"format":format,"bwidth":browserWidth,"bheight":browserHeight,"callback":callback,"customid":customId,"delay":delay}
+	def TakePicture(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = ''):	
+		qs = {"key":self.applicationKey, "url":url, "width":width,"height":height,"format":format,"bwidth":browserWidth,"bheight":browserHeight,"callback":callback,"customid":customId,"delay":delay,"target":targetElement}
 		encoded_qs = urllib.urlencode(qs)
-		sig =  md5.new(self.applicationSecret+"|"+url+"|"+callback+"|"+format+"|"+str(height)+"|"+str(width)+"|"+str(browserHeight)+"|"+str(browserWidth)+"|"+customId+"|"+str(delay)).hexdigest()
+		sig =  md5.new(self.applicationSecret+"|"+url+"|"+callback+"|"+format+"|"+str(height)+"|"+str(width)+"|"+str(browserHeight)+"|"+str(browserWidth)+"|"+customId+"|"+str(delay)+"|"+targetElement).hexdigest()
 		
 		encoded_qs += "&sig="+sig;
 
@@ -76,11 +77,12 @@ class GrabzItClient:
 	#outputWidth - The width of the resulting thumbnail in pixels
 	#format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	#delay - The number of milliseconds to wait before taking the screenshot
+	#targetElement - The id of the only HTML element in the web page to turn into a screenshot
 	#
 	#This function returns the true if it is successfull otherwise it throws an exception.
 	#
-	def SavePicture(self, url, saveToFile, browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0):
-		id = self.TakePicture(url, '', '', browserWidth, browserHeight, width, height, format, delay)
+	def SavePicture(self, url, saveToFile, browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = ''):
+		id = self.TakePicture(url, '', '', browserWidth, browserHeight, width, height, format, delay, targetElement)
                 
 		#Wait for it to be ready.
 		while(1):

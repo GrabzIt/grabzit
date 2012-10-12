@@ -28,13 +28,14 @@ class GrabzItClient
 	customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 	format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	delay - The number of milliseconds to wait before taking the screenshot
+	targetElement - The id of the only HTML element in the web page to turn into a screenshot
 
 	This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
 	*/
-	public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null)
+	public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
 	{
-		$qs = "key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".urlencode($callback)."&customid=".urlencode($customId)."&delay=".$delay;
-		$sig =  md5($this->applicationSecret."|".$url."|".$callback."|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay);
+		$qs = "key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&callback=".urlencode($callback)."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement);
+		$sig =  md5($this->applicationSecret."|".$url."|".$callback."|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement);
 		$qs .= "&sig=".$sig;
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "takepicture.ashx?" . $qs);
 		$obj = simplexml_load_string($result);
@@ -58,12 +59,13 @@ class GrabzItClient
 	outputWidth - The width of the resulting thumbnail in pixels
 	format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	delay - The number of milliseconds to wait before taking the screenshot
+	targetElement - The id of the only HTML element in the web page to turn into a screenshot
 
 	This function returns the true if it is successfull otherwise it throws an exception.
 	*/
-	public function SavePicture($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null)
+	public function SavePicture($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
 	{
-		$id = $this->TakePicture($url, null, null, $browserWidth, $browserHeight, $width, $height, $format, $delay);
+		$id = $this->TakePicture($url, null, null, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
 
 		//Wait for it to be ready.
 		while(true)
