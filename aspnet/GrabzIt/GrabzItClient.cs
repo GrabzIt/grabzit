@@ -15,9 +15,12 @@ namespace GrabzIt
     public class GrabzItClient
     {
         private static GrabzItClient grabzItClient;
+        private static MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider();
 
         public delegate void ScreenShotHandler(object sender, ScreenShotEventArgs result);
         public event ScreenShotHandler ScreenShotComplete;
+
+        private Object thisLock = new Object();
 
         private readonly string applicationKey;
         private readonly string applicationSecret;
@@ -104,24 +107,27 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ScreenShotFormat format, int delay, string targetElement)
         {
-            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}", applicationSecret, url, callback, format, outputHeight, outputWidth, browserHeight, browserWidth, customId, delay, targetElement));
-
-            WebClient client = new WebClient();
-            string result = client.DownloadString(string.Format(
-                                                      "{0}takepicture.ashx?callback={1}&url={2}&key={3}&width={4}&height={5}&bwidth={6}&bheight={7}&format={8}&customid={9}&delay={10}&target={11}&sig={12}",
-                                                      BaseURL, HttpUtility.UrlEncode(callback), HttpUtility.UrlEncode(url), applicationKey, outputWidth, outputHeight,
-                                                      browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(sig)));
-
-            XmlSerializer serializer = new XmlSerializer(typeof(TakePictureResult));
-            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            TakePictureResult webResult = (TakePictureResult)serializer.Deserialize(memStream);
-
-            if (!string.IsNullOrEmpty(webResult.Message))
+            lock (thisLock)
             {
-                throw new Exception(webResult.Message);
-            }
+                string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}", applicationSecret, url, callback, format, outputHeight, outputWidth, browserHeight, browserWidth, customId, delay, targetElement));
 
-            return webResult.ID;
+                WebClient client = new WebClient();
+                string result = client.DownloadString(string.Format(
+                                                          "{0}takepicture.ashx?callback={1}&url={2}&key={3}&width={4}&height={5}&bwidth={6}&bheight={7}&format={8}&customid={9}&delay={10}&target={11}&sig={12}",
+                                                          BaseURL, HttpUtility.UrlEncode(callback), HttpUtility.UrlEncode(url), applicationKey, outputWidth, outputHeight,
+                                                          browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(sig)));
+
+                XmlSerializer serializer = new XmlSerializer(typeof(TakePictureResult));
+                MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                TakePictureResult webResult = (TakePictureResult)serializer.Deserialize(memStream);
+
+                if (!string.IsNullOrEmpty(webResult.Message))
+                {
+                    throw new Exception(webResult.Message);
+                }
+
+                return webResult.ID;
+            }
         }
 
         /// <summary>
@@ -168,34 +174,37 @@ namespace GrabzIt
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ScreenShotFormat format, int delay, string targetElement)
         {
-            string id = TakePicture(url, null, browserWidth, browserHeight, outputHeight, outputWidth, null, format, delay, targetElement);
-
-            //Wait for it to be ready.
-            while (true)
+            lock (thisLock)
             {
-                ScreenShotStatus status = GetStatus(id);
-                
-                if (!status.Cached && !status.Processing)
-                {
-                    throw new Exception("The screenshot did not complete with the error: " + status.Message);
-                }
+                string id = TakePicture(url, null, browserWidth, browserHeight, outputHeight, outputWidth, null, format, delay, targetElement);
 
-                if (status.Cached)
+                //Wait for it to be ready.
+                while (true)
                 {
-                    Image result = GetPicture(id);
-                    
-                    if (result == null)
+                    ScreenShotStatus status = GetStatus(id);
+
+                    if (!status.Cached && !status.Processing)
                     {
-                        throw new Exception("The screenshot image could not be found on GrabzIt.");
+                        throw new Exception("The screenshot did not complete with the error: " + status.Message);
                     }
-                    result.Save(saveToFile);
-                    break;
+
+                    if (status.Cached)
+                    {
+                        Image result = GetPicture(id);
+
+                        if (result == null)
+                        {
+                            throw new Exception("The screenshot image could not be found on GrabzIt.");
+                        }
+                        result.Save(saveToFile);
+                        break;
+                    }
+
+                    Thread.Sleep(1);
                 }
 
-                Thread.Sleep(1);                
+                return true;
             }
-
-            return true;
         }
 
         /// <summary>
@@ -205,21 +214,24 @@ namespace GrabzIt
         /// <returns>A Status object representing the screenshot</returns>
         public ScreenShotStatus GetStatus(string id)
         {
-            WebClient client = new WebClient();
-            string result = client.DownloadString(string.Format(
-                                                      "{0}getstatus.ashx?id={1}",
-                                                      BaseURL, id));
-
-            XmlSerializer serializer = new XmlSerializer(typeof(GetStatusResult));
-            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            GetStatusResult status = (GetStatusResult)serializer.Deserialize(memStream);
-
-            if (status == null)
+            lock (thisLock)
             {
-                return null;
-            }
+                WebClient client = new WebClient();
+                string result = client.DownloadString(string.Format(
+                                                          "{0}getstatus.ashx?id={1}",
+                                                          BaseURL, id));
 
-            return status.GetStatus();
+                XmlSerializer serializer = new XmlSerializer(typeof(GetStatusResult));
+                MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                GetStatusResult status = (GetStatusResult)serializer.Deserialize(memStream);
+
+                if (status == null)
+                {
+                    return null;
+                }
+
+                return status.GetStatus();
+            }
         }
 
         /// <summary>
@@ -229,23 +241,26 @@ namespace GrabzIt
         /// <returns>A array of cookies</returns>
         public GrabzItCookie[] GetCookies(string domain)
         {
-            string sig = Encrypt(string.Format("{0}|{1}", applicationSecret, domain));
-
-            WebClient client = new WebClient();
-            string result = client.DownloadString(string.Format(
-                                                      "{0}getcookies.ashx?domain={1}&key={2}&sig={3}",
-                                                      BaseURL, domain, applicationKey, sig));
-
-            XmlSerializer serializer = new XmlSerializer(typeof(GetCookiesResult));
-            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            GetCookiesResult getCookiesResult = (GetCookiesResult)serializer.Deserialize(memStream);
-
-            if (!string.IsNullOrEmpty(getCookiesResult.Message))
+            lock (thisLock)
             {
-                throw new Exception(getCookiesResult.Message);
-            }
+                string sig = Encrypt(string.Format("{0}|{1}", applicationSecret, domain));
 
-            return getCookiesResult.Cookies;
+                WebClient client = new WebClient();
+                string result = client.DownloadString(string.Format(
+                                                          "{0}getcookies.ashx?domain={1}&key={2}&sig={3}",
+                                                          BaseURL, domain, applicationKey, sig));
+
+                XmlSerializer serializer = new XmlSerializer(typeof(GetCookiesResult));
+                MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                GetCookiesResult getCookiesResult = (GetCookiesResult)serializer.Deserialize(memStream);
+
+                if (!string.IsNullOrEmpty(getCookiesResult.Message))
+                {
+                    throw new Exception(getCookiesResult.Message);
+                }
+
+                return getCookiesResult.Cookies;
+            }
         }
 
         /// <summary>
@@ -325,24 +340,27 @@ namespace GrabzIt
         /// <returns>Returns true if the cookie was successfully set.</returns>
         public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime? expires)
         {
-            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", applicationSecret, name, domain,
-                                          value, path, (httponly ? 1 : 0), expires, 0));
- 
-            WebClient client = new WebClient();
-            string result = client.DownloadString(string.Format(
-                                                      "{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
-                                                      BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), expires, applicationKey, sig));
-
-            XmlSerializer serializer = new XmlSerializer(typeof(SetCookiesResult));
-            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            SetCookiesResult setCookiesResult = (SetCookiesResult)serializer.Deserialize(memStream);
-
-            if (!string.IsNullOrEmpty(setCookiesResult.Message))
+            lock (thisLock)
             {
-                throw new Exception(setCookiesResult.Message);
-            }
+                string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", applicationSecret, name, domain,
+                                              value, path, (httponly ? 1 : 0), expires, 0));
 
-            return Convert.ToBoolean(setCookiesResult.Result);
+                WebClient client = new WebClient();
+                string result = client.DownloadString(string.Format(
+                                                          "{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
+                                                          BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), expires, applicationKey, sig));
+
+                XmlSerializer serializer = new XmlSerializer(typeof(SetCookiesResult));
+                MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                SetCookiesResult setCookiesResult = (SetCookiesResult)serializer.Deserialize(memStream);
+
+                if (!string.IsNullOrEmpty(setCookiesResult.Message))
+                {
+                    throw new Exception(setCookiesResult.Message);
+                }
+
+                return Convert.ToBoolean(setCookiesResult.Result);
+            }
         }
 
         /// <summary>
@@ -353,26 +371,29 @@ namespace GrabzIt
         /// <returns>Returns true if the cookie was successfully set.</returns>
         public bool DeleteCookie(string name, string domain)
         {
-            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", applicationSecret, name, domain, 1));
-
-            WebClient client = new WebClient();
-
-            string url = string.Format(
-                                                      "{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
-                                                      BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), applicationKey, sig);
-
-            string result = client.DownloadString(url);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(SetCookiesResult));
-            MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            SetCookiesResult setCookiesResult = (SetCookiesResult)serializer.Deserialize(memStream);
-
-            if (!string.IsNullOrEmpty(setCookiesResult.Message))
+            lock (thisLock)
             {
-                throw new Exception(setCookiesResult.Message);
-            }
+                string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", applicationSecret, name, domain, 1));
 
-            return Convert.ToBoolean(setCookiesResult.Result);
+                WebClient client = new WebClient();
+
+                string url = string.Format(
+                                                          "{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
+                                                          BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), applicationKey, sig);
+
+                string result = client.DownloadString(url);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(SetCookiesResult));
+                MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                SetCookiesResult setCookiesResult = (SetCookiesResult)serializer.Deserialize(memStream);
+
+                if (!string.IsNullOrEmpty(setCookiesResult.Message))
+                {
+                    throw new Exception(setCookiesResult.Message);
+                }
+
+                return Convert.ToBoolean(setCookiesResult.Result);
+            }
         }
 
         /// <summary>
@@ -382,39 +403,52 @@ namespace GrabzIt
         /// <returns>The screenshot</returns>
         public Image GetPicture(string id)
         {
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(string.Format(
-                                                                            "{0}getpicture.ashx?id={1}",
-                                                                            BaseURL, id));
-            Image image;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            lock (thisLock)
             {
-                if (response.ContentLength == 0)
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
+                                                                                "{0}getpicture.ashx?id={1}",
+                                                                                BaseURL, id));
+                Image image;
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    return null;
+                    if (response.ContentLength == 0)
+                    {
+                        return null;
+                    }
+
+                    Stream stream = response.GetResponseStream();
+
+                    image = Image.FromStream(stream);
                 }
 
-                Stream stream = response.GetResponseStream();
-
-                image = Image.FromStream(stream);
+                return image;
             }
-
-            return image;
         }
 
         private static string Encrypt(string plainText)
         {
-            System.Security.Cryptography.MD5CryptoServiceProvider x = new MD5CryptoServiceProvider();
             byte[] bs = Encoding.ASCII.GetBytes(plainText);
-            bs = x.ComputeHash(bs);
+            return toHex(hasher.ComputeHash(bs));
+        }
 
-            // step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bs.Length; i++)
+        private static string toHex(byte[] bytes)
+        {
+            //Fastest method to convert bytes to hex according to http://stackoverflow.com/questions/623104/c-sharp-byte-to-hex-string/3974535#3974535
+            char[] c = new char[bytes.Length * 2];
+
+            byte b;
+
+            for (int bx = 0, cx = 0; bx < bytes.Length; ++bx, ++cx)
             {
-                sb.Append(bs[i].ToString("x2"));
+                b = ((byte)(bytes[bx] >> 4));
+                c[cx] = (char)(b > 9 ? b + 0x37 + 0x20 : b + 0x30);
+
+                b = ((byte)(bytes[bx] & 0x0F));
+                c[++cx] = (char)(b > 9 ? b + 0x37 + 0x20 : b + 0x30);
             }
-            return sb.ToString();
+
+            return new string(c);
         }
 
         /// <summary>
