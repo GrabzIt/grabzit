@@ -26,7 +26,7 @@ namespace GrabzIt
         private readonly string applicationSecret;
         private const string BaseURL = "http://grabz.it/services/";
 
-        internal GrabzItClient(string applicationKey, string applicationSecret)
+        public GrabzItClient(string applicationKey, string applicationSecret)
         {
             this.applicationKey = applicationKey;
             this.applicationSecret = applicationSecret;
