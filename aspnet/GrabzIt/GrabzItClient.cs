@@ -452,7 +452,7 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// Create a new GrabzIt client
+        /// Create a new GrabzIt client. Note if you are using Multi-Threading consider using the public constructor to improve performance.
         /// </summary>
         /// <param name="applicationKey">The application key of your GrabzIt account</param>
         /// <param name="applicationSecret">The application secret of your GrabzIt account</param>
