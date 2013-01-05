@@ -190,13 +190,21 @@ namespace GrabzIt
 
                     if (status.Cached)
                     {
-                        Image result = GetPicture(id);
-
-                        if (result == null)
+                        using (Image result = GetPicture(id))
                         {
-                            throw new Exception("The screenshot image could not be found on GrabzIt.");
+                            if (result == null)
+                            {
+                                throw new Exception("The screenshot image could not be found on GrabzIt.");
+                            }
+                            try
+                            {
+                                result.Save(saveToFile);
+                            }
+                            catch (Exception)
+                            {
+                                throw new Exception("An error occurred trying to save the screenshot to: " + saveToFile);
+                            }
                         }
-                        result.Save(saveToFile);
                         break;
                     }
 
@@ -417,9 +425,10 @@ namespace GrabzIt
                         return null;
                     }
 
-                    Stream stream = response.GetResponseStream();
-
-                    image = Image.FromStream(stream);
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        image = Image.FromStream(stream);
+                    }
                 }
 
                 return image;
