@@ -190,19 +190,30 @@ namespace GrabzIt
 
                     if (status.Cached)
                     {
-                        using (Image result = GetPicture(id))
+                        int attempt = 0;
+                        while (true)
                         {
-                            if (result == null)
+                            using (Image result = GetPicture(id))
                             {
-                                throw new Exception("The screenshot image could not be found on GrabzIt.");
-                            }
-                            try
-                            {
-                                result.Save(saveToFile);
-                            }
-                            catch (Exception)
-                            {
-                                throw new Exception("An error occurred trying to save the screenshot to: " + saveToFile);
+                                if (result == null)
+                                {
+                                    throw new Exception("The screenshot image could not be found on GrabzIt.");
+                                }
+                                try
+                                {
+                                    result.Save(saveToFile);
+                                    break;
+                                }
+                                catch (Exception)
+                                {
+                                    if (attempt < 3)
+                                    {
+                                        attempt++;
+                                        continue;
+                                    }
+                                    throw new Exception("An error occurred trying to save the screenshot to: " +
+                                                        saveToFile);
+                                }
                             }
                         }
                         break;
@@ -427,7 +438,7 @@ namespace GrabzIt
 
                     using (Stream stream = response.GetResponseStream())
                     {
-                        image = Image.FromStream(stream);
+                        image = Image.FromStream(stream, true, false);
                     }
                 }
 
