@@ -1,4 +1,4 @@
-﻿namespace GrabzIt
+namespace GrabzIt
 {
     public enum ScreenShotFormat
     {
@@ -7,7 +7,7 @@
         bmp24,
         bmp,
         jpg,
-        gif,
+        tiff,
         png
     }
 }
