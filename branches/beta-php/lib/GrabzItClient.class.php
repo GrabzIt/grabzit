@@ -44,11 +44,11 @@ class GrabzItClient
 		This method sets the parameters required to take a screenshot of a web page.
 
 		url - The URL that the screenshot should be made of
+		customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 		browserWidth - The width of the browser in pixels
 		browserHeight - The height of the browser in pixels
 		outputHeight - The height of the resulting thumbnail in pixels
 		outputWidth - The width of the resulting thumbnail in pixels
-		customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 		format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 		delay - The number of milliseconds to wait before taking the screenshot
 		targetElement - The id of the only HTML element in the web page to turn into a screenshot
@@ -66,8 +66,9 @@ class GrabzItClient
 		This method sets the parameters required to extract all tables from a web page.
 
 		url - The URL that the should be used to extract tables
-		format - The format the tableshould be in: csv, xlsx
 		customId - A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
+		tableNumberToInclude - Which table to include, in order from the begining of the page to the end
+		format - The format the tableshould be in: csv, xlsx
 		includeHeaderNames - If true header names will be included in the table
 		includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
 		targetElement - The id of the only HTML element in the web page that should be used to extract tables from
