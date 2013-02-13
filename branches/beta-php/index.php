@@ -6,7 +6,7 @@ $message = '';
 
 if (count($_POST) > 0)
 {
-        if ($_POST["delete"] == 1)
+        if (isset($_POST["delete"]) && $_POST["delete"] == 1)
         {
             $files = glob('results/*');
             foreach($files as $file)
@@ -51,16 +51,16 @@ if (count($_POST) > 0)
 <form method="post" action="index.php" class="inputForms">
 <p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 <?php
-if ($grabzItHandlerUrl == "URL OF YOUR GrabzItHandler.php FILE (http://www.example.com/grabzit/GrabzItHandler.php)")
+if ($grabzItHandlerUrl == "URL OF YOUR handler.php FILE (http://www.example.com/grabzit/handler.php)")
 {
         ?><p><span class="error">You must set your call back to a valid public URL.</span></p><?php
 }
 if (!is_writable("results"))
 {
-    ?><span class="error">The "results" directory is not writable! This directory needs to be made writable in order for this demo to work.</span><?php
+    ?><span class="error">The "results" directory is not writeable! This directory needs to be made writeable in order for this demo to work.</span><?php
     return;
 }
-if (count($_POST) > 0 && $_POST["delete"] != 1)
+if (count($_POST) > 0 && !isset($_POST["delete"]))
 {
 	if (!empty($message))
 	{
@@ -75,7 +75,7 @@ if (count($_POST) > 0 && $_POST["delete"] != 1)
 <label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format">
   <option value="jpg">JPG</option>
   <option value="pdf">PDF</option>
-</select> 
+</select>
 <input type="submit" value="Grabz It"></input>
 </form>
 <form method="post" action="index.php" class="inputForms">
