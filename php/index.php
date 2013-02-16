@@ -1,38 +1,70 @@
 <?php
-include("GrabzItClient.class.php");
-include("GrabzItConfig.php");
+include("lib/GrabzItClient.class.php");
+include("config.php");
 
 $message = '';
 
 if (count($_POST) > 0)
 {
-	$url = $_POST["url"];
-	try
-	{
-		$grabzIt = new GrabzItClient($grabzItApplicationKey, $grabzItApplicationSecret);
-		$grabzIt->TakePicture($url, $grabzItHandlerUrl);
-	}
-	catch (Exception $e)
-	{
-	    $message =  $e->getMessage();
+        if (isset($_POST["delete"]) && $_POST["delete"] == 1)
+        {
+            $files = glob('results/*');
+            foreach($files as $file)
+            {
+                if(is_file($file))
+                    unlink($file);
+            }
+        }
+        else
+        {
+		$url = $_POST["url"];
+		$format = $_POST["format"];
+		try
+		{
+			$grabzIt = new GrabzItClient($grabzItApplicationKey, $grabzItApplicationSecret);
+			if ($format == "pdf")
+			{
+			    $grabzIt->SetPDFOptions($url);
+			}
+			else
+			{
+			    $grabzIt->SetImageOptions($url);
+			}
+			$grabzIt->Save($grabzItHandlerUrl);
+		}
+		catch (Exception $e)
+		{
+		    $message =  $e->getMessage();
+		}
 	}
 }
 ?>
 <html>
 <head>
 <title>GrabzIt Demo</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="ajax/ui.js"></script>
 </head>
 <body>
 <h1>GrabzIt Demo</h1>
-<form method="post" action="index.php">
-<p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the <a href="images/">images directory</a>. It may take a few seconds for it to appear!</p>
-<p>If nothing is happening check the <a href="http://grabz.it/account/diagnostics">diagnostics panel</a> to see if there is an error.</p>
+<form method="post" action="index.php" class="inputForms">
+<p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 <?php
-if (count($_POST) > 0)
+if ($grabzItHandlerUrl == "URL OF YOUR handler.php FILE (http://www.example.com/grabzit/handler.php)")
+{
+        ?><p><span class="error">You must set your call back to a valid public URL.</span></p><?php
+}
+if (!is_writable("results"))
+{
+    ?><span class="error">The "results" directory is not writeable! This directory needs to be made writeable in order for this demo to work.</span><?php
+    return;
+}
+if (count($_POST) > 0 && !isset($_POST["delete"]))
 {
 	if (!empty($message))
 	{
-	    ?><p><span style="color:red;font-weight:bold;"><?php echo $message; ?></span></p><?php
+	    ?><p><span class="error"><?php echo $message; ?></span></p><?php
 	}
 	else
 	{
@@ -40,22 +72,18 @@ if (count($_POST) > 0)
 	}
 }
 ?>
-<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/>
+<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format">
+  <option value="jpg">JPG</option>
+  <option value="pdf">PDF</option>
+</select>
 <input type="submit" value="Grabz It"></input>
+</form>
+<form method="post" action="index.php" class="inputForms">
+<input type="hidden" name="delete" value="1"></input>
+<input type="submit" value="Clear Results"></input>
 </form>
     <br />
     <h2>Completed Screenshots</h2>
-    <iframe id="iFImages" src="images.php" width="100%" height="500px;" style="border:0;overflow-y:auto;"></iframe>
-    </div>
-    </form>
-    <script type="text/javascript">
-            function reloadIFrame() {
-                var iframe = document.getElementById('iFImages');
-                iframe.src = iframe.src;
-                setTimeout("reloadIFrame()", 5000);
-            }
-
-            reloadIFrame();
-    </script>
+    <div id="divResults"></div>
 </body>
 </html>
