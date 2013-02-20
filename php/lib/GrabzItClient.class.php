@@ -53,13 +53,13 @@ class GrabzItClient
 		delay - The number of milliseconds to wait before taking the screenshot
 		targetElement - The id of the only HTML element in the web page to turn into a screenshot
 		requestMobileVersion - Request a mobile version of the target website if possible
-		customWaterMarkId - add a custom watermark to the image
+		customWaterMarkId - Add a custom watermark to the image
 		*/
 		public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestMobileVersion = false, $customWaterMarkId = null)
 		{
 			$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestMobileVersion)."&callback=";
 			$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-					$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestMobileVersion);
+			$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestMobileVersion);
 		}
 
 		/*
@@ -78,7 +78,7 @@ class GrabzItClient
 		{
 			$this->request = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&includeAllTables=".intval($includeAllTables)."&includeHeaderNames=".intval($includeHeaderNames) ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".urlencode($customId)."&target=".urlencode($targetElement)."&requestmobileversion=".intval($requestMobileVersion)."&callback=";
 			$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-					$this->signaturePartTwo = "|".$customId."|".$tableNumberToInclude ."|".intval($includeAllTables)."|".intval($includeHeaderNames)."|".$targetElement."|".$format."|".intval($requestMobileVersion);
+			$this->signaturePartTwo = "|".$customId."|".$tableNumberToInclude ."|".intval($includeAllTables)."|".intval($includeHeaderNames)."|".$targetElement."|".$format."|".intval($requestMobileVersion);
 		}
 
 		/*
