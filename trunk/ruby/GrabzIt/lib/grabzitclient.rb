@@ -1,7 +1,7 @@
 require 'digest/md5'
 require 'net/http'
 require 'rexml/document'
-require 'uri'
+require 'cgi'
 require File.join(File.dirname(__FILE__), 'screenshotstatus')
 require File.join(File.dirname(__FILE__), 'grabzitcookie')
 
@@ -34,7 +34,7 @@ class GrabzItClient
 	#This function returns the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.
 	#
 	def take_picture(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
-		qs = "key=" + URI.escape(@applicationKey) + "&url=" + URI.escape(url) + "&width=" + nil_check(width) + "&height=" + nil_check(height) + "&format=" + nil_check(format) + "&bwidth=" + nil_check(browserWidth) + "&bheight=" + nil_check(browserHeight) + "&callback=" + URI.escape(nil_check(callback)) + "&customid=" + URI.escape(nil_check(customId)) + "&delay=" + nil_check(delay) + "&target=" + URI.escape(nil_check(targetElement))
+		qs = "key=" + CGI.escape(@applicationKey) + "&url=" + CGI.escape(url) + "&width=" + nil_check(width) + "&height=" + nil_check(height) + "&format=" + nil_check(format) + "&bwidth=" + nil_check(browserWidth) + "&bheight=" + nil_check(browserHeight) + "&callback=" + CGI.escape(nil_check(callback)) + "&customid=" + CGI.escape(nil_check(customId)) + "&delay=" + nil_check(delay) + "&target=" + CGI.escape(nil_check(targetElement))
 		sig =  Digest::MD5.hexdigest(@applicationSecret+"|"+url+"|"+nil_check(callback)+"|"+nil_check(format)+"|"+nil_check(height)+"|"+nil_check(width)+"|"+nil_check(browserHeight)+"|"+nil_check(browserWidth)+"|"+nil_check(customId)+"|"+nil_check(delay)+"|"+nil_check(targetElement))
 		qs = qs + "&sig=" + sig
 
@@ -150,7 +150,7 @@ class GrabzItClient
         def get_cookies(domain)
                 sig =  Digest::MD5.hexdigest(@applicationSecret+"|"+domain)               
 
-                qs = "key=" +URI.escape(@applicationKey)+"&domain="+URI.escape(domain)+"&sig="+sig
+                qs = "key=" +CGI.escape(@applicationKey)+"&domain="+CGI.escape(domain)+"&sig="+sig
 
                 result = get(WebServicesBaseURL + "getcookies.ashx?" + qs)
 
@@ -201,7 +201,7 @@ class GrabzItClient
         def set_cookie(name, domain, value = "", path = "/", httponly = false, expires = "")
                 sig =  Digest::MD5.hexdigest(@applicationSecret+"|"+name+"|"+domain+"|"+nil_check(value)+"|"+nil_check(path)+"|"+b_to_int(httponly).to_s+"|"+nil_check(expires)+"|0")
 
-                qs = "key=" +URI.escape(@applicationKey)+"&domain="+URI.escape(domain)+"&name="+URI.escape(name)+"&value="+URI.escape(nil_check(value))+"&path="+URI.escape(nil_check(path))+"&httponly="+b_to_int(httponly).to_s+"&expires="+nil_check(expires)+"&sig="+sig
+                qs = "key=" +CGI.escape(@applicationKey)+"&domain="+CGI.escape(domain)+"&name="+CGI.escape(name)+"&value="+CGI.escape(nil_check(value))+"&path="+CGI.escape(nil_check(path))+"&httponly="+b_to_int(httponly).to_s+"&expires="+nil_check(expires)+"&sig="+sig
 
                 result = get(WebServicesBaseURL + "setcookie.ashx?" + qs)
 
@@ -228,7 +228,7 @@ class GrabzItClient
         def delete_cookie(name, domain)
                 sig =  Digest::MD5.hexdigest(@applicationSecret+"|"+name+"|"+domain+"|1")
 
-                qs = "key=" + URI.escape(@applicationKey)+"&domain="+URI.escape(domain)+"&name="+URI.escape(name)+"&delete=1&sig="+sig
+                qs = "key=" + CGI.escape(@applicationKey)+"&domain="+CGI.escape(domain)+"&name="+CGI.escape(name)+"&delete=1&sig="+sig
 
                 result = get(WebServicesBaseURL + "setcookie.ashx?" + qs)
 
