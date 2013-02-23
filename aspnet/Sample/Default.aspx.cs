@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Web;
 using System.IO;
 using GrabzIt;
-using GrabzIt.Results;
+using GrabzIt.Screenshots;
 
 namespace Sample
 {
@@ -21,7 +21,7 @@ namespace Sample
             try
             {
                 grabzItClient.ScreenShotComplete += grabzIt_ScreenShotComplete;
-                grabzItClient.TakePicture(txtURL.Text/*, HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx"*/);
+                grabzItClient.TakePicture(txtURL.Text, HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
                 lblMessage.Text = "Processing screenshot.";
                 lblMessage.CssClass = string.Empty;
                 lblMessage.Style.Add("color", "green");

@@ -5,12 +5,12 @@ namespace GrabzIt.Results
 {
     [Serializable]
     [XmlType(TypeName = "WebResult")]
-    public class SetCookiesResult
+    public class GenericResult
     {
         public string Result;
         public string Message;
 
-        public SetCookiesResult()
+        public GenericResult()
         {            
         }
     }

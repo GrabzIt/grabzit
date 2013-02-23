@@ -1,4 +1,4 @@
-﻿namespace GrabzIt
+﻿namespace GrabzIt.Enums
 {
     public enum TableFormat
     {

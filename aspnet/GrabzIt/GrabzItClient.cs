@@ -7,8 +7,11 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml.Serialization;
+using System.Collections.Specialized;
 using GrabzIt.Cookies;
 using GrabzIt.Results;
+using GrabzIt.Enums;
+using GrabzIt.Screenshots;
 
 namespace GrabzIt
 {
@@ -220,7 +223,7 @@ namespace GrabzIt
                 //Wait for it to be ready.
                 while (true)
                 {
-                    ScreenShotStatus status = GetStatus(id);
+                    Status status = GetStatus(id);
 
                     if (!status.Cached && !status.Processing)
                     {
@@ -268,11 +271,16 @@ namespace GrabzIt
             using(WebClient client = new WebClient())
             {
                 string result = client.DownloadString(url);
-                using (MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result)))
-                {
-                    XmlSerializer serializer = new XmlSerializer(typeof(T));
-                    return (T)serializer.Deserialize(memStream);
-                }
+                return DeserializeResult<T>(result);
+            }
+        }
+
+        private T DeserializeResult<T>(string result)
+        {
+            using (MemoryStream memStream = new MemoryStream(Encoding.UTF8.GetBytes(result)))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                return (T)serializer.Deserialize(memStream);
             }
         }
 
@@ -281,6 +289,7 @@ namespace GrabzIt
         /// </summary>
         /// <param name="url">The URL that the screenshot should be made of</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
+        [Obsolete("Use the SetImageOptions and Save methods instead")]
         public string TakePicture(string url)
         {
             return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, ImageFormat.jpg, 0, string.Empty);
@@ -292,6 +301,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the screenshot should be made of</param>
         /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
+        [Obsolete("Use the SetImageOptions and Save methods instead")]
         public string TakePicture(string url, string callback)
         {
             return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, ImageFormat.jpg, 0, string.Empty);
@@ -304,6 +314,7 @@ namespace GrabzIt
         /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
         /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
+        [Obsolete("Use the SetImageOptions and Save methods instead")]
         public string TakePicture(string url, string callback, string customId)
         {
             return TakePicture(url, callback, 0, 0, 0, 0, customId, ImageFormat.jpg, 0, string.Empty);
@@ -322,6 +333,7 @@ namespace GrabzIt
         /// <param name="format">The format the screenshot should be in.</param>
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
+        [Obsolete("Use the SetImageOptions and Save methods instead")]
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay)
         {
             return TakePicture(url, callback, browserWidth, browserHeight, outputHeight, outputWidth, customId, format, delay, string.Empty);
@@ -341,6 +353,7 @@ namespace GrabzIt
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
+        [Obsolete("Use the SetImageOptions and Save methods instead")]
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay, string targetElement)
         {
             SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, false, string.Empty);
@@ -353,6 +366,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the screenshot should be made of</param>
         /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
+        [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
         public bool SavePicture(string url, string saveToFile)
         {
             return SavePicture(url, saveToFile, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty);
@@ -370,6 +384,7 @@ namespace GrabzIt
         /// <param name="format">The format the screenshot should be in.</param>
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
+        [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay)
         {
             return SavePicture(url, saveToFile, browserWidth, browserHeight, outputHeight, outputWidth, format, delay, string.Empty);
@@ -389,6 +404,7 @@ namespace GrabzIt
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
+        [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay, string targetElement)
         {
             SetImageOptions(url, string.Empty, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, false, string.Empty);
@@ -400,7 +416,7 @@ namespace GrabzIt
         /// </summary>
         /// <param name="id">The id of the screenshot</param>
         /// <returns>A Status object representing the screenshot</returns>
-        public ScreenShotStatus GetStatus(string id)
+        public Status GetStatus(string id)
         {
             lock (thisLock)
             {
@@ -527,7 +543,7 @@ namespace GrabzIt
                string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
                                                           BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), expires, ApplicationKey, sig);
 
-                SetCookiesResult webResult = Get<SetCookiesResult>(url);
+                GenericResult webResult = Get<GenericResult>(url);
 
                 if (!string.IsNullOrEmpty(webResult.Message))
                 {
@@ -553,7 +569,7 @@ namespace GrabzIt
                 string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
                                                           BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
 
-                SetCookiesResult webResult = Get<SetCookiesResult>(url);
+                GenericResult webResult = Get<GenericResult>(url);
 
                 if (!string.IsNullOrEmpty(webResult.Message))
                 {
@@ -562,6 +578,98 @@ namespace GrabzIt
 
                 return Convert.ToBoolean(webResult.Result);
             }
+        }
+
+        /// <summary>
+		/// Add a new custom watermark.
+        /// </summary>
+		/// <param name="identifier">The identifier you want to give the custom watermark. It is important that this identifier is unique.</param>
+		/// <param name="path">The absolute path of the watermark on your server. For instance C:/watermark/1.png</param>
+        /// <param name="xpos">The horizontal position you want the screenshot to appear at</param>
+        /// <param name="ypos">The vertical position you want the screenshot to appear at</param>
+        /// <returns>Returns true if the watermark was successfully set.</returns>
+        public bool AddWaterMark(string identifier, string path, HorizontalPosition xpos, VerticalPosition ypos)
+        {
+            if (!File.Exists(path))
+            {
+                throw new Exception("File: " + path + " does not exist");
+            }
+
+            string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, identifier, (int)xpos, (int)ypos));
+
+            string url = string.Format("{0}addwatermark.ashx", BaseURL);
+
+            NameValueCollection nvc = new NameValueCollection();
+            nvc.Add("key", ApplicationKey);
+            nvc.Add("identifier", identifier);
+            nvc.Add("xpos", ((int)xpos).ToString());
+            nvc.Add("ypos", ((int)ypos).ToString());
+            nvc.Add("sig", sig);
+
+            string result = HttpUploadFile(url, path, "watermark", "image/jpeg", nvc);
+
+            GenericResult webResult = DeserializeResult<GenericResult>(result);
+
+            if (!string.IsNullOrEmpty(webResult.Message))
+            {
+                throw new Exception(webResult.Message);
+            }
+
+            return Convert.ToBoolean(webResult.Result);
+        }
+
+        /// <summary>
+		/// Delete a custom watermark.
+        /// <summary>
+		/// <param name="identifier">The identifier of the custom watermark you want to delete</param>
+        /// <returns>Returns true if the watermark was successfully deleted.</returns>
+		public bool DeleteWaterMark(string identifier)
+		{
+			string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
+
+            string url = string.Format("{0}deletewatermark.ashx?key={1}&identifier={2}&sig={3}",
+                                                          BaseURL, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
+
+
+            GenericResult webResult = Get<GenericResult>(url);
+
+            if (!string.IsNullOrEmpty(webResult.Message))
+            {
+                throw new Exception(webResult.Message);
+            }
+
+            return Convert.ToBoolean(webResult.Result);
+		}
+
+		/// <summary>
+		/// Get all your custom watermarks.
+        /// </summary>
+        /// <returns>Returns an array of GrabzItWaterMark</returns>
+        public WaterMark[] GetWaterMarks()
+        {
+            return GetWaterMarks(string.Empty);
+        }
+
+		/// <summary>
+		/// Get a particular custom watermark.
+        /// </summary>
+		/// <param name="identifier">The identifier of a particular custom watermark you want to view</param>
+        /// <returns>Returns an array of GrabzItWaterMark</returns>
+		public WaterMark[] GetWaterMarks(string identifier)
+		{
+			string sig =  Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
+
+            string url = string.Format("{0}getwatermarks.ashx?key={1}&identifier={2}&sig={3}",
+                                                          BaseURL, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
+
+            GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
+
+			if (!string.IsNullOrEmpty(webResult.Message))
+            {
+                throw new Exception(webResult.Message);
+            }
+
+            return webResult.WaterMarks;
         }
 
         /// <summary>
@@ -646,6 +754,60 @@ namespace GrabzIt
             }
 
             return new string(c);
+        }
+
+        public static string HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
+        {
+            string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
+            byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
+
+            HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
+            wr.ContentType = "multipart/form-data; boundary=" + boundary;
+            wr.Method = "POST";
+            wr.KeepAlive = true;
+            wr.Credentials = System.Net.CredentialCache.DefaultCredentials;
+
+            using (Stream rs = wr.GetRequestStream())
+            {
+                string formdataTemplate = "Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}";
+                foreach (string key in nvc.Keys)
+                {
+                    rs.Write(boundarybytes, 0, boundarybytes.Length);
+                    string formitem = string.Format(formdataTemplate, key, nvc[key]);
+                    byte[] formitembytes = System.Text.Encoding.UTF8.GetBytes(formitem);
+                    rs.Write(formitembytes, 0, formitembytes.Length);
+                }
+                rs.Write(boundarybytes, 0, boundarybytes.Length);
+
+                string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
+                string header = string.Format(headerTemplate, paramName, file, contentType);
+                byte[] headerbytes = System.Text.Encoding.UTF8.GetBytes(header);
+                rs.Write(headerbytes, 0, headerbytes.Length);
+
+                using (FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = 0;
+                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                    {
+                        rs.Write(buffer, 0, bytesRead);
+                    }
+                }
+
+                byte[] trailer = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "--\r\n");
+                rs.Write(trailer, 0, trailer.Length);
+            }
+
+            using (WebResponse wresp = wr.GetResponse())
+            {
+                using (Stream stream2 = wresp.GetResponseStream())
+                {
+                    using (StreamReader reader2 = new StreamReader(stream2))
+                    {
+                        return reader2.ReadToEnd();
+                    }
+                }
+            }
         }
 
         /// <summary>

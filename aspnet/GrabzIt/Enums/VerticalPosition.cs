@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GrabzIt
+namespace GrabzIt.Enums
 {
-    public enum PageOrientation
+    public enum VerticalPosition
     {
-        Landscape,
-        Portrait
+        Top = 0, Middle = 1, Bottom = 2
     }
 }
