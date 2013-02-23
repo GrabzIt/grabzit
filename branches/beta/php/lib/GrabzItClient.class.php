@@ -101,13 +101,13 @@ class GrabzItClient
 		*/
 		public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $customWaterMarkId = null)
 		{
-					$pagesize = strtoupper($pagesize);
-					$orientation = ucfirst($orientation);
+			$pagesize = strtoupper($pagesize);
+			$orientation = ucfirst($orientation);
 
 			$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&callback=";
 
 			$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-					$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight;
+			$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight;
 		}
 
 		/*
@@ -288,55 +288,60 @@ class GrabzItClient
 
 		identifier - The identifier you want to give the custom watermark. It is important that this identifier is unique.
 		path - The absolute path of the watermark on your server. For instance C:/watermark/1.png
-		xpos - The horizontal position you want the screenshot to appear at: Left, Center, Right
-		ypos - The vertical position you want the screenshot to appear at: Top, Middle, Bottom
+		xpos - The horizontal position you want the screenshot to appear at: Left = 0, Center = 1, Right = 2
+		ypos - The vertical position you want the screenshot to appear at: Top = 0, Middle = 1, Bottom = 2
 
 		This function returns true if the watermark was successfully set.
 		*/
         public function AddWaterMark($identifier, $path, $xpos, $ypos)
         {
-                $sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
+            if (!file_exists($path))
+            {
+            	throw new Exception("File: " . $path . " does not exist");
+            }
 
-                $boundary = '--------------------------'.microtime(true);
+            $sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
 
-		$content =  "--".$boundary."\r\n".
-			    "Content-Disposition: form-data; name=\"watermark\"; filename=\"".basename($path)."\"\r\n".
-			    "Content-Type: image/jpeg\r\n\r\n".
-			    file_get_contents($path)."\r\n";
+            $boundary = '--------------------------'.microtime(true);
 
-		$content .= "--".$boundary."\r\n".
-			    "Content-Disposition: form-data; name=\"key\"\r\n\r\n".
-			    urlencode($this->applicationKey) . "\r\n";
+			$content =  "--".$boundary."\r\n".
+					"Content-Disposition: form-data; name=\"watermark\"; filename=\"".basename($path)."\"\r\n".
+					"Content-Type: image/jpeg\r\n\r\n".
+					file_get_contents($path)."\r\n";
 
-		$content .= "--".$boundary."\r\n".
-			    "Content-Disposition: form-data; name=\"identifier\"\r\n\r\n".
-			    urlencode($identifier) . "\r\n";
+			$content .= "--".$boundary."\r\n".
+					"Content-Disposition: form-data; name=\"key\"\r\n\r\n".
+					urlencode($this->applicationKey) . "\r\n";
 
-		$content .= "--".$boundary."\r\n".
-			    "Content-Disposition: form-data; name=\"xpos\"\r\n\r\n".
-			    intval($xpos) . "\r\n";
+			$content .= "--".$boundary."\r\n".
+					"Content-Disposition: form-data; name=\"identifier\"\r\n\r\n".
+					urlencode($identifier) . "\r\n";
 
-		$content .= "--".$boundary."\r\n".
-			    "Content-Disposition: form-data; name=\"ypos\"\r\n\r\n".
-			    intval($ypos) . "\r\n";
+			$content .= "--".$boundary."\r\n".
+					"Content-Disposition: form-data; name=\"xpos\"\r\n\r\n".
+					intval($xpos) . "\r\n";
 
-                $content .= "--".$boundary."\r\n".
-			    "Content-Disposition: form-data; name=\"sig\"\r\n\r\n".
-			    $sig. "\r\n";
+			$content .= "--".$boundary."\r\n".
+					"Content-Disposition: form-data; name=\"ypos\"\r\n\r\n".
+					intval($ypos) . "\r\n";
 
-		$content .= "--".$boundary."--\r\n";
+					$content .= "--".$boundary."\r\n".
+					"Content-Disposition: form-data; name=\"sig\"\r\n\r\n".
+					$sig. "\r\n";
 
-		$opts = array('http' =>
-		    array(
-			'method'  => 'POST',
-			'header'  => 'Content-Type: multipart/form-data; boundary='.$boundary,
-			'content' => $content
-		    )
-		);
+			$content .= "--".$boundary."--\r\n";
 
-		$context  = stream_context_create($opts);
+			$opts = array('http' =>
+				array(
+				'method'  => 'POST',
+				'header'  => 'Content-Type: multipart/form-data; boundary='.$boundary,
+				'content' => $content
+				)
+			);
 
-		return $this->isSuccessful(file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context));
+			$context  = stream_context_create($opts);
+
+			return $this->isSuccessful(file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context));
         }
 
 		/*
@@ -404,12 +409,12 @@ class GrabzItClient
 		}
 
         /*
-        DEPRECATED - Use SetImageOptions and Save method instead
+        DEPRECATED - Use the SetImageOptions and Save methods instead
         */
         public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
         {
         	$this->SetImageOptions($url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
-                return $this->Save($callback);
+            return $this->Save($callback);
         }
 
         private function isSuccessful($result)
