@@ -48,10 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PageOrientation.cs" />
-    <Compile Include="PageSize.cs" />
-    <Compile Include="Results\GrabzItFile.cs" />
-    <Compile Include="TableFormat.cs" />
+    <Compile Include="Enums\HorizontalPosition.cs" />
+    <Compile Include="Enums\PageOrientation.cs" />
+    <Compile Include="Enums\PageSize.cs" />
+    <Compile Include="Results\GetWatermarksResult.cs" />
+    <Compile Include="Screenshots\GrabzItFile.cs" />
+    <Compile Include="Enums\TableFormat.cs" />
     <Compile Include="Results\GetCookiesResult.cs" />
     <Compile Include="Cookies\GrabzItCookie.cs" />
     <Compile Include="GrabzItClient.cs" />
@@ -60,11 +62,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\GetStatusResult.cs" />
-    <Compile Include="Results\SetCookiesResult.cs" />
+    <Compile Include="Results\GenericResult.cs" />
     <Compile Include="ScreenShotEventArgs.cs" />
-    <Compile Include="ImageFormat.cs" />
-    <Compile Include="ScreenShotStatus.cs" />
+    <Compile Include="Enums\ImageFormat.cs" />
+    <Compile Include="Screenshots\Status.cs" />
     <Compile Include="Results\TakePictureResult.cs" />
+    <Compile Include="Enums\VerticalPosition.cs" />
+    <Compile Include="Screenshots\WaterMark.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="handler.ashx" />

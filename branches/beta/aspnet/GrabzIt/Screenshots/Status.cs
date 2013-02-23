@@ -1,6 +1,6 @@
-﻿namespace GrabzIt
+﻿namespace GrabzIt.Screenshots
 {
-    public class ScreenShotStatus
+    public class Status
     {
         public bool Processing;
         public bool Cached;

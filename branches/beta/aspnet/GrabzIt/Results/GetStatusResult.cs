@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using GrabzIt.Screenshots;
 
 namespace GrabzIt.Results
 {
@@ -16,9 +17,9 @@ namespace GrabzIt.Results
         {            
         }
 
-        internal ScreenShotStatus GetStatus()
+        internal Status GetStatus()
         {
-            ScreenShotStatus status = new ScreenShotStatus();
+            Status status = new Status();
             status.Cached = StringToBool(Cached);
             status.Expired = StringToBool(Expired);
             status.Processing = StringToBool(Processing);

@@ -18,6 +18,7 @@ namespace SampleConsole
                 string formatType = Console.ReadLine();
                 GrabzItClient grabzIt = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], 
                                                                 ConfigurationManager.AppSettings["ApplicationSecret"]);
+
                 try
                 {
                     string format = ".jpg";
