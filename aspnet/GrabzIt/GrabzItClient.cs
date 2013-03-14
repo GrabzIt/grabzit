@@ -157,15 +157,17 @@ namespace GrabzIt
         /// <param name="marginTop">The margin that should appear at the top of the PDF document page</param>
         /// <param name="marginLeft">The margin that should appear at the left of the PDF document page</param>
         /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
-        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>
+        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <param name="requestMobileVersionstring">Request a mobile version of the target website if possible</param>
         /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
-        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, string customWaterMarkId)
+        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, bool requestMobileVersionstring, string customWaterMarkId)
         {
             lock (thisLock)
             {
-                this.request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&callback=";
+                this.request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + Convert.ToInt32(requestMobileVersionstring) + "&callback=";
                 this.signaturePartOne = ApplicationSecret + "|" + url + "|";
-                this.signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight;
+                this.signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + Convert.ToInt32(requestMobileVersionstring);
             }
         }
 
@@ -175,7 +177,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the should be converted into a pdf</param>
         public void SetPDFOptions(string url)
         {
-            SetPDFOptions(url, string.Empty, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, string.Empty);
+            SetPDFOptions(url, string.Empty, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, false, string.Empty);
         }
 
         /// <summary>
@@ -185,7 +187,7 @@ namespace GrabzIt
         /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>        
         public void SetPDFOptions(string url, string customId)
         {
-            SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, string.Empty);
+            SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, false, string.Empty);
         }
 
         public string Save()
