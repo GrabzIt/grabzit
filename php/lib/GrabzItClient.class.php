@@ -10,9 +10,9 @@ class GrabzItClient
 
 	private $applicationKey;
 	private $applicationSecret;
-        private $signaturePartOne;
-        private $signaturePartTwo;
-        private $request;
+    private $signaturePartOne;
+    private $signaturePartTwo;
+    private $request;
 
 	public function __construct($applicationKey, $applicationSecret)
 	{
@@ -44,16 +44,16 @@ class GrabzItClient
 		This method sets the parameters required to take a screenshot of a web page.
 
 		url - The URL that the screenshot should be made of
-		customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 		browserWidth - The width of the browser in pixels
 		browserHeight - The height of the browser in pixels
 		outputHeight - The height of the resulting thumbnail in pixels
 		outputWidth - The width of the resulting thumbnail in pixels
+		customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
 		format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 		delay - The number of milliseconds to wait before taking the screenshot
 		targetElement - The id of the only HTML element in the web page to turn into a screenshot
 		requestMobileVersion - Request a mobile version of the target website if possible
-		customWaterMarkId - Add a custom watermark to the image
+		customWaterMarkId - add a custom watermark to the image
 		*/
 		public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestMobileVersion = false, $customWaterMarkId = null)
 		{
@@ -66,9 +66,8 @@ class GrabzItClient
 		This method sets the parameters required to extract all tables from a web page.
 
 		url - The URL that the should be used to extract tables
-		customId - A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
-		tableNumberToInclude - Which table to include, in order from the begining of the page to the end
 		format - The format the tableshould be in: csv, xlsx
+		customId - A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
 		includeHeaderNames - If true header names will be included in the table
 		includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
 		targetElement - The id of the only HTML element in the web page that should be used to extract tables from
@@ -97,17 +96,19 @@ class GrabzItClient
 		marginLeft - The margin that should appear at the left of the PDF document page
 		marginBottom - The margin that should appear at the bottom of the PDF document page
 		marginRight - The margin that should appear at the right of the PDF document
+		delay - The number of milliseconds to wait before taking the screenshot
+		requestMobileVersion - Request a mobile version of the target website if possible
 		customWaterMarkId - add a custom watermark to each page of the PDF document
 		*/
-		public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $customWaterMarkId = null)
+		public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestMobileVersion = false, $customWaterMarkId = null)
 		{
 			$pagesize = strtoupper($pagesize);
 			$orientation = ucfirst($orientation);
 
-			$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&callback=";
+			$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".intval($requestMobileVersion)."&callback=";
 
 			$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-			$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight;
+			$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".intval($requestMobileVersion);
 		}
 
 		/*
@@ -115,18 +116,18 @@ class GrabzItClient
 
 		This is the recommended method of saving a file.
 		*/
-			public function Save($callBackURL = null)
+		public function Save($callBackURL = null)
+		{
+			if (empty($this->signaturePartOne) && empty($this->signaturePartTwo) && empty($this->request))
 			{
-					if (empty($this->signaturePartOne) && empty($this->signaturePartTwo) && empty($this->request))
-					{
-						  throw new Exception("No screenshot parameters have been set.");
-					}
-					$sig =  md5($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
+				  throw new Exception("No screenshot parameters have been set.");
+			}
+			$sig =  md5($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
 			$this->request .= urlencode($callBackURL)."&sig=".$sig;
 			$obj = $this->getResultObject($this->Get($this->request));
 
 			return $obj->ID;
-			}
+		}
 
 		/*
 		This function attempts to Save the result synchronously to a file.
@@ -137,34 +138,34 @@ class GrabzItClient
 		*/
 		public function SaveTo($saveToFile)
 		{
-		$id = $this->Save();
+			$id = $this->Save();
 
-		//Wait for it to be ready.
-		while(true)
-		{
-			$status = $this->GetStatus($id);
+			//Wait for it to be ready.
+			while(true)
+			{
+				$status = $this->GetStatus($id);
 
-			if (!$status->Cached && !$status->Processing)
-			{
-				throw new Exception("The screenshot did not complete with the error: " . $status->Message);
-				break;
-			}
-			else if ($status->Cached)
-			{
-				$result = $this->GetResult($id);
-				if (!$result)
+				if (!$status->Cached && !$status->Processing)
 				{
-					throw new Exception("The screenshot image could not be found on GrabzIt.");
+					throw new Exception("The screenshot did not complete with the error: " . $status->Message);
 					break;
 				}
-				file_put_contents($saveToFile, $result);
-				break;
+				else if ($status->Cached)
+				{
+					$result = $this->GetResult($id);
+					if (!$result)
+					{
+						throw new Exception("The screenshot image could not be found on GrabzIt.");
+						break;
+					}
+					file_put_contents($saveToFile, $result);
+					break;
+				}
+
+				sleep(1);
 			}
 
-			sleep(1);
-		}
-
-		return true;
+			return true;
 		}
 
 		/*
@@ -288,60 +289,55 @@ class GrabzItClient
 
 		identifier - The identifier you want to give the custom watermark. It is important that this identifier is unique.
 		path - The absolute path of the watermark on your server. For instance C:/watermark/1.png
-		xpos - The horizontal position you want the screenshot to appear at: Left = 0, Center = 1, Right = 2
-		ypos - The vertical position you want the screenshot to appear at: Top = 0, Middle = 1, Bottom = 2
+		xpos - The horizontal position you want the screenshot to appear at: Left, Center, Right
+		ypos - The vertical position you want the screenshot to appear at: Top, Middle, Bottom
 
 		This function returns true if the watermark was successfully set.
 		*/
         public function AddWaterMark($identifier, $path, $xpos, $ypos)
         {
-            if (!file_exists($path))
-            {
-            	throw new Exception("File: " . $path . " does not exist");
-            }
+                $sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
 
-            $sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
+                $boundary = '--------------------------'.microtime(true);
 
-            $boundary = '--------------------------'.microtime(true);
+		$content =  "--".$boundary."\r\n".
+			    "Content-Disposition: form-data; name=\"watermark\"; filename=\"".basename($path)."\"\r\n".
+			    "Content-Type: image/jpeg\r\n\r\n".
+			    file_get_contents($path)."\r\n";
 
-			$content =  "--".$boundary."\r\n".
-					"Content-Disposition: form-data; name=\"watermark\"; filename=\"".basename($path)."\"\r\n".
-					"Content-Type: image/jpeg\r\n\r\n".
-					file_get_contents($path)."\r\n";
+		$content .= "--".$boundary."\r\n".
+			    "Content-Disposition: form-data; name=\"key\"\r\n\r\n".
+			    urlencode($this->applicationKey) . "\r\n";
 
-			$content .= "--".$boundary."\r\n".
-					"Content-Disposition: form-data; name=\"key\"\r\n\r\n".
-					urlencode($this->applicationKey) . "\r\n";
+		$content .= "--".$boundary."\r\n".
+			    "Content-Disposition: form-data; name=\"identifier\"\r\n\r\n".
+			    urlencode($identifier) . "\r\n";
 
-			$content .= "--".$boundary."\r\n".
-					"Content-Disposition: form-data; name=\"identifier\"\r\n\r\n".
-					urlencode($identifier) . "\r\n";
+		$content .= "--".$boundary."\r\n".
+			    "Content-Disposition: form-data; name=\"xpos\"\r\n\r\n".
+			    intval($xpos) . "\r\n";
 
-			$content .= "--".$boundary."\r\n".
-					"Content-Disposition: form-data; name=\"xpos\"\r\n\r\n".
-					intval($xpos) . "\r\n";
+		$content .= "--".$boundary."\r\n".
+			    "Content-Disposition: form-data; name=\"ypos\"\r\n\r\n".
+			    intval($ypos) . "\r\n";
 
-			$content .= "--".$boundary."\r\n".
-					"Content-Disposition: form-data; name=\"ypos\"\r\n\r\n".
-					intval($ypos) . "\r\n";
+                $content .= "--".$boundary."\r\n".
+			    "Content-Disposition: form-data; name=\"sig\"\r\n\r\n".
+			    $sig. "\r\n";
 
-					$content .= "--".$boundary."\r\n".
-					"Content-Disposition: form-data; name=\"sig\"\r\n\r\n".
-					$sig. "\r\n";
+		$content .= "--".$boundary."--\r\n";
 
-			$content .= "--".$boundary."--\r\n";
+		$opts = array('http' =>
+		    array(
+			'method'  => 'POST',
+			'header'  => 'Content-Type: multipart/form-data; boundary='.$boundary,
+			'content' => $content
+		    )
+		);
 
-			$opts = array('http' =>
-				array(
-				'method'  => 'POST',
-				'header'  => 'Content-Type: multipart/form-data; boundary='.$boundary,
-				'content' => $content
-				)
-			);
+		$context  = stream_context_create($opts);
 
-			$context  = stream_context_create($opts);
-
-			return $this->isSuccessful(file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context));
+		return $this->isSuccessful(file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context));
         }
 
 		/*
@@ -409,12 +405,12 @@ class GrabzItClient
 		}
 
         /*
-        DEPRECATED - Use the SetImageOptions and Save methods instead
+        DEPRECATED - Use SetImageOptions and Save method instead
         */
         public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
         {
         	$this->SetImageOptions($url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
-            return $this->Save($callback);
+                return $this->Save($callback);
         }
 
         private function isSuccessful($result)
