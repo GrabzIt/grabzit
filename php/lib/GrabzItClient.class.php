@@ -289,13 +289,17 @@ class GrabzItClient
 
 		identifier - The identifier you want to give the custom watermark. It is important that this identifier is unique.
 		path - The absolute path of the watermark on your server. For instance C:/watermark/1.png
-		xpos - The horizontal position you want the screenshot to appear at: Left, Center, Right
-		ypos - The vertical position you want the screenshot to appear at: Top, Middle, Bottom
+		xpos - The horizontal position you want the screenshot to appear at: Left = 0, Center = 1, Right = 2
+		ypos - The vertical position you want the screenshot to appear at: Top = 0, Middle = 1, Bottom = 2
 
 		This function returns true if the watermark was successfully set.
 		*/
         public function AddWaterMark($identifier, $path, $xpos, $ypos)
         {
+        		if (!file_exists($path))
+				{
+					throw new Exception("File: " . $path . " does not exist");
+		        }
                 $sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
 
                 $boundary = '--------------------------'.microtime(true);
@@ -396,7 +400,7 @@ class GrabzItClient
 		}
 
         /*
-        DEPRECATED - Use SetImageOptions and SaveTo method instead
+        DEPRECATED - Use the SetImageOptions and Save methods instead
         */
 		public function SaveImage($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
 		{
