@@ -400,7 +400,7 @@ class GrabzItClient
 		}
 
         /*
-        DEPRECATED - Use the SetImageOptions and Save methods instead
+        DEPRECATED - Use the SetImageOptions and SaveTo methods instead
         */
 		public function SaveImage($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
 		{
