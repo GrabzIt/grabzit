@@ -191,9 +191,9 @@ class GrabzItClient
 		}
 
 		/*
-		This method returns the image itself. If nothing is returned then something has gone wrong or the image is not ready yet.
+		This method returns the screenshot itself. If nothing is returned then something has gone wrong or the screenshot is not ready yet.
 
-		id - The unique identifier of the screenshot, returned by the callback handler or the TakePicture method
+		id - The unique identifier of the screenshot, returned by the callback handler or the Save method
 
 		This function returns the screenshot
 		*/
