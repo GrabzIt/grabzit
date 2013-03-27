@@ -402,9 +402,9 @@ class GrabzItClient
         /*
         DEPRECATED - Use the SetImageOptions and SaveTo methods instead
         */
-		public function SaveImage($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
+		public function SavePicture($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
 		{
-				$this->SetImageOptions($url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
+				$this->SetImageOptions($url, '', $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
 					return $this->SaveTo($saveToFile);
 		}
 
