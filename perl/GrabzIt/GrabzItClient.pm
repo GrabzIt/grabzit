@@ -492,7 +492,7 @@ sub SavePicture($$;$$$$$$$)
 {		
 	my ($self, $url, $saveToFile, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement) = @_;	
 	
-	$self->SetImageOptions($url, $callback, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
+	$self->SetImageOptions($url, '', $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
 	return $self->SaveTo($saveToFile);
 }
 
