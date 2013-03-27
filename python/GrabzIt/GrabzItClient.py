@@ -412,7 +412,7 @@ class GrabzItClient:
 	#DEPRECATED - Use the SetImageOptions and SaveTo methods instead
 	#
 	def SavePicture(self, url, saveToFile, browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = ''):
-		self.SetImageOptions(url, callback, customId, browserWidth, browserHeight, width, height, format, delay, targetElement)
+		self.SetImageOptions(url, '', customId, browserWidth, browserHeight, width, height, format, delay, targetElement)
 		return self.SaveTo(saveToFile)			
 
         def IsSuccessful(self, result):
