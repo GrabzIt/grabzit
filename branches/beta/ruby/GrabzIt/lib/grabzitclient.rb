@@ -55,7 +55,7 @@ class GrabzItClient
 	
 	# Sets the parameters required to extract one or more tables from a web page.
 	# @param url [String] the URL that the should be used to extract tables
-	# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.	
+	# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified	
 	# @param tableNumberToInclude [Integer, 1] the index of the table to be converted, were all tables in a web page are ordered from the top of the web page to bottom
 	# @param format [String, 'csv'] the format the table should be in: csv, xlsx
 	# @param includeHeaderNames [Boolean, true] if true header names will be included in the table
@@ -72,13 +72,13 @@ class GrabzItClient
 	end	
 
 	# Sets the parameters required to convert a web page into a PDF.
-	# @param url url [String] the URL that the should be converted into a pdf
+	# @param url [String] the URL that the should be converted into a PDF
 	# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
 	# @param includeBackground [Boolean, true] if true the background of the web page should be included in the screenshot
-	# @param pagesize [String, 'A4'] the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'.
+	# @param pagesize [String, 'A4'] the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'
 	# @param orientation [String, 'Portrait'] the orientation of the PDF to be returned: 'Landscape' or 'Portrait'
 	# @param includeLinks [Boolean, true] true if links should be included in the PDF
-	# @param includeOutline [Boolean, false] True if the PDF outline should be included
+	# @param includeOutline [Boolean, false] true if the PDF outline should be included
 	# @param title [String, nil] provide a title to the PDF document
 	# @param coverURL [String, nil] the URL of a web page that should be used as a cover page for the PDF
 	# @param marginTop [Integer, 10] the margin that should appear at the top of the PDF document page
@@ -104,7 +104,7 @@ class GrabzItClient
 	# Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the get_result method
 	# @note This is the recommended method of saving a file
 	# @param callBackURL [String, nil] the handler the GrabzIt service should call after it has completed its work
-	# @return [String] the unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method
+	# @return [String] the unique identifier of the screenshot. This can be used to get the screenshot with the get_result method
 	# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 	def save(callBackURL = nil)
 		if @@signaturePartOne == nil && @@signaturePartTwo == nil && @@request == nil
