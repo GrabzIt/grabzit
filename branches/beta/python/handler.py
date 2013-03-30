@@ -20,7 +20,7 @@ parser.read('config.ini')
 #resulting screenshot
 
 grabzIt = GrabzItClient.GrabzItClient(parser.get('GrabzIt', 'applicationKey'), parser.get('GrabzIt', 'applicationSecret'))
-result = grabzIt.GetPicture(id)
+result = grabzIt.GetResult(id)
 
 if result != None:
 	#Ensure that the application has the correct rights for this directory.
