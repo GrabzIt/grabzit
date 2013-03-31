@@ -10,9 +10,9 @@ class GrabzItClient
 
 	private $applicationKey;
 	private $applicationSecret;
-    private $signaturePartOne;
-    private $signaturePartTwo;
-    private $request;
+	private $signaturePartOne;
+	private $signaturePartTwo;
+	private $request;
 
 	public function __construct($applicationKey, $applicationSecret)
 	{
