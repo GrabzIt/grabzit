@@ -46,11 +46,10 @@ sub new
 #requestMobileVersion - Request a mobile version of the target website if possible
 #customWaterMarkId - add a custom watermark to the image
 #
-sub SetImageOptions($;$$$$$$$$$$$)
+sub SetImageOptions($;$$$$$$$$$$)
 {
-	my ($self, $url, $callback, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement, $requestMobileVersion, $customWaterMarkId) = @_;	
-	
-	$callback ||= '';
+	my ($self, $url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement, $requestMobileVersion, $customWaterMarkId) = @_;	
+
 	$customId ||= '';
 	$browserWidth ||= 0;
 	$browserHeight ||= 0;
