@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Drawing;
 using System.Web;
 using System.IO;
 using GrabzIt;
@@ -21,7 +20,15 @@ namespace Sample
             try
             {
                 grabzItClient.ScreenShotComplete += grabzIt_ScreenShotComplete;
-                grabzItClient.TakePicture(txtURL.Text, HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
+                if (ddlFormat.SelectedValue == "jpg")
+                {
+                    grabzItClient.SetImageOptions(txtURL.Text);
+                }
+                else
+                {
+                    grabzItClient.SetPDFOptions(txtURL.Text);
+                }
+                grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
                 lblMessage.Text = "Processing screenshot.";
                 lblMessage.CssClass = string.Empty;
                 lblMessage.Style.Add("color", "green");
