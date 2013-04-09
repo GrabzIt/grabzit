@@ -21,13 +21,33 @@ namespace GrabzIt
         private static MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider();
 
         public delegate void ScreenShotHandler(object sender, ScreenShotEventArgs result);
-        public event ScreenShotHandler ScreenShotComplete;
+
+        private event ScreenShotHandler screenShotComplete;
+        public event ScreenShotHandler ScreenShotComplete
+        {
+            add
+            {
+                lock (eventLock)
+                {
+                    screenShotComplete -= value;
+                    screenShotComplete += value;
+                }
+            }
+            remove
+            {
+                lock (eventLock)
+                {
+                    screenShotComplete -= value;
+                }
+            }
+        }
 
         private string request;
         private string signaturePartOne;
         private string signaturePartTwo;
 
         private Object thisLock = new Object();
+        private Object eventLock = new Object();
 
         public string ApplicationKey
         {
@@ -51,9 +71,9 @@ namespace GrabzIt
 
         internal void OnScreenShotComplete(object sender, ScreenShotEventArgs result)
         {
-            if (ScreenShotComplete != null)
+            if (screenShotComplete != null)
             {
-                ScreenShotComplete(this, result);
+                screenShotComplete(this, result);
             }
         }
 
@@ -190,11 +210,40 @@ namespace GrabzIt
             SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, false, string.Empty);
         }
 
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot
+        /// </summary>
+        /// <remarks>
+        /// This is the recommended method of saving a screenshot
+        /// 
+        /// The handler will be passed a URL with the following query string parameters:
+        ///  - message (is any error message associated with the screenshot)
+        ///  - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
+        ///  - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
+        ///  - filename (is the filename of the screenshot)
+        ///  - format (is the format of the screenshot)
+        /// </remarks>
+        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
         public string Save()
         {
             return Save(string.Empty);
         }
         
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot
+        /// </summary>
+        /// <remarks>
+        /// This is the recommended method of saving a screenshot
+        /// 
+        /// The handler will be passed a URL with the following query string parameters:
+		///  - message (is any error message associated with the screenshot)
+		///  - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
+		///  - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
+		///  - filename (is the filename of the screenshot)
+        ///  - format (is the format of the screenshot)
+        /// </remarks>
+        /// <param name="callBackURL">The handler the GrabzIt web service should call after it has completed its work</param>
+        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
         public string Save(string callBackURL)
         {
             lock (thisLock)
@@ -217,6 +266,14 @@ namespace GrabzIt
             }
         }
 
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+        /// </summary>
+        /// <remarks>
+        /// Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
+        /// </remarks>
+        /// <param name="saveToFile">The file path that the screenshot should saved to.</param>
+        /// <returns>Returns the true if it is successful otherwise it throws an exception.</returns>
         public bool SaveTo(string saveToFile)
         {
             lock (thisLock)
@@ -701,6 +758,11 @@ namespace GrabzIt
             }
         }
 
+        /// <summary>
+        /// This method returns the screenshot.
+        /// </summary>
+        /// <param name="id">The unique identifier of the screenshot, returned by the callback handler or the Save method</param>
+        /// <returns>GrabzItFile - which represents the screenshot</returns>
         public GrabzItFile GetResult(string id)
         {
             lock (thisLock)
