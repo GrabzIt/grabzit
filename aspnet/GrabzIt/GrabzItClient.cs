@@ -23,14 +23,19 @@ namespace GrabzIt
         public delegate void ScreenShotHandler(object sender, ScreenShotEventArgs result);
 
         private event ScreenShotHandler screenShotComplete;
+        /// <summary>
+        /// Only one screenshot event handler can be set, due to the possibility of multiple event handlers being assigned before a response is recieved. 
+        /// </summary>
         public event ScreenShotHandler ScreenShotComplete
         {
             add
             {
                 lock (eventLock)
                 {
-                    screenShotComplete -= value;
-                    screenShotComplete += value;
+                    if ((screenShotComplete == null || screenShotComplete.GetInvocationList().Length == 0) && value.GetInvocationList().Length == 1)
+                    {
+                        screenShotComplete += value;
+                    }
                 }
             }
             remove
