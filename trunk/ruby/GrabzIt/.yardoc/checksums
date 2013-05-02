@@ -1,0 +1,5 @@
+lib/grabzit.rb 7e87746f09a86f9c09a3fb601a7d7ee621856aae
+lib/grabzit/cookie.rb 31fe3a9d3bc39f148069e0e7cc53eacef088420d
+lib/grabzit/client.rb 8a5a4d973042e1fb8fcdde1d09bddabb07f42732
+lib/grabzit/watermark.rb edb25015dc0b0156c7450bc5b979db9e81cd516f
+lib/grabzit/screenshotstatus.rb cde078cf76526146d5efe1dc4fbdb5dcc11e2dc0
