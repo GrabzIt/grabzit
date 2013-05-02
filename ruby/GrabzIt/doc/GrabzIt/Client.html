@@ -1,0 +1,3566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: GrabzIt::Client
+  
+    &mdash; Documentation by YARD 0.8.5.2
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../GrabzIt.html" title="GrabzIt (module)">GrabzIt</a></span></span>
+     &raquo; 
+    <span class="title">Client</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: GrabzIt::Client
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">GrabzIt::Client</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/grabzit/client.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>This client provides access to the GrabzIt web services This API allows you
+to take screenshot of websites for free and convert them into images, PDF's
+and tables.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Example usage</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>grabzit</span><span class='tstring_end'>'</span></span>	
+
+<span class='id identifier rubyid_grabzItClient'>grabzItClient</span> <span class='op'>=</span> <span class='const'>GrabzIt</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>YOUR APPLICATION KEY</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>YOUR APPLICATION SECRET</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_grabzItClient'>grabzItClient</span><span class='period'>.</span><span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.google.com</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_grabzItClient'>grabzItClient</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.mysite.com/grabzit/handler</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://grabz.it/api/ruby/" target="_parent" title="GrabzIt Ruby API">GrabzIt Ruby API</a></li>
+    
+  </ul>
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>GrabzIt</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Version:</p>
+<ul class="version">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+  <h2>Constant Summary</h2>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_watermark-instance_method" title="#add_watermark (instance method)">- (Boolean) <strong>add_watermark</strong>(identifier, path, xpos, ypos) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Add a new custom watermark.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_cookie-instance_method" title="#delete_cookie (instance method)">- (Boolean) <strong>delete_cookie</strong>(name, domain) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Delete a custom cookie or block a global cookie from being used.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_watermark-instance_method" title="#delete_watermark (instance method)">- (Boolean) <strong>delete_watermark</strong>(identifier) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Delete a custom watermark.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_cookies-instance_method" title="#get_cookies (instance method)">- (Array&lt;Cookie&gt;) <strong>get_cookies</strong>(domain) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get all the cookies that GrabzIt is using for a particular domain.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#get_picture-instance_method" title="#get_picture (instance method)">- (Object) <strong>get_picture</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'>
+<p>Use <span class='object_link'><a href="#get_result-instance_method" title="GrabzIt::Client#get_result (method)">#get_result</a></span> instead.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_result-instance_method" title="#get_result (instance method)">- (Object) <strong>get_result</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This method returns the screenshot itself.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_status-instance_method" title="#get_status (instance method)">- (ScreenShotStatus) <strong>get_status</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the current status of a GrabzIt screenshot.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_watermarks-instance_method" title="#get_watermarks (instance method)">- (Array&lt;WaterMark&gt;) <strong>get_watermarks</strong>(identifier = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get your uploaded custom watermarks.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Client) <strong>initialize</strong>(applicationKey, applicationSecret) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a new instance of the Client class in order to access the GrabzIt
+API.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save-instance_method" title="#save (instance method)">- (String) <strong>save</strong>(callBackURL = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Calls the GrabzIt web service to take the screenshot.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#save_picture-instance_method" title="#save_picture (instance method)">- (Boolean) <strong>save_picture</strong>(url, saveToFile, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'>
+<p>Use <span class='object_link'><a href="#set_image_options-instance_method" title="GrabzIt::Client#set_image_options (method)">#set_image_options</a></span> and <span class='object_link'><a href="#save_to-instance_method" title="GrabzIt::Client#save_to (method)">#save_to</a></span> instead.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save_to-instance_method" title="#save_to (instance method)">- (Boolean) <strong>save_to</strong>(saveToFile) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Calls the GrabzIt web service to take the screenshot and saves it to the
+target path provided.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_cookie-instance_method" title="#set_cookie (instance method)">- (Boolean) <strong>set_cookie</strong>(name, domain, value = &quot;&quot;, path = &quot;/&quot;, httponly = false, expires = &quot;&quot;) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets a new custom cookie on GrabzIt, if the custom cookie has the same name
+and domain as a global cookie the global cookie is overridden.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_image_options-instance_method" title="#set_image_options (instance method)">- (void) <strong>set_image_options</strong>(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestMobileVersion = false, customWaterMarkId = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the parameters required to take a screenshot of a web page.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_pdf_options-instance_method" title="#set_pdf_options (instance method)">- (void) <strong>set_pdf_options</strong>(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestMobileVersion = false, customWaterMarkId = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the parameters required to convert a web page into a PDF.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_table_options-instance_method" title="#set_table_options (instance method)">- (void) <strong>set_table_options</strong>(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestMobileVersion = false) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the parameters required to extract one or more tables from a web page.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#take_picture-instance_method" title="#take_picture (instance method)">- (String) <strong>take_picture</strong>(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'>
+<p>Use <span class='object_link'><a href="#set_image_options-instance_method" title="GrabzIt::Client#set_image_options (method)">#set_image_options</a></span> and <span class='object_link'><a href="#save-instance_method" title="GrabzIt::Client#save (method)">#save</a></span> instead.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="GrabzIt::Client (class)">Client</a></span></tt>) <strong>initialize</strong>(applicationKey, applicationSecret) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a new instance of the Client class in order to access the GrabzIt
+API.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>applicationKey</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>your application key</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>applicationSecret</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>your application secret</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://grabz.it/register.aspx" target="_parent" title="You can get an application key and secret by registering for free with GrabzIt">You can get an application key and secret by registering for free with GrabzIt</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_applicationKey'>applicationKey</span><span class='comma'>,</span> <span class='id identifier rubyid_applicationSecret'>applicationSecret</span><span class='rparen'>)</span>
+	<span class='ivar'>@applicationKey</span> <span class='op'>=</span> <span class='id identifier rubyid_applicationKey'>applicationKey</span>
+	<span class='ivar'>@applicationSecret</span> <span class='op'>=</span> <span class='id identifier rubyid_applicationSecret'>applicationSecret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_watermark-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>add_watermark</strong>(identifier, path, xpos, ypos) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Add a new custom watermark</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>identifier</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the identifier you want to give the custom watermark. It is important that
+this identifier is unique.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the absolute path of the watermark on your server. For instance
+C:/watermark/1.png</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>xpos</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the horizontal position you want the screenshot to appear at: Left = 0,
+Center = 1, Right = 2</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ypos</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the vertical position you want the screenshot to appear at: Top = 0, Middle
+= 1, Bottom = 2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns true if the watermark was successfully set</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 295</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_watermark'>add_watermark</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_xpos'>xpos</span><span class='comma'>,</span> <span class='id identifier rubyid_ypos'>ypos</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>File: </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_path'>path</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> does not exist</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_xpos'>xpos</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_ypos'>ypos</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+
+	<span class='id identifier rubyid_boundary'>boundary</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>--------------------------</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
+	<span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>addwatermark.ashx</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
+
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition: form-data; name=\&quot;watermark\&quot;; filename=\&quot;</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\&quot;\r\nContent-Type: image/jpeg\r\n\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_data'>data</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition: form-data; name=\&quot;key\&quot;\r\n\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition: form-data; name=\&quot;identifier\&quot;\r\n\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition: form-data; name=\&quot;xpos\&quot;\r\n\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_xpos'>xpos</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition: form-data; name=\&quot;ypos\&quot;\r\n\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_ypos'>ypos</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Disposition: form-data; name=\&quot;sig\&quot;\r\n\r\n</span><span class='tstring_end'>&quot;</span></span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_sig'>sig</span>
+	<span class='id identifier rubyid_post_body'>post_body</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r\n--</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--\r\n</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='op'>::</span><span class='const'>Post</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>multipart/form-data, boundary=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_boundary'>boundary</span>
+	<span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_post_body'>post_body</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+
+	<span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_http'>http</span><span class='op'>|</span> <span class='id identifier rubyid_http'>http</span><span class='period'>.</span><span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span> <span class='rbrace'>}</span>	
+
+	<span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='lparen'>(</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Result</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span>		
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_cookie-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>delete_cookie</strong>(name, domain) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Delete a custom cookie or block a global cookie from being used</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the cookie to delete</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>domain</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the website the cookie belongs to</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns true if the cookie was successfully set</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+257
+258
+259
+260
+261
+262
+263</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 257</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_cookie'>delete_cookie</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;domain=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;name=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delete=1&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+
+	<span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setcookie.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Result</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_watermark-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>delete_watermark</strong>(identifier) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Delete a custom watermark</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>identifier</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the identifier of the custom watermark you want to delete</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns true if the watermark was successfully deleted</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+348
+349
+350
+351
+352
+353
+354</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 348</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_watermark'>delete_watermark</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span>               
+
+	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;identifier=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+
+	<span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deletewatermark.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Result</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_cookies-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="Cookie.html" title="GrabzIt::Cookie (class)">Cookie</a></span>&gt;</tt>) <strong>get_cookies</strong>(domain) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get all the cookies that GrabzIt is using for a particular domain. This may
+include your user set cookies as well</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>domain</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the domain to return cookies for</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Cookie.html" title="GrabzIt::Cookie (class)">Cookie</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an array of cookies</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 203</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_cookies'>get_cookies</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span>               
+
+	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;domain=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getcookies.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='lparen'>(</span><span class='rparen'>)</span>
+
+	<span class='kw'>if</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>!=</span> <span class='kw'>nil</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_message'>message</span>
+	<span class='kw'>end</span>
+
+	<span class='id identifier rubyid_cookies'>cookies</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+	<span class='id identifier rubyid_xml_cookies'>xml_cookies</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>//WebResult/Cookies/Cookie</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>		
+	<span class='id identifier rubyid_xml_cookies'>xml_cookies</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cookie'>cookie</span><span class='op'>|</span>
+		<span class='id identifier rubyid_expires'>expires</span> <span class='op'>=</span> <span class='kw'>nil</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expires</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='kw'>nil</span>                        
+			<span class='id identifier rubyid_expires'>expires</span> <span class='op'>=</span> <span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expires</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
+		<span class='kw'>end</span>                
+		<span class='id identifier rubyid_grabzItCookie'>grabzItCookie</span> <span class='op'>=</span> <span class='const'>GrabzIt</span><span class='op'>::</span><span class='const'>Cookie</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Domain</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Value</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Path</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HttpOnly</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_expires'>expires</span><span class='comma'>,</span> <span class='id identifier rubyid_cookie'>cookie</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_cookies'>cookies</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_grabzItCookie'>grabzItCookie</span>
+	<span class='kw'>end</span>
+
+	<span class='kw'>return</span> <span class='id identifier rubyid_cookies'>cookies</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_picture-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_picture</strong>(id) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'>
+<p>Use <span class='object_link'><a href="#get_result-instance_method" title="GrabzIt::Client#get_result (method)">#get_result</a></span> instead.</p>
+</div></div>
+
+<p>This method returns the image itself. If nothing is returned then something
+has gone wrong or the image is not ready yet.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns the screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+399
+400
+401</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 399</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_picture'>get_picture</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_get_result'>get_result</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_result-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_result</strong>(id) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This method returns the screenshot itself. If nothing is returned then
+something has gone wrong or the screenshot is not ready yet</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns the screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 195</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_result'>get_result</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getfile.ashx?id=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_status-instance_method">
+  
+    - (<tt><span class='object_link'><a href="ScreenShotStatus.html" title="GrabzIt::ScreenShotStatus (class)">ScreenShotStatus</a></span></tt>) <strong>get_status</strong>(id) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the current status of a GrabzIt screenshot</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ScreenShotStatus.html" title="GrabzIt::ScreenShotStatus (class)">ScreenShotStatus</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a object representing the status of the screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 178</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_status'>get_status</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getstatus.ashx?id=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_processing'>processing</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Processing</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='lparen'>(</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_cached'>cached</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cached</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='lparen'>(</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_expired'>expired</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expired</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='lparen'>(</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='lparen'>(</span><span class='rparen'>)</span>
+
+	<span class='kw'>return</span> <span class='const'>ScreenShotStatus</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_processing'>processing</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_cached'>cached</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_expired'>expired</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_watermarks-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="WaterMark.html" title="GrabzIt::WaterMark (class)">WaterMark</a></span>&gt;</tt>) <strong>get_watermarks</strong>(identifier = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get your uploaded custom watermarks</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>identifier</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the identifier of a particular custom watermark you want to view</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="WaterMark.html" title="GrabzIt::WaterMark (class)">WaterMark</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an array of uploaded watermarks</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 268</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_watermarks'>get_watermarks</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span>               
+
+	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;identifier=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getwatermarks.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_watermarks'>watermarks</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+	<span class='id identifier rubyid_xml_watemarks'>xml_watemarks</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>//WebResult/WaterMarks/WaterMark</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>		
+	<span class='id identifier rubyid_xml_watemarks'>xml_watemarks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_watemark'>watemark</span><span class='op'>|</span>                	
+		<span class='id identifier rubyid_grabzItWaterMark'>grabzItWaterMark</span> <span class='op'>=</span> <span class='const'>GrabzIt</span><span class='op'>::</span><span class='const'>WaterMark</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Identifier</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XPosition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>YPosition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Format</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_watermarks'>watermarks</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_grabzItWaterMark'>grabzItWaterMark</span>
+	<span class='kw'>end</span>
+
+	<span class='kw'>return</span> <span class='id identifier rubyid_watermarks'>watermarks</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save-instance_method">
+  
+    - (<tt>String</tt>) <strong>save</strong>(callBackURL = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This is the recommended method of saving a screenshot</p>
+</div>
+  </div>
+
+
+<p>Calls the GrabzIt web service to take the screenshot</p>
+
+<p>The handler will be passed a URL with the following query string
+parameters:</p>
+<ul><li>
+<p>message (is any error message associated with the screenshot)</p>
+</li><li>
+<p>customId (is a custom id you may have specified in the
+<span class='object_link'><a href="#set_image_options-instance_method" title="GrabzIt::Client#set_image_options (method)">#set_image_options</a></span>, <span class='object_link'><a href="#set_table_options-instance_method" title="GrabzIt::Client#set_table_options (method)">#set_table_options</a></span> or <span class='object_link'><a href="#set_pdf_options-instance_method" title="GrabzIt::Client#set_pdf_options (method)">#set_pdf_options</a></span> method)</p>
+</li><li>
+<p>id (is the unique id of the screenshot which can be used to retrieve the
+screenshot with the <span class='object_link'><a href="#get_result-instance_method" title="GrabzIt::Client#get_result (method)">#get_result</a></span> method)</p>
+</li><li>
+<p>filename (is the filename of the screenshot)</p>
+</li><li>
+<p>format (is the format of the screenshot)</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>callBackURL</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the handler the GrabzIt web service should call after it has completed its
+work</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the unique identifier of the screenshot. This can be used to get the
+screenshot with the <span class='object_link'><a href="#get_result-instance_method" title="GrabzIt::Client#get_result (method)">#get_result</a></span> method</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='id identifier rubyid_callBackURL'>callBackURL</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='cvar'>@@signaturePartOne</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='cvar'>@@signaturePartTwo</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='cvar'>@@request</span> <span class='op'>==</span> <span class='kw'>nil</span>
+		  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No screenshot parameters have been set.</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>end</span>
+
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span> <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='cvar'>@@signaturePartOne</span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_callBackURL'>callBackURL</span><span class='rparen'>)</span><span class='op'>+</span><span class='cvar'>@@signaturePartTwo</span><span class='rparen'>)</span>
+	<span class='cvar'>@@request</span> <span class='op'>+=</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_callBackURL'>callBackURL</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+
+	<span class='kw'>return</span> <span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='cvar'>@@request</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ID</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save_picture-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>save_picture</strong>(url, saveToFile, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'>
+<p>Use <span class='object_link'><a href="#set_image_options-instance_method" title="GrabzIt::Client#set_image_options (method)">#set_image_options</a></span> and <span class='object_link'><a href="#save_to-instance_method" title="GrabzIt::Client#save_to (method)">#save_to</a></span> instead.</p>
+</div></div>
+
+<p>This method takes the screenshot and then saves the result to a file.
+WARNING this method is synchronous</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Synchronously save the screenshot to test.jpg</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_save_picture'>save_picture</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>images/test.jpg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>	</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the URL that the screenshot should be made of</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>saveToFile</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the file path that the screenshot should saved to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>browserWidth</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the width of the browser in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>browserHeight</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the height of the browser in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>width</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the width of the resulting thumbnail in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>height</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the height of the resulting thumbnail in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg,
+png</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delay</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the number of milliseconds to wait before taking the screenshot</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>targetElement</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the only HTML element in the web page to turn into a screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns the true if it is successfull otherwise it throws an exception</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the screenshot cannot be saved a RuntimeError will be raised that will
+contain an explanation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+390
+391
+392
+393</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 390</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save_picture'>save_picture</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_saveToFile'>saveToFile</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span>	
+	<span class='kw'>return</span> <span class='id identifier rubyid_save_to'>save_to</span><span class='lparen'>(</span><span class='id identifier rubyid_saveToFile'>saveToFile</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="save_to-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>save_to</strong>(saveToFile) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a
+response</p>
+</div>
+  </div>
+
+
+<p>Calls the GrabzIt web service to take the screenshot and saves it to the
+target path provided</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Synchronously save the screenshot to test.jpg</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_save_to'>save_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>images/test.jpg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>saveToFile</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the file path that the screenshot should saved to.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns the true if it is successful otherwise it throws an exception.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the screenshot cannot be saved a RuntimeError will be raised that will
+contain an explanation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 144</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_save_to'>save_to</span><span class='lparen'>(</span><span class='id identifier rubyid_saveToFile'>saveToFile</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='rparen'>)</span>
+
+	<span class='comment'>#Wait for it to be ready.
+</span>	<span class='kw'>while</span> <span class='kw'>true</span> <span class='kw'>do</span>
+		<span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_get_status'>get_status</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+
+		<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_cached'>cached</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_processing'>processing</span>
+			<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The screenshot did not complete with the error: </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='const'>Message</span>
+			<span class='kw'>break</span><span class='semicolon'>;</span>
+		<span class='kw'>elsif</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_cached'>cached</span>
+			<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_get_result'>get_result</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+			<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_result'>result</span>
+				<span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The screenshot image could not be found on GrabzIt.</span><span class='tstring_end'>&quot;</span></span>
+				<span class='kw'>break</span>
+			<span class='kw'>end</span>
+
+			<span class='id identifier rubyid_screenshot'>screenshot</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_saveToFile'>saveToFile</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+			<span class='id identifier rubyid_screenshot'>screenshot</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+			<span class='id identifier rubyid_screenshot'>screenshot</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>				
+
+			<span class='kw'>break</span>
+		<span class='kw'>end</span>
+
+		<span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
+	<span class='kw'>end</span>
+
+	<span class='kw'>return</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_cookie-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>set_cookie</strong>(name, domain, value = &quot;&quot;, path = &quot;/&quot;, httponly = false, expires = &quot;&quot;) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This can be useful if a websites functionality is controlled by cookies</p>
+</div>
+  </div>
+
+
+<p>Sets a new custom cookie on GrabzIt, if the custom cookie has the same name
+and domain as a global cookie the global cookie is overridden</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the cookie to set</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>domain</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the domain of the website to set the cookie for</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>''</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value of the cookie</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>'/'</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;/&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the website path the cookie relates to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>httponly</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>is the cookie only used on HTTP</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>expires</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>''</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>when the cookie expires. Pass a nil value if it does not expire</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns true if the cookie was successfully set</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+244
+245
+246
+247
+248
+249
+250</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 244</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_cookie'>set_cookie</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_domain'>domain</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_httponly'>httponly</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_expires'>expires</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_httponly'>httponly</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_expires'>expires</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;domain=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;name=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;value=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;path=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;httponly=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_httponly'>httponly</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;expires=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_expires'>expires</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+
+	<span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setcookie.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Result</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_image_options-instance_method">
+  
+    - (<tt>void</tt>) <strong>set_image_options</strong>(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestMobileVersion = false, customWaterMarkId = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Sets the parameters required to take a screenshot of a web page.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the URL that the screenshot should be made of</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>customId</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>custom identifier that you can pass through to the screenshot webservice.
+This will be returned with the callback URL you have specified.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>browserWidth</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the width of the browser in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>browserHeight</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the height of the browser in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>width</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the width of the resulting thumbnail in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>height</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the height of the resulting thumbnail in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg,
+png</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delay</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the number of milliseconds to wait before taking the screenshot</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>targetElement</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the only HTML element in the web page to turn into a screenshot</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>requestMobileVersion</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>request a mobile version of the target website if possible</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>customWaterMarkId</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>add a custom watermark to the image</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>takepicture.ashx?key=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;width=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;height=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;format=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;bwidth=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;bheight=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delay=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;target=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customwatermarkid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
+	<span class='cvar'>@@signaturePartOne</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
+	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span>
+
+	<span class='kw'>return</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_pdf_options-instance_method">
+  
+    - (<tt>void</tt>) <strong>set_pdf_options</strong>(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestMobileVersion = false, customWaterMarkId = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Sets the parameters required to convert a web page into a PDF.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>url [String] the URL that the should be converted into a pdf</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>customId</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a custom identifier that you can pass through to the webservice. This will
+be returned with the callback URL you have specified.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>includeBackground</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>true</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if true the background of the web page should be included in the screenshot</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>pagesize</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>'A4'</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>'A4'</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4',
+'B5'.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>orientation</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>'Portrait'</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>'Portrait'</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the orientation of the PDF to be returned: 'Landscape' or 'Portrait'</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>includeLinks</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>true</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>true if links should be included in the PDF</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>includeOutline</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if the PDF outline should be included</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>title</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>provide a title to the PDF document</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>coverURL</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the URL of a web page that should be used as a cover page for the PDF</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>marginTop</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>10</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>10</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the margin that should appear at the top of the PDF document page</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>marginLeft</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>10</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>10</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the margin that should appear at the left of the PDF document page</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>marginBottom</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>10</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>10</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the margin that should appear at the bottom of the PDF document page</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>marginRight</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>10</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>10</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the margin that should appear at the right of the PDF document</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delay</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the number of milliseconds to wait before taking the screenshot</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>requestMobileVersion</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>request a mobile version of the target website if possible</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>customWaterMarkId</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>add a custom watermark to each page of the PDF document</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_pdf_options'>set_pdf_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_includeBackground'>includeBackground</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>A4</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_orientation'>orientation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Portrait</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_includeLinks'>includeLinks</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_includeOutline'>includeOutline</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_coverURL'>coverURL</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_marginTop'>marginTop</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginLeft'>marginLeft</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginBottom'>marginBottom</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginRight'>marginRight</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_pagesize'>pagesize</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span>
+	<span class='gvar'>$orientation</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_orientation'>orientation</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
+
+	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>takepdf.ashx?key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;background=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeBackground'>includeBackground</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;pagesize=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_pagesize'>pagesize</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;orientation=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_orientation'>orientation</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customwatermarkid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includelinks=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeLinks'>includeLinks</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeoutline=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeOutline'>includeOutline</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;title=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;coverurl=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_coverURL'>coverURL</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mleft=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginLeft'>marginLeft</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mright=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginRight'>marginRight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mtop=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginTop'>marginTop</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mbottom=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginBottom'>marginBottom</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delay=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
+
+	<span class='cvar'>@@signaturePartOne</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
+	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeBackground'>includeBackground</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_orientation'>orientation</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeLinks'>includeLinks</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeOutline'>includeOutline</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_coverURL'>coverURL</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginTop'>marginTop</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginLeft'>marginLeft</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginBottom'>marginBottom</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginRight'>marginRight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span>
+
+	<span class='kw'>return</span> <span class='kw'>nil</span>		
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_table_options-instance_method">
+  
+    - (<tt>void</tt>) <strong>set_table_options</strong>(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestMobileVersion = false) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Sets the parameters required to extract one or more tables from a web page.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the URL that the should be used to extract tables</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>customId</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a custom identifier that you can pass through to the webservice. This will
+be returned with the callback URL you have specified.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tableNumberToInclude</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>1</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>1</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the index of the table to be converted, were all tables in a web page are
+ordered from the top of the web page to bottom</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>'csv'</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>'csv'</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the format the table should be in: csv, xlsx</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>includeHeaderNames</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>true</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if true header names will be included in the table</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>includeAllTables</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>true</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if true all table on the web page will be extracted with each table
+appearing in a seperate spreadsheet sheet. Only available with the XLSX
+format.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>targetElement</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the only HTML element in the web page that should be used to
+extract tables from</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>requestMobileVersion</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>request a mobile version of the target website if possible</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_table_options'>set_table_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span> <span class='op'>=</span> <span class='int'>1</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>csv</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_includeAllTables'>includeAllTables</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>taketable.ashx?key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeAllTables=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeAllTables'>includeAllTables</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeHeaderNames=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;format=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;tableToInclude=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;target=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
+	<span class='cvar'>@@signaturePartOne</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
+	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeAllTables'>includeAllTables</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span>
+
+	<span class='kw'>return</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="take_picture-instance_method">
+  
+    - (<tt>String</tt>) <strong>take_picture</strong>(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'>
+<p>Use <span class='object_link'><a href="#set_image_options-instance_method" title="GrabzIt::Client#set_image_options (method)">#set_image_options</a></span> and <span class='object_link'><a href="#save-instance_method" title="GrabzIt::Client#save (method)">#save</a></span> instead.</p>
+</div></div>
+
+<p>This method calls the GrabzIt web service to take the screenshot.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the URL that the screenshot should be made of</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>callback</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the handler the GrabzIt web service should call after it has completed its
+work</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>customId</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>custom identifier that you can pass through to the screenshot webservice.
+This will be returned with the callback URL you have specified.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>browserWidth</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the width of the browser in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>browserHeight</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the height of the browser in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>width</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the width of the resulting thumbnail in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>height</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the height of the resulting thumbnail in pixels</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg,
+png</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delay</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the number of milliseconds to wait before taking the screenshot</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>targetElement</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the only HTML element in the web page to turn into a screenshot</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>returns the unique identifier of the screenshot. This can be used to get
+the screenshot with the get_result method</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if the GrabzIt service reports an error with the request it will be raised
+as a RuntimeError</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+370
+371
+372
+373</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 370</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_take_picture'>take_picture</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span>	
+	<span class='kw'>return</span> <span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Mar 27 10:06:25 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.5.2 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
