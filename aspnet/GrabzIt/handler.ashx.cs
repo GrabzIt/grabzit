@@ -1,9 +1,13 @@
-﻿using System.Web;
+ using System;
+using System.Web;
 
 namespace GrabzIt
 {
-    public class Handler : IHttpHandler
+    public class Handler : IHttpAsyncHandler
     {
+        private AsyncProcessorDelegate WorkDelegate;
+        protected delegate void AsyncProcessorDelegate(HttpContext context);
+
         private const string ID = "id";
         private const string FILENAME = "filename";
         private const string MESSAGE = "message";
@@ -45,6 +49,21 @@ namespace GrabzIt
             Process(context, filename, id, message, customId, format);
         }
 
+        #region IHttpAsyncHandler Members
+
+        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
+        {
+            WorkDelegate = new AsyncProcessorDelegate(ProcessRequest);
+            return WorkDelegate.BeginInvoke(context, cb, extraData);
+        }
+
+        public void EndProcessRequest(IAsyncResult result)
+        {
+            WorkDelegate.EndInvoke(result);
+        }
+
+        #endregion
+
         /// <summary>
         /// This method allows this handler to be overriden and the result processed in a different way
         /// </summary>
@@ -62,7 +81,7 @@ namespace GrabzIt
             }
         }
 
-        public bool IsReusable
+        public virtual bool IsReusable
         {
             get
             {
