@@ -1,13 +1,10 @@
- using System;
+using System;
 using System.Web;
 
 namespace GrabzIt
 {
     public class Handler : IHttpAsyncHandler
     {
-        private AsyncProcessorDelegate WorkDelegate;
-        protected delegate void AsyncProcessorDelegate(HttpContext context);
-
         private const string ID = "id";
         private const string FILENAME = "filename";
         private const string MESSAGE = "message";
@@ -53,13 +50,12 @@ namespace GrabzIt
 
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
         {
-            WorkDelegate = new AsyncProcessorDelegate(ProcessRequest);
+            Action<HttpContext> WorkDelegate = new Action<HttpContext>(ProcessRequest);
             return WorkDelegate.BeginInvoke(context, cb, extraData);
         }
 
         public void EndProcessRequest(IAsyncResult result)
         {
-            WorkDelegate.EndInvoke(result);
         }
 
         #endregion
