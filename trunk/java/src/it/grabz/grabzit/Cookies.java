@@ -2,12 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.grabz.GrabzIt;
+package it.grabz.grabzit;
 
-import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -15,23 +13,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Skinners
  */
 @XmlRootElement(name="WebResult")
-@XmlAccessorType(XmlAccessType.FIELD)
-class Cookies {
-    @XmlElement(name="Cookies", type=Cookie.class)
-    private List<Cookie> cookies;
+class Cookies implements IMessageResult {
+    @XmlElementWrapper(name="Cookies")
+    @XmlElement( name="Cookie" )
+    private Cookie[] cookies;
     @XmlElement(name="Message")
     private String message;
 
-    /**
-     * @return the cookies
-     */
-    public List<Cookie> getCookies() {
+    public Cookie[] getCookies() {
         return cookies;
     }
 
-    /**
-     * @return the message
-     */
+    @Override
     public String getMessage() {
         return message;
     }

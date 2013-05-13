@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.grabz.GrabzIt;
+package it.grabz.grabzit;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
