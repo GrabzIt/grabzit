@@ -459,18 +459,26 @@ public class GrabzItClient {
      */
     public boolean AddWaterMark(String identifier, String path, HorizontalPosition xpos, VerticalPosition ypos) throws UnsupportedEncodingException, NoSuchAlgorithmException, MalformedURLException, IOException, JAXBException, Exception
     {
+        File fileToUpload = new File(path);
+        if(!fileToUpload.exists())
+        {
+            throw new Exception("File: " + path + " does not exist");
+        }
+        
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, identifier, String.valueOf(xpos.getValue()), String.valueOf(ypos.getValue())));
 
         String url = String.format("%saddwatermark.ashx", BASE_URL);
+        
+        Post post = new Post(url, "UTF-8");
+ 
+        post.addFormField("key", applicationKey);
+        post.addFormField("identifier", identifier);
+        post.addFormField("xpos", String.valueOf(xpos.getValue()));
+        post.addFormField("ypos", String.valueOf(ypos.getValue()));
+        post.addFormField("sig", sig);
+        post.addFilePart("watermark", fileToUpload);
 
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("key", applicationKey);
-        params.put("identifier", identifier);
-        params.put("xpos", String.valueOf(xpos.getValue()));
-        params.put("ypos", String.valueOf(ypos.getValue()));
-        params.put("sig", sig);
-
-        GenericResult webResult = post(url, path, params, GenericResult.class);
+        GenericResult webResult = post.finish(GenericResult.class);
         checkForError(webResult);
 
         return Boolean.valueOf(webResult.getResult());
@@ -597,89 +605,11 @@ public class GrabzItClient {
     private <T> T get(String url, Class<T> clazz) throws IOException, JAXBException
     {
         URL request = new URL(url);
-        URLConnection connection = request.openConnection();
-        return parseResponse(connection, clazz);
+        URLConnection connection = request.openConnection();        
+        Response response = new Response();        
+        return response.Parse(connection, clazz);
     }
 
-    private <T> T parseResponse(URLConnection connection, Class<T> clazz) throws IOException, JAXBException {
-        InputStream in = null;
-        try {
-            in = connection.getInputStream();
-            JAXBContext context = JAXBContext.newInstance(clazz);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            return (T) unmarshaller.unmarshal(in);
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-        }
-    }
-
-    private <T> T post(String url, String file, HashMap<String, String> params, Class<T> clazz) throws MalformedURLException, IOException, JAXBException, Exception
-    {
-        File fileToUpload = new File(file);
-        if(!fileToUpload.exists())
-        {
-            throw new Exception("File: " + file + " does not exist");
-        }
-        String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
-
-        URLConnection connection = new URL(url).openConnection();
-        connection.setDoOutput(true); // This sets request method to POST.
-        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-
-            for(Entry<String, String> entry : params.entrySet())
-            {
-                writer.println("--" + boundary);
-                writer.println("Content-Disposition: form-data; name=\""+entry.getKey()+"\"");
-                writer.println("Content-Type: text/plain; charset=UTF-8");
-                writer.println();
-                writer.println(entry.getValue());
-            }
-
-            writer.println("--" + boundary);
-            writer.println("Content-Disposition: form-data; name=\"watermark\"; filename=\""+file+"\"");
-            writer.println("Content-Type: image/jpeg; charset=UTF-8");
-            writer.println();
-            BufferedReader reader = null;
-            try
-            {
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileToUpload), "UTF-8"));
-                for (String line; (line = reader.readLine()) != null;)
-                {
-                    writer.println(line);
-                }
-            }
-            finally
-            {
-                if (reader != null)
-                {
-                    try
-                    {
-                        reader.close();
-                    }
-                    catch (IOException ex)
-                    {
-                    }
-                }
-            }
-
-            writer.println("--" + boundary + "--");
-        } 
-        finally
-        {
-            if (writer != null)
-            {                
-                writer.close();
-            }
-        }
-
-        return parseResponse(connection, clazz);
-    }
-    
     private String encrypt(String value) throws UnsupportedEncodingException, NoSuchAlgorithmException
     {
         if (value == null || value.isEmpty())
