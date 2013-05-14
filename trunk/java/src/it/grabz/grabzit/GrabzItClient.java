@@ -10,15 +10,10 @@ import it.grabz.grabzit.enums.PageOrientation;
 import it.grabz.grabzit.enums.VerticalPosition;
 import it.grabz.grabzit.enums.ImageFormat;
 import it.grabz.grabzit.enums.PageSize;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,12 +21,10 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map.Entry;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 /**
  *
@@ -162,7 +155,7 @@ public class GrabzItClient {
     {
         this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + toInt(requestMobileVersionstring) + "&callback=";
         this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + toInt(requestMobileVersionstring);
+        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + toInt(requestMobileVersionstring);
     }
 
     /**
@@ -408,10 +401,18 @@ public class GrabzItClient {
      */
     public boolean SetCookie(String name, String domain, String value, String path, boolean httponly, Date expires) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
+        String expiresStr = "";
+        if (expires != null)
+        {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            expiresStr = df.format(expires);
+        }
+        
         String sig = encrypt(String.format("%s|%s|%s|%s|%s|%s|%s|%s", applicationSecret, name, domain,
-                                      value, path, (httponly ? 1 : 0), expires, 0));
-        String url = String.format("{0}setcookie.ashx?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
-                                                  BASE_URL, encode(name), encode(domain), encode(value), encode(path), (httponly ? 1 : 0), expires, applicationKey, sig);
+                                      value, path, (httponly ? 1 : 0), expiresStr, 0));
+        
+        String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
+                                                  BASE_URL, encode(name), encode(domain), encode(value), encode(path), (httponly ? 1 : 0), expiresStr, applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -516,20 +517,32 @@ public class GrabzItClient {
      */
     public WaterMark[] GetWaterMarks() throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
-        return GetWaterMarks("");
+        return getWaterMarks("");
     }
 
     /**
      * Get a particular custom watermark.
      * @param identifier The identifier of a particular custom watermark you want to view
-     * @return An array of {@link it.grabz.grabzit.WaterMark} objects
+     * @return A {@link it.grabz.grabzit.WaterMark} object
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      * @throws IOException
      * @throws JAXBException
      * @throws Exception
      */
-    public WaterMark[] GetWaterMarks(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
+    public WaterMark GetWaterMark(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
+    {
+        WaterMark[] waterMarks = getWaterMarks(identifier);
+
+        if (waterMarks == null || waterMarks.length != 1)
+        {
+            return null;
+        }
+
+        return waterMarks[0];
+    }
+
+    private WaterMark[] getWaterMarks(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
         String sig =  encrypt(String.format("%s|%s", applicationSecret, identifier));
 
