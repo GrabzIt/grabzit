@@ -16,12 +16,13 @@ import javax.xml.bind.Unmarshaller;
  * @author Skinners
  */
 class Response {
+    @SuppressWarnings("unchecked")
     public <T> T Parse(URLConnection connection, Class<T> clazz) throws IOException, JAXBException {
         InputStream in = null;
         try {
             in = connection.getInputStream();
             JAXBContext context = JAXBContext.newInstance(clazz);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Unmarshaller unmarshaller = context.createUnmarshaller();            
             return (T) unmarshaller.unmarshal(in);
         } finally {
             if (in != null) {

@@ -11,8 +11,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
+ * This class represents the custom watermarks stored in GrabzIt
  *
- * @author Administrator
+ * @version 2.0
+ * @author GrabzIt
  */
 @XmlRootElement(name="WaterMark")
 public class WaterMark {
@@ -26,28 +28,28 @@ public class WaterMark {
     private int YPosition;
 
     /**
-     * @return the Identifier
+     * @return the identifier of the watermark
      */
     public String getIdentifier() {
         return Identifier;
     }
 
     /**
-     * @return the Format
+     * @return the format of the watermark  
      */
     public String getFormat() {
         return Format;
     }
 
     /**
-     * @return the XPosition
+     * @return the horizontal position of the watermark
      */
     public HorizontalPosition getXPosition() {
         return HorizontalPosition.values()[XPosition];
     }
 
     /**
-     * @return the YPosition
+     * @return the vertical position of the watermark
      */
     public VerticalPosition getYPosition() {
         return VerticalPosition.values()[YPosition];
