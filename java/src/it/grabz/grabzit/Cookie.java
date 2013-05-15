@@ -9,8 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
+ * This class represents the cookies stored in GrabzIt
  *
- * @author Skinners
+ * @version 2.0
+ * @author GrabzIt
  */
 @XmlRootElement(name = "Cookie")
 public class Cookie {
@@ -31,49 +33,49 @@ public class Cookie {
     private String type;   
 
     /**
-     * @return the name
+     * @return the name of the cookie
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @return the value
+     * @return the value of the cookie
      */
     public String getValue() {
         return value;
     }
 
     /**
-     * @return the domain
+     * @return the domain of the cookie
      */
     public String getDomain() {
         return domain;
     }
 
     /**
-     * @return the path
+     * @return the path of the cookie
      */
     public String getPath() {
         return path;
     }
 
     /**
-     * @return the httpOnly
+     * @return is the cookie httponly
      */
     public Boolean getHttpOnly() {
         return httpOnly;
     }
 
     /**
-     * @return the expires
+     * @return the date and time the cookie expires
      */
     public String getExpires() {
         return expires;
     }
 
     /**
-     * @return the type
+     * @return the type of cookie
      */
     public String getType() {
         return type;

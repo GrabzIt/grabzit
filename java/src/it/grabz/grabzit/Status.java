@@ -9,7 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
+ * This class represents the screenshot status
  *
+ * @version 2.0
  * @author GrabzIt
  */
 @XmlRootElement(name="WebResult")
@@ -27,28 +29,28 @@ public class Status {
     private String message;
 
     /**
-     * @return the processing
+     * @return if true the screenshot is still being processed
      */
     public boolean isProcessing() {
         return processing;
     }
 
     /**
-     * @return the cached
+     * @return if true the screenshot has been cached
      */
     public boolean isCached() {
         return cached;
     }
 
     /**
-     * @return the expired
+     * @return if true the screenshot has expired
      */
     public boolean isExpired() {
         return expired;
     }
 
     /**
-     * @return the message
+     * @return returns any error messages associated with the screenshot
      */
     public String getMessage() {
         return message;

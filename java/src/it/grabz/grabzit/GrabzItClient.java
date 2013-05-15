@@ -27,8 +27,12 @@ import java.util.Date;
 import javax.xml.bind.JAXBException;
 
 /**
+ * This client provides access to the GrabzIt web services
+ * This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
  *
+ * @version 2.0
  * @author GrabzIt
+ * @see <a href="http://grabz.it/api/java/">GrabzIt Java API</a>
  */
 public class GrabzItClient {
     private String applicationKey;
@@ -39,7 +43,14 @@ public class GrabzItClient {
     private String signaturePartTwo;
     
     private final String BASE_URL = "http://grabz.it/services/";
-    
+
+    /**
+     * Create a new instance of the Client class in order to access the GrabzIt API.
+     *
+     * @see <a href="http://grabz.it/register.aspx">You can get an application key and secret by registering for free with GrabzIt</a>
+     * @param applicationKey your application key
+     * @param applicationSecret your application secret
+     */
     public GrabzItClient(String applicationKey, String applicationSecret)
     {
         this.applicationKey = applicationKey;
