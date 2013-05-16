@@ -35,8 +35,8 @@ public class GrabzItClientTest {
     private GrabzItClient client;
     
     public GrabzItClientTest() {
-        applicationKey = "c3VwcG9ydEBncmFiei5pdA==";
-        applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi=";
+        applicationKey = null;
+        applicationSecret = null;
         isSubscribedAccount = true;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
@@ -60,13 +60,13 @@ public class GrabzItClientTest {
     @Test
     public void testApplicationKey()
     {
-        Assert.assertNotNull(applicationKey, "Please set your application key in the constructor");
+        Assert.assertNotNull("Please set your application key in the constructor", applicationKey);
     }
 
     @Test
     public void testApplicationSecret()
     {
-        Assert.assertNotNull(applicationSecret, "Please set your application secret in the constructor");
+        Assert.assertNotNull("Please set your application secret in the constructor", applicationSecret);
     }
 
     @Test
