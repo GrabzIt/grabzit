@@ -52,14 +52,15 @@ class GrabzItClient
 	format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	delay - The number of milliseconds to wait before taking the screenshot
 	targetElement - The id of the only HTML element in the web page to turn into a screenshot
-	requestMobileVersion - Request a mobile version of the target website if possible
+	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 	customWaterMarkId - add a custom watermark to the image
+	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
-	public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestMobileVersion = false, $customWaterMarkId = null)
+	public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestAs = 0, $customWaterMarkId = null, $country = null)
 	{
-		$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestMobileVersion)."&callback=";
+		$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestMobileVersion);
+		$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestAs)."|".$country;
 	}
 
 	/*
@@ -71,13 +72,14 @@ class GrabzItClient
 	includeHeaderNames - If true header names will be included in the table
 	includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
 	targetElement - The id of the only HTML element in the web page that should be used to extract tables from
-	requestMobileVersion - Request a mobile version of the target website if possible
+	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
-	public function SetTableOptions($url, $customId = null, $tableNumberToInclude = 1, $format = 'csv', $includeHeaderNames = true, $includeAllTables = false, $targetElement = null, $requestMobileVersion = false)
+	public function SetTableOptions($url, $customId = null, $tableNumberToInclude = 1, $format = 'csv', $includeHeaderNames = true, $includeAllTables = false, $targetElement = null, $requestAs = 0, $country = null)
 	{
-		$this->request = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&includeAllTables=".intval($includeAllTables)."&includeHeaderNames=".intval($includeHeaderNames) ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".urlencode($customId)."&target=".urlencode($targetElement)."&requestmobileversion=".intval($requestMobileVersion)."&callback=";
+		$this->request = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&includeAllTables=".intval($includeAllTables)."&includeHeaderNames=".intval($includeHeaderNames) ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".urlencode($customId)."&target=".urlencode($targetElement)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$customId."|".$tableNumberToInclude ."|".intval($includeAllTables)."|".intval($includeHeaderNames)."|".$targetElement."|".$format."|".intval($requestMobileVersion);
+		$this->signaturePartTwo = "|".$customId."|".$tableNumberToInclude ."|".intval($includeAllTables)."|".intval($includeHeaderNames)."|".$targetElement."|".$format."|".intval($requestAs)."|".$country;
 	}
 
 	/*
@@ -97,18 +99,19 @@ class GrabzItClient
 	marginBottom - The margin that should appear at the bottom of the PDF document page
 	marginRight - The margin that should appear at the right of the PDF document
 	delay - The number of milliseconds to wait before taking the screenshot
-	requestMobileVersion - Request a mobile version of the target website if possible
-	customWaterMarkId - add a custom watermark to each page of the PDF document
+	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+	customWaterMarkId - add a custom watermark to the image
+	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
-	public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestMobileVersion = false, $customWaterMarkId = null)
+	public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestMobileVersion = 0, $customWaterMarkId = null, $country = null)
 	{
 		$pagesize = strtoupper($pagesize);
 		$orientation = ucfirst($orientation);
 
-		$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".intval($requestMobileVersion)."&callback=";
+		$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
 
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".intval($requestMobileVersion);
+		$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".intval($requestAs)."|".$country;
 	}
 
 	/*
