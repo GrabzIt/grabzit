@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Web;
 
 namespace GrabzIt
 {
-    public class Handler : IHttpAsyncHandler
+    public class Handler : IHttpHandler
     {
         private const string ID = "id";
         private const string FILENAME = "filename";
@@ -45,20 +45,6 @@ namespace GrabzIt
 
             Process(context, filename, id, message, customId, format);
         }
-
-        #region IHttpAsyncHandler Members
-
-        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
-        {
-            Action<HttpContext> WorkDelegate = new Action<HttpContext>(ProcessRequest);
-            return WorkDelegate.BeginInvoke(context, cb, extraData);
-        }
-
-        public void EndProcessRequest(IAsyncResult result)
-        {
-        }
-
-        #endregion
 
         /// <summary>
         /// This method allows this handler to be overriden and the result processed in a different way

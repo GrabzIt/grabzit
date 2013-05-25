@@ -94,17 +94,18 @@ namespace GrabzIt
         /// <param name="format">The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png</param>
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <param name="targetElement">The id of the only HTML element in the web page to turn into a screenshot</param>
-        /// <param name="requestMobileVersion">Request a mobile version of the target website if possible</param>
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
         /// <param name="customWaterMarkId">Add a custom watermark to the image</param>
-        public void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, bool requestMobileVersion, string customWaterMarkId)
+        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
+        public void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, BrowserType requestAs, string customWaterMarkId, Country country)
         {
             lock (thisLock)
             {
-                this.request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&callback=",
+                this.request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&callback=",
                                                               BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, outputWidth, outputHeight,
-                                                              browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(customWaterMarkId), Convert.ToInt32(requestMobileVersion));
+                                                              browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(customWaterMarkId), (int)requestAs, ConvertCountryToString(country));
                 this.signaturePartOne = ApplicationSecret + "|" + url + "|";
-                this.signaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + Convert.ToInt32(requestMobileVersion);
+                this.signaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -114,7 +115,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the screenshot should be made of</param>
         public void SetImageOptions(string url)
         {
-            SetImageOptions(url, string.Empty, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, false, string.Empty);
+            SetImageOptions(url, string.Empty, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, BrowserType.StandardBrowser, string.Empty);
         }
 
         /// <summary>
@@ -124,7 +125,26 @@ namespace GrabzIt
         /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>        
         public void SetImageOptions(string url, string customId)
         {
-            SetImageOptions(url, customId, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, false, string.Empty);
+            SetImageOptions(url, customId, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, BrowserType.StandardBrowser, string.Empty);
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to take a screenshot of a web page.
+        /// </summary>
+        /// <param name="url">The URL that the screenshot should be made of</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="browserWidth">The width of the browser in pixels</param>
+        /// <param name="browserHeight">The height of the browser in pixels</param>
+        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
+        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
+        /// <param name="format">The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png</param>
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <param name="targetElement">The id of the only HTML element in the web page to turn into a screenshot</param>
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
+        /// <param name="customWaterMarkId">Add a custom watermark to the image</param>
+        public void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, BrowserType requestAs, string customWaterMarkId)
+        {
+            SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, requestAs, customWaterMarkId, Country.Default);
         }
 
 		/// <summary>
@@ -137,15 +157,32 @@ namespace GrabzIt
 		/// <param name="includeHeaderNames">If true header names will be included in the table</param>
 		/// <param name="includeAllTables">If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.</param>
 		/// <param name="targetElement">The id of the only HTML element in the web page that should be used to extract tables from</param>
-		/// <param name="requestMobileVersion">Request a mobile version of the target website if possible</param>
-		public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, bool requestMobileVersion)
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
+        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
+		public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs, Country country)
 		{
             lock(thisLock)
             {
-			    this.request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey)+"&url="+HttpUtility.UrlEncode(url)+"&includeAllTables="+ Convert.ToInt32(includeAllTables)+"&includeHeaderNames="+Convert.ToInt32(includeHeaderNames)+"&format="+format+"&tableToInclude="+tableNumberToInclude+"&customid="+HttpUtility.UrlEncode(customId)+"&target="+HttpUtility.UrlEncode(targetElement)+"&requestmobileversion="+Convert.ToInt32(requestMobileVersion)+"&callback=";
+                this.request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
 			    this.signaturePartOne = ApplicationSecret+"|"+url+"|";
-			    this.signaturePartTwo = "|"+customId+"|"+tableNumberToInclude+"|"+Convert.ToInt32(includeAllTables)+"|"+Convert.ToInt32(includeHeaderNames)+"|"+targetElement+"|"+format+"|"+Convert.ToInt32(requestMobileVersion);
+                this.signaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to extract all tables from a web page.
+        /// </summary>
+        /// <param name="url">The URL that the should be used to extract tables</param>
+        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
+        /// <param name="format">The format the tableshould be in: csv, xlsx</param>
+        /// <param name="includeHeaderNames">If true header names will be included in the table</param>
+        /// <param name="includeAllTables">If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.</param>
+        /// <param name="targetElement">The id of the only HTML element in the web page that should be used to extract tables from</param>
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
+        public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs)
+        {
+            SetTableOptions(url, customId, tableNumberToInclude, format, includeHeaderNames, includeAllTables, targetElement, requestAs, Country.Default);
         }
 
         /// <summary>
@@ -154,7 +191,7 @@ namespace GrabzIt
 		/// <param name="url">The URL that the should be used to extract tables</param>
         public void SetTableOptions(string url)
         {
-            SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, false);
+            SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
         }
 
         /// <summary>
@@ -164,7 +201,7 @@ namespace GrabzIt
         /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
         public void SetTableOptions(string url, string customId)
         {
-            SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, false);
+            SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
         }
 
 		/// <summary>
@@ -184,15 +221,16 @@ namespace GrabzIt
         /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
         /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="requestMobileVersionstring">Request a mobile version of the target website if possible</param>
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
         /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
-        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, bool requestMobileVersionstring, string customWaterMarkId)
+        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
+        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId, Country country)
         {
             lock (thisLock)
             {
-                this.request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + Convert.ToInt32(requestMobileVersionstring) + "&callback=";
+                this.request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
                 this.signaturePartOne = ApplicationSecret + "|" + url + "|";
-                this.signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + Convert.ToInt32(requestMobileVersionstring);
+                this.signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -202,7 +240,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the should be converted into a pdf</param>
         public void SetPDFOptions(string url)
         {
-            SetPDFOptions(url, string.Empty, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, false, string.Empty);
+            SetPDFOptions(url, string.Empty, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, BrowserType.StandardBrowser, string.Empty);
         }
 
         /// <summary>
@@ -212,7 +250,31 @@ namespace GrabzIt
         /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>        
         public void SetPDFOptions(string url, string customId)
         {
-            SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, false, string.Empty);
+            SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, BrowserType.StandardBrowser, string.Empty);
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to convert a web page into a PDF.
+        /// </summary>
+        /// <param name="url">The URL that the should be converted into a pdf</param>
+        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
+        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'.</param>
+        /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
+        /// <param name="includeLinks">True if links should be included in the PDF</param>
+        /// <param name="includeOutline">True if the PDF outline should be included</param>
+        /// <param name="title">Provide a title to the PDF document</param>
+        /// <param name="coverURL">The URL of a web page that should be used as a cover page for the PDF</param>
+        /// <param name="marginTop">The margin that should appear at the top of the PDF document page</param>
+        /// <param name="marginLeft">The margin that should appear at the left of the PDF document page</param>
+        /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
+        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
+        /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
+        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId)
+        {
+            SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, customWaterMarkId, Country.Default);
         }
 
         /// <summary>
@@ -420,7 +482,7 @@ namespace GrabzIt
         [Obsolete("Use the SetImageOptions and Save methods instead")]
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay, string targetElement)
         {
-            SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, false, string.Empty);
+            SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, 0, string.Empty);
             return Save(callback);
         }
 
@@ -471,7 +533,7 @@ namespace GrabzIt
         [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay, string targetElement)
         {
-            SetImageOptions(url, string.Empty, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, false, string.Empty);
+            SetImageOptions(url, string.Empty, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, BrowserType.StandardBrowser, string.Empty);
             return SaveTo(saveToFile);            
         }
 
@@ -804,6 +866,15 @@ namespace GrabzIt
         {
             byte[] bs = Encoding.ASCII.GetBytes(plainText);
             return toHex(hasher.ComputeHash(bs));
+        }
+
+        private static string ConvertCountryToString(Country country)
+        {
+            if (country == Country.Default)
+            {
+                return string.Empty;
+            }
+            return country.ToString();
         }
 
         private static string toHex(byte[] bytes)
