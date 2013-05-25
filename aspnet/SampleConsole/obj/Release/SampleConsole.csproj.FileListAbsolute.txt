@@ -1,8 +1,0 @@
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\bin\Release\SampleConsole.exe.config
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\bin\Release\SampleConsole.exe
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\bin\Release\SampleConsole.pdb
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\bin\Release\GrabzIt.dll
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\bin\Release\GrabzIt.pdb
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\obj\Release\ResolveAssemblyReference.cache
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\obj\Release\SampleConsole.exe
-C:\Users\Skinners\Documents\grabzit.client\aspnet\SampleConsole\obj\Release\SampleConsole.pdb

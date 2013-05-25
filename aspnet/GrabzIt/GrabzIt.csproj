@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\BrowserType.cs" />
+    <Compile Include="Enums\Country.cs" />
     <Compile Include="Enums\HorizontalPosition.cs" />
     <Compile Include="Enums\PageOrientation.cs" />
     <Compile Include="Enums\PageSize.cs" />
