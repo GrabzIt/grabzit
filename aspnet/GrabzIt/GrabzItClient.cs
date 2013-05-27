@@ -781,7 +781,19 @@ namespace GrabzIt
         /// </summary>
 		/// <param name="identifier">The identifier of a particular custom watermark you want to view</param>
         /// <returns>Returns an array of GrabzItWaterMark</returns>
-		public WaterMark[] GetWaterMarks(string identifier)
+        public WaterMark GetWaterMark(string identifier)
+        {
+            WaterMark[] watermarks = GetWaterMarks(identifier);
+
+            if (watermarks != null && watermarks.Length == 1)
+            {
+                return watermarks[0];
+            }
+
+            return null;
+        }
+
+		private WaterMark[] GetWaterMarks(string identifier)
 		{
 			string sig =  Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
