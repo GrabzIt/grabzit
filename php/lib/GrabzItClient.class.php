@@ -364,13 +364,35 @@ class GrabzItClient
 	}
 
 	/*
-	Get your custom watermarks.
+	Get a particular custom watermark.
 
-	identifier - The identifier of a particular custom watermark you want to view
+    identifier - The identifier of a particular custom watermark you want to view
+
+    This function returns a GrabzItWaterMark
+    */
+	public function GetWaterMark($identifier)
+	{
+		$watermarks[] = _getWaterMarks($identifier);
+
+		if ($watermarks != null && count($watermarks) == 1)
+		{
+			return $watermarks[0];
+		}
+
+		return null;
+	}
+
+	/*
+	Get your custom watermarks.
 
 	This function returns an array of GrabzItWaterMark
 	*/
-	public function GetWaterMarks($identifier = null)
+	public function GetWaterMarks()
+	{
+		return _getWaterMarks();
+	}
+
+	private function _getWaterMarks($identifier = null)
 	{
 		$sig =  md5($this->applicationSecret."|".$identifier );
 
@@ -388,7 +410,7 @@ class GrabzItClient
 			$grabzItWaterMark->YPosition = (string)$waterMark->YPosition;
 			$grabzItWaterMark->Format = (string)$waterMark->Format;
 
-			$result[] = $grabzItWaterMark ;
+			$result[] = $grabzItWaterMark;
 		}
 
 		return $result;
