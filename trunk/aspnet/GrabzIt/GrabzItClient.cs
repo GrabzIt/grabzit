@@ -770,7 +770,7 @@ namespace GrabzIt
 		/// <summary>
 		/// Get all your custom watermarks.
         /// </summary>
-        /// <returns>Returns an array of GrabzItWaterMark</returns>
+        /// <returns>Returns an array of WaterMark</returns>
         public WaterMark[] GetWaterMarks()
         {
             return GetWaterMarks(string.Empty);
@@ -780,7 +780,7 @@ namespace GrabzIt
 		/// Get a particular custom watermark.
         /// </summary>
 		/// <param name="identifier">The identifier of a particular custom watermark you want to view</param>
-        /// <returns>Returns an array of GrabzItWaterMark</returns>
+        /// <returns>Returns a WaterMark</returns>
         public WaterMark GetWaterMark(string identifier)
         {
             WaterMark[] watermarks = GetWaterMarks(identifier);
