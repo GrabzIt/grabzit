@@ -244,7 +244,7 @@ module GrabzIt
 		def set_cookie(name, domain, value = "", path = "/", httponly = false, expires = "")
 			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|"+nil_check(value)+"|"+nil_check(path)+"|"+b_to_str(httponly)+"|"+nil_check(expires)+"|0")
 
-			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&name="+CGI.escape(nil_check(name))+"&value="+CGI.escape(nil_check(value))+"&path="+CGI.escape(nil_check(path))+"&httponly="+b_to_str(httponly)+"&expires="+nil_check(expires)+"&sig="+sig
+			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&name="+CGI.escape(nil_check(name))+"&value="+CGI.escape(nil_check(value))+"&path="+CGI.escape(nil_check(path))+"&httponly="+b_to_str(httponly)+"&expires="+CGI.escape(nil_check(expires))+"&sig="+sig
 
 			return (get_result_value(get(WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
