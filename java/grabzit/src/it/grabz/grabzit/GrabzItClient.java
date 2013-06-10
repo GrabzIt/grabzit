@@ -423,7 +423,7 @@ public class GrabzItClient {
                                       value, path, (httponly ? 1 : 0), expiresStr, 0));
         
         String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
-                                                  BASE_URL, encode(name), encode(domain), encode(value), encode(path), (httponly ? 1 : 0), expiresStr, applicationKey, sig);
+                                                  BASE_URL, encode(name), encode(domain), encode(value), encode(path), (httponly ? 1 : 0), encode(expiresStr), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
