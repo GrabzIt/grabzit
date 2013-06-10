@@ -327,7 +327,7 @@ sub SetCookie($$;$$$$)
 	
 	$sig =  md5_hex($self->{_applicationSecret}."|".$name."|".$domain."|".$value."|".$path."|".$httponly."|".$expires."|0");
 
-	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&value=".uri_escape($value)."&path=".uri_escape($path)."&httponly=".$httponly."&expires=".$expires."&sig=".$sig;
+	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&value=".uri_escape($value)."&path=".uri_escape($path)."&httponly=".$httponly."&expires=".uri_escape($expires)."&sig=".$sig;
 
 	my $url = GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs;
 
