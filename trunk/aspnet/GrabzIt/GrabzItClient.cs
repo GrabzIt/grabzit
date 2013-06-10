@@ -47,9 +47,12 @@ namespace GrabzIt
             }
         }
 
-        private string request;
-        private string signaturePartOne;
-        private string signaturePartTwo;
+        [ThreadStatic]
+        private static string request;
+        [ThreadStatic]
+        private static string signaturePartOne;
+        [ThreadStatic]
+        private static string signaturePartTwo;
 
         private Object thisLock = new Object();
         private Object eventLock = new Object();
@@ -83,9 +86,9 @@ namespace GrabzIt
         }
 
         /// <summary>
-		/// This method sets the parameters required to take a screenshot of a web page.
+        /// This method sets the parameters required to take a screenshot of a web page.
         /// </summary>
-		/// <param name="url">The URL that the screenshot should be made of</param>
+        /// <param name="url">The URL that the screenshot should be made of</param>
         /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
         /// <param name="browserWidth">The width of the browser in pixels</param>
         /// <param name="browserHeight">The height of the browser in pixels</param>
@@ -101,11 +104,11 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                this.request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&callback=",
+                request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&callback=",
                                                               BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, outputWidth, outputHeight,
                                                               browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(customWaterMarkId), (int)requestAs, ConvertCountryToString(country));
-                this.signaturePartOne = ApplicationSecret + "|" + url + "|";
-                this.signaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                signaturePartOne = ApplicationSecret + "|" + url + "|";
+                signaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -147,25 +150,25 @@ namespace GrabzIt
             SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, requestAs, customWaterMarkId, Country.Default);
         }
 
-		/// <summary>
-		/// This method sets the parameters required to extract all tables from a web page.
+        /// <summary>
+        /// This method sets the parameters required to extract all tables from a web page.
         /// </summary>
-		/// <param name="url">The URL that the should be used to extract tables</param>
-		/// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
-		/// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
-		/// <param name="format">The format the tableshould be in: csv, xlsx</param>
-		/// <param name="includeHeaderNames">If true header names will be included in the table</param>
-		/// <param name="includeAllTables">If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.</param>
-		/// <param name="targetElement">The id of the only HTML element in the web page that should be used to extract tables from</param>
+        /// <param name="url">The URL that the should be used to extract tables</param>
+        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
+        /// <param name="format">The format the tableshould be in: csv, xlsx</param>
+        /// <param name="includeHeaderNames">If true header names will be included in the table</param>
+        /// <param name="includeAllTables">If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.</param>
+        /// <param name="targetElement">The id of the only HTML element in the web page that should be used to extract tables from</param>
         /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
         /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
-		public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs, Country country)
-		{
-            lock(thisLock)
+        public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs, Country country)
+        {
+            lock (thisLock)
             {
-                this.request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
-			    this.signaturePartOne = ApplicationSecret+"|"+url+"|";
-                this.signaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
+                signaturePartOne = ApplicationSecret + "|" + url + "|";
+                signaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -186,9 +189,9 @@ namespace GrabzIt
         }
 
         /// <summary>
-		/// This method sets the parameters required to extract all tables from a web page.
+        /// This method sets the parameters required to extract all tables from a web page.
         /// </summary>
-		/// <param name="url">The URL that the should be used to extract tables</param>
+        /// <param name="url">The URL that the should be used to extract tables</param>
         public void SetTableOptions(string url)
         {
             SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
@@ -204,8 +207,8 @@ namespace GrabzIt
             SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
         }
 
-		/// <summary>
-		/// This method sets the parameters required to convert a web page into a PDF.
+        /// <summary>
+        /// This method sets the parameters required to convert a web page into a PDF.
         /// </summary>
         /// <param name="url">The URL that the should be converted into a pdf</param>
         /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
@@ -228,9 +231,9 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                this.request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
-                this.signaturePartOne = ApplicationSecret + "|" + url + "|";
-                this.signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
+                signaturePartOne = ApplicationSecret + "|" + url + "|";
+                signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -295,7 +298,7 @@ namespace GrabzIt
         {
             return Save(string.Empty);
         }
-        
+
         /// <summary>
         /// Calls the GrabzIt web service to take the screenshot
         /// </summary>
@@ -303,10 +306,10 @@ namespace GrabzIt
         /// This is the recommended method of saving a screenshot
         /// 
         /// The handler will be passed a URL with the following query string parameters:
-		///  - message (is any error message associated with the screenshot)
-		///  - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
-		///  - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
-		///  - filename (is the filename of the screenshot)
+        ///  - message (is any error message associated with the screenshot)
+        ///  - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
+        ///  - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
+        ///  - filename (is the filename of the screenshot)
         ///  - format (is the format of the screenshot)
         /// </remarks>
         /// <param name="callBackURL">The handler the GrabzIt web service should call after it has completed its work</param>
@@ -315,14 +318,14 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                if (string.IsNullOrEmpty(this.signaturePartOne) && string.IsNullOrEmpty(this.signaturePartTwo) && string.IsNullOrEmpty(this.request))
+                if (string.IsNullOrEmpty(signaturePartOne) && string.IsNullOrEmpty(signaturePartTwo) && string.IsNullOrEmpty(request))
                 {
                     throw new Exception("No screenshot parameters have been set.");
                 }
-                string sig = Encrypt(this.signaturePartOne + callBackURL + this.signaturePartTwo);
-                this.request += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
-                
-                TakePictureResult webResult = Get<TakePictureResult>(this.request);
+                string sig = Encrypt(signaturePartOne + callBackURL + signaturePartTwo);
+                request += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
+
+                TakePictureResult webResult = Get<TakePictureResult>(request);
 
                 if (!string.IsNullOrEmpty(webResult.Message))
                 {
@@ -394,7 +397,7 @@ namespace GrabzIt
 
         private T Get<T>(string url)
         {
-            using(WebClient client = new WebClient())
+            using (WebClient client = new WebClient())
             {
                 string result = client.DownloadString(url);
                 return DeserializeResult<T>(result);
@@ -534,7 +537,7 @@ namespace GrabzIt
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay, string targetElement)
         {
             SetImageOptions(url, string.Empty, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, BrowserType.StandardBrowser, string.Empty);
-            return SaveTo(saveToFile);            
+            return SaveTo(saveToFile);
         }
 
         /// <summary>
@@ -663,11 +666,17 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", ApplicationSecret, name, domain,
-                                              value, path, (httponly ? 1 : 0), expires, 0));
+                string expiresStr = string.Empty;
+                if (expires.HasValue)
+                {
+                    expiresStr = expires.Value.ToString("yyyy-MM-dd HH':'mm':'ss");
+                }
 
-               string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
-                                                          BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), expires, ApplicationKey, sig);
+                string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", ApplicationSecret, name, domain,
+                                               value, path, (httponly ? 1 : 0), expiresStr, 0));
+
+                string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
+                                                           BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
 
@@ -691,7 +700,7 @@ namespace GrabzIt
             lock (thisLock)
             {
                 string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, name, domain, 1));
-               
+
                 string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
                                                           BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
 
@@ -707,10 +716,10 @@ namespace GrabzIt
         }
 
         /// <summary>
-		/// Add a new custom watermark.
+        /// Add a new custom watermark.
         /// </summary>
-		/// <param name="identifier">The identifier you want to give the custom watermark. It is important that this identifier is unique.</param>
-		/// <param name="path">The absolute path of the watermark on your server. For instance C:/watermark/1.png</param>
+        /// <param name="identifier">The identifier you want to give the custom watermark. It is important that this identifier is unique.</param>
+        /// <param name="path">The absolute path of the watermark on your server. For instance C:/watermark/1.png</param>
         /// <param name="xpos">The horizontal position you want the screenshot to appear at</param>
         /// <param name="ypos">The vertical position you want the screenshot to appear at</param>
         /// <returns>Returns true if the watermark was successfully set.</returns>
@@ -745,13 +754,13 @@ namespace GrabzIt
         }
 
         /// <summary>
-		/// Delete a custom watermark.
+        /// Delete a custom watermark.
         /// <summary>
-		/// <param name="identifier">The identifier of the custom watermark you want to delete</param>
+        /// <param name="identifier">The identifier of the custom watermark you want to delete</param>
         /// <returns>Returns true if the watermark was successfully deleted.</returns>
-		public bool DeleteWaterMark(string identifier)
-		{
-			string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
+        public bool DeleteWaterMark(string identifier)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}deletewatermark.ashx?key={1}&identifier={2}&sig={3}",
                                                           BaseURL, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
@@ -765,10 +774,10 @@ namespace GrabzIt
             }
 
             return Convert.ToBoolean(webResult.Result);
-		}
+        }
 
-		/// <summary>
-		/// Get all your custom watermarks.
+        /// <summary>
+        /// Get all your custom watermarks.
         /// </summary>
         /// <returns>Returns an array of WaterMark</returns>
         public WaterMark[] GetWaterMarks()
@@ -776,10 +785,10 @@ namespace GrabzIt
             return GetWaterMarks(string.Empty);
         }
 
-		/// <summary>
-		/// Get a particular custom watermark.
+        /// <summary>
+        /// Get a particular custom watermark.
         /// </summary>
-		/// <param name="identifier">The identifier of a particular custom watermark you want to view</param>
+        /// <param name="identifier">The identifier of a particular custom watermark you want to view</param>
         /// <returns>Returns a WaterMark</returns>
         public WaterMark GetWaterMark(string identifier)
         {
@@ -793,16 +802,16 @@ namespace GrabzIt
             return null;
         }
 
-		private WaterMark[] GetWaterMarks(string identifier)
-		{
-			string sig =  Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
+        private WaterMark[] GetWaterMarks(string identifier)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}getwatermarks.ashx?key={1}&identifier={2}&sig={3}",
                                                           BaseURL, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
             GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
 
-			if (!string.IsNullOrEmpty(webResult.Message))
+            if (!string.IsNullOrEmpty(webResult.Message))
             {
                 throw new Exception(webResult.Message);
             }
@@ -833,7 +842,7 @@ namespace GrabzIt
                     {
                         return Image.FromStream(stream, true, false);
                     }
-                }          
+                }
             }
         }
 
@@ -870,7 +879,7 @@ namespace GrabzIt
                             return new GrabzItFile(ms.ToArray());
                         }
                     }
-                }                
+                }
             }
         }
 
