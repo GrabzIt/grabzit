@@ -265,7 +265,7 @@ class GrabzItClient
 	{
 		$sig =  md5($this->applicationSecret."|".$name."|".$domain."|".$value."|".$path."|".((int)$httponly)."|".$expires."|0");
 
-		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".$expires."&sig=".$sig;
+		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".urlencode($expires)."&sig=".$sig;
 
 		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs));
 	}
