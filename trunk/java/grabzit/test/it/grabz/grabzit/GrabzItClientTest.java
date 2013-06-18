@@ -238,6 +238,24 @@ public class GrabzItClientTest {
         
         Assert.assertEquals("Set watermark has not been found!", findWaterMark(), true);
     }    
+    
+    @Test
+    public void testDDOS() throws IOException, JAXBException, Exception {
+        String message = "";
+        try
+        {
+            for(int i = 0;i < 200;i++)
+            {
+                client.GetStatus("abcd");
+            }
+        }
+        catch(Exception e)
+        {
+            message = e.getMessage();            
+        }
+        Assert.assertTrue("DDOS Detected", message.contains("DDOS"));
+    }
+            
 
     private boolean findCookie() throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
