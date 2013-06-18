@@ -10,11 +10,14 @@ import it.grabz.grabzit.enums.PageOrientation;
 import it.grabz.grabzit.enums.VerticalPosition;
 import it.grabz.grabzit.enums.ImageFormat;
 import it.grabz.grabzit.enums.PageSize;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -284,9 +287,10 @@ public class GrabzItClient {
      * @param id The id of the screenshot
      * @return A {@link it.grabz.grabzit.Status} object representing the screenshot status
      * @throws IOException
-     * @throws JAXBException 
+     * @throws JAXBException
+     * @throws Exception
      */
-    public Status GetStatus(String id) throws IOException, JAXBException
+    public Status GetStatus(String id) throws IOException, JAXBException, Exception
     {
         return get(BASE_URL + "getstatus.ashx?id=" + id, Status.class);
     }
@@ -577,13 +581,14 @@ public class GrabzItClient {
      * @param id The unique identifier of the screenshot, returned by the callback handler or the Save method
      * @return A {@link it.grabz.grabzit.GrabzItFile} object representing the screenshot
      * @throws IOException
+     * @throws Exception
      */
-    public GrabzItFile GetResult(String id) throws IOException
+    public GrabzItFile GetResult(String id) throws IOException, Exception
     {
         String url = String.format("%sgetfile.ashx?id=%s", BASE_URL, id);
 
         URL requestUrl = new URL(url);
-        URLConnection connection = requestUrl.openConnection();
+        URLConnection connection = HttpUtility.OpenConnection(requestUrl);
 
         InputStream in = null;
         ByteArrayOutputStream buffer = null;
@@ -626,10 +631,10 @@ public class GrabzItClient {
         }
     }
     
-    private <T> T get(String url, Class<T> clazz) throws IOException, JAXBException
+    private <T> T get(String url, Class<T> clazz) throws IOException, JAXBException, Exception
     {
         URL request = new URL(url);
-        URLConnection connection = request.openConnection();        
+        URLConnection connection = HttpUtility.OpenConnection(request);        
         Response response = new Response();        
         return response.Parse(connection, clazz);
     }

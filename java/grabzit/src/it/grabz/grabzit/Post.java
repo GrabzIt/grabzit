@@ -39,7 +39,7 @@ class Post
      * @throws IOException
      */
     public Post(String requestURL, String charset)
-            throws IOException 
+            throws IOException, Exception 
     {
         this.charset = charset;
          
@@ -47,7 +47,7 @@ class Post
         boundary = "===" + System.currentTimeMillis() + "===";
          
         URL url = new URL(requestURL);
-        httpConn = (HttpURLConnection) url.openConnection();
+        httpConn = (HttpURLConnection) HttpUtility.OpenConnection(url);
         httpConn.setDoOutput(true); // indicates POST method
         httpConn.setDoInput(true);
         httpConn.setRequestProperty("Content-Type",
