@@ -165,7 +165,7 @@ class GrabzItClient
 				break;
 			}
 
-			sleep(1);
+			sleep(3);
 		}
 
 		return true;
@@ -344,7 +344,9 @@ class GrabzItClient
 
 		$context  = stream_context_create($opts);
 
-		return $this->isSuccessful(file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context));
+    $response = @file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context);
+    $this->checkResponseHeader($http_response_header);
+		return $this->isSuccessful($response);
 	}
 
 	/*
@@ -464,7 +466,10 @@ class GrabzItClient
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-			return file_get_contents($url);
+				$response = @file_get_contents($url);
+        $this->checkResponseHeader($http_response_header);
+                
+        return $response;
 		}
 		else
 		{
@@ -474,9 +479,23 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
 			$data = curl_exec($ch);
+      $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+      if($httpCode == 403) 
+      {                
+        throw new Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.');
+      }         
 			curl_close($ch);
 			return $data;
 		}
 	}
+   
+  private function checkResponseHeader($header)
+  {
+      list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
+      if ($httpCode == 403)
+      {
+           throw new Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.');
+      }
+  }   
 }
 ?>
