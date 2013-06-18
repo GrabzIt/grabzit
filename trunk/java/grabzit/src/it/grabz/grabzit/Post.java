@@ -20,7 +20,7 @@ import java.util.List;
 import javax.xml.bind.JAXBException;
 /**
  *
- * @author Skinners
+ * @author GrabzIt
  */
 class Post 
 {
