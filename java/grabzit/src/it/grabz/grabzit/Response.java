@@ -13,7 +13,7 @@ import javax.xml.bind.Unmarshaller;
 
 /**
  *
- * @author Skinners
+ * @author GrabzIt
  */
 class Response {
     @SuppressWarnings("unchecked")
