@@ -389,7 +389,7 @@ namespace GrabzIt
                         break;
                     }
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(3000);
                 }
             }
             return true;
@@ -399,8 +399,36 @@ namespace GrabzIt
         {
             using (WebClient client = new WebClient())
             {
-                string result = client.DownloadString(url);
-                return DeserializeResult<T>(result);
+                try
+                {
+                    string result = client.DownloadString(url);
+                    return DeserializeResult<T>(result);
+                }
+                catch (WebException e)
+                {
+                    HandleWebException(e);
+                    return default(T);
+                }
+            }
+        }
+
+        private void HandleWebException(WebException e)
+        {
+            if (e == null)
+            {
+                return;
+            }
+
+            if (e.Status == WebExceptionStatus.ProtocolError)
+            {
+                var response = e.Response as HttpWebResponse;
+                if (response != null && response.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        throw new Exception(reader.ReadToEnd());
+                    }
+                }
             }
         }
 
@@ -917,7 +945,7 @@ namespace GrabzIt
             return new string(c);
         }
 
-        public static string HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
+        public string HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
@@ -959,15 +987,23 @@ namespace GrabzIt
                 rs.Write(trailer, 0, trailer.Length);
             }
 
-            using (WebResponse wresp = wr.GetResponse())
+            try
             {
-                using (Stream stream2 = wresp.GetResponseStream())
+                using (WebResponse wresp = wr.GetResponse())
                 {
-                    using (StreamReader reader2 = new StreamReader(stream2))
+                    using (Stream stream2 = wresp.GetResponseStream())
                     {
-                        return reader2.ReadToEnd();
+                        using (StreamReader reader2 = new StreamReader(stream2))
+                        {
+                            return reader2.ReadToEnd();
+                        }
                     }
                 }
+            }
+            catch (WebException e)
+            {
+                HandleWebException(e);
+                return string.Empty;
             }
         }
 
