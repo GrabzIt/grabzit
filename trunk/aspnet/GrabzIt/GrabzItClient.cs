@@ -421,13 +421,17 @@ namespace GrabzIt
 
             if (e.Status == WebExceptionStatus.ProtocolError)
             {
-                var response = e.Response as HttpWebResponse;
+                HttpWebResponse response = e.Response as HttpWebResponse;
                 if (response != null && response.StatusCode == HttpStatusCode.Forbidden)
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         throw new Exception(reader.ReadToEnd());
                     }
+                }
+                else if (((int)response.StatusCode) >= 400)
+                {
+                	throw new Exception("A network error occured when connecting to the GrabzIt servers.");
                 }
             }
         }
