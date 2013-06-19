@@ -496,6 +496,10 @@ class GrabzItClient
       {
            throw new Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.');
       }
+      else if ($httpCode >= 400)
+      {
+           throw new Exception("A network error occured when connecting to the GrabzIt servers.");
+      }      
   }   
 }
 ?>
