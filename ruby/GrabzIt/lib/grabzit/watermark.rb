@@ -1,6 +1,6 @@
 module GrabzIt
 	# This class represents the custom watermarks stored in GrabzIt
-	# @version 2.0
+	# @version 2.1
 	# @author GrabzIt
 	class WaterMark
 		# @api private

@@ -1,6 +1,6 @@
 module GrabzIt
 	# This class represents the cookies stored in GrabzIt
-	# @version 2.0
+	# @version 2.1
 	# @author GrabzIt
 	class Cookie
 		# @api private

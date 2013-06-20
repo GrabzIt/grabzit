@@ -9,8 +9,8 @@ class GrabzItTest < Test::Unit::TestCase
 	Screenshot_Path = "test/tmp.jpg"
 
 	def setup
-		@applicationKey = nil
-		@applicationSecret = nil
+		@applicationKey = ""
+		@applicationSecret = ""
 		#Set to true if the account is subscribed
 		@isSubscribedAccount = false
 	end
@@ -151,6 +151,15 @@ class GrabzItTest < Test::Unit::TestCase
 		end	
 	end
 	
+	#def test_Xtreme_DDOS
+	#	assert_raise RuntimeError, "An error occured when detecting potential DDOS attack." do
+	#		grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+	#		for i in 0..200
+	#			grabzItClient.get_status("ccxz")
+	#		end
+	#	end
+	#end
+	
 	def find_cookie(grabzItClient)
 		cookies = grabzItClient.get_cookies(Cookie_Domain)
 		
@@ -168,18 +177,12 @@ class GrabzItTest < Test::Unit::TestCase
 	end
 	
 	def find_watermark(grabzItClient)
-		watermarks = grabzItClient.get_watermarks(WaterMark_Identifier)
+		watermark = grabzItClient.get_watermark(WaterMark_Identifier)
 		
-		if watermarks == nil
+		if watermark == nil
 			return false
 		end
 		
-		watermarks.each { |watermark| 
-			if watermark.identifier == WaterMark_Identifier 
-				return true
-			end 
-		} 	
-		
-		return false
+		return true
 	end	
 end
