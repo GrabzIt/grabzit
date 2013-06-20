@@ -1,6 +1,6 @@
 module GrabzIt
 	# This class represents the screenshot status
-	# @version 2.0
+	# @version 2.1
 	# @author GrabzIt
 	class ScreenShotStatus
 		# @api private
