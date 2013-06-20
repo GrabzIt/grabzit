@@ -47,13 +47,7 @@ namespace GrabzIt
             }
         }
 
-        [ThreadStatic]
-        private static string request;
-        [ThreadStatic]
-        private static string signaturePartOne;
-        [ThreadStatic]
-        private static string signaturePartTwo;
-
+        private GrabzItRequest request;
         private Object thisLock = new Object();
         private Object eventLock = new Object();
 
@@ -71,10 +65,20 @@ namespace GrabzIt
 
         private const string BaseURL = "http://grabz.it/services/";
 
-        public GrabzItClient(string applicationKey, string applicationSecret)
+        /// <summary>
+        /// Create a new GrabzIt client.
+        /// </summary>
+        /// <param name="applicationKey">The application key of your GrabzIt account</param>
+        /// <param name="applicationSecret">The application secret of your GrabzIt account</param>
+        public GrabzItClient(string applicationKey, string applicationSecret) : this(applicationKey, applicationSecret, false)
+        {
+        }
+
+        private GrabzItClient(string applicationKey, string applicationSecret, bool isStatic)
         {
             this.ApplicationKey = applicationKey;
             this.ApplicationSecret = applicationSecret;
+            request = new GrabzItRequest(isStatic);
         }
 
         internal void OnScreenShotComplete(object sender, ScreenShotEventArgs result)
@@ -104,11 +108,11 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&callback=",
+                request.Request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&callback=",
                                                               BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, outputWidth, outputHeight,
                                                               browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(customWaterMarkId), (int)requestAs, ConvertCountryToString(country));
-                signaturePartOne = ApplicationSecret + "|" + url + "|";
-                signaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
+                request.SignaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -166,9 +170,9 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
-                signaturePartOne = ApplicationSecret + "|" + url + "|";
-                signaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                request.Request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
+                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
+                request.SignaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -231,9 +235,9 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
-                signaturePartOne = ApplicationSecret + "|" + url + "|";
-                signaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                request.Request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
+                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
+                request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -318,14 +322,14 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                if (string.IsNullOrEmpty(signaturePartOne) && string.IsNullOrEmpty(signaturePartTwo) && string.IsNullOrEmpty(request))
+                if (string.IsNullOrEmpty(request.SignaturePartOne) && string.IsNullOrEmpty(request.SignaturePartTwo) && string.IsNullOrEmpty(request.Request))
                 {
                     throw new Exception("No screenshot parameters have been set.");
                 }
-                string sig = Encrypt(signaturePartOne + callBackURL + signaturePartTwo);
-                request += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
+                string sig = Encrypt(request.SignaturePartOne + callBackURL + request.SignaturePartTwo);
+                request.Request += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
 
-                TakePictureResult webResult = Get<TakePictureResult>(request);
+                TakePictureResult webResult = Get<TakePictureResult>(request.Request);
 
                 if (!string.IsNullOrEmpty(webResult.Message))
                 {
@@ -1012,16 +1016,16 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// Create a new GrabzIt client. Note if you are using Multi-Threading consider using the public constructor to improve performance.
+        /// Create a new GrabzIt client. Note if you are not using the ScreenShotComplete event or you are using multiple threads to call this class, consider using the public constructor to improve performance.
         /// </summary>
         /// <param name="applicationKey">The application key of your GrabzIt account</param>
         /// <param name="applicationSecret">The application secret of your GrabzIt account</param>
-        /// <returns>A copy of GrabzIt</returns>
+        /// <returns>GrabzItClient</returns>
         public static GrabzItClient Create(string applicationKey, string applicationSecret)
         {
             if (grabzItClient == null)
             {
-                Interlocked.CompareExchange(ref grabzItClient, new GrabzItClient(applicationKey, applicationSecret), null);
+                Interlocked.CompareExchange(ref grabzItClient, new GrabzItClient(applicationKey, applicationSecret, true), null);
             }
             return grabzItClient;
         }
