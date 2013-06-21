@@ -17,9 +17,8 @@ import java.net.URLConnection;
  */
 class HttpUtility {
        
-    public static URLConnection OpenConnection(URL url) throws IOException, Exception
-    {
-        URLConnection urlConnection = (URLConnection) url.openConnection();
+    public static void CheckResponse(URLConnection urlConnection) throws IOException, Exception
+    {        
         HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
         
         int statusCode = httpConnection.getResponseCode();
@@ -31,7 +30,6 @@ class HttpUtility {
         {
             throw new Exception("A network error occured when connecting to the GrabzIt servers.");
         }
-        return urlConnection;
     }
 
 }

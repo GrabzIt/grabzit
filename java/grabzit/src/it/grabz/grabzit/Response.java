@@ -17,7 +17,7 @@ import javax.xml.bind.Unmarshaller;
  */
 class Response {
     @SuppressWarnings("unchecked")
-    public <T> T Parse(URLConnection connection, Class<T> clazz) throws IOException, JAXBException {
+    public <T> T Parse(URLConnection connection, Class<T> clazz) throws IOException, JAXBException, Exception {
         InputStream in = null;
         try {
             in = connection.getInputStream();
@@ -28,6 +28,7 @@ class Response {
             if (in != null) {
                 in.close();
             }
+            HttpUtility.CheckResponse(connection);
         }
     }    
 }

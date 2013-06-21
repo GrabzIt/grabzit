@@ -35,8 +35,8 @@ public class GrabzItClientTest {
     private GrabzItClient client;
     
     public GrabzItClientTest() {
-        applicationKey = null;
-        applicationSecret = null;
+        applicationKey = "c3VwcG9ydEBncmFiei5pdA==";
+        applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi=";
         isSubscribedAccount = true;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
@@ -239,7 +239,7 @@ public class GrabzItClientTest {
         Assert.assertEquals("Set watermark has not been found!", findWaterMark(), true);
     }    
     
-    @Test
+    //@Test
     public void testDDOS() throws IOException, JAXBException, Exception {
         String message = "";
         try
