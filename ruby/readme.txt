@@ -1,5 +1,5 @@
-GrabzIt
-=======
+GrabzIt 2.1
+===========
 
 This software allows you to programmatically take screenshots of websites.
 
