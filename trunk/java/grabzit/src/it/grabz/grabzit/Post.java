@@ -4,19 +4,15 @@
  */
 package it.grabz.grabzit;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.JAXBException;
 /**
  *
@@ -47,7 +43,8 @@ class Post
         boundary = "===" + System.currentTimeMillis() + "===";
          
         URL url = new URL(requestURL);
-        httpConn = (HttpURLConnection) HttpUtility.OpenConnection(url);
+        URLConnection connection = (URLConnection) url.openConnection();
+        httpConn = (HttpURLConnection) connection;
         httpConn.setDoOutput(true); // indicates POST method
         httpConn.setDoInput(true);
         httpConn.setRequestProperty("Content-Type",
@@ -116,7 +113,7 @@ class Post
      * status OK, otherwise an exception is thrown.
      * @throws IOException
      */
-    public <T> T finish(Class<T> clazz) throws IOException, JAXBException {
+    public <T> T finish(Class<T> clazz) throws IOException, JAXBException, Exception {
         writer.append(LINE_FEED).flush();
         writer.append("--" + boundary + "--").append(LINE_FEED);
         writer.close();
