@@ -6,13 +6,13 @@
 <title>
   Class: GrabzIt::Client
   
-    &mdash; Documentation by YARD 0.8.5.2
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
@@ -103,8 +103,8 @@
   <div class="discussion">
     
 <p>This client provides access to the GrabzIt web services This API allows you
-to take screenshot of websites for free and convert them into images, PDF's
-and tables.</p>
+to take screenshot of websites for free and convert them into images,
+PDF&#39;s and tables.</p>
 
 
   </div>
@@ -119,7 +119,7 @@ and tables.</p>
 <p>Example usage</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>grabzit</span><span class='tstring_end'>'</span></span>	
+      <pre class="example code"><code><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>grabzit</span><span class='tstring_end'>&#39;</span></span>	
 
 <span class='id identifier rubyid_grabzItClient'>grabzItClient</span> <span class='op'>=</span> <span class='const'>GrabzIt</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>YOUR APPLICATION KEY</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>YOUR APPLICATION SECRET</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='id identifier rubyid_grabzItClient'>grabzItClient</span><span class='period'>.</span><span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.google.com</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -160,7 +160,7 @@ and tables.</p>
       
         
         <div class='inline'>
-<p>2.0</p>
+<p>2.1</p>
 </div>
       
     </li>
@@ -356,7 +356,7 @@ and tables.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_watermarks-instance_method" title="#get_watermarks (instance method)">- (Array&lt;WaterMark&gt;) <strong>get_watermarks</strong>(identifier = nil) </a>
+      <a href="#get_watermark-instance_method" title="#get_watermark (instance method)">- (WaterMark) <strong>get_watermark</strong>(identifier) </a>
     
 
     
@@ -371,7 +371,7 @@ and tables.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Get your uploaded custom watermarks.</p>
+<p>Get your uploaded custom watermark.</p>
 </div></span>
   
 </li>
@@ -496,7 +496,7 @@ target path provided.</p>
   
     <span class="summary_desc"><div class='inline'>
 <p>Sets a new custom cookie on GrabzIt, if the custom cookie has the same name
-and domain as a global cookie the global cookie is overridden.</p>
+and domain as a global cookie the global.</p>
 </div></span>
   
 </li>
@@ -505,7 +505,7 @@ and domain as a global cookie the global cookie is overridden.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#set_image_options-instance_method" title="#set_image_options (instance method)">- (void) <strong>set_image_options</strong>(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestMobileVersion = false, customWaterMarkId = nil) </a>
+      <a href="#set_image_options-instance_method" title="#set_image_options (instance method)">- (void) <strong>set_image_options</strong>(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestAs = 0, customWaterMarkId = nil, country = nil) </a>
     
 
     
@@ -529,7 +529,7 @@ and domain as a global cookie the global cookie is overridden.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#set_pdf_options-instance_method" title="#set_pdf_options (instance method)">- (void) <strong>set_pdf_options</strong>(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestMobileVersion = false, customWaterMarkId = nil) </a>
+      <a href="#set_pdf_options-instance_method" title="#set_pdf_options (instance method)">- (void) <strong>set_pdf_options</strong>(url, customId = nil, includeBackground = true, pagesize = &#39;A4&#39;, orientation = &#39;Portrait&#39;, includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, customWaterMarkId = nil, country = nil) </a>
     
 
     
@@ -553,7 +553,7 @@ and domain as a global cookie the global cookie is overridden.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#set_table_options-instance_method" title="#set_table_options (instance method)">- (void) <strong>set_table_options</strong>(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestMobileVersion = false) </a>
+      <a href="#set_table_options-instance_method" title="#set_table_options (instance method)">- (void) <strong>set_table_options</strong>(url, customId = nil, tableNumberToInclude = 1, format = &#39;csv&#39;, includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestAs = 0, country = nil) </a>
     
 
     
@@ -674,13 +674,13 @@ API.</p>
       <pre class="lines">
 
 
-40
 41
 42
-43</pre>
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_applicationKey'>applicationKey</span><span class='comma'>,</span> <span class='id identifier rubyid_applicationSecret'>applicationSecret</span><span class='rparen'>)</span>
 	<span class='ivar'>@applicationKey</span> <span class='op'>=</span> <span class='id identifier rubyid_applicationKey'>applicationKey</span>
@@ -833,16 +833,6 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
 305
 306
 307
@@ -880,10 +870,21 @@ as a RuntimeError</p>
 339
 340
 341
-342</pre>
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_watermark'>add_watermark</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_xpos'>xpos</span><span class='comma'>,</span> <span class='id identifier rubyid_ypos'>ypos</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
@@ -891,7 +892,7 @@ as a RuntimeError</p>
 	<span class='kw'>end</span>
 	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_xpos'>xpos</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_ypos'>ypos</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='semicolon'>;</span>
 
-	<span class='id identifier rubyid_boundary'>boundary</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>--------------------------</span><span class='tstring_end'>'</span></span><span class='op'>+</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+	<span class='id identifier rubyid_boundary'>boundary</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--------------------------</span><span class='tstring_end'>&#39;</span></span><span class='op'>+</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 
 	<span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>addwatermark.ashx</span><span class='tstring_end'>&quot;</span></span>
 	<span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
@@ -930,6 +931,7 @@ as a RuntimeError</p>
 	<span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_post_body'>post_body</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
 
 	<span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_http'>http</span><span class='op'>|</span> <span class='id identifier rubyid_http'>http</span><span class='period'>.</span><span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span> <span class='rbrace'>}</span>	
+	<span class='id identifier rubyid_response_check'>response_check</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
 
 	<span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='lparen'>(</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Result</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span>		
 <span class='kw'>end</span></pre>
@@ -1037,16 +1039,16 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-257
-258
-259
-260
-261
-262
-263</pre>
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_cookie'>delete_cookie</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1143,16 +1145,16 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-348
-349
-350
-351
-352
-353
-354</pre>
+360
+361
+362
+363
+364
+365
+366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 348</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 360</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_watermark'>delete_watermark</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span>               
@@ -1250,16 +1252,6 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
 213
 214
 215
@@ -1278,10 +1270,20 @@ as a RuntimeError</p>
 228
 229
 230
-231</pre>
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_cookies'>get_cookies</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span>               
@@ -1385,12 +1387,12 @@ has gone wrong or the image is not ready yet.</p>
       <pre class="lines">
 
 
-399
-400
-401</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_picture'>get_picture</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
 	<span class='kw'>return</span> <span class='id identifier rubyid_get_result'>get_result</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -1484,12 +1486,12 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-195
-196
-197</pre>
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_result'>get_result</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
 	<span class='kw'>return</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getfile.ashx?id=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1563,21 +1565,21 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-178
-179
-180
-181
-182
-183
-184
-185
 186
 187
 188
-189</pre>
+189
+190
+191
+192
+193
+194
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_status'>get_status</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getstatus.ashx?id=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1597,9 +1599,9 @@ as a RuntimeError</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="get_watermarks-instance_method">
+  <h3 class="signature " id="get_watermark-instance_method">
   
-    - (<tt>Array&lt;<span class='object_link'><a href="WaterMark.html" title="GrabzIt::WaterMark (class)">WaterMark</a></span>&gt;</tt>) <strong>get_watermarks</strong>(identifier = nil) 
+    - (<tt><span class='object_link'><a href="WaterMark.html" title="GrabzIt::WaterMark (class)">WaterMark</a></span></tt>) <strong>get_watermark</strong>(identifier) 
   
 
   
@@ -1608,7 +1610,7 @@ as a RuntimeError</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Get your uploaded custom watermarks</p>
+<p>Get your uploaded custom watermark</p>
 
 
   </div>
@@ -1624,8 +1626,6 @@ as a RuntimeError</p>
       
         <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -1643,13 +1643,13 @@ as a RuntimeError</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="WaterMark.html" title="GrabzIt::WaterMark (class)">WaterMark</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="WaterMark.html" title="GrabzIt::WaterMark (class)">WaterMark</a></span></tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>an array of uploaded watermarks</p>
+<p>the watermark with the specified identifier</p>
 </div>
       
     </li>
@@ -1662,47 +1662,25 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
 281
 282
 283
 284
 285
-286</pre>
+286
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 281</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_get_watermarks'>get_watermarks</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span>               
-
-	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;identifier=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
-
-	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>getwatermarks.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span>
-
-	<span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'>REXML</span><span class='op'>::</span><span class='const'>Document</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
-
-	<span class='id identifier rubyid_watermarks'>watermarks</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-
-	<span class='id identifier rubyid_xml_watemarks'>xml_watemarks</span> <span class='op'>=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>//WebResult/WaterMarks/WaterMark</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>		
-	<span class='id identifier rubyid_xml_watemarks'>xml_watemarks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_watemark'>watemark</span><span class='op'>|</span>                	
-		<span class='id identifier rubyid_grabzItWaterMark'>grabzItWaterMark</span> <span class='op'>=</span> <span class='const'>GrabzIt</span><span class='op'>::</span><span class='const'>WaterMark</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Identifier</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XPosition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>YPosition</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_watemark'>watemark</span><span class='period'>.</span><span class='id identifier rubyid_elements'>elements</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Format</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
-		<span class='id identifier rubyid_watermarks'>watermarks</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_grabzItWaterMark'>grabzItWaterMark</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_get_watermark'>get_watermark</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_watermarks'>watermarks</span> <span class='op'>=</span> <span class='id identifier rubyid_get_watermarks'>get_watermarks</span><span class='lparen'>(</span><span class='id identifier rubyid_identifier'>identifier</span><span class='rparen'>)</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_watermarks'>watermarks</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
+		<span class='kw'>return</span> <span class='id identifier rubyid_watermarks'>watermarks</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='semicolon'>;</span>
 	<span class='kw'>end</span>
-
-	<span class='kw'>return</span> <span class='id identifier rubyid_watermarks'>watermarks</span>
+	
+	<span class='kw'>return</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1820,19 +1798,19 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-126
-127
-128
-129
-130
-131
-132
 133
 134
-135</pre>
+135
+136
+137
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='id identifier rubyid_callBackURL'>callBackURL</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
 	<span class='kw'>if</span> <span class='cvar'>@@signaturePartOne</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='cvar'>@@signaturePartTwo</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='cvar'>@@request</span> <span class='op'>==</span> <span class='kw'>nil</span>
@@ -1880,7 +1858,7 @@ WARNING this method is synchronous</p>
 <p>Synchronously save the screenshot to test.jpg</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_save_picture'>save_picture</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>images/test.jpg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>	</code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_save_picture'>save_picture</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>images/test.jpg</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>	</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -2091,13 +2069,13 @@ contain an explanation</p>
       <pre class="lines">
 
 
-390
-391
-392
-393</pre>
+404
+405
+406
+407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 404</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_picture'>save_picture</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_saveToFile'>saveToFile</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span>	
@@ -2145,7 +2123,7 @@ target path provided</p>
 <p>Synchronously save the screenshot to test.jpg</p>
 </div></p>
       
-      <pre class="example code"><code><span class='id identifier rubyid_save_to'>save_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>images/test.jpg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code><span class='id identifier rubyid_save_to'>save_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>images/test.jpg</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -2213,14 +2191,6 @@ contain an explanation</p>
       <pre class="lines">
 
 
-144
-145
-146
-147
-148
-149
-150
-151
 152
 153
 154
@@ -2241,10 +2211,18 @@ contain an explanation</p>
 169
 170
 171
-172</pre>
+172
+173
+174
+175
+176
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_to'>save_to</span><span class='lparen'>(</span><span class='id identifier rubyid_saveToFile'>saveToFile</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_save'>save</span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -2270,7 +2248,7 @@ contain an explanation</p>
 			<span class='kw'>break</span>
 		<span class='kw'>end</span>
 
-		<span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_sleep'>sleep</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span>
 	<span class='kw'>end</span>
 
 	<span class='kw'>return</span> <span class='kw'>true</span>
@@ -2301,7 +2279,9 @@ contain an explanation</p>
 
 
 <p>Sets a new custom cookie on GrabzIt, if the custom cookie has the same name
-and domain as a global cookie the global cookie is overridden</p>
+and domain as a global cookie the global</p>
+
+<p>cookie is overridden</p>
 
 
   </div>
@@ -2460,21 +2440,21 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-244
-245
-246
-247
-248
-249
-250</pre>
+255
+256
+257
+258
+259
+260
+261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_cookie'>set_cookie</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_domain'>domain</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_httponly'>httponly</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_expires'>expires</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_sig'>sig</span> <span class='op'>=</span>  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_httponly'>httponly</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_expires'>expires</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;domain=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;name=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;value=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;path=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;httponly=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_httponly'>httponly</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;expires=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_expires'>expires</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
+	<span class='id identifier rubyid_qs'>qs</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;domain=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;name=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;value=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;path=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;httponly=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_httponly'>httponly</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;expires=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_expires'>expires</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;sig=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_sig'>sig</span>
 
 	<span class='kw'>return</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_result_value'>get_result_value</span><span class='lparen'>(</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setcookie.ashx?</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_qs'>qs</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Result</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='const'>TrueString</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -2486,7 +2466,7 @@ as a RuntimeError</p>
       <div class="method_details ">
   <h3 class="signature " id="set_image_options-instance_method">
   
-    - (<tt>void</tt>) <strong>set_image_options</strong>(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestMobileVersion = false, customWaterMarkId = nil) 
+    - (<tt>void</tt>) <strong>set_image_options</strong>(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestAs = 0, customWaterMarkId = nil, country = nil) 
   
 
   
@@ -2668,18 +2648,19 @@ png</p>
   
     <li>
       
-        <span class='name'>requestMobileVersion</span>
+        <span class='name'>requestAs</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+        <span class='type'>(<tt>Integer</tt>, <tt>0</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>false</tt>)</em>
+        <em class="default">(defaults to: <tt>0</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>request a mobile version of the target website if possible</p>
+<p>request a screenshot in different forms: Standard Browser = 0, Mobile
+Browser = 1 and Search Engine = 2</p>
 </div>
       
     </li>
@@ -2702,6 +2683,25 @@ png</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>country</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>request the screenshot from different countries: Default = “”, UK = “UK”,
+US = “US”</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -2711,21 +2711,21 @@ png</p>
       <pre class="lines">
 
 
-58
-59
-60
 61
 62
 63
-64</pre>
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 61</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>takepicture.ashx?key=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;width=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;height=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;format=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;bwidth=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;bheight=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delay=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;target=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customwatermarkid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestAs'>requestAs</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_country'>country</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>takepicture.ashx?key=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;width=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;height=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;format=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;bwidth=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;bheight=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delay=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;target=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customwatermarkid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_requestAs'>requestAs</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;country=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_country'>country</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
 	<span class='cvar'>@@signaturePartOne</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
-	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span>
+	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_requestAs'>requestAs</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_country'>country</span><span class='rparen'>)</span><span class='semicolon'>;</span>
 
 	<span class='kw'>return</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
@@ -2737,7 +2737,7 @@ png</p>
       <div class="method_details ">
   <h3 class="signature " id="set_pdf_options-instance_method">
   
-    - (<tt>void</tt>) <strong>set_pdf_options</strong>(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestMobileVersion = false, customWaterMarkId = nil) 
+    - (<tt>void</tt>) <strong>set_pdf_options</strong>(url, customId = nil, includeBackground = true, pagesize = &#39;A4&#39;, orientation = &#39;Portrait&#39;, includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, customWaterMarkId = nil, country = nil) 
   
 
   
@@ -2816,13 +2816,13 @@ be returned with the callback URL you have specified.</p>
         <span class='type'>(<tt>String</tt>, <tt>'A4'</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>'A4'</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;A4&#39;</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4',
-'B5'.</p>
+<p>the page size of the PDF to be returned: &#39;A3&#39;, &#39;A4&#39;,
+&#39;A5&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;.</p>
 </div>
       
     </li>
@@ -2835,12 +2835,13 @@ be returned with the callback URL you have specified.</p>
         <span class='type'>(<tt>String</tt>, <tt>'Portrait'</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>'Portrait'</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;Portrait&#39;</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>the orientation of the PDF to be returned: 'Landscape' or 'Portrait'</p>
+<p>the orientation of the PDF to be returned: &#39;Landscape&#39; or
+&#39;Portrait&#39;</p>
 </div>
       
     </li>
@@ -3009,18 +3010,19 @@ be returned with the callback URL you have specified.</p>
   
     <li>
       
-        <span class='name'>requestMobileVersion</span>
+        <span class='name'>requestAs</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+        <span class='type'>(<tt>Integer</tt>, <tt>0</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>false</tt>)</em>
+        <em class="default">(defaults to: <tt>0</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>request a mobile version of the target website if possible</p>
+<p>request a screenshot in different forms: Standard Browser = 0, Mobile
+Browser = 1 and Search Engine = 2</p>
 </div>
       
     </li>
@@ -3043,6 +3045,25 @@ be returned with the callback URL you have specified.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>country</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>request the screenshot from different countries: Default = “”, UK = “UK”,
+US = “US”</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -3052,29 +3073,29 @@ be returned with the callback URL you have specified.</p>
       <pre class="lines">
 
 
-102
-103
-104
-105
-106
-107
-108
 109
 110
 111
-112</pre>
+112
+113
+114
+115
+116
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 109</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_set_pdf_options'>set_pdf_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_includeBackground'>includeBackground</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>A4</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_orientation'>orientation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Portrait</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_includeLinks'>includeLinks</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_includeOutline'>includeOutline</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_coverURL'>coverURL</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_marginTop'>marginTop</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginLeft'>marginLeft</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginBottom'>marginBottom</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginRight'>marginRight</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_set_pdf_options'>set_pdf_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_includeBackground'>includeBackground</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A4</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_orientation'>orientation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Portrait</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_includeLinks'>includeLinks</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_includeOutline'>includeOutline</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_coverURL'>coverURL</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_marginTop'>marginTop</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginLeft'>marginLeft</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginBottom'>marginBottom</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_marginRight'>marginRight</span> <span class='op'>=</span> <span class='int'>10</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestAs'>requestAs</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_country'>country</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_pagesize'>pagesize</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span>
 	<span class='gvar'>$orientation</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_orientation'>orientation</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
 
-	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>takepdf.ashx?key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;background=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeBackground'>includeBackground</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;pagesize=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_pagesize'>pagesize</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;orientation=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_orientation'>orientation</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customwatermarkid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includelinks=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeLinks'>includeLinks</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeoutline=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeOutline'>includeOutline</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;title=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;coverurl=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_coverURL'>coverURL</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mleft=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginLeft'>marginLeft</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mright=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginRight'>marginRight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mtop=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginTop'>marginTop</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mbottom=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginBottom'>marginBottom</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delay=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
+	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>takepdf.ashx?key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;background=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeBackground'>includeBackground</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;pagesize=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_pagesize'>pagesize</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;orientation=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_orientation'>orientation</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customwatermarkid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includelinks=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeLinks'>includeLinks</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeoutline=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeOutline'>includeOutline</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;title=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;coverurl=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_coverURL'>coverURL</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mleft=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginLeft'>marginLeft</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mright=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginRight'>marginRight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mtop=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginTop'>marginTop</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;mbottom=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginBottom'>marginBottom</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;delay=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_requestAs'>requestAs</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;country=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_country'>country</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
 
 	<span class='cvar'>@@signaturePartOne</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
-	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeBackground'>includeBackground</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_orientation'>orientation</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeLinks'>includeLinks</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeOutline'>includeOutline</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_coverURL'>coverURL</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginTop'>marginTop</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginLeft'>marginLeft</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginBottom'>marginBottom</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginRight'>marginRight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span>
+	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeBackground'>includeBackground</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_pagesize'>pagesize</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_orientation'>orientation</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeLinks'>includeLinks</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeOutline'>includeOutline</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_coverURL'>coverURL</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginTop'>marginTop</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginLeft'>marginLeft</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginBottom'>marginBottom</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_marginRight'>marginRight</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_delay'>delay</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_requestAs'>requestAs</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_country'>country</span><span class='rparen'>)</span>
 
 	<span class='kw'>return</span> <span class='kw'>nil</span>		
 <span class='kw'>end</span></pre>
@@ -3086,7 +3107,7 @@ be returned with the callback URL you have specified.</p>
       <div class="method_details ">
   <h3 class="signature " id="set_table_options-instance_method">
   
-    - (<tt>void</tt>) <strong>set_table_options</strong>(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestMobileVersion = false) 
+    - (<tt>void</tt>) <strong>set_table_options</strong>(url, customId = nil, tableNumberToInclude = 1, format = &#39;csv&#39;, includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestAs = 0, country = nil) 
   
 
   
@@ -3166,7 +3187,7 @@ ordered from the top of the web page to bottom</p>
         <span class='type'>(<tt>String</tt>, <tt>'csv'</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>'csv'</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;csv&#39;</tt>)</em>
       
       
         &mdash;
@@ -3235,18 +3256,38 @@ extract tables from</p>
   
     <li>
       
-        <span class='name'>requestMobileVersion</span>
+        <span class='name'>requestAs</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>, <tt>false</tt>)</span>
+        <span class='type'>(<tt>Integer</tt>, <tt>0</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>false</tt>)</em>
+        <em class="default">(defaults to: <tt>0</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>request a mobile version of the target website if possible</p>
+<p>request a screenshot in different forms: Standard Browser = 0, Mobile
+Browser = 1 and Search Engine = 2</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>country</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>request the screenshot from different countries: Default = “”, UK = “UK”,
+US = “US”</p>
 </div>
       
     </li>
@@ -3260,21 +3301,21 @@ extract tables from</p>
       <pre class="lines">
 
 
-76
-77
-78
-79
-80
 81
-82</pre>
+82
+83
+84
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 81</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_set_table_options'>set_table_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span> <span class='op'>=</span> <span class='int'>1</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>csv</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_includeAllTables'>includeAllTables</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
-	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>taketable.ashx?key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeAllTables=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeAllTables'>includeAllTables</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeHeaderNames=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;format=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;tableToInclude=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;target=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_set_table_options'>set_table_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span> <span class='op'>=</span> <span class='int'>1</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>csv</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_includeAllTables'>includeAllTables</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_requestAs'>requestAs</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_country'>country</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+	<span class='cvar'>@@request</span> <span class='op'>=</span> <span class='const'>WebServicesBaseURL</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>taketable.ashx?key=</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationKey</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;url=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeAllTables=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeAllTables'>includeAllTables</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;includeHeaderNames=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;format=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;tableToInclude=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;customid=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;target=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;requestmobileversion=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_requestAs'>requestAs</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;country=</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_country'>country</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;callback=</span><span class='tstring_end'>&quot;</span></span>
 	<span class='cvar'>@@signaturePartOne</span> <span class='op'>=</span> <span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='ivar'>@applicationSecret</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
-	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeAllTables'>includeAllTables</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_requestMobileVersion'>requestMobileVersion</span><span class='rparen'>)</span>
+	<span class='cvar'>@@signaturePartTwo</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_customId'>customId</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_tableNumberToInclude'>tableNumberToInclude</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeAllTables'>includeAllTables</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_b_to_str'>b_to_str</span><span class='lparen'>(</span><span class='id identifier rubyid_includeHeaderNames'>includeHeaderNames</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_int_check'>nil_int_check</span><span class='lparen'>(</span><span class='id identifier rubyid_requestAs'>requestAs</span><span class='rparen'>)</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_country'>country</span><span class='rparen'>)</span>
 
 	<span class='kw'>return</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
@@ -3535,13 +3576,13 @@ as a RuntimeError</p>
       <pre class="lines">
 
 
-370
-371
-372
-373</pre>
+383
+384
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/client.rb', line 383</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_take_picture'>take_picture</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_set_image_options'>set_image_options</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_customId'>customId</span><span class='comma'>,</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span><span class='comma'>,</span> <span class='id identifier rubyid_browserHeight'>browserHeight</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_format'>format</span><span class='comma'>,</span> <span class='id identifier rubyid_delay'>delay</span><span class='comma'>,</span> <span class='id identifier rubyid_targetElement'>targetElement</span><span class='rparen'>)</span>	
@@ -3557,9 +3598,9 @@ as a RuntimeError</p>
 </div>
 
     <div id="footer">
-  Generated on Wed Mar 27 10:06:25 2013 by
+  Generated on Sat Jun 22 12:23:48 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.5.2 (ruby-1.9.3).
+  0.8.6.1 (ruby-2.0.0).
 </div>
 
   </body>
