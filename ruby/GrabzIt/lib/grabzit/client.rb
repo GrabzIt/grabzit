@@ -34,6 +34,7 @@ module GrabzIt
 		@@request;
 
 		# Create a new instance of the Client class in order to access the GrabzIt API.
+		#
 		# @param applicationKey [String] your application key
 		# @param applicationSecret [String] your application secret
 		# @see http://grabz.it/register.aspx You can get an application key and secret by registering for free with GrabzIt		
@@ -43,6 +44,7 @@ module GrabzIt
 		end
 
 		# Sets the parameters required to take a screenshot of a web page.
+		#
 		# @param url [String] the URL that the screenshot should be made of
 		# @param customId [String, nil] custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.	
 		# @param browserWidth [Integer, nil] the width of the browser in pixels
@@ -55,8 +57,7 @@ module GrabzIt
 		# @param requestAs [Integer, 0] request a screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 		# @param customWaterMarkId [String, nil] add a custom watermark to the image
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"
-		# @return [void]
-		public
+		# @return [void]		
 		def set_image_options(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestAs = 0, customWaterMarkId = nil, country = nil)
 			@@request = WebServicesBaseURL + "takepicture.ashx?key="+CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&width="+nil_int_check(width)+"&height="+nil_int_check(height)+"&format="+CGI.escape(nil_check(format))+"&bwidth="+nil_int_check(browserWidth)+"&bheight="+nil_int_check(browserHeight)+"&customid="+CGI.escape(nil_check(customId))+"&delay="+nil_int_check(delay)+"&target="+CGI.escape(nil_check(targetElement))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&callback="
 			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
@@ -66,6 +67,7 @@ module GrabzIt
 		end
 
 		# Sets the parameters required to extract one or more tables from a web page.
+		#
 		# @param url [String] the URL that the should be used to extract tables
 		# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.	
 		# @param tableNumberToInclude [Integer, 1] the index of the table to be converted, were all tables in a web page are ordered from the top of the web page to bottom
@@ -76,7 +78,6 @@ module GrabzIt
 		# @param requestAs [Integer, 0] request a screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"		
 		# @return [void]
-		public
 		def set_table_options(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestAs = 0, country = nil)
 			@@request = WebServicesBaseURL + "taketable.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(url)+"&includeAllTables="+b_to_str(includeAllTables)+"&includeHeaderNames="+b_to_str(includeHeaderNames)+"&format="+CGI.escape(nil_check(format))+"&tableToInclude="+nil_int_check(tableNumberToInclude)+"&customid="+CGI.escape(nil_check(customId))+"&target="+CGI.escape(nil_check(targetElement))+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&callback="
 			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
@@ -86,6 +87,7 @@ module GrabzIt
 		end	
 
 		# Sets the parameters required to convert a web page into a PDF.
+		#
 		# @param url url [String] the URL that the should be converted into a pdf
 		# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
 		# @param includeBackground [Boolean, true] if true the background of the web page should be included in the screenshot
@@ -104,7 +106,6 @@ module GrabzIt
 		# @param customWaterMarkId [String, nil] add a custom watermark to each page of the PDF document
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"				
 		# @return [void]
-		public
 		def set_pdf_options(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, customWaterMarkId = nil, country = nil)
 			pagesize = nil_check(pagesize).upcase
 			$orientation = nil_check(orientation).capitalize
@@ -129,7 +130,6 @@ module GrabzIt
 		# @param callBackURL [String, nil] the handler the GrabzIt web service should call after it has completed its work
 		# @return [String] the unique identifier of the screenshot. This can be used to get the screenshot with the {#get_result} method
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def save(callBackURL = nil)
 			if @@signaturePartOne == nil && @@signaturePartTwo == nil && @@request == nil
 				  raise "No screenshot parameters have been set."
@@ -142,13 +142,13 @@ module GrabzIt
 		end   
 
 		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+		#
 		# @note Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
 		# @param saveToFile [String] the file path that the screenshot should saved to. 
 		# @example Synchronously save the screenshot to test.jpg
 		#   save_to('images/test.jpg')
 		# @raise [RuntimeError] if the screenshot cannot be saved a RuntimeError will be raised that will contain an explanation
 		# @return [Boolean] returns the true if it is successful otherwise it throws an exception.
-		public
 		def save_to(saveToFile)
 			id = save()
 
@@ -179,11 +179,10 @@ module GrabzIt
 			return true
 		end	
 
-
 		# Get the current status of a GrabzIt screenshot
+		#
 		# @param id [String] the id of the screenshot
 		# @return [ScreenShotStatus] a object representing the status of the screenshot
-		public
 		def get_status(id)
 			result = get(WebServicesBaseURL + "getstatus.ashx?id=" + nil_check(id))
 
@@ -198,19 +197,19 @@ module GrabzIt
 		end	
 
 		# This method returns the screenshot itself. If nothing is returned then something has gone wrong or the screenshot is not ready yet
+		#
 		# @param id [String] the id of the screenshot
 		# @return [Object] returns the screenshot
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def get_result(id)
 			return get(WebServicesBaseURL + "getfile.ashx?id=" + nil_check(id))
 		end
 
 		# Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well
+		#
 		# @param domain [String] the domain to return cookies for
 		# @return [Array<Cookie>] an array of cookies
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def get_cookies(domain)
 			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(domain))               
 
@@ -242,6 +241,7 @@ module GrabzIt
 		end
 
 		# Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+		#
 		# cookie is overridden
 		# @note This can be useful if a websites functionality is controlled by cookies
 		# @param name [String] the name of the cookie to set
@@ -252,7 +252,6 @@ module GrabzIt
 		# @param expires [String, ''] when the cookie expires. Pass a nil value if it does not expire	
 		# @return [Boolean] returns true if the cookie was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def set_cookie(name, domain, value = "", path = "/", httponly = false, expires = "")
 			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|"+nil_check(value)+"|"+nil_check(path)+"|"+b_to_str(httponly)+"|"+nil_check(expires)+"|0")
 
@@ -262,11 +261,11 @@ module GrabzIt
 		end
 
 		# Delete a custom cookie or block a global cookie from being used
+		#
 		# @param name [String] the name of the cookie to delete
 		# @param domain [String] the website the cookie belongs to
 		# @return [Boolean] returns true if the cookie was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def delete_cookie(name, domain)
 			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|1")
 
@@ -276,9 +275,9 @@ module GrabzIt
 		end
 
 		# Get your uploaded custom watermark
+		#
 		# @param identifier [String, nil] the identifier of a particular custom watermark you want to view
 		# @return [WaterMark] the watermark with the specified identifier
-		public
 		def get_watermark(identifier)
 			watermarks = get_watermarks(identifier)
 			if watermarks.length == 1
@@ -289,40 +288,20 @@ module GrabzIt
 		end
 
 		# Get your uploaded custom watermarks
+		#
 		# @return [Array<WaterMark>] an array of uploaded watermarks
 		def get_watermarks()
 			return get_watermarks(nil)
-		end
-		
-		private
-		def get_watermarks(identifier = nil)
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
-
-			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&identifier="+CGI.escape(nil_check(identifier))+"&sig="+sig
-
-			result = get(WebServicesBaseURL + "getwatermarks.ashx?" + qs)
-
-			doc = REXML::Document.new(result)
-
-			watermarks = Array.new
-
-			xml_watemarks = doc.elements.to_a("//WebResult/WaterMarks/WaterMark")		
-			xml_watemarks.each do |watemark|                	
-				grabzItWaterMark = GrabzIt::WaterMark.new(watemark.elements["Identifier"].text, watemark.elements["XPosition"].text.to_i, watemark.elements["YPosition"].text.to_i, watemark.elements["Format"].text)
-				watermarks << grabzItWaterMark
-			end
-
-			return watermarks
-		end
+		end		
 
 		# Add a new custom watermark
+		#
 		# @param identifier [String] the identifier you want to give the custom watermark. It is important that this identifier is unique.
 		# @param path [String] the absolute path of the watermark on your server. For instance C:/watermark/1.png
 		# @param xpos [Integer] the horizontal position you want the screenshot to appear at: Left = 0, Center = 1, Right = 2
 		# @param ypos [Integer] the vertical position you want the screenshot to appear at: Top = 0, Middle = 1, Bottom = 2
 		# @return [Boolean] returns true if the watermark was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def add_watermark(identifier, path, xpos, ypos)
 			if !File.file?(path)
 				raise "File: " + path + " does not exist"
@@ -374,10 +353,10 @@ module GrabzIt
 		end
 
 		# Delete a custom watermark
+		#
 		# @param identifier [String] the identifier of the custom watermark you want to delete
 		# @return [Boolean] returns true if the watermark was successfully deleted
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		public
 		def delete_watermark(identifier)
 			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
 
@@ -387,6 +366,7 @@ module GrabzIt
 		end	
 
 		# This method calls the GrabzIt web service to take the screenshot.
+		#
 		# @param url [String] the URL that the screenshot should be made of
 		# @param callback [String, nil] the handler the GrabzIt web service should call after it has completed its work
 		# @param customId [String, nil] custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.	
@@ -400,13 +380,13 @@ module GrabzIt
 		# @return [String] returns the unique identifier of the screenshot. This can be used to get the screenshot with the get_result method
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		# @deprecated Use {#set_image_options} and {#save} instead.
-		public
 		def take_picture(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
 			set_image_options(url, customId, browserWidth, browserHeight, width, height, format, delay, targetElement)	
 			return save(callback)
 		end   
 
 		# This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous
+		#
 		# @param url [String] the URL that the screenshot should be made of
 		# @param saveToFile [String] the file path that the screenshot should saved to
 		# @param browserWidth [Integer, nil] the width of the browser in pixels
@@ -421,19 +401,39 @@ module GrabzIt
 		# @return [Boolean] returns the true if it is successfull otherwise it throws an exception
 		# @raise [RuntimeError] if the screenshot cannot be saved a RuntimeError will be raised that will contain an explanation
 		# @deprecated Use {#set_image_options} and {#save_to} instead.
-		public
 		def save_picture(url, saveToFile, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
 			set_image_options(url, nil, browserWidth, browserHeight, width, height, format, delay, targetElement)	
 			return save_to(saveToFile)
 		end	
 
 		# This method returns the image itself. If nothing is returned then something has gone wrong or the image is not ready yet.
+		#
 		# @param id [String] the id of the screenshot
 		# @return [Object] returns the screenshot
 		# @deprecated Use {#get_result} instead.	
-		public
 		def get_picture(id)
 			return get_result(id)
+		end
+
+		private
+		def get_watermarks(identifier = nil)
+			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
+
+			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&identifier="+CGI.escape(nil_check(identifier))+"&sig="+sig
+
+			result = get(WebServicesBaseURL + "getwatermarks.ashx?" + qs)
+
+			doc = REXML::Document.new(result)
+
+			watermarks = Array.new
+
+			xml_watemarks = doc.elements.to_a("//WebResult/WaterMarks/WaterMark")		
+			xml_watemarks.each do |watemark|                	
+				grabzItWaterMark = GrabzIt::WaterMark.new(watemark.elements["Identifier"].text, watemark.elements["XPosition"].text.to_i, watemark.elements["YPosition"].text.to_i, watemark.elements["Format"].text)
+				watermarks << grabzItWaterMark
+			end
+
+			return watermarks
 		end
 
 		private
