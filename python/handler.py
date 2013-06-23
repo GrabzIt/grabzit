@@ -3,7 +3,7 @@
 import os
 import cgi
 from GrabzIt import GrabzItClient
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 form = cgi.FieldStorage()
 
@@ -28,5 +28,4 @@ if result != None:
 	fo.write(result)
 	fo.close()
 	
-print "Status: 200 OK"
-print
+print ("Content-type: text/html\n\n")
