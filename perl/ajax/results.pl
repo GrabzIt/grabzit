@@ -1,10 +1,9 @@
 #!/usr/bin/perl
 
-print "HTTP/1.0 200 OK";
-print "Content-Type: application/json;charset=utf-8\r\n\r\n";
+print "Content-Type: application/json;charset=utf-8\n\n";
 
 my $json;
-@files = <../results/*>;
+@files = glob('./results/*');
 
 foreach $file (@files) 
 {
