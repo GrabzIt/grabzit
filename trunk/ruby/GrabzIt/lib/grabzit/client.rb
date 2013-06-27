@@ -54,7 +54,7 @@ module GrabzIt
 		# @param format [String, nil] the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
 		# @param targetElement [String, nil] the id of the only HTML element in the web page to turn into a screenshot
-		# @param requestAs [Integer, 0] request a screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 		# @param customWaterMarkId [String, nil] add a custom watermark to the image
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 		# @return [void]		
@@ -75,7 +75,7 @@ module GrabzIt
 		# @param includeHeaderNames [Boolean, true] if true header names will be included in the table
 		# @param includeAllTables [Boolean, true] if true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
 		# @param targetElement [String, nil] the id of the only HTML element in the web page that should be used to extract tables from
-		# @param requestAs [Integer, 0] request a screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"		
 		# @return [void]
 		def set_table_options(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestAs = 0, country = nil)
@@ -102,7 +102,7 @@ module GrabzIt
 		# @param marginBottom [Integer, 10] the margin that should appear at the bottom of the PDF document page
 		# @param marginRight [Integer, 10] the margin that should appear at the right of the PDF document
 		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
-		# @param requestAs [Integer, 0] request a screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 		# @param customWaterMarkId [String, nil] add a custom watermark to each page of the PDF document
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"				
 		# @return [void]
