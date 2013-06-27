@@ -37,15 +37,16 @@ class GrabzItClient:
         #format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
         #delay - The number of milliseconds to wait before taking the screenshot
         #targetElement - The id of the only HTML element in the web page to turn into a screenshot
-        #requestMobileVersion - Request a mobile version of the target website if possible
+        #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
         #customWaterMarkId - add a custom watermark to the image
+        #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
-        def SetImageOptions(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestMobileVersion = False, customWaterMarkId = ''):
-                self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"format":str(format),"bwidth":int(browserWidth),"bheight":int(browserHeight),"callback":str(callback),"customid":str(customId),"delay":int(delay),"target":str(targetElement),"customwatermarkid":str(customWaterMarkId), "requestmobileversion": int(requestMobileVersion)}                   
+        def SetImageOptions(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestAs = 0, customWaterMarkId = '', country = ''):
+                self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"format":str(format),"bwidth":int(browserWidth),"bheight":int(browserHeight),"callback":str(callback),"customid":str(customId),"delay":int(delay),"target":str(targetElement),"customwatermarkid":str(customWaterMarkId), "requestmobileversion": int(requestAs), "country": str(country)}                   
                 
                 self.request = self.WebServicesBaseURL + "takepicture.ashx?"
                 self.signaturePartOne = self.applicationSecret+"|"+str(url)+"|"
-                self.signaturePartTwo = "|"+str(format)+"|"+str(int(height))+"|"+str(int(width))+"|"+str(int(browserHeight))+"|"+str(int(browserWidth))+"|"+str(customId)+"|"+str(int(delay))+"|"+str(targetElement)+"|"+str(customWaterMarkId)+"|"+str(int(requestMobileVersion))
+                self.signaturePartTwo = "|"+str(format)+"|"+str(int(height))+"|"+str(int(width))+"|"+str(int(browserHeight))+"|"+str(int(browserWidth))+"|"+str(customId)+"|"+str(int(delay))+"|"+str(targetElement)+"|"+str(customWaterMarkId)+"|"+str(int(requestAs))+"|"+str(country)
 
         #
         #This method sets the parameters required to extract all tables from a web page.
@@ -56,15 +57,16 @@ class GrabzItClient:
         #includeHeaderNames - If true header names will be included in the table
         #includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
         #targetElement - The id of the only HTML element in the web page that should be used to extract tables from
-        #requestMobileVersion - Request a mobile version of the target website if possible
+        #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+        #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
-        def SetTableOptions(self, url, customId = '', tableNumberToInclude = 1, format = 'csv', includeHeaderNames = True, includeAllTables = False, targetElement = '', requestMobileVersion = False):
-                self.requestParams = {"key":self.applicationKey, "url":url, "includeAllTables":int(includeAllTables),"includeHeaderNames":int(includeHeaderNames),"format":str(format),"tableToInclude":int(tableNumberToInclude),"customid":str(customId),"target":str(targetElement),"requestmobileversion":int(requestMobileVersion)}                
+        def SetTableOptions(self, url, customId = '', tableNumberToInclude = 1, format = 'csv', includeHeaderNames = True, includeAllTables = False, targetElement = '', requestAs = 0, country = ''):
+                self.requestParams = {"key":self.applicationKey, "url":url, "includeAllTables":int(includeAllTables),"includeHeaderNames":int(includeHeaderNames),"format":str(format),"tableToInclude":int(tableNumberToInclude),"customid":str(customId),"target":str(targetElement),"requestmobileversion":int(requestAs),"country":str(country)}                
         
                 self.request = self.WebServicesBaseURL + "taketable.ashx?"
                 
                 self.signaturePartOne = self.applicationSecret+"|"+url+"|"
-                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(tableNumberToInclude))+"|"+str(int(includeAllTables))+"|"+str(int(includeHeaderNames))+"|"+str(targetElement)+"|"+str(format)+"|"+str(int(requestMobileVersion))
+                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(tableNumberToInclude))+"|"+str(int(includeAllTables))+"|"+str(int(includeHeaderNames))+"|"+str(targetElement)+"|"+str(format)+"|"+str(int(requestAs))+"|"+str(country)
 
         #
         #This method sets the parameters required to convert a web page into a PDF.
@@ -83,19 +85,20 @@ class GrabzItClient:
         #marginBottom - The margin that should appear at the bottom of the PDF document page
         #marginRight - The margin that should appear at the right of the PDF document
         #delay - The number of milliseconds to wait before taking the screenshot
-        #requestMobileVersion - Request a mobile version of the target website if possible
+        #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
         #customWaterMarkId - add a custom watermark to each page of the PDF document
+        #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
-        def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestMobileVersion = False, customWaterMarkId = ''):
+        def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestAs = 0, customWaterMarkId = '', country = ''):
                 pagesize = pagesize.upper()
                 orientation = orientation.title()
                 
-                self.requestParams = {"key":self.applicationKey, "url":url, "background":int(includeBackground),"pagesize":str(pagesize),"orientation":str(orientation),"customid":str(customId),"customWaterMarkId":customWaterMarkId,"includelinks":int(includeLinks),"includeoutline":int(includeOutline),"title":str(title),"coverurl":str(coverURL),"mleft":int(marginLeft),"mright":int(marginRight),"mtop":int(marginTop),"mbottom":int(marginBottom),"delay":int(delay),"requestmobileversion":int(requestMobileVersion)}                                       
+                self.requestParams = {"key":self.applicationKey, "url":url, "background":int(includeBackground),"pagesize":str(pagesize),"orientation":str(orientation),"customid":str(customId),"customWaterMarkId":customWaterMarkId,"includelinks":int(includeLinks),"includeoutline":int(includeOutline),"title":str(title),"coverurl":str(coverURL),"mleft":int(marginLeft),"mright":int(marginRight),"mtop":int(marginTop),"mbottom":int(marginBottom),"delay":int(delay),"requestmobileversion":int(requestAs),"country":str(country)}                                       
 
                 self.request = self.WebServicesBaseURL + "takepdf.ashx?"
 
                 self.signaturePartOne = self.applicationSecret+"|"+url+"|"
-                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(includeBackground))+"|"+str(pagesize) +"|"+str(orientation)+"|"+str(customWaterMarkId)+"|"+str(int(includeLinks))+"|"+str(int(includeOutline))+"|"+str(title)+"|"+str(coverURL)+"|"+str(int(marginTop))+"|"+str(int(marginLeft))+"|"+str(int(marginBottom))+"|"+str(int(marginRight))+"|"+str(int(delay))+"|"+str(int(requestMobileVersion))
+                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(includeBackground))+"|"+str(pagesize) +"|"+str(orientation)+"|"+str(customWaterMarkId)+"|"+str(int(includeLinks))+"|"+str(int(includeOutline))+"|"+str(title)+"|"+str(coverURL)+"|"+str(int(marginTop))+"|"+str(int(marginLeft))+"|"+str(int(marginBottom))+"|"+str(int(marginRight))+"|"+str(int(delay))+"|"+str(int(requestAs))+"|"+str(country)
 
         #
         #This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the #GetResult method.
@@ -350,13 +353,27 @@ class GrabzItClient:
                 return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "deletewatermark.ashx?" + encoded_qs));        
 
         #
-        #Get your custom watermarks.
+        #Get your uploaded custom watermarks
+        #
+        #A GrabzItWaterMark array
+        #
+        def GetWaterMarks(self):
+                return self.getWaterMarks()
+
+        #
+        #Get your uploaded custom watermark
         #
         #identifier - The identifier of a particular custom watermark you want to view
         #
-        #This function returns an array of GrabzItWaterMark
-        #
-        def GetWaterMarks(self, identifier = ""):
+        #the GrabzItWaterMark with the specified identifier
+        #       
+        def GetWaterMark(self, identifier):
+                watermarks = self.getWaterMarks(identifier)
+                if watermarks.Length == 1:
+                        return watermarks.get(0)
+                return nil      
+        
+        def getWaterMarks(self, identifier = ""):
                 sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(identifier))
 
                 qs = {"key":self.applicationKey, "identifier":identifier}
