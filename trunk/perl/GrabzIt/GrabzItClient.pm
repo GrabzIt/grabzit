@@ -43,12 +43,13 @@ sub new
 #format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 #delay - The number of milliseconds to wait before taking the screenshot
 #targetElement - The id of the only HTML element in the web page to turn into a screenshot
-#requestMobileVersion - Request a mobile version of the target website if possible
+#requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 #customWaterMarkId - add a custom watermark to the image
+#country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 #
-sub SetImageOptions($;$$$$$$$$$$)
+sub SetImageOptions($;$$$$$$$$$$$)
 {
-	my ($self, $url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement, $requestMobileVersion, $customWaterMarkId) = @_;	
+	my ($self, $url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement, $requestAs, $customWaterMarkId, $country) = @_;	
 
 	$customId ||= '';
 	$browserWidth ||= 0;
@@ -58,12 +59,13 @@ sub SetImageOptions($;$$$$$$$$$$)
 	$format ||= '';
 	$delay ||= 0;	
 	$targetElement ||= '';
-	$requestMobileVersion ||= 0;
+	$requestAs ||= 0;
 	$customWaterMarkId ||= '';
+	$country ||= '';
 
-	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".uri_escape($customId)."&delay=".$delay."&target=".uri_escape($targetElement)."&customwatermarkid=".uri_escape($customWaterMarkId)."&requestmobileversion=".$requestMobileVersion."&callback=";
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".uri_escape($customId)."&delay=".$delay."&target=".uri_escape($targetElement)."&customwatermarkid=".uri_escape($customWaterMarkId)."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&callback=";
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
-	$self->{signaturePartTwo} = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".$requestMobileVersion;
+	$self->{signaturePartTwo} = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".$requestAs."|".$country;
 }
 
 #
@@ -75,11 +77,12 @@ sub SetImageOptions($;$$$$$$$$$$)
 #includeHeaderNames - If true header names will be included in the table
 #includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
 #targetElement - The id of the only HTML element in the web page that should be used to extract tables from
-#requestMobileVersion - Request a mobile version of the target website if possible
+#requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+#country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 #
-sub SetTableOptions($;$$$$$$$)
+sub SetTableOptions($;$$$$$$$$)
 {
-	my ($self, $url, $customId, $tableNumberToInclude, $format, $includeHeaderNames, $includeAllTables, $targetElement, $requestMobileVersion) = @_;	
+	my ($self, $url, $customId, $tableNumberToInclude, $format, $includeHeaderNames, $includeAllTables, $targetElement, $requestAs, $country) = @_;	
 	
 	$tableNumberToInclude ||= 1;
 	$customId ||= '';
@@ -87,11 +90,12 @@ sub SetTableOptions($;$$$$$$$)
 	$includeHeaderNames ||= 1;
 	$includeAllTables ||= 1;
 	$targetElement ||= '';
-	$requestMobileVersion ||= '';
+	$requestAs ||= 0;
+	$country ||= '';
 
-	$self->{request} = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&includeAllTables=".$includeAllTables."&includeHeaderNames=".$includeHeaderNames ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".uri_escape($customId)."&target=".uri_escape($targetElement)."&requestmobileversion=".$requestMobileVersion."&callback=";
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&includeAllTables=".$includeAllTables."&includeHeaderNames=".$includeHeaderNames ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".uri_escape($customId)."&target=".uri_escape($targetElement)."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&callback=";
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
-	$self->{signaturePartTwo} = "|".$customId."|".$tableNumberToInclude ."|".$includeAllTables."|".$includeHeaderNames."|".$targetElement."|".$format."|".$requestMobileVersion;
+	$self->{signaturePartTwo} = "|".$customId."|".$tableNumberToInclude ."|".$includeAllTables."|".$includeHeaderNames."|".$targetElement."|".$format."|".$requestAs."|".$country;
 }
 
 #
@@ -111,12 +115,13 @@ sub SetTableOptions($;$$$$$$$)
 #marginBottom - The margin that should appear at the bottom of the PDF document page
 #marginRight - The margin that should appear at the right of the PDF document
 #delay - The number of milliseconds to wait before taking the screenshot
-#requestMobileVersion - Request a mobile version of the target website if possible
+#requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
 #customWaterMarkId - add a custom watermark to each page of the PDF document
+#country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 #
-sub SetPDFOptions($;$$$$$$$$$$$$$$)
+sub SetPDFOptions($;$$$$$$$$$$$$$$$)
 {
-	my ($self, $url, $customId, $includeBackground, $pagesize, $orientation, $includeLinks, $includeOutline, $title, $coverURL, $marginTop, $marginLeft, $marginBottom, $marginRight, $delay, $requestMobileVersion, $customWaterMarkId) = @_;	
+	my ($self, $url, $customId, $includeBackground, $pagesize, $orientation, $includeLinks, $includeOutline, $title, $coverURL, $marginTop, $marginLeft, $marginBottom, $marginRight, $delay, $requestAs, $customWaterMarkId, $country) = @_;	
 	
 	$tableNumberToInclude ||= 1;
 	$customId ||= '';
@@ -132,16 +137,17 @@ sub SetPDFOptions($;$$$$$$$$$$$$$$)
 	$marginBottom ||= 10;
 	$marginRight ||= 10;
 	$delay ||= 0;
-	$requestMobileVersion ||= 0;
+	$requestAs ||= 0;
 	$customWaterMarkId ||= '';
+	$country ||= '';
 	
 	$pagesize = uc($pagesize);
 	$orientation = ucfirst($orientation);
 
-	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestMobileVersion."&callback=";
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&callback=";
 
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
-	$self->{signaturePartTwo} = "|".$customId ."|".$includeBackground ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".$includeLinks."|".$includeOutline."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".$requestMobileVersion;
+	$self->{signaturePartTwo} = "|".$customId ."|".$includeBackground ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".$includeLinks."|".$includeOutline."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".$requestAs."|".$country;
 }
 
 #
@@ -163,9 +169,7 @@ sub Save($)
 	$sig =  md5_hex($self->{signaturePartOne}.$callBackURL.$self->{signaturePartTwo});
 	$self->{request} .= uri_escape($callBackURL)."&sig=".$sig;
 	
-	my $result = get $self->{request};
-
-	return $self->GetResultValue($result, 'ID');
+	return $self->_getResultValue($self->_get($self->{request}), 'ID');
 }
 
 #
@@ -198,7 +202,7 @@ sub SaveTo($)
 		}
 		elsif ($status->getCached())
 		{
-			$result = $self->GetPicture($id);
+			$result = $self->GetResult($id);
 			if (!$result)
 			{
 				die "The screenshot image could not be found on GrabzIt.\n";
@@ -211,7 +215,7 @@ sub SaveTo($)
 			last;
 		}
 
-		sleep(1);
+		sleep(3);
 	}
 	
 	return 1;
@@ -229,10 +233,8 @@ sub GetResult($)
         my ($self, $id) = @_;   
         
         my $url = GrabzItClient::WebServicesBaseURL . "getfile.ashx?id=" . $id;
-        
-        my $result = get $url;          
-
-        return $result;
+	
+        return $self->_get($url);
 }
 
 #
@@ -248,7 +250,7 @@ sub GetStatus($)
 	
 	my $url = GrabzItClient::WebServicesBaseURL . "getstatus.ashx?id=" . $id;
 	
-	my $result = get $url;	
+	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
 
 	my $xml = XML::Twig->new();
@@ -274,7 +276,7 @@ sub GetCookies($)
 
 	my $url = GrabzItClient::WebServicesBaseURL . "getcookies.ashx?" . $qs;
 
-	my $result = get $url;	
+	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
 
 	my $xml = XML::Twig->new();
@@ -331,9 +333,7 @@ sub SetCookie($$;$$$$)
 
 	my $url = GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs;
 
-	my $result = get $url;	
-	
-	return ($self->GetResultValue($result, 'Result') eq GrabzItClient::TrueString);
+	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
 
 #
@@ -354,9 +354,7 @@ sub DeleteCookie($$)
 
 	my $url = GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs;
 
-	my $result = get $url;	
-	
-	return ($self->GetResultValue($result, 'Result') eq GrabzItClient::TrueString);
+	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
 
 #
@@ -405,17 +403,34 @@ sub AddWaterMark($$$$)
 					 ] 
 			       ]; 
 
-	return $self->GetResultValue($ua->request($req)->decoded_content, 'Result');
+	return $self->_getResultValue($self->_handleResponse($ua->request($req)), 'Result');
 }
 
 #
-#Get your custom watermarks.
+#Get your uploaded custom watermark
 #
 #identifier - The identifier of a particular custom watermark you want to view
 #
 #This function returns an array of GrabzItWaterMark
 #
-sub GetWaterMarks($)
+sub GetWaterMark($)
+{
+    my ($self, $identifier) = @_;
+    return $self->_getWaterMarks($identifier);
+}
+
+#
+#Get your custom watermarks
+#
+#This function returns an array of GrabzItWaterMark
+#
+sub GetWaterMarks()
+{
+    my ($self) = @_;
+    return $self->_getWaterMarks("");
+}
+
+sub _getWaterMarks($)
 {
 	my ($self, $identifier) = @_;
 	
@@ -427,7 +442,7 @@ sub GetWaterMarks($)
 
 	my $url = GrabzItClient::WebServicesBaseURL . "getwatermarks.ashx?" . $qs;
 
-	my $result = get $url;	
+	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
 
 	my $xml = XML::Twig->new();
@@ -468,9 +483,7 @@ sub DeleteWaterMark($)
 
 	my $url = GrabzItClient::WebServicesBaseURL . "deletewatermark.ashx?" . $qs;
 
-	my $result = get $url;	
-
-	return ($self->GetResultValue($result, 'Result') eq GrabzItClient::TrueString);
+	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
 
 #
@@ -500,12 +513,37 @@ sub SavePicture($$;$$$$$$$)
 #
 sub GetPicture($)
 {
-	my ($self, $id) = @_;
+    my ($self, $id) = @_;
 	
-	return $self->GetResult($id);
+    return $self->GetResult($id);
 }
 
-sub GetResultValue($$)
+sub _get($)
+{
+    my ($self, $url) = @_;
+    
+    $ua = LWP::UserAgent->new();
+    
+    return $self->_handleResponse($ua->get($url));
+}
+
+sub _handleResponse($)
+{
+    my ($self, $response) = @_;
+    
+    if ($response->code == 403)
+    {
+        die 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
+    }
+    elsif ($response->code >= 400)
+    {
+        die 'A network error occured when connecting to the GrabzIt servers.';
+    }
+    
+    return $response->decoded_content;
+}
+
+sub _getResultValue($$)
 {	
 	my ($self, $result, $elementId) = @_;
 	
