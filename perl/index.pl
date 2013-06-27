@@ -25,7 +25,6 @@ if ($cgi->request_method() eq 'POST')
 		my %Config = %{$ini{"GrabzIt"}};
 
 		$grabzIt = new GrabzItClient($Config{applicationKey}, $Config{applicationSecret});
-		
 		if ($format eq "pdf")
 		{
 		    $grabzIt->SetPDFOptions($url);
@@ -45,8 +44,7 @@ if ($cgi->request_method() eq 'POST')
 	}
 }
 
-print "HTTP/1.0 200 OK";
-print "Content-Type: application/json;charset=utf-8\r\n\r\n";
+print "Content-type: text/html\n\n";
 print <<'HEADER';
 <html>
 <head>
