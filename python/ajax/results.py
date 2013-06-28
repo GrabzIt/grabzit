@@ -8,16 +8,14 @@ import json
 
 cgitb.enable()
 
-print "Status: 200 OK"
-print "Content-Type: application/json;charset=utf-8"
-print
+print ("Content-Type: application/json\n\n")
 
 results = []
 
-for infile in glob.glob("../results" + os.sep + "*.*"):
+for infile in glob.glob("."  + os.sep + "results" + os.sep + "*.*"):
     if ".txt" in infile:
     	continue
     
-    results.append(infile.replace("../", ""));
+    results.append(infile.replace("." + os.sep, "").replace(os.sep, "/"));
     
-print json.dumps(results);
+print (json.dumps(results));
