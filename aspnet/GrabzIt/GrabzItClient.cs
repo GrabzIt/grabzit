@@ -17,8 +17,7 @@ namespace GrabzIt
 {
     public class GrabzItClient
     {
-        private static GrabzItClient grabzItClient;
-        private static MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider();
+        private static GrabzItClient grabzItClient;        
 
         public delegate void ScreenShotHandler(object sender, ScreenShotEventArgs result);
 
@@ -922,6 +921,7 @@ namespace GrabzIt
         private static string Encrypt(string plainText)
         {
             byte[] bs = Encoding.ASCII.GetBytes(plainText);
+            MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider();
             return toHex(hasher.ComputeHash(bs));
         }
 
