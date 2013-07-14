@@ -4,7 +4,7 @@ function checkForResults() {
 	//clear div
 	$('#divResults').html('');
 	//read result directory and display
-	$.getJSON('ajax/results.ashx', function(data) {
+	$.getJSON('ajax/results.ashx?r='+Math.floor((Math.random()*100000)+1), function(data) {
 		$.each(data, function(key, val) {
                         if (val.indexOf(".pdf") !== -1)
                         {
