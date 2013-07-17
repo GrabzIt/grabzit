@@ -437,6 +437,10 @@ namespace GrabzIt
                 	throw new Exception("A network error occured when connecting to the GrabzIt servers.");
                 }
             }
+            else if (e.Status == WebExceptionStatus.NameResolutionFailure)
+            {
+                throw new Exception("A network error occured when connecting to the GrabzIt servers.");
+            }
         }
 
         private T DeserializeResult<T>(string result)
