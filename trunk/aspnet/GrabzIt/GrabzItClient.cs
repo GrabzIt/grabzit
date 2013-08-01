@@ -352,6 +352,12 @@ namespace GrabzIt
             lock (thisLock)
             {
                 string id = Save();
+
+                if (string.IsNullOrEmpty(id))
+                {
+                    return false;
+                }
+
                 //Wait for it to be ready.
                 while (true)
                 {
@@ -588,6 +594,11 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return null;
+                }
+
                 string url = string.Format("{0}getstatus.ashx?id={1}",
                                                           BaseURL, id);
                 GetStatusResult webResult = Get<GetStatusResult>(url);
