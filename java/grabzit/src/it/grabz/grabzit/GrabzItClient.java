@@ -299,6 +299,12 @@ public class GrabzItClient {
     public boolean SaveTo(String saveToFile) throws Exception
     {
         String id = Save();
+        
+        if (isNullOrEmpty(id))
+        {
+            return false;
+        }
+        
         //Wait for it to be ready.
         while (true)
         {
@@ -355,6 +361,10 @@ public class GrabzItClient {
      */
     public Status GetStatus(String id) throws IOException, JAXBException, Exception
     {
+        if (isNullOrEmpty(id))
+        {
+            return null;
+        }
         return get(BASE_URL + "getstatus.ashx?id=" + id, Status.class);
     }
 

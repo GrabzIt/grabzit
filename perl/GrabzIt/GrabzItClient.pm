@@ -190,6 +190,11 @@ sub SaveTo($)
 	
 	my $id = self->Save();
 
+	if ($id eq '')
+	{
+	    return 0;
+	}
+	
 	#Wait for it to be ready.
 	while(1)
 	{
@@ -246,7 +251,7 @@ sub GetResult($)
 #
 sub GetStatus($)
 {
-	my ($self, $id) = @_;
+	my ($self, $id) = @_;	
 	
 	my $url = GrabzItClient::WebServicesBaseURL . "getstatus.ashx?id=" . $id;
 	

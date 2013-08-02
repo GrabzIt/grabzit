@@ -128,6 +128,9 @@ class GrabzItClient:
         def SaveTo(self, saveToFile):
                 id = self.Save()
                 
+                if (id == None or id == ""):
+                        return False;
+                
                 #Wait for it to be ready.
                 while(1):
                     status = self.GetStatus(id)
@@ -175,6 +178,10 @@ class GrabzItClient:
         #This function returns a Status object representing the screenshot
         #
         def GetStatus(self, id):
+                
+                if (id == "" or id == None):
+                        return None
+                
                 result = self.HTTPGet(self.WebServicesBaseURL + "getstatus.ashx?id=" + id)    
                 
                 dom = minidom.parseString(result)
@@ -371,7 +378,7 @@ class GrabzItClient:
                 watermarks = self.getWaterMarks(identifier)
                 if watermarks.Length == 1:
                         return watermarks.get(0)
-                return nil      
+                return None      
         
         def getWaterMarks(self, identifier = ""):
                 sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(identifier))

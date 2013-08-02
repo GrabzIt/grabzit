@@ -152,13 +152,17 @@ module GrabzIt
 		def save_to(saveToFile)
 			id = save()
 
+			if id == nil || id == ""
+				return false
+			end			
+
 			#Wait for it to be ready.
 			while true do
 				status = get_status(id)
 
 				if !status.cached && !status.processing
 					raise "The screenshot did not complete with the error: " + status.Message
-					break;
+					break
 				elsif status.cached
 					result = get_result(id)
 					if !result
@@ -184,6 +188,11 @@ module GrabzIt
 		# @param id [String] the id of the screenshot
 		# @return [ScreenShotStatus] a object representing the status of the screenshot
 		def get_status(id)
+			
+			if id == nil || id == ""
+				return nil
+			end			
+			
 			result = get(WebServicesBaseURL + "getstatus.ashx?id=" + nil_check(id))
 
 			doc = REXML::Document.new(result)
