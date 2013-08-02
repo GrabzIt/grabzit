@@ -143,6 +143,11 @@ class GrabzItClient
 	{
 		$id = $this->Save();
 
+		if (empty($id))
+		{
+			return false;
+		}
+
 		//Wait for it to be ready.
 		while(true)
 		{
@@ -180,6 +185,11 @@ class GrabzItClient
 	*/
 	public function GetStatus($id)
 	{
+		if (empty($id))
+		{
+			return null;
+		}
+
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getstatus.ashx?id=" . $id);
 
 		$obj = simplexml_load_string($result);
@@ -468,7 +478,7 @@ class GrabzItClient
 		{
 				$response = @file_get_contents($url);
         $this->checkResponseHeader($http_response_header);
-                
+
         return $response;
 		}
 		else
@@ -480,15 +490,15 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
 			$data = curl_exec($ch);
       $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-      if($httpCode == 403) 
-      {                
+      if($httpCode == 403)
+      {
         throw new Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.');
-      }         
+      }
 			curl_close($ch);
 			return $data;
 		}
 	}
-   
+
   private function checkResponseHeader($header)
   {
       list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
@@ -499,7 +509,7 @@ class GrabzItClient
       else if ($httpCode >= 400)
       {
            throw new Exception("A network error occured when connecting to the GrabzIt servers.");
-      }      
-  }   
+      }
+  }
 }
 ?>
