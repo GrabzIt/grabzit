@@ -6,12 +6,23 @@ namespace GrabzIt.Results
 {
     [Serializable]
     [XmlType(TypeName = "WebResult")]
-    public class GetStatusResult
+    public class GetStatusResult : IException
     {
         public string Processing;
         public string Cached;
         public string Expired;
-        public string Message;
+
+        public string Message
+        {
+            get;
+            set;
+        }
+
+        public string Code
+        {
+            get;
+            set;
+        }
 
         public GetStatusResult()
         {            
