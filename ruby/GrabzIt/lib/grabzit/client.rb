@@ -10,6 +10,7 @@ module GrabzIt
 	require File.join(File.dirname(__FILE__), 'screenshotstatus')
 	require File.join(File.dirname(__FILE__), 'cookie')
 	require File.join(File.dirname(__FILE__), 'watermark')
+	require File.join(File.dirname(__FILE__), 'exception')
 
 	# This client provides access to the GrabzIt web services
 	# This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
@@ -132,7 +133,7 @@ module GrabzIt
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def save(callBackURL = nil)
 			if @@signaturePartOne == nil && @@signaturePartTwo == nil && @@request == nil
-				  raise "No screenshot parameters have been set."
+				  raise GrabzItException.new("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS)
 			end
 
 			sig = Digest::MD5.hexdigest(@@signaturePartOne+nil_check(callBackURL)+@@signaturePartTwo)
@@ -161,12 +162,12 @@ module GrabzIt
 				status = get_status(id)
 
 				if !status.cached && !status.processing
-					raise "The screenshot did not complete with the error: " + status.Message
+					raise GrabzItException.new("The screenshot did not complete with the error: " + status.Message, GrabzItException::RENDERING_ERROR)
 					break
 				elsif status.cached
 					result = get_result(id)
 					if !result
-						raise "The screenshot image could not be found on GrabzIt."
+						raise GrabzItException.new("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT)
 						break
 					end
 
@@ -228,11 +229,7 @@ module GrabzIt
 
 			doc = REXML::Document.new(result)
 
-			message = doc.root.elements["Message"].text()
-
-			if message != nil
-				raise message
-			end
+			check_for_exception(doc)
 
 			cookies = Array.new
 
@@ -434,6 +431,8 @@ module GrabzIt
 
 			doc = REXML::Document.new(result)
 
+			check_for_exception(doc)
+
 			watermarks = Array.new
 
 			xml_watemarks = doc.elements.to_a("//WebResult/WaterMarks/WaterMark")		
@@ -457,9 +456,9 @@ module GrabzIt
 		def response_check(response)
 			statusCode = response.code.to_i
 			if statusCode == 403
-				raise response.body
+				raise GrabzItException.new(response.body, GrabzItException::NETWORK_DDOS_ATTACK)
 			elsif statusCode >= 400
-				raise "A network error occured when connecting to the GrabzIt servers."
+				raise GrabzItException.new("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR)
 			end
 		end
 
@@ -482,18 +481,29 @@ module GrabzIt
 		private
 		def nil_int_check(param)
 			return param.to_i.to_s
-		end		
+		end
+		
+		private
+		def check_for_exception(doc)
+			if (doc == nil)
+				return
+			end
+			
+			message = doc.root.elements["Message"].text()
+			code  = doc.root.elements["Code"].text()
+			
+			if message != nil
+				raise GrabzItException.new(message, code)
+			end			
+		end
 
 		private 
 		def get_result_value(result, field)
 			doc = REXML::Document.new(result)
-
-			message = doc.root.elements["Message"].text()
+			
 			value = doc.root.elements[field].text()
 
-			if message != nil
-				raise message
-			end
+			check_for_exception(doc)
 
 			return value
 		end

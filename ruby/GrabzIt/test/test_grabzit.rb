@@ -76,7 +76,7 @@ class GrabzItTest < Test::Unit::TestCase
 			if @isSubscribedAccount
 				grabzItClient.set_cookie(Cookie_Name, Cookie_Domain)
 			elsif
-				assert_raise RuntimeError, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
+				assert_raise GrabzIt::GrabzItException, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
 				  grabzItClient.set_cookie(Cookie_Name, Cookie_Domain)				  
 				end		
 				return
@@ -92,7 +92,7 @@ class GrabzItTest < Test::Unit::TestCase
 			if @isSubscribedAccount
 				grabzItClient.set_cookie(Cookie_Name, Cookie_Domain)
 			elsif
-				assert_raise RuntimeError, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
+				assert_raise GrabzIt::GrabzItException, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
 				  grabzItClient.set_cookie(Cookie_Name, Cookie_Domain)				  
 				end		
 				return
@@ -117,7 +117,7 @@ class GrabzItTest < Test::Unit::TestCase
 			if @isSubscribedAccount
 				grabzItClient.add_watermark(WaterMark_Identifier, WaterMark_Path, 2, 2)
 			elsif
-				assert_raise RuntimeError, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
+				assert_raise GrabzIt::GrabzItException, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
 				  grabzItClient.add_watermark(WaterMark_Identifier, WaterMark_Path, 2, 2)				  
 				end		
 				return
@@ -141,7 +141,7 @@ class GrabzItTest < Test::Unit::TestCase
 			if @isSubscribedAccount
 				grabzItClient.add_watermark(WaterMark_Identifier, WaterMark_Path, 2, 2)
 			elsif
-				assert_raise RuntimeError, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
+				assert_raise GrabzIt::GrabzItException, "User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method" do
 				  grabzItClient.add_watermark(WaterMark_Identifier, WaterMark_Path, 2, 2)				  
 				end		
 				return
