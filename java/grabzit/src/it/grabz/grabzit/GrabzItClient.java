@@ -6,6 +6,7 @@ package it.grabz.grabzit;
 
 import it.grabz.grabzit.enums.BrowserType;
 import it.grabz.grabzit.enums.Country;
+import it.grabz.grabzit.enums.ErrorCode;
 import it.grabz.grabzit.enums.HorizontalPosition;
 import it.grabz.grabzit.enums.TableFormat;
 import it.grabz.grabzit.enums.PageOrientation;
@@ -266,7 +267,7 @@ public class GrabzItClient {
     {
         if (isNullOrEmpty(this.signaturePartOne) && isNullOrEmpty(this.signaturePartTwo) && isNullOrEmpty(this.request))
         {
-            throw new Exception("No screenshot parameters have been set.");
+            throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.ParameterMissingParameters);
         }
 
         String sig = encrypt(this.signaturePartOne + callBackURL + this.signaturePartTwo);
@@ -312,7 +313,7 @@ public class GrabzItClient {
 
             if (!status.isCached() && !status.isProcessing())
             {
-                throw new Exception("The screenshot did not complete with the error: " + status.getMessage());
+                throw new GrabzItException("The screenshot did not complete with the error: " + status.getMessage(), ErrorCode.RenderingError);
             }
 
             if (status.isCached())
@@ -324,7 +325,7 @@ public class GrabzItClient {
 
                     if (result == null)
                     {
-                        throw new Exception("The screenshot image could not be found on GrabzIt.");
+                        throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
                     }
                     try
                     {
@@ -338,8 +339,8 @@ public class GrabzItClient {
                             attempt++;
                             continue;
                         }
-                        throw new Exception("An error occurred trying to save the screenshot to: " +
-                                            saveToFile);
+                        throw new GrabzItException("An error occurred trying to save the screenshot to: " +
+                                            saveToFile, ErrorCode.FileSaveError);
                     }
                 }
                 break;
@@ -551,7 +552,7 @@ public class GrabzItClient {
         File fileToUpload = new File(path);
         if(!fileToUpload.exists())
         {
-            throw new Exception("File: " + path + " does not exist");
+            throw new GrabzItException("File: " + path + " does not exist", ErrorCode.FileNonExistantPath);
         }
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, identifier, String.valueOf(xpos.getValue()), String.valueOf(ypos.getValue())));
@@ -701,7 +702,7 @@ public class GrabzItClient {
     {
         if (!isNullOrEmpty(result.getMessage()))
         {
-            throw new Exception(result.getMessage());
+            throw new GrabzItException(result.getMessage(), result.getCode());
         }
     }
     

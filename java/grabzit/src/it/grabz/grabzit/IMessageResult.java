@@ -5,10 +5,13 @@
 
 package it.grabz.grabzit;
 
+import it.grabz.grabzit.enums.ErrorCode;
+
 /**
  *
  * @author Administrator
  */
 interface IMessageResult {
     public String getMessage();
+    public ErrorCode getCode();
 }
