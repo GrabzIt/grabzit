@@ -5,10 +5,21 @@ namespace GrabzIt.Results
 {
     [Serializable]
     [XmlType(TypeName = "WebResult")]
-    public class GenericResult
+    public class GenericResult : IException
     {
         public string Result;
-        public string Message;
+
+        public string Message
+        {
+            get;
+            set;
+        }
+
+        public string Code
+        {
+            get;
+            set;
+        }
 
         public GenericResult()
         {            

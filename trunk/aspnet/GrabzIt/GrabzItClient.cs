@@ -323,17 +323,14 @@ namespace GrabzIt
             {
                 if (string.IsNullOrEmpty(request.SignaturePartOne) && string.IsNullOrEmpty(request.SignaturePartTwo) && string.IsNullOrEmpty(request.Request))
                 {
-                    throw new Exception("No screenshot parameters have been set.");
+                    throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.ParameterMissingParameters);
                 }
                 string sig = Encrypt(request.SignaturePartOne + callBackURL + request.SignaturePartTwo);
                 request.Request += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
 
                 TakePictureResult webResult = Get<TakePictureResult>(request.Request);
 
-                if (!string.IsNullOrEmpty(webResult.Message))
-                {
-                    throw new Exception(webResult.Message);
-                }
+                CheckForException(webResult);
 
                 return webResult.ID;
             }
@@ -365,7 +362,7 @@ namespace GrabzIt
 
                     if (!status.Cached && !status.Processing)
                     {
-                        throw new Exception("The screenshot did not complete with the error: " + status.Message);
+                        throw new GrabzItException("The screenshot did not complete with the error: " + status.Message, ErrorCode.RenderingError);
                     }
 
                     if (status.Cached)
@@ -377,7 +374,7 @@ namespace GrabzIt
 
                             if (result == null)
                             {
-                                throw new Exception("The screenshot image could not be found on GrabzIt.");
+                                throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
                             }
                             try
                             {
@@ -391,8 +388,8 @@ namespace GrabzIt
                                     attempt++;
                                     continue;
                                 }
-                                throw new Exception("An error occurred trying to save the screenshot to: " +
-                                                    saveToFile);
+                                throw new GrabzItException("An error occurred trying to save the screenshot to: " +
+                                                    saveToFile, ErrorCode.FileSaveError);
                             }
                         }
                         break;
@@ -435,17 +432,17 @@ namespace GrabzIt
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        throw new Exception(reader.ReadToEnd());
+                        throw new GrabzItException(reader.ReadToEnd(), ErrorCode.NetworkDDOSAttack);
                     }
                 }
                 else if (((int)response.StatusCode) >= 400)
                 {
-                	throw new Exception("A network error occured when connecting to the GrabzIt servers.");
+                    throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NetworkGeneralError);
                 }
             }
             else if (e.Status == WebExceptionStatus.NameResolutionFailure)
             {
-                throw new Exception("A network error occured when connecting to the GrabzIt servers.");
+                throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NetworkGeneralError);
             }
         }
 
@@ -628,10 +625,7 @@ namespace GrabzIt
 
                 GetCookiesResult webResult = Get<GetCookiesResult>(url);
 
-                if (!string.IsNullOrEmpty(webResult.Message))
-                {
-                    throw new Exception(webResult.Message);
-                }
+                CheckForException(webResult);
 
                 return webResult.Cookies;
             }
@@ -730,10 +724,7 @@ namespace GrabzIt
 
                 GenericResult webResult = Get<GenericResult>(url);
 
-                if (!string.IsNullOrEmpty(webResult.Message))
-                {
-                    throw new Exception(webResult.Message);
-                }
+                CheckForException(webResult);
 
                 return Convert.ToBoolean(webResult.Result);
             }
@@ -756,10 +747,7 @@ namespace GrabzIt
 
                 GenericResult webResult = Get<GenericResult>(url);
 
-                if (!string.IsNullOrEmpty(webResult.Message))
-                {
-                    throw new Exception(webResult.Message);
-                }
+                CheckForException(webResult);
 
                 return Convert.ToBoolean(webResult.Result);
             }
@@ -777,7 +765,7 @@ namespace GrabzIt
         {
             if (!File.Exists(path))
             {
-                throw new Exception("File: " + path + " does not exist");
+                throw new GrabzItException("File: " + path + " does not exist", ErrorCode.FileNonExistantPath);
             }
 
             string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, identifier, (int)xpos, (int)ypos));
@@ -795,10 +783,7 @@ namespace GrabzIt
 
             GenericResult webResult = DeserializeResult<GenericResult>(result);
 
-            if (!string.IsNullOrEmpty(webResult.Message))
-            {
-                throw new Exception(webResult.Message);
-            }
+            CheckForException(webResult);
 
             return Convert.ToBoolean(webResult.Result);
         }
@@ -818,10 +803,7 @@ namespace GrabzIt
 
             GenericResult webResult = Get<GenericResult>(url);
 
-            if (!string.IsNullOrEmpty(webResult.Message))
-            {
-                throw new Exception(webResult.Message);
-            }
+            CheckForException(webResult);
 
             return Convert.ToBoolean(webResult.Result);
         }
@@ -861,10 +843,7 @@ namespace GrabzIt
 
             GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
 
-            if (!string.IsNullOrEmpty(webResult.Message))
-            {
-                throw new Exception(webResult.Message);
-            }
+            CheckForException(webResult);
 
             return webResult.WaterMarks;
         }
@@ -933,6 +912,17 @@ namespace GrabzIt
             }
         }
 
+        private void CheckForException(IException result)
+        {
+            if (result != null)
+            {
+                if (!string.IsNullOrEmpty(result.Message))
+                {
+                    throw new GrabzItException(result.Message, result.Code);
+                }
+            }
+        }
+
         private static string Encrypt(string plainText)
         {
             byte[] bs = Encoding.ASCII.GetBytes(plainText);
@@ -968,7 +958,7 @@ namespace GrabzIt
             return new string(c);
         }
 
-        public string HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
+        private string HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
