@@ -2,6 +2,7 @@
 include_once("GrabzItCookie.class.php");
 include_once("GrabzItStatus.class.php");
 include_once("GrabzItWaterMark.class.php");
+include_once("GrabzItException.class.php");
 
 class GrabzItClient
 {
@@ -123,7 +124,7 @@ class GrabzItClient
 	{
 		if (empty($this->signaturePartOne) && empty($this->signaturePartTwo) && empty($this->request))
 		{
-			throw new Exception("No screenshot parameters have been set.");
+			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
 		$sig =  md5($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
 		$this->request .= urlencode($callBackURL)."&sig=".$sig;
@@ -155,7 +156,7 @@ class GrabzItClient
 
 			if (!$status->Cached && !$status->Processing)
 			{
-				throw new Exception("The screenshot did not complete with the error: " . $status->Message);
+				throw new GrabzItException("The screenshot did not complete with the error: " . $status->Message, GrabzItException::RENDERING_ERROR);
 				break;
 			}
 			else if ($status->Cached)
@@ -163,7 +164,7 @@ class GrabzItClient
 				$result = $this->GetResult($id);
 				if (!$result)
 				{
-					throw new Exception("The screenshot image could not be found on GrabzIt.");
+					throw new GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT);
 					break;
 				}
 				file_put_contents($saveToFile, $result);
@@ -311,7 +312,7 @@ class GrabzItClient
 	{
 		if (!file_exists($path))
 		{
-			throw new Exception("File: " . $path . " does not exist");
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
 		}
 		$sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
 
@@ -354,8 +355,8 @@ class GrabzItClient
 
 		$context  = stream_context_create($opts);
 
-    $response = @file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context);
-    $this->checkResponseHeader($http_response_header);
+		$response = @file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context);
+		$this->checkResponseHeader($http_response_header);
 		return $this->isSuccessful($response);
 	}
 
@@ -466,7 +467,7 @@ class GrabzItClient
 
 		if (!empty($obj->Message))
 		{
-			throw new Exception($obj->Message);
+			throw new GrabzItException($obj->Message, $obj->Code);
 		}
 
 		return $obj;
@@ -476,10 +477,10 @@ class GrabzItClient
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-				$response = @file_get_contents($url);
-        $this->checkResponseHeader($http_response_header);
+			$response = @file_get_contents($url);
+			$this->checkResponseHeader($http_response_header);
 
-        return $response;
+			return $response;
 		}
 		else
 		{
@@ -489,27 +490,27 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
 			$data = curl_exec($ch);
-      $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-      if($httpCode == 403)
-      {
-        throw new Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.');
-      }
+			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+			if($httpCode == 403)
+			{
+				throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
+			}
 			curl_close($ch);
 			return $data;
 		}
 	}
 
-  private function checkResponseHeader($header)
-  {
-      list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
-      if ($httpCode == 403)
-      {
-           throw new Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.');
-      }
-      else if ($httpCode >= 400)
-      {
-           throw new Exception("A network error occured when connecting to the GrabzIt servers.");
-      }
-  }
+	private function checkResponseHeader($header)
+	{
+	    list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
+	    if ($httpCode == 403)
+	    {
+		 throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
+	    }
+	    else if ($httpCode >= 400)
+	    {
+		 throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR);
+	    }
+	}
 }
 ?>
