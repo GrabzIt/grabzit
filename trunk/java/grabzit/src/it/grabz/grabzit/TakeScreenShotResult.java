@@ -5,6 +5,7 @@
 
 package it.grabz.grabzit;
 
+import it.grabz.grabzit.enums.ErrorCode;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,6 +19,8 @@ class TakeScreenShotResult implements IMessageResult {
     private String result;
     @XmlElement(name="Message")
     private String message;
+    @XmlElement(name="Code")
+    private String code;    
     @XmlElement(name="ID")
     private String id;
     
@@ -33,4 +36,9 @@ class TakeScreenShotResult implements IMessageResult {
     public String getId() {
         return id;
     }
+    
+    @Override
+    public ErrorCode getCode() {
+        return ErrorCode.values()[Integer.parseInt(code)];
+    }    
 }

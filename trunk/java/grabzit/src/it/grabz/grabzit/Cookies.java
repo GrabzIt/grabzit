@@ -4,6 +4,7 @@
  */
 package it.grabz.grabzit;
 
+import it.grabz.grabzit.enums.ErrorCode;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,6 +20,8 @@ class Cookies implements IMessageResult {
     private Cookie[] cookies;
     @XmlElement(name="Message")
     private String message;
+    @XmlElement(name="Code")
+    private String code;   
 
     public Cookie[] getCookies() {
         return cookies;
@@ -28,4 +31,9 @@ class Cookies implements IMessageResult {
     public String getMessage() {
         return message;
     }
+    
+    @Override
+    public ErrorCode getCode() {
+        return ErrorCode.values()[Integer.parseInt(code)];
+    }    
 }

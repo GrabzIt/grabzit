@@ -4,6 +4,7 @@
  */
 package it.grabz.grabzit;
 
+import it.grabz.grabzit.enums.ErrorCode;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,6 +20,8 @@ class WaterMarks implements IMessageResult {
     private WaterMark[] watermarks;
     @XmlElement(name="Message")
     private String message;
+    @XmlElement(name="Code")
+    private String code;
 
     public WaterMark[] getWaterMarks() {
         return watermarks;
@@ -27,5 +30,10 @@ class WaterMarks implements IMessageResult {
     @Override
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public ErrorCode getCode() {
+        return ErrorCode.values()[Integer.parseInt(code)];
     }
 }

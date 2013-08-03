@@ -4,6 +4,7 @@
  */
 package it.grabz.grabzit;
 
+import it.grabz.grabzit.enums.ErrorCode;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author GrabzIt
  */
 @XmlRootElement(name="WebResult")
-public class Status {
+public class Status implements IMessageResult {
     @XmlElement(name="Processing")
     @XmlJavaTypeAdapter( BooleanAdapter.class )
     private Boolean processing;
@@ -27,6 +28,8 @@ public class Status {
     private Boolean expired;
     @XmlElement(name="Message")
     private String message;
+    @XmlElement(name="Code")
+    private String code;    
 
     /**
      * @return if true the screenshot is still being processed
@@ -55,4 +58,9 @@ public class Status {
     public String getMessage() {
         return message;
     }
+    
+    @Override
+    public ErrorCode getCode() {
+        return ErrorCode.values()[Integer.parseInt(code)];
+    }    
 }
