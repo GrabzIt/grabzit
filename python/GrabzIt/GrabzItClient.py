@@ -11,6 +11,7 @@ from time import sleep
 from GrabzIt import GrabzItCookie
 from GrabzIt import ScreenShotStatus
 from GrabzIt import GrabzItWaterMark
+from GrabzIt import GrabzItException
 
 class GrabzItClient:
 
@@ -107,7 +108,7 @@ class GrabzItClient:
         #
         def Save(self, callBackURL = ''):
                 if (self.signaturePartOne == None and self.signaturePartTwo == None and self.request == None ):
-                          raise Exception("No screenshot parameters have been set.")
+                          raise GrabzItException.GrabzItException("No screenshot parameters have been set.", GrabzItException.GrabzItException.PARAMETER_MISSING_PARAMETERS)
                 
                 self.requestParams["callback"] = str(callBackURL)
                 encoded_qs = urllib.parse.urlencode(self.requestParams)
@@ -135,14 +136,14 @@ class GrabzItClient:
                 while(1):
                     status = self.GetStatus(id)
                     if not(status.Cached) and not(status.Processing):
-                        raise Exception("The screenshot did not complete with the error: " + status.Message)
+                        raise GrabzItException.GrabzItException("The screenshot did not complete with the error: " + status.Message, GrabzItException.GrabzItException.RENDERING_ERROR)
                         break
                         
                     elif status.Cached:
                         result = self.GetPicture(id)
                         
                         if result == None:
-                                raise Exception("The screenshot could not be found on GrabzIt.")
+                                raise GrabzItException.GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException.GrabzItException.RENDERING_MISSING_SCREENSHOT)
                                 break
                                 
                         fo = open(saveToFile, "wb")
@@ -234,22 +235,11 @@ class GrabzItClient:
                 qs = {"key":self.applicationKey, "domain":domain}
                 encoded_qs = urllib.urlencode(qs)
                 
-                encoded_qs += "&sig="+sig;
+                encoded_qs += "&sig="+sig
 
                 dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getcookies.ashx?" + encoded_qs))
 
-                message = ""
-
-                messageNodes = dom.getElementsByTagName("Message")
-                
-                for messageNode in messageNodes:
-                        if messageNode.firstChild == None:
-                                break
-                        message = messageNode.firstChild.nodeValue
-                        break           
-
-                if len(message) > 0:
-                        raise Exception(message)
+                self.CheckForException(dom)
                         
                 results = []
 
@@ -328,7 +318,7 @@ class GrabzItClient:
                 try:                    
                         files.append(['watermark', os.path.basename(path), open(path, 'rb').read()])
                 except:
-                        raise Exception("File: " + path + " does not exist")
+                        raise GrabzItException.GrabzItException("File: " + path + " does not exist", GrabzItException.GrabzItException.FILE_NON_EXISTANT_PATH)
                 
                 sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(identifier)+"|"+str(xpos)+"|"+str(ypos))
                 
@@ -355,7 +345,7 @@ class GrabzItClient:
 
                 encoded_qs = urllib.urlencode(qs)
                 
-                encoded_qs += "&sig="+sig;
+                encoded_qs += "&sig="+sig
 
                 return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "deletewatermark.ashx?" + encoded_qs));        
 
@@ -387,22 +377,11 @@ class GrabzItClient:
 
                 encoded_qs = urllib.urlencode(qs)
                 
-                encoded_qs += "&sig="+sig;              
+                encoded_qs += "&sig="+sig;             
 
                 dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getwatermarks.ashx?" + encoded_qs))
 
-                message = ""
-
-                messageNodes = dom.getElementsByTagName("Message")
-                
-                for messageNode in messageNodes:
-                        if messageNode.firstChild == None:
-                                break
-                        message = messageNode.firstChild.nodeValue
-                        break           
-
-                if len(message) > 0:
-                        raise Exception(message)
+                self.CheckForException(dom)
                         
                 results = []
 
@@ -444,11 +423,29 @@ class GrabzItClient:
         def GetResultObject(self, result, resultTagName):
                 dom = minidom.parseString(result)
                 
-                message = ""
                 result = ""
+                                
+                nodes = dom.getElementsByTagName(resultTagName)
+                
+                self.CheckForException(dom)
+                
+                for node in nodes:
+                        if node.firstChild == None:
+                                break
+                        result = node.firstChild.nodeValue
+                        break                   
+                                        
+                return result
+ 
+        def CheckForException(self, dom):
+                if dom == None:
+                        return
+                
+                message = ""
+                code = ""               
                 
                 messageNodes = dom.getElementsByTagName("Message")
-                nodes = dom.getElementsByTagName(resultTagName)
+                codeNodes = dom.getElementsByTagName("Code")
                 
                 for messageNode in messageNodes:
                         if messageNode.firstChild == None:
@@ -456,17 +453,15 @@ class GrabzItClient:
                         message = messageNode.firstChild.nodeValue
                         break
 
-                for node in nodes:
-                        if node.firstChild == None:
+                for codeNode in codeNodes:
+                        if codeNode.firstChild == None:
                                 break
-                        result = node.firstChild.nodeValue
-                        break                   
+                        code = codeNode.firstChild.nodeValue
+                        break
                 
                 if len(message) > 0:
-                        raise Exception(message)
-                        
-                return result
-        
+                        raise GrabzItException.GrabzItException(message, code)		
+       
                 
         def GetFirstValue(self, node):
                 if node.length > 0 and node[0].firstChild:
@@ -517,9 +512,9 @@ class GrabzItClient:
         
         def CheckResponseHeader(self, httpCode):
                 if httpCode == 403:
-                        raise Exception('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.')
+                        raise GrabzItException.GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException.GrabzItException.NETWORK_DDOS_ATTACK)
                 elif httpCode >= 400:
-                        raise Exception('A network error occured when connecting to the GrabzIt servers.')
+                        raise GrabzItException.GrabzItException('A network error occured when connecting to the GrabzIt servers.', GrabzItException.GrabzItException.NETWORK_GENERAL_ERROR)
 
         def CreateSignature(self, value):
                 md5 = hashlib.md5()
