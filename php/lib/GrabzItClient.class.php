@@ -53,7 +53,7 @@ class GrabzItClient
 	format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 	delay - The number of milliseconds to wait before taking the screenshot
 	targetElement - The id of the only HTML element in the web page to turn into a screenshot
-	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 	customWaterMarkId - add a custom watermark to the image
 	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
@@ -73,7 +73,7 @@ class GrabzItClient
 	includeHeaderNames - If true header names will be included in the table
 	includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
 	targetElement - The id of the only HTML element in the web page that should be used to extract tables from
-	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
 	public function SetTableOptions($url, $customId = null, $tableNumberToInclude = 1, $format = 'csv', $includeHeaderNames = true, $includeAllTables = false, $targetElement = null, $requestAs = 0, $country = null)
@@ -100,7 +100,7 @@ class GrabzItClient
 	marginBottom - The margin that should appear at the bottom of the PDF document page
 	marginRight - The margin that should appear at the right of the PDF document
 	delay - The number of milliseconds to wait before taking the screenshot
-	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1 and Search Engine = 2
+	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 	customWaterMarkId - add a custom watermark to the image
 	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
