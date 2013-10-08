@@ -12,7 +12,8 @@ package it.grabz.grabzit.enums;
 public enum BrowserType {
     STANDARDBROWSER(0),
     MOBILEBROWSER(1),
-    SEARCHENGINE(2);
+    SEARCHENGINE(2),
+    FALLBACKBROWSER(3);
 
     private int value;
 
