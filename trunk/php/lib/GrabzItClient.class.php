@@ -477,7 +477,10 @@ class GrabzItClient
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-			$response = @file_get_contents($url);
+            $timeout = array('http' => array('timeout' => 120));
+            $context = stream_context_create($timeout);
+		    $response = @file_get_contents($url, false, $context);
+			
 			$this->checkResponseHeader($http_response_header);
 
 			return $response;
@@ -485,10 +488,9 @@ class GrabzItClient
 		else
 		{
 			$ch = curl_init();
-			$timeout = 5;
 			curl_setopt($ch,CURLOPT_URL,$url);
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,120);
 			$data = curl_exec($ch);
 			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 			if($httpCode == 403)
