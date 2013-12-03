@@ -14,7 +14,7 @@ class GrabzItClient
 	private $signaturePartOne;
 	private $signaturePartTwo;
 	private $request;
-	private $connectionTimeout = 120;
+	private $connectionTimeout = 600;
 
 	public function __construct($applicationKey, $applicationSecret)
 	{
