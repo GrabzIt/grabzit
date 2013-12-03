@@ -75,7 +75,7 @@ class GrabzItClient:
         #url - The URL that the should be converted into a pdf
         #customId - A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
         #includeBackground - If true the background of the web page should be included in the screenshot
-        #pagesize - The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'.
+        #pagesize - The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
         #orientation - The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
         #includeLinks - True if links should be included in the PDF
         #includeOutline - True if the PDF outline should be included

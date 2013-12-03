@@ -189,7 +189,7 @@ public class GrabzItClient {
      * @param url The URL that the should be converted into a PDF
      * @param customId A custom identifier that you can pass through to the webs ervice. This will be returned with the callback URL you have specified
      * @param includeBackground If true the background of the web page should be included in the screenshot
-     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'
+     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'
      * @param orientation The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
      * @param includeLinks True if links should be included in the PDF
      * @param includeOutline True if the PDF outline should be included
@@ -217,7 +217,7 @@ public class GrabzItClient {
      * @param url The URL that the should be converted into a PDF
      * @param customId A custom identifier that you can pass through to the webs ervice. This will be returned with the callback URL you have specified
      * @param includeBackground If true the background of the web page should be included in the screenshot
-     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'
+     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'
      * @param orientation The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
      * @param includeLinks True if links should be included in the PDF
      * @param includeOutline True if the PDF outline should be included
