@@ -216,7 +216,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the should be converted into a pdf</param>
         /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
         /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
-        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'.</param>
+        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
         /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
         /// <param name="includeLinks">True if links should be included in the PDF</param>
         /// <param name="includeOutline">True if the PDF outline should be included</param>
@@ -236,7 +236,7 @@ namespace GrabzIt
             {
                 request.Request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
                 request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
-                request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize.ToString().ToUpper() + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
             }
         }
 
@@ -265,7 +265,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the should be converted into a pdf</param>
         /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
         /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
-        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'.</param>
+        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
         /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
         /// <param name="includeLinks">True if links should be included in the PDF</param>
         /// <param name="includeOutline">True if the PDF outline should be included</param>

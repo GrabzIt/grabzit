@@ -92,7 +92,7 @@ module GrabzIt
 		# @param url url [String] the URL that the should be converted into a pdf
 		# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
 		# @param includeBackground [Boolean, true] if true the background of the web page should be included in the screenshot
-		# @param pagesize [String, 'A4'] the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'.
+		# @param pagesize [String, 'A4'] the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
 		# @param orientation [String, 'Portrait'] the orientation of the PDF to be returned: 'Landscape' or 'Portrait'
 		# @param includeLinks [Boolean, true] true if links should be included in the PDF
 		# @param includeOutline [Boolean, false] True if the PDF outline should be included

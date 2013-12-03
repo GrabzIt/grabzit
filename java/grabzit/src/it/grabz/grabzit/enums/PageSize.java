@@ -15,7 +15,8 @@ public enum PageSize {
     A5("A5"),
     B3("B3"),
     B4("B4"),
-    B5("B5");
+    B5("B5"),
+    LETTER("LETTER");
 
     private String value;
 
