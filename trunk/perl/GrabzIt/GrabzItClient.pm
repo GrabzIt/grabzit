@@ -45,11 +45,12 @@ sub new
 #targetElement - The id of the only HTML element in the web page to turn into a screenshot
 #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 #customWaterMarkId - add a custom watermark to the image
+#quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
 #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 #
-sub SetImageOptions($;$$$$$$$$$$$)
+sub SetImageOptions($;$$$$$$$$$$$$)
 {
-	my ($self, $url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement, $requestAs, $customWaterMarkId, $country) = @_;	
+	my ($self, $url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement, $requestAs, $customWaterMarkId, $quality, $country) = @_;	
 
 	$customId ||= '';
 	$browserWidth ||= 0;
@@ -61,11 +62,12 @@ sub SetImageOptions($;$$$$$$$$$$$)
 	$targetElement ||= '';
 	$requestAs ||= 0;
 	$customWaterMarkId ||= '';
+	$quality ||= -1;
 	$country ||= '';
 
-	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".uri_escape($customId)."&delay=".$delay."&target=".uri_escape($targetElement)."&customwatermarkid=".uri_escape($customWaterMarkId)."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&callback=";
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".uri_escape($customId)."&delay=".$delay."&target=".uri_escape($targetElement)."&customwatermarkid=".uri_escape($customWaterMarkId)."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&quality=".$quality."&callback=";
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
-	$self->{signaturePartTwo} = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".$requestAs."|".$country;
+	$self->{signaturePartTwo} = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".$requestAs."|".$country."|".$quality;
 }
 
 #
@@ -117,11 +119,12 @@ sub SetTableOptions($;$$$$$$$$)
 #delay - The number of milliseconds to wait before taking the screenshot
 #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 #customWaterMarkId - add a custom watermark to each page of the PDF document
+#quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 #
-sub SetPDFOptions($;$$$$$$$$$$$$$$$)
+sub SetPDFOptions($;$$$$$$$$$$$$$$$$)
 {
-	my ($self, $url, $customId, $includeBackground, $pagesize, $orientation, $includeLinks, $includeOutline, $title, $coverURL, $marginTop, $marginLeft, $marginBottom, $marginRight, $delay, $requestAs, $customWaterMarkId, $country) = @_;	
+	my ($self, $url, $customId, $includeBackground, $pagesize, $orientation, $includeLinks, $includeOutline, $title, $coverURL, $marginTop, $marginLeft, $marginBottom, $marginRight, $delay, $requestAs, $customWaterMarkId, $quality, $country) = @_;	
 	
 	$tableNumberToInclude ||= 1;
 	$customId ||= '';
@@ -139,15 +142,16 @@ sub SetPDFOptions($;$$$$$$$$$$$$$$$)
 	$delay ||= 0;
 	$requestAs ||= 0;
 	$customWaterMarkId ||= '';
+	$quality ||= -1;
 	$country ||= '';
 	
 	$pagesize = uc($pagesize);
 	$orientation = ucfirst($orientation);
 
-	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&callback=";
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&quality=".$quality."&callback=";
 
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
-	$self->{signaturePartTwo} = "|".$customId ."|".$includeBackground ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".$includeLinks."|".$includeOutline."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".$requestAs."|".$country;
+	$self->{signaturePartTwo} = "|".$customId ."|".$includeBackground ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".$includeLinks."|".$includeOutline."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".$requestAs."|".$country."|".$quality;
 }
 
 #
