@@ -73,16 +73,17 @@ public class GrabzItClient {
      * @param targetElement The id of the only HTML element in the web page to turn into a screenshot
      * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
      * @param customWaterMarkId Add a custom watermark to the image
+     * @param quality The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
      * @param country Request the screenshot from different countries: Default, UK or US
      * @throws UnsupportedEncodingException
      */
-    public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId, Country country) throws UnsupportedEncodingException
+    public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
-        this.request = String.format("%stakepicture.ashx?url=%s&key=%s&width=%s&height=%s&bwidth=%s&bheight=%s&format=%s&customid=%s&delay=%s&target=%s&customwatermarkid=%s&requestmobileversion=%s&country=%s&callback=",
+        this.request = String.format("%stakepicture.ashx?url=%s&key=%s&width=%s&height=%s&bwidth=%s&bheight=%s&format=%s&customid=%s&delay=%s&target=%s&customwatermarkid=%s&requestmobileversion=%s&country=%s&quality=%s&callback=",
                                                               BASE_URL, encode(url), applicationKey, outputWidth, outputHeight,
-                                                              browserWidth, browserHeight, format.getValue(), encode(customId), delay, encode(targetElement), encode(customWaterMarkId), requestAs.getValue(), country.getValue());
+                                                              browserWidth, browserHeight, format.getValue(), encode(customId), delay, encode(targetElement), encode(customWaterMarkId), requestAs.getValue(), country.getValue(), quality);
         this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + requestAs.getValue() + "|" + country.getValue();
+        this.signaturePartTwo = "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality;
     }
 
         /**
@@ -102,7 +103,7 @@ public class GrabzItClient {
      */
     public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId) throws UnsupportedEncodingException
     {
-        SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, requestAs, customWaterMarkId, Country.DEFAULT);
+        SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, requestAs, customWaterMarkId, -1, Country.DEFAULT);
     }
 
     /**
@@ -202,14 +203,15 @@ public class GrabzItClient {
      * @param delay The number of milliseconds to wait before taking the screenshot
      * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
      * @param customWaterMarkId Add a custom watermark to each page of the PDF document
+     * @param quality The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
      * @param country Request the screenshot from different countries: Default, UK or US
      * @throws UnsupportedEncodingException
      */
-    public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId, Country country) throws UnsupportedEncodingException
+    public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
-        this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&callback=";
+        this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&quality=" + quality + "&callback=";
         this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + requestAs.getValue() + "|" + country.getValue();
+        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality;
     }
 
    /**
@@ -234,7 +236,7 @@ public class GrabzItClient {
      */
     public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId) throws UnsupportedEncodingException
     {
-        SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, customWaterMarkId, Country.DEFAULT);
+        SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, customWaterMarkId, -1, Country.DEFAULT);
     }
     /**
      * This method sets the parameters required to convert a web page into a PDF.
@@ -267,7 +269,7 @@ public class GrabzItClient {
     {
         if (isNullOrEmpty(this.signaturePartOne) && isNullOrEmpty(this.signaturePartTwo) && isNullOrEmpty(this.request))
         {
-            throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.ParameterMissingParameters);
+            throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.PARAMETERMISSINGPARAMETERS);
         }
 
         String sig = encrypt(this.signaturePartOne + callBackURL + this.signaturePartTwo);
@@ -313,7 +315,7 @@ public class GrabzItClient {
 
             if (!status.isCached() && !status.isProcessing())
             {
-                throw new GrabzItException("The screenshot did not complete with the error: " + status.getMessage(), ErrorCode.RenderingError);
+                throw new GrabzItException("The screenshot did not complete with the error: " + status.getMessage(), ErrorCode.RENDERINGERROR);
             }
 
             if (status.isCached())
@@ -325,7 +327,7 @@ public class GrabzItClient {
 
                     if (result == null)
                     {
-                        throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
+                        throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RENDERINGMISSINGSCREENSHOT);
                     }
                     try
                     {
@@ -340,7 +342,7 @@ public class GrabzItClient {
                             continue;
                         }
                         throw new GrabzItException("An error occurred trying to save the screenshot to: " +
-                                            saveToFile, ErrorCode.FileSaveError);
+                                            saveToFile, ErrorCode.FILESAVEERROR);
                     }
                 }
                 break;
@@ -552,7 +554,7 @@ public class GrabzItClient {
         File fileToUpload = new File(path);
         if(!fileToUpload.exists())
         {
-            throw new GrabzItException("File: " + path + " does not exist", ErrorCode.FileNonExistantPath);
+            throw new GrabzItException("File: " + path + " does not exist", ErrorCode.FILENONEXISTANTPATH);
         }
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, identifier, String.valueOf(xpos.getValue()), String.valueOf(ypos.getValue())));

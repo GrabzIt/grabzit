@@ -61,13 +61,14 @@ class GrabzItClient
 	targetElement - The id of the only HTML element in the web page to turn into a screenshot
 	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 	customWaterMarkId - add a custom watermark to the image
+	quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
 	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
-	public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestAs = 0, $customWaterMarkId = null, $country = null)
+	public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestAs = 0, $customWaterMarkId = null, $quality = -1, $country = null)
 	{
-		$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
+		$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&quality=".$quality."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestAs)."|".$country;
+		$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestAs)."|".$country."|".$quality;
 	}
 
 	/*
@@ -108,14 +109,15 @@ class GrabzItClient
 	delay - The number of milliseconds to wait before taking the screenshot
 	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 	customWaterMarkId - add a custom watermark to the image
+	quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 	*/
-	public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestMobileVersion = 0, $customWaterMarkId = null, $country = null)
+	public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestMobileVersion = 0, $customWaterMarkId = null, $quality = -1, $country = null)
 	{
 		$pagesize = strtoupper($pagesize);
 		$orientation = ucfirst($orientation);
 
-		$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
+		$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&quality=".$quality."&callback=";
 
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
 		$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".intval($requestAs)."|".$country;

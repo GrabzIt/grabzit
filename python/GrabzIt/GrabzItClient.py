@@ -40,14 +40,15 @@ class GrabzItClient:
         #targetElement - The id of the only HTML element in the web page to turn into a screenshot
         #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
         #customWaterMarkId - add a custom watermark to the image
+		#quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
         #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
-        def SetImageOptions(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestAs = 0, customWaterMarkId = '', country = ''):
-                self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"format":str(format),"bwidth":int(browserWidth),"bheight":int(browserHeight),"callback":str(callback),"customid":str(customId),"delay":int(delay),"target":str(targetElement),"customwatermarkid":str(customWaterMarkId), "requestmobileversion": int(requestAs), "country": str(country)}                   
+        def SetImageOptions(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
+                self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"format":str(format),"bwidth":int(browserWidth),"bheight":int(browserHeight),"callback":str(callback),"customid":str(customId),"delay":int(delay),"target":str(targetElement),"customwatermarkid":str(customWaterMarkId), "requestmobileversion": int(requestAs), "country": str(country), "quality" : int(quality)}                   
                 
                 self.request = self.WebServicesBaseURL + "takepicture.ashx?"
                 self.signaturePartOne = self.applicationSecret+"|"+str(url)+"|"
-                self.signaturePartTwo = "|"+str(format)+"|"+str(int(height))+"|"+str(int(width))+"|"+str(int(browserHeight))+"|"+str(int(browserWidth))+"|"+str(customId)+"|"+str(int(delay))+"|"+str(targetElement)+"|"+str(customWaterMarkId)+"|"+str(int(requestAs))+"|"+str(country)
+                self.signaturePartTwo = "|"+str(format)+"|"+str(int(height))+"|"+str(int(width))+"|"+str(int(browserHeight))+"|"+str(int(browserWidth))+"|"+str(customId)+"|"+str(int(delay))+"|"+str(targetElement)+"|"+str(customWaterMarkId)+"|"+str(int(requestAs))+"|"+str(country)+"|"+str(int(quality))
 
         #
         #This method sets the parameters required to extract all tables from a web page.
@@ -88,18 +89,19 @@ class GrabzItClient:
         #delay - The number of milliseconds to wait before taking the screenshot
         #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
         #customWaterMarkId - add a custom watermark to each page of the PDF document
+		#quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
-        def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestAs = 0, customWaterMarkId = '', country = ''):
+        def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
                 pagesize = pagesize.upper()
                 orientation = orientation.title()
                 
-                self.requestParams = {"key":self.applicationKey, "url":url, "background":int(includeBackground),"pagesize":str(pagesize),"orientation":str(orientation),"customid":str(customId),"customWaterMarkId":customWaterMarkId,"includelinks":int(includeLinks),"includeoutline":int(includeOutline),"title":str(title),"coverurl":str(coverURL),"mleft":int(marginLeft),"mright":int(marginRight),"mtop":int(marginTop),"mbottom":int(marginBottom),"delay":int(delay),"requestmobileversion":int(requestAs),"country":str(country)}                                       
+                self.requestParams = {"key":self.applicationKey, "url":url, "background":int(includeBackground),"pagesize":str(pagesize),"orientation":str(orientation),"customid":str(customId),"customWaterMarkId":customWaterMarkId,"includelinks":int(includeLinks),"includeoutline":int(includeOutline),"title":str(title),"coverurl":str(coverURL),"mleft":int(marginLeft),"mright":int(marginRight),"mtop":int(marginTop),"mbottom":int(marginBottom),"delay":int(delay),"requestmobileversion":int(requestAs),"country":str(country), "quality":int(quality)}                                       
 
                 self.request = self.WebServicesBaseURL + "takepdf.ashx?"
 
                 self.signaturePartOne = self.applicationSecret+"|"+url+"|"
-                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(includeBackground))+"|"+str(pagesize) +"|"+str(orientation)+"|"+str(customWaterMarkId)+"|"+str(int(includeLinks))+"|"+str(int(includeOutline))+"|"+str(title)+"|"+str(coverURL)+"|"+str(int(marginTop))+"|"+str(int(marginLeft))+"|"+str(int(marginBottom))+"|"+str(int(marginRight))+"|"+str(int(delay))+"|"+str(int(requestAs))+"|"+str(country)
+                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(includeBackground))+"|"+str(pagesize) +"|"+str(orientation)+"|"+str(customWaterMarkId)+"|"+str(int(includeLinks))+"|"+str(int(includeOutline))+"|"+str(title)+"|"+str(coverURL)+"|"+str(int(marginTop))+"|"+str(int(marginLeft))+"|"+str(int(marginBottom))+"|"+str(int(marginRight))+"|"+str(int(delay))+"|"+str(int(requestAs))+"|"+str(country)+"|"+str(int(quality))
 
         #
         #This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the #GetResult method.

@@ -49,6 +49,8 @@ namespace GrabzIt.Enums
         ParameterMissingWaterMarkFormat = 141,
         ParameterWaterMarkTooLarge = 142,
         ParameterMissingParameters = 143,
+		ParameterQualityTooLarge = 144,
+		ParameterQualityTooSmall = 145,
         NetworkServerOffline = 200,
         NetworkGeneralError = 201,
         NetworkDDOSAttack = 202,
