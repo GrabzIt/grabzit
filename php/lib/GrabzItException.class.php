@@ -58,10 +58,17 @@ class GrabzItException extends Exception {
     const FILE_SAVE_ERROR = 600;
     const FILE_NON_EXISTANT_PATH = 601;   
     
+    private $errorCode;
+    
     public function __construct($message, $code)
     {
-	parent::__construct($message, $code);
+        $this->errorCode = $code;
+	    parent::__construct($message);
+    }
+    
+    public function getErrorCode()
+    {
+        return $this->errorCode; 
     }
 }
-
 ?>
