@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -710,11 +711,18 @@ public class GrabzItClient {
     
     private <T> T get(String url, Class<T> clazz) throws IOException, JAXBException, Exception
     {
-        URL request = new URL(url);
-        URLConnection connection = (URLConnection) request.openConnection();
-        HttpUtility.CheckResponse(connection);        
-        Response response = new Response();        
-        return response.Parse(connection, clazz);
+        try
+        {
+            URL request = new URL(url);
+            URLConnection connection = (URLConnection) request.openConnection();
+            HttpUtility.CheckResponse(connection);        
+            Response response = new Response();        
+            return response.Parse(connection, clazz);
+        }
+        catch(UnknownHostException e)
+        {
+            throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NETWORKGENERALERROR);
+        }
     }
 
     private String encrypt(String value) throws UnsupportedEncodingException, NoSuchAlgorithmException
