@@ -5,6 +5,9 @@
 
 package it.grabz.grabzit.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author GrabzIt
@@ -68,12 +71,24 @@ public enum ErrorCode {
     FILENONEXISTANTPATH(601);
     
     private int value;
+    
+    private static Map<Integer, ErrorCode> map = new HashMap<Integer, ErrorCode>();
 
     ErrorCode(int value)
     {
         this.value = value;
     }
+    
+    static {
+        for (ErrorCode errorCode : ErrorCode.values()) {
+            map.put(errorCode.getValue(), errorCode);
+        }
+    }
 
+    public static ErrorCode valueOf(int value) {
+        return map.get(value);
+    }    
+    
     /**
      * @return the value
      */

@@ -33,6 +33,6 @@ class GenericResult implements IMessageResult {
     
     @Override
     public ErrorCode getCode() {
-        return ErrorCode.values()[Integer.parseInt(code)];
+        return ErrorCode.valueOf(Integer.parseInt(code));
     }    
 }
