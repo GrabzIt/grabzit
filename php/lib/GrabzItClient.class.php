@@ -142,13 +142,15 @@ class GrabzItClient
 	}
 
 	/*
-	This function attempts to Save the result synchronously to a file.
+	Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
+	it returns the screenshot byte data.
 
 	WARNING this method is synchronous so will cause a application to pause while the result is processed.
 
-	This function returns the true if it is successful otherwise it throws an exception.
+	This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
+	otherwise the method throws an exception.
 	*/
-	public function SaveTo($saveToFile)
+	public function SaveTo($saveToFile = '')
 	{
 		$id = $this->Save();
 
@@ -175,6 +177,12 @@ class GrabzItClient
 					throw new GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT);
 					break;
 				}
+				
+				if (empty($saveToFile))
+				{
+					return $result;
+				}				
+				
 				file_put_contents($saveToFile, $result);
 				break;
 			}
@@ -485,12 +493,11 @@ class GrabzItClient
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-            $timeout = array('http' => array('timeout' => $this->connectionTimeout));
-            $context = stream_context_create($timeout);
-		    $response = @file_get_contents($url, false, $context);
+			$timeout = array('http' => array('timeout' => $this->connectionTimeout));
+			$context = stream_context_create($timeout);
+			$response = @file_get_contents($url, false, $context);
 			
 			$this->checkResponseHeader($http_response_header);
-
 			return $response;
 		}
 		else

@@ -56,7 +56,17 @@ class GrabzItTest < Test::Unit::TestCase
 			assert_equal(true, File.file?(Screenshot_Path), "Not saved screenshot file")
 		end	
 		File.delete(Screenshot_Path)
-	end	
+	end
+	
+	def test_save_to_bytes
+		assert_nothing_raised "An error occured when trying to take a image screenshot" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			grabzItClient.set_image_options("http://www.google.com")
+			val = grabzItClient.save_to();
+			assert_not_nil(val, "Screenshot not returned as bytes")
+			assert_not_equal(false, val, "An error occured attempting to save data to byte variable")
+		end	
+	end		
 	
 	def test_status
 		assert_nothing_raised "An error occured when trying to test the status method" do

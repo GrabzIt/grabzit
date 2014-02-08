@@ -40,7 +40,7 @@ class GrabzItClient:
         #targetElement - The id of the only HTML element in the web page to turn into a screenshot
         #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
         #customWaterMarkId - add a custom watermark to the image
-		#quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
+	#quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
         #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
         def SetImageOptions(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
@@ -89,7 +89,7 @@ class GrabzItClient:
         #delay - The number of milliseconds to wait before taking the screenshot
         #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
         #customWaterMarkId - add a custom watermark to each page of the PDF document
-		#quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+	#quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
         def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
@@ -121,41 +121,43 @@ class GrabzItClient:
                 
                 return self.GetResultObject(self.HTTPGet(self.request), "ID")
 
-        #
-        #This function attempts to Save the result synchronously to a file.
-        #
-        #WARNING this method is synchronous so will cause a application to pause while the result is processed.
-        #
-        #This function returns the true if it is successful otherwise it throws an exception.
-        #
-        def SaveTo(self, saveToFile):
+	#
+	#Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
+	#it returns the screenshot byte data.
+	#
+	#WARNING this method is synchronous so will cause a application to pause while the result is processed.
+	#
+	#This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
+	#otherwise the method throws an exception.
+	#
+        def SaveTo(self, saveToFile = ''):
                 id = self.Save()
-                
-                if (id == None or id == ""):
-                        return False;
-                
-                #Wait for it to be ready.
-                while(1):
-                    status = self.GetStatus(id)
-                    if not(status.Cached) and not(status.Processing):
-                        raise GrabzItException.GrabzItException("The screenshot did not complete with the error: " + status.Message, GrabzItException.GrabzItException.RENDERING_ERROR)
-                        break
-                        
-                    elif status.Cached:
-                        result = self.GetPicture(id)
-                        
-                        if result == None:
-                                raise GrabzItException.GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException.GrabzItException.RENDERING_MISSING_SCREENSHOT)
-                                break
-                                
-                        fo = open(saveToFile, "wb")
-                        fo.write(result)
-                        fo.close()
-                        
-                        break
 
-                    sleep(3)
-                    
+                if (id == None or id == ""):
+                        return False
+
+		#Wait for it to be ready.
+                while(1):
+                        status = self.GetStatus(id)
+                        if not(status.Cached) and not(status.Processing):
+                                raise GrabzItException.GrabzItException("The screenshot did not complete with the error: " + status.Message, GrabzItException.GrabzItException.RENDERING_ERROR)
+                                break
+                        elif status.Cached:
+                                result = self.GetPicture(id)
+                                if result == None:
+                                        raise GrabzItException.GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException.GrabzItException.RENDERING_MISSING_SCREENSHOT)
+                                        break
+
+                                if (saveToFile == None or saveToFile == ""):
+                                        return result
+                                        
+                                fo = open(saveToFile, "wb")
+                                fo.write(result)		
+                                fo.close()
+                        
+                                break
+
+                        sleep(3)		    
                 return True
         
         #

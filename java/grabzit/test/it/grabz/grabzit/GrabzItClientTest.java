@@ -119,6 +119,23 @@ public class GrabzItClientTest {
             Assert.fail("An error occured when trying to take a image screenshot: " + ex.getMessage());
         }
     }
+    
+    @Test
+    public void testSaveObject() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            client.SetImageOptions("http://www.google.com");
+            GrabzItFile grabzItFile = client.SaveTo();
+            Assert.assertNotNull("Screenshot object not returned", grabzItFile);
+            Assert.assertNotSame("Screenshot not saved", grabzItFile.getBytes().length, 0);
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to take a image screenshot: " + ex.getMessage());
+        }
+    }
+ 
 
     @Test
     public void testStatus() throws IOException, JAXBException, Exception 

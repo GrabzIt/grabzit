@@ -339,14 +339,13 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+        /// Calls the GrabzIt web service to take the screenshot and returns a GrabzItFile object
         /// </summary>
         /// <remarks>
         /// Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
         /// </remarks>
-        /// <param name="saveToFile">The file path that the screenshot should saved to.</param>
-        /// <returns>Returns the true if it is successful otherwise it throws an exception.</returns>
-        public bool SaveTo(string saveToFile)
+        /// <returns>Returns a GrabzItFile object containing the screenshot data.</returns>
+        public GrabzItFile SaveTo()
         {
             lock (thisLock)
             {
@@ -354,7 +353,7 @@ namespace GrabzIt
 
                 if (string.IsNullOrEmpty(id))
                 {
-                    return false;
+                    return null;
                 }
 
                 //Wait for it to be ready.
@@ -369,35 +368,55 @@ namespace GrabzIt
 
                     if (status.Cached)
                     {
-                        int attempt = 0;
-                        while (true)
-                        {
-                            GrabzItFile result = GetResult(id);
+                        GrabzItFile result = GetResult(id);
 
-                            if (result == null)
-                            {
-                                throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
-                            }
-                            try
-                            {
-                                result.Save(saveToFile);
-                                break;
-                            }
-                            catch (Exception)
-                            {
-                                if (attempt < 3)
-                                {
-                                    attempt++;
-                                    continue;
-                                }
-                                throw new GrabzItException("An error occurred trying to save the screenshot to: " +
-                                                    saveToFile, ErrorCode.FileSaveError);
-                            }
+                        if (result == null)
+                        {
+                            throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
                         }
-                        break;
+
+                        return result;
                     }
 
                     Thread.Sleep(3000);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+        /// </summary>
+        /// <remarks>
+        /// Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
+        /// </remarks>
+        /// <param name="saveToFile">The file path that the screenshot should saved to.</param>
+        /// <returns>Returns the true if it is successful otherwise it throws an exception.</returns>
+        public bool SaveTo(string saveToFile)
+        {
+            int attempt = 0;
+            while (true)
+            {
+                try
+                {
+                    GrabzItFile result = SaveTo();
+
+                    if (result == null)
+                    {
+                        return false;
+                    }
+
+                    result.Save(saveToFile);
+                    break;
+                }
+                catch (Exception)
+                {
+                    if (attempt < 3)
+                    {
+                        attempt++;
+                        continue;
+                    }
+                    throw new GrabzItException("An error occurred trying to save the screenshot to: " +
+                                        saveToFile, ErrorCode.FileSaveError);
                 }
             }
             return true;
