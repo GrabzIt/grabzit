@@ -293,20 +293,19 @@ public class GrabzItClient {
     }
 
     /**
-     * Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
-     *
+     * Calls the GrabzIt web service to take the screenshot and returns a GrabzItFile object
+     * 
      * Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
-     * @param saveToFile The file path that the screenshot should saved to
-     * @return Returns the true if it is successful otherwise it throws an exception
-     * @throws Exception
+     * @return Returns a GrabzItFile object containing the screenshot data.
+     * @throws Exception 
      */
-    public boolean SaveTo(String saveToFile) throws Exception
+    public GrabzItFile SaveTo() throws Exception
     {
         String id = Save();
         
         if (isNullOrEmpty(id))
         {
-            return false;
+            return null;
         }
         
         //Wait for it to be ready.
@@ -321,37 +320,56 @@ public class GrabzItClient {
 
             if (status.isCached())
             {
-                int attempt = 0;
-                while (true)
-                {
-                    GrabzItFile result = GetResult(id);
+                GrabzItFile result = GetResult(id);
 
-                    if (result == null)
-                    {
-                        throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RENDERINGMISSINGSCREENSHOT);
-                    }
-                    try
-                    {
-                        result.Save(saveToFile);
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        if (attempt < 3)
-                        {
-                            attempt++;
-                            continue;
-                        }
-                        throw new GrabzItException("An error occurred trying to save the screenshot to: " +
-                                            saveToFile, ErrorCode.FILESAVEERROR);
-                    }
+                if (result == null)
+                {
+                    throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RENDERINGMISSINGSCREENSHOT);
                 }
-                break;
+
+                return result;
             }
 
             Thread.sleep(3000);
         }
+    }    
+    
+    /**
+     * Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+     *
+     * Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
+     * @param saveToFile The file path that the screenshot should saved to
+     * @return Returns the true if it is successful otherwise it throws an exception
+     * @throws Exception
+     */
+    public boolean SaveTo(String saveToFile) throws Exception
+    {
+        int attempt = 0;
+        while (true)
+        {
+            try
+            {
+                GrabzItFile result = SaveTo();
 
+                if (result == null)
+                {
+                    return false;
+                }
+
+                result.Save(saveToFile);
+                break;
+            }
+            catch (Exception ex)
+            {
+                if (attempt < 3)
+                {
+                    attempt++;
+                    continue;
+                }
+                throw new GrabzItException("An error occurred trying to save the screenshot to: " +
+                                    saveToFile, ErrorCode.FILESAVEERROR);
+            }
+        }
         return true;
     }
 

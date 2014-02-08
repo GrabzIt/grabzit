@@ -177,22 +177,21 @@ sub Save($)
 }
 
 #
-#This function attempts to Save the result synchronously to a file.
+#Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
+#it returns the screenshot byte data.
 #
 #WARNING this method is synchronous so will cause a application to pause while the result is processed.
 #
-#This function returns the true if it is successful otherwise it throws an exception.
+#This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
+#otherwise the method throws an exception.
 #
 sub SaveTo($)
 {
-	my ($self, $saveToFile) = @_;	
+	my ($self, $saveToFile) = @_;
 	
-	if ($saveToFile eq '')
-	{
-		 die "No file to save to has been set.";
-	}	
+	$saveToFile ||= '';
 	
-	my $id = self->Save();
+	my $id = $self->Save();
 
 	if ($id eq '')
 	{
@@ -217,6 +216,12 @@ sub SaveTo($)
 				die "The screenshot image could not be found on GrabzIt.\n";
 				last;
 			}
+			
+			if ($saveToFile eq '')
+			{
+				return $result;
+			}				
+			
 			open FILE, ">".File::Spec->catfile($saveToFile) or die $!."\n"; 
 			binmode FILE;
 			print FILE $result; 

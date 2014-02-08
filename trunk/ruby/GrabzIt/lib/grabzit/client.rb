@@ -144,15 +144,16 @@ module GrabzIt
 			return get_result_value(get(@@request), "ID")
 		end   
 
-		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
+		# it returns the screenshot byte data.
 		#
 		# @note Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
-		# @param saveToFile [String] the file path that the screenshot should saved to. 
+		# @param saveToFile [String, nil] the file path that the screenshot should saved to. 
 		# @example Synchronously save the screenshot to test.jpg
 		#   save_to('images/test.jpg')
 		# @raise [RuntimeError] if the screenshot cannot be saved a RuntimeError will be raised that will contain an explanation
-		# @return [Boolean] returns the true if it is successful otherwise it throws an exception.
-		def save_to(saveToFile)
+		# @return [Boolean] returns the true if it is successfully saved to a file, otherwise if a target path is not provided it returns the screenshot's byte data.
+		def save_to(saveToFile = nil)
 			id = save()
 
 			if id == nil || id == ""
@@ -172,6 +173,10 @@ module GrabzIt
 						raise GrabzItException.new("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT)
 						break
 					end
+					
+					if saveToFile == nil || saveToFile == ""
+						return result
+					end					
 
 					screenshot = File.new(saveToFile, "wb")
 					screenshot.write(result)
