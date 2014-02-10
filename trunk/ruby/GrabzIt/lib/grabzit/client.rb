@@ -139,9 +139,11 @@ module GrabzIt
 			end
 
 			sig = Digest::MD5.hexdigest(@@signaturePartOne+nil_check(callBackURL)+@@signaturePartTwo)
-			@@request += CGI.escape(nil_check(callBackURL))+"&sig="+sig
+			currentRequest = @@request
+			
+			currentRequest += CGI.escape(nil_check(callBackURL))+"&sig="+sig
 
-			return get_result_value(get(@@request), "ID")
+			return get_result_value(get(currentRequest), "ID")
 		end   
 
 		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided

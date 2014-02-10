@@ -134,9 +134,12 @@ class GrabzItClient
 		{
 			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
+		
 		$sig =  md5($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
-		$this->request .= urlencode($callBackURL)."&sig=".$sig;
-		$obj = $this->getResultObject($this->Get($this->request));
+		$currentRequest = $this->request;
+		
+		$currentRequest .= urlencode($callBackURL)."&sig=".$sig;
+		$obj = $this->getResultObject($this->Get($currentRequest));
 
 		return $obj->ID;
 	}

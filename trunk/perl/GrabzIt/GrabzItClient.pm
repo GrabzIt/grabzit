@@ -171,9 +171,10 @@ sub Save($)
 	}
 	
 	$sig =  md5_hex($self->{signaturePartOne}.$callBackURL.$self->{signaturePartTwo});
-	$self->{request} .= uri_escape($callBackURL)."&sig=".$sig;
+	$currentRequest = $self->{request};
+	$currentRequest .= uri_escape($callBackURL)."&sig=".$sig;
 	
-	return $self->_getResultValue($self->_get($self->{request}), 'ID');
+	return $self->_getResultValue($self->_get($currentRequest), 'ID');
 }
 
 #

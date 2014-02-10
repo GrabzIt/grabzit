@@ -37,7 +37,7 @@ public class GrabzItClientTest {
     public GrabzItClientTest() {
         applicationKey = "YOUR APPLICATION KEY";
         applicationSecret = "YOUR APPLICATION SECRET";
-        isSubscribedAccount = true;
+        isSubscribedAccount = false;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
     
