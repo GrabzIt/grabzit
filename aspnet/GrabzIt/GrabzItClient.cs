@@ -328,9 +328,11 @@ namespace GrabzIt
                     throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.ParameterMissingParameters);
                 }
                 string sig = Encrypt(request.SignaturePartOne + callBackURL + request.SignaturePartTwo);
-                request.Request += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
+                //this allows multiple calls with the same parameters
+                string currentRequest = request.Request;
+                currentRequest += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
 
-                TakePictureResult webResult = Get<TakePictureResult>(request.Request);
+                TakePictureResult webResult = Get<TakePictureResult>(currentRequest);
 
                 CheckForException(webResult);
 

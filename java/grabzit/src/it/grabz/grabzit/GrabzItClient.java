@@ -274,9 +274,11 @@ public class GrabzItClient {
         }
 
         String sig = encrypt(this.signaturePartOne + callBackURL + this.signaturePartTwo);
-        this.request += encode(callBackURL) + "&sig=" + encode(sig);
+        String currentRequest = this.request;
+        
+        currentRequest += encode(callBackURL) + "&sig=" + encode(sig);
 
-        TakeScreenShotResult result = get(this.request, TakeScreenShotResult.class);
+        TakeScreenShotResult result = get(currentRequest, TakeScreenShotResult.class);
         checkForError(result);
 
         return result.getId();

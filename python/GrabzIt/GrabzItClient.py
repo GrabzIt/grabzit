@@ -116,10 +116,11 @@ class GrabzItClient:
                 encoded_qs = urllib.parse.urlencode(self.requestParams)
                 
                 sig = self.CreateSignature(self.signaturePartOne+str(callBackURL)+self.signaturePartTwo)                               
-
-                self.request += encoded_qs+"&sig="+sig
+                currentRequest = self.request
                 
-                return self.GetResultObject(self.HTTPGet(self.request), "ID")
+                currentRequest += encoded_qs+"&sig="+sig
+                
+                return self.GetResultObject(self.HTTPGet(currentRequest), "ID")
 
 	#
 	#Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
