@@ -72,6 +72,9 @@
     <Compile Include="Enums\PageSize.cs" />
     <Compile Include="GrabzItException.cs" />
     <Compile Include="GrabzItRequest.cs" />
+    <Compile Include="Net\QuickWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Results\GetWatermarksResult.cs" />
     <Compile Include="Results\IException.cs" />
     <Compile Include="Screenshots\GrabzItFile.cs" />

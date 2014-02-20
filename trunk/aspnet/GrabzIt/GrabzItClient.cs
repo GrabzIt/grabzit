@@ -12,6 +12,7 @@ using GrabzIt.Cookies;
 using GrabzIt.Results;
 using GrabzIt.Enums;
 using GrabzIt.Screenshots;
+using GrabzIt.Net;
 
 namespace GrabzIt
 {
@@ -426,7 +427,7 @@ namespace GrabzIt
 
         private T Get<T>(string url)
         {
-            using (WebClient client = new WebClient())
+            using (QuickWebClient client = new QuickWebClient())
             {
                 try
                 {
@@ -883,6 +884,7 @@ namespace GrabzIt
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
                                                                                 "{0}getfile.ashx?id={1}",
                                                                                 BaseURL, id));
+                request.KeepAlive = false;
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
@@ -910,6 +912,7 @@ namespace GrabzIt
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
                                                                                 "{0}getfile.ashx?id={1}",
                                                                                 BaseURL, id));
+                request.KeepAlive = false;
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
@@ -949,8 +952,10 @@ namespace GrabzIt
         private static string Encrypt(string plainText)
         {
             byte[] bs = Encoding.ASCII.GetBytes(plainText);
-            MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider();
-            return toHex(hasher.ComputeHash(bs));
+            using (MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider())
+            {
+                return toHex(hasher.ComputeHash(bs));
+            }
         }
 
         private static string ConvertCountryToString(Country country)
