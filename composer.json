@@ -11,7 +11,7 @@
     },
 	"repositories": [
         {
-	        "type": "vcs",
+	        "type": "svn",
             "url": "http://grabzit.googlecode.com/svn/",	
 			"package-path":"php/"
 		}
