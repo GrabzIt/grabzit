@@ -8,7 +8,14 @@
 	"version":"2.1.4",
 	"support": {
         "issues": "http://grabz.it/support/"
-    },	
+    },
+	"repositories": [
+        {
+	        "type": "vcs",
+            "url": "http://grabzit.googlecode.com/svn/",	
+			"package-path":"php/"
+		}
+	],		
     "require": {
         "php": ">=5.0.0"
     }
