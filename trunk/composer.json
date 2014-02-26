@@ -9,13 +9,6 @@
 	"support": {
         "issues": "http://grabz.it/support/"
     },
-	"repositories": [
-        {
-	        "type": "svn",
-            "url": "http://grabzit.googlecode.com/svn/",	
-			"trunk-path":"/trunk/php/"
-		}
-	],		
     "require": {
         "php": ">=5.0.0"
     }
