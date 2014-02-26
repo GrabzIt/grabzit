@@ -13,7 +13,7 @@
         {
 	        "type": "svn",
             "url": "http://grabzit.googlecode.com/svn/",	
-			"package-path":"php/"
+			"trunk-path":"/trunk/php/"
 		}
 	],		
     "require": {
