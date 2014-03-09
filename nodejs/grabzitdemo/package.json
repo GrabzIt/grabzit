@@ -1,0 +1,17 @@
+{
+  "name": "grabzit_demo",
+  "version": "2.1.2",
+  "author": "GrabzIt",
+  "description": "A simple example of how to use GrabzIt",
+  "main": "./server.js",
+  "dependencies": {
+    "jade": "*",
+    "express": "~3.1.0",
+    "grabzit": "*"
+  },
+  "noAnalyze": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6.14"
+  }
+}

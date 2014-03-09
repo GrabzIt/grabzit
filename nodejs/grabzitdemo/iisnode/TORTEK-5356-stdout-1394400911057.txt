@@ -1,0 +1,4 @@
+Express server listening on port \\.\pipe\edeb2284-d59c-4b31-b80d-bd5ba4b97bee
+[90mGET / [32m200 [90m95ms - 1.06kb[0m
+[90mGET /ajax/results?r=5028 [32m200 [90m7ms[0m
+[90mGET / [36m304 [90m14ms[0m

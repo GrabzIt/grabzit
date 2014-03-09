@@ -1,0 +1,23 @@
+{
+  "name": "grabzit",
+  "description": "Automatically create screenshots of website for free, with GrabzIt. Screenshots can be output in a variety of formats including: JPEG, PNG, TIFF, BMP, PDF, CSV and XLSX.",
+  "version": "0.0.6",
+  "main": "./lib/grabzit",
+  "keywords": [
+    "screenshots",
+    "api",
+    "pdf",
+    "image",
+    "screen",
+    "grab",
+    "table",
+    "capture"
+  ],
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "homepage": "http://grabz.it"
+}
