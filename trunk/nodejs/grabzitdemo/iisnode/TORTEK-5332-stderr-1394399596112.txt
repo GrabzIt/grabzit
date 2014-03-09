@@ -1,0 +1,6 @@
+Application has thrown an uncaught exception and is terminated:
+ReferenceError: fs is not defined
+    at C:\Users\Dom\Documents\My Web Sites\GrabzItDemo\server.js:44:13
+    at Array.forEach (native)
+    at C:\Users\Dom\Documents\My Web Sites\GrabzItDemo\server.js:43:15
+    at Object.oncomplete (fs.js:107:15)
