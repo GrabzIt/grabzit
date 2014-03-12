@@ -1,7 +1,7 @@
 {
   "name": "grabzit",
   "description": "Automatically create screenshots of website for free, with GrabzIt. Screenshots can be output in a variety of formats including: JPEG, PNG, TIFF, BMP, PDF, CSV and XLSX.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "./lib/grabzit",
   "keywords": [
     "screenshots",

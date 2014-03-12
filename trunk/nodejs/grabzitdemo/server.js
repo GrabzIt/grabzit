@@ -82,7 +82,7 @@ app.post('/', function (req, res) {
         client.set_pdf_options(targetUrl);
     }
 
-    client.save({'callBackUrl':config.callbackHandlerUrl});
+    client.save(config.callbackHandlerUrl);
 
     res.render('index');
 });
