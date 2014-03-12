@@ -1,11 +1,9 @@
-GrabzIt 0.0.7 (Alpha)
-=====================
+GrabzIt 2.1.0
+=============
 
-This software allows you to programmatically take screenshots of websites.
+This software allows you to programmatically take screenshots of websites. For more help please read our [documentation](http://grabz.it/api/nodejs).
 
-Its usually best to place these files in thier own directory.
-
-**Note this is very much in alpha and currently has no dedicated documentation, however some will be coming soon. We released the alpha version so people can use it and [suggest](http://grabz.it/contact.aspx) and improvements.**
+Its usually best to place these files in their own directory.
 
 Before the package can be used you must [register](http://grabz.it/register.aspx) to get your application key and secret. Once you have this you can take a screenshot like so:
 
