@@ -1,4 +1,4 @@
-GrabzIt 0.0.6 (Alpha)
+GrabzIt 0.0.7 (Alpha)
 =====================
 
 This software allows you to programmatically take screenshots of websites.
@@ -12,7 +12,7 @@ Before the package can be used you must [register](http://grabz.it/register.aspx
     var grabzit = require("grabzit");
     var client = new grabzit("YOUR APPLICATION KEY", "YOUR APPLICATION SECRET");
     client.set_image_options("http://www.google.com");
-    client.save({"callBackUrl":"http://www.mysite.com/handler"});
+    client.save(http://www.mysite.com/handler");
 
 The handler then gets passed the following query string parameters:
 

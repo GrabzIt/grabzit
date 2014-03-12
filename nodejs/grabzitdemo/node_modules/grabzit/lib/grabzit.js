@@ -8,62 +8,64 @@ var TRUE = "True";
 
 function GrabzItClient(applicationKey, applicationSecret)
 {
-        this.SUCCESS = 0;
-        this.PARAMETER_NO_URL = 100;
-        this.PARAMETER_INVALID_URL = 101;
-        this.PARAMETER_NON_EXISTANT_URL = 102;
-        this.PARAMETER_MISSING_APPLICATION_KEY = 103;
-        this.PARAMETER_UNRECOGNISED_APPLICATION_KEY = 104;
-        this.PARAMETER_MISSING_SIGNATURE = 105;
-        this.PARAMETER_INVALID_SIGNATURE = 106;
-        this.PARAMETER_INVALID_FORMAT = 107;
-        this.PARAMETER_INVALID_COUNTRY_CODE = 108;
-        this.PARAMETER_DUPLICATE_IDENTIFIER = 109;
-        this.PARAMETER_MATCHING_RECORD_NOT_FOUND = 110;
-        this.PARAMETER_INVALID_CALLBACK_URL = 111;
-        this.PARAMETER_NON_EXISTANT_CALLBACK_URL = 112;
-        this.PARAMETER_IMAGE_WIDTH_TOO_LARGE = 113;
-        this.PARAMETER_IMAGE_HEIGHT_TOO_LARGE = 114;
-        this.PARAMETER_BROWSER_WIDTH_TOO_LARGE = 115;
-        this.PARAMETER_BROWSER_HEIGHT_TOO_LARGE = 116;
-        this.PARAMETER_DELAY_TOO_LARGE = 117;
-        this.PARAMETER_INVALID_BACKGROUND = 118;
-        this.PARAMETER_INVALID_INCLUDE_LINKS = 119;
-        this.PARAMETER_INVALID_INCLUDE_OUTLINE = 120;
-        this.PARAMETER_INVALID_PAGE_SIZE = 121;
-        this.PARAMETER_INVALID_PAGE_ORIENTATION = 122;
-        this.PARAMETER_VERTICAL_MARGIN_TOO_LARGE = 123;
-        this.PARAMETER_HORIZONTAL_MARGIN_TOO_LARGE = 124;
-        this.PARAMETER_INVALID_COVER_URL = 125;
-        this.PARAMETER_NON_EXISTANT_COVER_URL = 126;
-        this.PARAMETER_MISSING_COOKIE_NAME = 127;
-        this.PARAMETER_MISSING_COOKIE_DOMAIN = 128;
-        this.PARAMETER_INVALID_COOKIE_NAME = 129;
-        this.PARAMETER_INVALID_COOKIE_DOMAIN = 130;
-        this.PARAMETER_INVALID_COOKIE_DELETE = 131;
-        this.PARAMETER_INVALID_COOKIE_HTTP = 132;
-        this.PARAMETER_INVALID_COOKIE_EXPIRY = 133;
-        this.PARAMETER_INVALID_CACHE_VALUE = 134;
-        this.PARAMETER_INVALID_DOWNLOAD_VALUE = 135;
-        this.PARAMETER_INVALID_SUPPRESS_VALUE = 136;
-        this.PARAMETER_MISSING_WATERMARK_IDENTIFIER = 137;
-        this.PARAMETER_INVALID_WATERMARK_IDENTIFIER = 138;
-        this.PARAMETER_INVALID_WATERMARK_XPOS = 139;
-        this.PARAMETER_INVALID_WATERMARK_YPOS = 140;
-        this.PARAMETER_MISSING_WATERMARK_FORMAT = 141;
-        this.PARAMETER_WATERMARK_TOO_LARGE = 142;
-        this.PARAMETER_MISSING_PARAMETERS = 143;
-        this.PARAMETER_QUALITY_TOO_LARGE = 144;
-        this.PARAMETER_QUALITY_TOO_SMALL = 145;
-        this.NETWORK_SERVER_OFFLINE = 200;
-        this.NETWORK_GENERAL_ERROR = 201;
-        this.NETWORK_DDOS_ATTACK = 202;
-        this.RENDERING_ERROR = 300;
-        this.RENDERING_MISSING_SCREENSHOT = 301;
-        this.GENERIC_ERROR = 400;
-        this.UPGRADE_REQUIRED = 500;
-        this.FILE_SAVE_ERROR = 600;
-        this.FILE_NON_EXISTANT_PATH = 601;   
+    this.ERROR_CODES = {
+        SUCCESS: 0,
+        PARAMETER_NO_URL: 100,
+        PARAMETER_INVALID_URL: 101,
+        PARAMETER_NON_EXISTANT_URL: 102,
+        PARAMETER_MISSING_APPLICATION_KEY: 103,
+        PARAMETER_UNRECOGNISED_APPLICATION_KEY: 104,
+        PARAMETER_MISSING_SIGNATURE: 105,
+        PARAMETER_INVALID_SIGNATURE: 106,
+        PARAMETER_INVALID_FORMAT: 107,
+        PARAMETER_INVALID_COUNTRY_CODE: 108,
+        PARAMETER_DUPLICATE_IDENTIFIER: 109,
+        PARAMETER_MATCHING_RECORD_NOT_FOUND: 110,
+        PARAMETER_INVALID_CALLBACK_URL: 111,
+        PARAMETER_NON_EXISTANT_CALLBACK_URL: 112,
+        PARAMETER_IMAGE_WIDTH_TOO_LARGE: 113,
+        PARAMETER_IMAGE_HEIGHT_TOO_LARGE: 114,
+        PARAMETER_BROWSER_WIDTH_TOO_LARGE: 115,
+        PARAMETER_BROWSER_HEIGHT_TOO_LARGE: 116,
+        PARAMETER_DELAY_TOO_LARGE: 117,
+        PARAMETER_INVALID_BACKGROUND: 118,
+        PARAMETER_INVALID_INCLUDE_LINKS: 119,
+        PARAMETER_INVALID_INCLUDE_OUTLINE: 120,
+        PARAMETER_INVALID_PAGE_SIZE: 121,
+        PARAMETER_INVALID_PAGE_ORIENTATION: 122,
+        PARAMETER_VERTICAL_MARGIN_TOO_LARGE: 123,
+        PARAMETER_HORIZONTAL_MARGIN_TOO_LARGE: 124,
+        PARAMETER_INVALID_COVER_URL: 125,
+        PARAMETER_NON_EXISTANT_COVER_URL: 126,
+        PARAMETER_MISSING_COOKIE_NAME: 127,
+        PARAMETER_MISSING_COOKIE_DOMAIN: 128,
+        PARAMETER_INVALID_COOKIE_NAME: 129,
+        PARAMETER_INVALID_COOKIE_DOMAIN: 130,
+        PARAMETER_INVALID_COOKIE_DELETE: 131,
+        PARAMETER_INVALID_COOKIE_HTTP: 132,
+        PARAMETER_INVALID_COOKIE_EXPIRY: 133,
+        PARAMETER_INVALID_CACHE_VALUE: 134,
+        PARAMETER_INVALID_DOWNLOAD_VALUE: 135,
+        PARAMETER_INVALID_SUPPRESS_VALUE: 136,
+        PARAMETER_MISSING_WATERMARK_IDENTIFIER: 137,
+        PARAMETER_INVALID_WATERMARK_IDENTIFIER: 138,
+        PARAMETER_INVALID_WATERMARK_XPOS: 139,
+        PARAMETER_INVALID_WATERMARK_YPOS: 140,
+        PARAMETER_MISSING_WATERMARK_FORMAT: 141,
+        PARAMETER_WATERMARK_TOO_LARGE: 142,
+        PARAMETER_MISSING_PARAMETERS: 143,
+        PARAMETER_QUALITY_TOO_LARGE: 144,
+        PARAMETER_QUALITY_TOO_SMALL: 145,
+        NETWORK_SERVER_OFFLINE: 200,
+        NETWORK_GENERAL_ERROR: 201,
+        NETWORK_DDOS_ATTACK: 202,
+        RENDERING_ERROR: 300,
+        RENDERING_MISSING_SCREENSHOT: 301,
+        GENERIC_ERROR: 400,
+        UPGRADE_REQUIRED: 500,
+        FILE_SAVE_ERROR: 600,
+        FILE_NON_EXISTANT_PATH: 601
+        };   
 
         this.request = '';
         this.requestParams = null;
@@ -150,7 +152,7 @@ function _toInt(value){
     return 0;
 }
 
-function _getWaterMarks(applicationKey, applicationSecret, identifier, onComplete){
+function _getWaterMarks(applicationKey, applicationSecret, identifier, oncomplete){
     var sig = _createSignature(applicationSecret + '|' + identifier);
 
     var params = {
@@ -159,7 +161,7 @@ function _getWaterMarks(applicationKey, applicationSecret, identifier, onComplet
         'sig': sig
     };
 
-    _get(this, 'getwatermarks.ashx?' + querystring.stringify(params), 'watermarks', onComplete);
+    _get(this, 'getwatermarks.ashx?' + querystring.stringify(params), 'watermarks', oncomplete);
 }
 
 function _getFormDataForPost(fields, files) {
@@ -215,7 +217,7 @@ function _getFormDataForPost(fields, files) {
     return params;
 }
 
-function _get(self, url, type, onComplete){
+function _get(self, url, type, oncomplete){
     var options = {
         host: 'grabz.it',
         port: 80,
@@ -236,16 +238,16 @@ function _get(self, url, type, onComplete){
 
         res.on('end', function () {
             if (type != 'binary') {
-                if (onComplete != null) {
+                if (oncomplete != null) {
                     var error = _getError(res, data);
                     var obj = _convert(data, type);
                     if (error != null) {
                         obj = null;
                     }
-                    onComplete(error, obj);
+                    oncomplete(error, obj);
                 }
-            } else if (onComplete != null) {
-                onComplete(null, data);
+            } else if (oncomplete != null) {
+                oncomplete(null, data);
             }
         });
     });
@@ -257,7 +259,7 @@ function _getError(res, data){
     if (res.statusCode == 403) {
         var error = new Error();
         error.message = 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
-        error.code = self.NETWORK_DDOS_ATTACK;
+        error.code = self.ERROR_CODES.NETWORK_DDOS_ATTACK;
             
         return error;
     }
@@ -265,7 +267,7 @@ function _getError(res, data){
     if (res.statusCode >= 400) {
         var error = new Error();
         error.message = 'A network error occured when connecting to the GrabzIt servers.';
-        error.code = self.NETWORK_GENERAL_ERROR;
+        error.code = self.ERROR_CODES.NETWORK_GENERAL_ERROR;
 
         return error;
     }
@@ -283,6 +285,11 @@ function _getError(res, data){
     return null;
 }
 
+/*
+* Sets the parameters required to convert a web page into a PDF.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#setpdfoptions
+*/
 GrabzItClient.prototype.set_pdf_options = function (url, options) {
     var defaults = {
         'customId': '',
@@ -351,6 +358,11 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
      + '|' +  parseInt(context['requestAs'])  + '|' + context['country'] + '|' + context['quality'];
 };
 
+/*
+* Sets the parameters required to extract one or more tables from a web page.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#settableoptions
+*/
 GrabzItClient.prototype.set_table_options = function (url, options) {
     var defaults = {
         'customId': '',
@@ -385,6 +397,11 @@ GrabzItClient.prototype.set_table_options = function (url, options) {
 
 };
 
+/*
+* Sets the parameters required to take a screenshot of a web page.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#setimageoptions
+*/
 GrabzItClient.prototype.set_image_options = function (url, options) {
     var defaults = {
         'customId': '',
@@ -427,51 +444,51 @@ GrabzItClient.prototype.set_image_options = function (url, options) {
      + '|' + context['country'] + '|' + context['quality'];
 };
 
-GrabzItClient.prototype.save = function (options) {
-    var defaults = {
-        'callBackUrl': '',
-        'onComplete': null
-    };
+/*
+* Calls the GrabzIt web service to take the screenshot.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#save
+*/
+GrabzItClient.prototype.save = function (callBackUrl, oncomplete) {
+    if (callBackUrl == null) {
+        callBackUrl = '';
+    }
 
-    context = _extend(defaults, options);
-
-    onComplete = context['onComplete'];
-        
     if (this.signaturePartOne == '' && this.signaturePartTwo == '' && this.request == '') {
-        if (onComplete != null){
+        if (oncomplete != null) {
             var error = new Error();
             error.message = 'No screenshot parameters have been set.';
-            error.code = this.PARAMETER_MISSING_PARAMETERS;
-            onComplete(error, null);
+            error.code = this.ERROR_CODES.PARAMETER_MISSING_PARAMETERS;
+            oncomplete(error, null);
         }
         return;
-	}
+    }
 
-	this.requestParams.callback = context['callBackUrl'];
+    this.requestParams.callback = callBackUrl;
 
-    var sig = _createSignature(this.signaturePartOne+context['callBackUrl']+this.signaturePartTwo);                                              
+    var sig = _createSignature(this.signaturePartOne + callBackUrl + this.signaturePartTwo);
     var currentRequest = this.request + querystring.stringify(this.requestParams) + '&sig=' + sig;
 
-    _get(this, currentRequest, 'screenshot', onComplete);
+    _get(this, currentRequest, 'screenshot', oncomplete);
 };
 
-GrabzItClient.prototype.save_to = function (options) {
-    var defaults = {
-        'saveToFile': '',
-        'onComplete': null
-    };
+/*
+* Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. If no target path is provided it returns the screenshot byte data.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#saveto
+*/
+GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
+    if (saveToFile == null) {
+        saveToFile = '';
+    }
 
-    context = _extend(defaults, options);
-
-    saveToFile = context['saveToFile'];
-    onCompleteEvent = context['onComplete'];
-
+    var oncompleteEvent = oncomplete;
     var self = this;
 
-    this.save({ 'onComplete': function (err, id) {
+    this.save(null, function (err, id) {
         if (err != null) {
-            if (onCompleteEvent != null) {
-                onCompleteEvent(err, null);
+            if (oncompleteEvent != null) {
+                oncompleteEvent(err, null);
             }
             return;
         }
@@ -481,8 +498,8 @@ GrabzItClient.prototype.save_to = function (options) {
                 if (err != null) {
                     clearInterval(intervalId);
                         
-                    if (onCompleteEvent != null) {
-                        onCompleteEvent(err, null);
+                    if (oncompleteEvent != null) {
+                        oncompleteEvent(err, null);
                     }
                     return;
                 }
@@ -490,12 +507,12 @@ GrabzItClient.prototype.save_to = function (options) {
                 if (!status.cached && !status.processing) {
                     clearInterval(intervalId);
 
-                    if (onCompleteEvent != null) {
+                    if (oncompleteEvent != null) {
                         var error = new Error();
                         error.message = 'The screenshot did not complete with the error: ' + status.message;
-                        error.code = this.RENDERING_ERROR;
+                        error.code = this.ERROR_CODES.RENDERING_ERROR;
 
-                        onCompleteEvent(error, null);
+                        oncompleteEvent(error, null);
                     }
                 }
                 else if (status.cached) {
@@ -503,45 +520,59 @@ GrabzItClient.prototype.save_to = function (options) {
 
                     self.get_result(id, function (err, result) {
                         if (result == null || result == '') {
-                            if (onCompleteEvent != null) {
+                            if (oncompleteEvent != null) {
                                 var error = new Error();
                                 error.message = 'The screenshot could not be found on GrabzIt.';
-                                error.code = this.RENDERING_MISSING_SCREENSHOT;
+                                error.code = this.ERROR_CODES.RENDERING_MISSING_SCREENSHOT;
 
-                                onCompleteEvent(error, null);
+                                oncompleteEvent(error, null);
 
                                 return;
                             }
                         }
 
                         if (saveToFile == '') {
-                            if (onCompleteEvent != null) {
-                                onCompleteEvent(null, result)
+                            if (oncompleteEvent != null) {
+                                oncompleteEvent(null, result)
                             }
                         }
 
                         file.writeFile(saveToFile, result, 'binary', function(err) {
-                            if (onCompleteEvent != null) {
-                                onCompleteEvent(err, null)
+                            if (oncompleteEvent != null) {
+                                oncompleteEvent(err, null)
                             }
                         });
                     });
                 }
             });
         }, 3000);
-    }
     });
 };
 
-GrabzItClient.prototype.get_result = function (id, onComplete) {
-    _get(this, 'getfile.ashx?id=' + id, 'binary', onComplete)
+/*
+* This method returns the screenshot itself. If nothing is returned then something has gone wrong or the screenshot is not ready yet.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getresult
+*/
+GrabzItClient.prototype.get_result = function (id, oncomplete) {
+    _get(this, 'getfile.ashx?id=' + id, 'binary', oncomplete)
 };
 
-GrabzItClient.prototype.get_status = function (id, onComplete) {
-    _get(this, 'getstatus.ashx?id=' + id, 'status', onComplete);
+/*
+* Get the current status of a GrabzIt screenshot.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getstatus
+*/
+GrabzItClient.prototype.get_status = function (id, oncomplete) {
+    _get(this, 'getstatus.ashx?id=' + id, 'status', oncomplete);
 };
 
-GrabzItClient.prototype.get_cookies = function (domain, onComplete) {
+/*
+* Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getcookies
+*/
+GrabzItClient.prototype.get_cookies = function (domain, oncomplete) {
     var sig = _createSignature(this.applicationSecret+'|'+domain);
 
     var params = {
@@ -550,10 +581,15 @@ GrabzItClient.prototype.get_cookies = function (domain, onComplete) {
         'sig':sig
     };    
 
-    _get(this, 'getcookies.ashx?' + querystring.stringify(params), 'cookies', onComplete)
+    _get(this, 'getcookies.ashx?' + querystring.stringify(params), 'cookies', oncomplete)
 };
 
-GrabzItClient.prototype.set_cookie = function (name, domain, options, onComplete) {
+/*
+* Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global cookie is overridden.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#setcookie
+*/
+GrabzItClient.prototype.set_cookie = function (name, domain, options, oncomplete) {
 
     var defaults = {
         'value': '',
@@ -577,10 +613,15 @@ GrabzItClient.prototype.set_cookie = function (name, domain, options, onComplete
         'sig': sig
     };
 
-    _get(this, 'setcookie.ashx?' + querystring.stringify(params), 'result', onComplete);
+    _get(this, 'setcookie.ashx?' + querystring.stringify(params), 'result', oncomplete);
 };
 
-GrabzItClient.prototype.delete_cookie = function (name, domain, onComplete) {
+/*
+* Delete a custom cookie or block a global cookie from being used.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#deletecookie
+*/
+GrabzItClient.prototype.delete_cookie = function (name, domain, oncomplete) {
 
     var sig = _createSignature(this.applicationSecret + '|' + name + '|' + domain + '|1');
 
@@ -592,21 +633,26 @@ GrabzItClient.prototype.delete_cookie = function (name, domain, onComplete) {
         'sig': sig
     };
 
-    _get(this, 'setcookie.ashx?' + querystring.stringify(params), 'result', onComplete);
+    _get(this, 'setcookie.ashx?' + querystring.stringify(params), 'result', oncomplete);
 };
 
-GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, ypos, onComplete) {
+/*
+* Add a new custom watermark.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#addwatermark
+*/
+GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, ypos, oncomplete) {
 
     var self = this;
 
     file.exists(filePath, function (exists) {
         if (!exists) {
-            if (onComplete != null) {
+            if (oncomplete != null) {
                 var error = new Error();
                 error.message = 'File: ' + filePath + ' does not exist';
                 error.code = self.FILE_NON_EXISTANT_PATH;
 
-                onComplete(error, null);
+                oncomplete(error, null);
             }
             return;
         }
@@ -650,14 +696,14 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
             });
 
             response.on('end', function () {
-                if (onComplete != null) {
+                if (oncomplete != null) {
                     var error = _getError(res, data);
                     var obj = _convert(data, 'result');
                     if (error != null) {
                         obj = null;
                     }
 
-                    onComplete(error, obj);
+                    oncomplete(error, obj);
                 }
             });
         });
@@ -669,7 +715,12 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
     });
 };
 
-GrabzItClient.prototype.delete_watermark = function (identifier, onComplete) {
+/*
+* Delete a custom watermark.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#deletewatermark
+*/
+GrabzItClient.prototype.delete_watermark = function (identifier, oncomplete) {
     var sig = _createSignature(this.applicationSecret + '|' + identifier);
 
     var params = {
@@ -678,30 +729,40 @@ GrabzItClient.prototype.delete_watermark = function (identifier, onComplete) {
         'sig': sig
     };
 
-    _get(this, 'deletewatermark.ashx?' + querystring.stringify(params), 'result', onComplete);
+    _get(this, 'deletewatermark.ashx?' + querystring.stringify(params), 'result', oncomplete);
 };
 
-GrabzItClient.prototype.get_watermarks = function (onComplete) {
-    _getWaterMarks(this.applicationKey, this.applicationSecret, '', onComplete);
+/*
+* Get your uploaded custom watermarks.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getwatermarks
+*/
+GrabzItClient.prototype.get_watermarks = function (oncomplete) {
+    _getWaterMarks(this.applicationKey, this.applicationSecret, '', oncomplete);
 }
 
-GrabzItClient.prototype.get_watermark = function (identifier, onComplete) {
+/*
+* Get your uploaded custom watermark.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getwatermark
+*/
+GrabzItClient.prototype.get_watermark = function (identifier, oncomplete) {
     _getWaterMarks(this.applicationKey, this.applicationSecret, identifier, function (err, watermarks) {
         if (err != null) {
-            if (onComplete != null) {
-                onComplete(err, null);
+            if (oncomplete != null) {
+                oncomplete(err, null);
             }
             return;
         }
         if (watermarks != null && watermarks.length == 1) {
-            if (onComplete != null) {
-                onComplete(null, watermarks[0]);
+            if (oncomplete != null) {
+                oncomplete(null, watermarks[0]);
             }
             return;
         }
 
-        if (onComplete != null) {
-            onComplete(null, null);
+        if (oncomplete != null) {
+            oncomplete(null, null);
         }
     });
 }
