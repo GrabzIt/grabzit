@@ -9,6 +9,12 @@ block content
     a(href="http://grabz.it/account/diagnostics",target="_blank") diagnostics panel
     |  to see if there is an error.
 
+  if success
+    p
+        span(style="color:green;font-weight:bold;") Processing screenshot.
+  else if !success && message != null
+    p
+        span(class="error")= message
   form(action="/",method="post",class="inputForms")
     label(style="font-weight:bold;margin-right:1em;") URL 
     input(type="text",name="url")

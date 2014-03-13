@@ -82,9 +82,13 @@ app.post('/', function (req, res) {
         client.set_pdf_options(targetUrl);
     }
 
-    client.save(config.callbackHandlerUrl);
-
-    res.render('index');
+    client.save(config.callbackHandlerUrl, function (error, id){
+        if (error != null){
+            res.render('index', {'message': error.message, 'success': false});
+            return;     
+        }   
+        res.render('index', {'success': true}); 
+    });    
 });
 
 http.createServer(app).listen(app.get('port'), function(){
