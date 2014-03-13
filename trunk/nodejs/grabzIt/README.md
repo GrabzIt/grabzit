@@ -1,5 +1,5 @@
-GrabzIt 2.1.0
-=============
+GrabzIt 2.1
+===========
 
 This software allows you to programmatically take screenshots of websites. For more help please read our [documentation](http://grabz.it/api/nodejs).
 
