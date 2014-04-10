@@ -1,6 +1,6 @@
 #labels Featured
 =Download GrabzIt's Screenshot API=
-GrabzIt Screenshot API currently supports the following eight languages: 
+GrabzIt Screenshot API currently supports the following eight programming languages: 
   * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
   * [http://grabz.it/api/java/download.aspx Java]
   * [http://grabz.it/api/javascript/ JavaScript]
