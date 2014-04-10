@@ -2,6 +2,9 @@
 =Download GrabzIt's Screenshot API's=
   * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
   * [http://grabz.it/api/java/download.aspx Java]
-  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
-  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
-  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
+  * [http://grabz.it/api/javascript/ JavaScript]
+  * [http://grabz.it/api/nodejs/download.aspx Node.js]
+  * [http://grabz.it/api/perl/download.aspx Perl]
+  * [http://grabz.it/api/php/download.aspx PHP]
+  * [http://grabz.it/api/python/download.aspx Python]
+  * [http://grabz.it/api/ruby/download.aspx Ruby]
