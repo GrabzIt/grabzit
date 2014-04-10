@@ -1,7 +1,7 @@
 #labels Featured
 =Download GrabzIt's Screenshot API's=
-*[http://grabz.it/api/aspnet/download.aspx ASP.NET]
-*[http://grabz.it/api/java/download.aspx Java]
-*[http://grabz.it/api/aspnet/download.aspx ASP.NET]
-*[http://grabz.it/api/aspnet/download.aspx ASP.NET]
-*[http://grabz.it/api/aspnet/download.aspx ASP.NET]
+  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
+  * [http://grabz.it/api/java/download.aspx Java]
+  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
+  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
+  * [http://grabz.it/api/aspnet/download.aspx ASP.NET]
