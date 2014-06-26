@@ -35,7 +35,6 @@ public class GrabzItFile {
         {
             fileOuputStream = new FileOutputStream(path);
             fileOuputStream.write(getBytes());
-            fileOuputStream.close();
         }
         finally
         {
