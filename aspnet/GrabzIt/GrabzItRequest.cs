@@ -12,10 +12,13 @@ namespace GrabzIt
         private static string static_signaturePartOne;
         [ThreadStatic]
         private static string static_signaturePartTwo;
+        [ThreadStatic]
+        private static int static_startDelay;
 
         private string instance_request;
         private string instance_signaturePartOne;
         private string instance_signaturePartTwo;
+        private int instance_startDelay;
 
         private bool isStatic;
 
@@ -89,6 +92,29 @@ namespace GrabzIt
                 else
                 {
                     instance_signaturePartTwo = value;
+                }
+            }
+        }
+
+        internal int StartDelay
+        {
+            get
+            {
+                if (isStatic)
+                {
+                    return static_startDelay;
+                }
+                return instance_startDelay;
+            }
+            set
+            {
+                if (isStatic)
+                {
+                    static_startDelay = value;
+                }
+                else
+                {
+                    instance_startDelay = value;
                 }
             }
         }
