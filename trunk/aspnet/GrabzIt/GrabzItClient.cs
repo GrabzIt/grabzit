@@ -109,6 +109,7 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
+                request.StartDelay = delay;
                 request.Request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&quality={14}&callback=",
                                                               BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, outputWidth, outputHeight,
                                                               browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(customWaterMarkId), (int)requestAs, ConvertCountryToString(country), quality);
@@ -171,6 +172,7 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
+                request.StartDelay = 0;
                 request.Request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
                 request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
                 request.SignaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
@@ -237,6 +239,7 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
+                request.StartDelay = delay;
                 request.Request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&quality=" + quality + "&callback=";
                 request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
                 request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize.ToString().ToUpper() + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country) + "|" + quality;
@@ -358,6 +361,9 @@ namespace GrabzIt
                 {
                     return null;
                 }
+
+                //Wait until it is possible to be ready
+                Thread.Sleep(3000 + request.StartDelay);
 
                 //Wait for it to be ready.
                 while (true)
@@ -747,6 +753,11 @@ namespace GrabzIt
                                                            BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
+
+                if (webResult == null)
+                {
+                    return false;
+                }
 
                 CheckForException(webResult);
 
