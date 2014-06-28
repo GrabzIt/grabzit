@@ -32,8 +32,9 @@ module GrabzIt
 
 		@@signaturePartOne;
 		@@signaturePartTwo;
+		@@startDelay;		
 		@@request;
-
+		
 		# Create a new instance of the Client class in order to access the GrabzIt API.
 		#
 		# @param applicationKey [String] your application key
@@ -61,6 +62,13 @@ module GrabzIt
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 		# @return [void]		
 		def set_image_options(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestAs = 0, customWaterMarkId = nil, quality = -1, country = nil)
+
+			if delay == nil
+				@@startDelay = 0
+			else
+				@@startDelay = delay
+			end
+			
 			@@request = WebServicesBaseURL + "takepicture.ashx?key="+CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&width="+nil_int_check(width)+"&height="+nil_int_check(height)+"&format="+CGI.escape(nil_check(format))+"&bwidth="+nil_int_check(browserWidth)+"&bheight="+nil_int_check(browserHeight)+"&customid="+CGI.escape(nil_check(customId))+"&delay="+nil_int_check(delay)+"&target="+CGI.escape(nil_check(targetElement))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="
 			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
 			@@signaturePartTwo = "|"+nil_check(format)+"|"+nil_int_check(height)+"|"+nil_int_check(width)+"|"+nil_int_check(browserHeight)+"|"+nil_int_check(browserWidth)+"|"+nil_check(customId)+"|"+nil_int_check(delay)+"|"+nil_check(targetElement)+"|"+nil_check(customWaterMarkId)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)+"|"+nil_int_check(quality)
@@ -81,6 +89,8 @@ module GrabzIt
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"		
 		# @return [void]
 		def set_table_options(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestAs = 0, country = nil)
+			@@startDelay = 0
+			
 			@@request = WebServicesBaseURL + "taketable.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(url)+"&includeAllTables="+b_to_str(includeAllTables)+"&includeHeaderNames="+b_to_str(includeHeaderNames)+"&format="+CGI.escape(nil_check(format))+"&tableToInclude="+nil_int_check(tableNumberToInclude)+"&customid="+CGI.escape(nil_check(customId))+"&target="+CGI.escape(nil_check(targetElement))+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&callback="
 			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
 			@@signaturePartTwo = "|"+nil_check(customId)+"|"+nil_int_check(tableNumberToInclude)+"|"+b_to_str(includeAllTables)+"|"+b_to_str(includeHeaderNames)+"|"+nil_check(targetElement)+"|"+nil_check(format)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)
@@ -112,6 +122,12 @@ module GrabzIt
 		def set_pdf_options(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, customWaterMarkId = nil, quality = -1, country = nil)
 			pagesize = nil_check(pagesize).upcase
 			$orientation = nil_check(orientation).capitalize
+			
+			if delay == nil
+				@@startDelay = 0
+			else
+				@@startDelay = delay
+			end	
 
 			@@request = WebServicesBaseURL + "takepdf.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&background="+b_to_str(includeBackground)+"&pagesize="+pagesize+"&orientation="+orientation+"&customid="+CGI.escape(nil_check(customId))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&includelinks="+b_to_str(includeLinks)+"&includeoutline="+b_to_str(includeOutline)+"&title="+CGI.escape(nil_check(title))+"&coverurl="+CGI.escape(nil_check(coverURL))+"&mleft="+nil_int_check(marginLeft)+"&mright="+nil_int_check(marginRight)+"&mtop="+nil_int_check(marginTop)+"&mbottom="+nil_int_check(marginBottom)+"&delay="+nil_int_check(delay)+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="
 
@@ -161,6 +177,9 @@ module GrabzIt
 			if id == nil || id == ""
 				return false
 			end			
+			
+			#Wait for it to be possibly ready
+			sleep((@@startDelay / 1000) + 3)
 
 			#Wait for it to be ready.
 			while true do
