@@ -71,6 +71,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         this.requestParams = null;
         this.signaturePartOne = '';
         this.signaturePartTwo = '';
+        this.startDelay = 0;
         this.applicationKey = applicationKey;
         this.applicationSecret = applicationSecret;    
 }
@@ -325,6 +326,12 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
         orientation = first.toUpperCase() + rest.toLowerCase();
     }
 
+    if (context['delay'] == '') {
+        this.startDelay = 0;
+    } else {
+        this.startDelay = context['delay'] 
+    }
+
     this.requestParams = {
         'key':this.applicationKey,
         'url':url,
@@ -377,6 +384,8 @@ GrabzItClient.prototype.set_table_options = function (url, options) {
 
     context = _extend(defaults, options);
 
+    this.startDelay = 0;
+
     this.requestParams = {
         'key': this.applicationKey,
         'url': url,
@@ -420,27 +429,33 @@ GrabzItClient.prototype.set_image_options = function (url, options) {
 
     context = _extend(defaults, options);
 
+    if (context['delay'] == '') {
+        this.startDelay = 0;
+    } else {
+        this.startDelay = context['delay'] 
+    }
+
     this.requestParams = {
-        'key':this.applicationKey,
-        'url':url,
-        'width':context['width'],
-        'height':context['height'],
-        'format':context['format'],
-        'bwidth':context['browserWidth'],
-        'bheight':context['browserHeight'],
-        'customid':context['customid'],
-        'delay':context['delay'],
-        'target':context['targetElement'],
-        'customwatermarkid':context['customWaterMarkId'],
-        'requestmobileversion':parseInt(context['requestAs']),
-        'country':context['country'],
-        'quality':parseInt(context['quality'])
+        'key': this.applicationKey,
+        'url': url,
+        'width': context['width'],
+        'height': context['height'],
+        'format': context['format'],
+        'bwidth': context['browserWidth'],
+        'bheight': context['browserHeight'],
+        'customid': context['customid'],
+        'delay': context['delay'],
+        'target': context['targetElement'],
+        'customwatermarkid': context['customWaterMarkId'],
+        'requestmobileversion': parseInt(context['requestAs']),
+        'country': context['country'],
+        'quality': parseInt(context['quality'])
     };
 
     this.request = 'takepicture.ashx?';
     this.signaturePartOne = this.applicationSecret + '|' + url + '|';
     this.signaturePartTwo = '|' + context['format'] + '|' + context['height'] + '|' + context['width'] + '|' + context['browserHeight'] + '|' + context['browserWidth']
-     + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs']) 
+     + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs'])
      + '|' + context['country'] + '|' + context['quality'];
 };
 
@@ -493,59 +508,61 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
             return;
         }
 
-        var intervalId = setInterval(function () {
-            self.get_status(id, function (err, status) {
-                if (err != null) {
-                    clearInterval(intervalId);
-                        
-                    if (oncompleteEvent != null) {
-                        oncompleteEvent(err, null);
-                    }
-                    return;
-                }
+        setTimeout(function () {
+            var intervalId = setInterval(function () {
+                self.get_status(id, function (err, status) {
+                    if (err != null) {
+                        clearInterval(intervalId);
 
-                if (!status.cached && !status.processing) {
-                    clearInterval(intervalId);
-
-                    if (oncompleteEvent != null) {
-                        var error = new Error();
-                        error.message = 'The screenshot did not complete with the error: ' + status.message;
-                        error.code = this.ERROR_CODES.RENDERING_ERROR;
-
-                        oncompleteEvent(error, null);
-                    }
-                }
-                else if (status.cached) {
-                    clearInterval(intervalId);
-
-                    self.get_result(id, function (err, result) {
-                        if (result == null || result == '') {
-                            if (oncompleteEvent != null) {
-                                var error = new Error();
-                                error.message = 'The screenshot could not be found on GrabzIt.';
-                                error.code = this.ERROR_CODES.RENDERING_MISSING_SCREENSHOT;
-
-                                oncompleteEvent(error, null);
-
-                                return;
-                            }
+                        if (oncompleteEvent != null) {
+                            oncompleteEvent(err, null);
                         }
+                        return;
+                    }
 
-                        if (saveToFile == '') {
-                            if (oncompleteEvent != null) {
-                                oncompleteEvent(null, result)
-                            }
+                    if (!status.cached && !status.processing) {
+                        clearInterval(intervalId);
+
+                        if (oncompleteEvent != null) {
+                            var error = new Error();
+                            error.message = 'The screenshot did not complete with the error: ' + status.message;
+                            error.code = self.ERROR_CODES.RENDERING_ERROR;
+
+                            oncompleteEvent(error, null);
                         }
+                    }
+                    else if (status.cached) {
+                        clearInterval(intervalId);
 
-                        file.writeFile(saveToFile, result, 'binary', function(err) {
-                            if (oncompleteEvent != null) {
-                                oncompleteEvent(err, null)
+                        self.get_result(id, function (err, result) {
+                            if (result == null || result == '') {
+                                if (oncompleteEvent != null) {
+                                    var error = new Error();
+                                    error.message = 'The screenshot could not be found on GrabzIt.';
+                                    error.code = self.ERROR_CODES.RENDERING_MISSING_SCREENSHOT;
+
+                                    oncompleteEvent(error, null);
+
+                                    return;
+                                }
                             }
+
+                            if (saveToFile == '') {
+                                if (oncompleteEvent != null) {
+                                    oncompleteEvent(null, result)
+                                }
+                            }
+
+                            file.writeFile(saveToFile, result, 'binary', function (err) {
+                                if (oncompleteEvent != null) {
+                                    oncompleteEvent(err, null)
+                                }
+                            });
                         });
-                    });
-                }
-            });
-        }, 3000);
+                    }
+                });
+            }, 3000);
+        }, (3000 + self.startDelay));
     });
 };
 
