@@ -240,7 +240,7 @@ function _get(self, url, type, oncomplete){
         res.on('end', function () {
             if (type != 'binary') {
                 if (oncomplete != null) {
-                    var error = _getError(res, data);
+                    var error = _getError(self, res, data);
                     var obj = _convert(data, type);
                     if (error != null) {
                         obj = null;
@@ -256,7 +256,7 @@ function _get(self, url, type, oncomplete){
     request.end();
 }
 
-function _getError(res, data){
+function _getError(self, res, data){
     if (res.statusCode == 403) {
         var error = new Error();
         error.message = 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
@@ -714,7 +714,7 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
 
             response.on('end', function () {
                 if (oncomplete != null) {
-                    var error = _getError(res, data);
+                    var error = _getError(self, res, data);
                     var obj = _convert(data, 'result');
                     if (error != null) {
                         obj = null;
