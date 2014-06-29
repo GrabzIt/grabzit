@@ -14,6 +14,7 @@ class GrabzItClient
 	private $signaturePartOne;
 	private $signaturePartTwo;
 	private $request;
+	private $startDelay;
 	private $connectionTimeout = 600;
 
 	public function __construct($applicationKey, $applicationSecret)
@@ -66,6 +67,14 @@ class GrabzItClient
 	*/
 	public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestAs = 0, $customWaterMarkId = null, $quality = -1, $country = null)
 	{
+		if ($delay == null)
+		{
+			$this->startDelay = 0;
+		}
+		else
+		{
+			$this->startDelay = $delay;
+		}
 		$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&quality=".$quality."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
 		$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestAs)."|".$country."|".$quality;
@@ -85,6 +94,7 @@ class GrabzItClient
 	*/
 	public function SetTableOptions($url, $customId = null, $tableNumberToInclude = 1, $format = 'csv', $includeHeaderNames = true, $includeAllTables = false, $targetElement = null, $requestAs = 0, $country = null)
 	{
+		$this->startDelay = 0;
 		$this->request = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&includeAllTables=".intval($includeAllTables)."&includeHeaderNames=".intval($includeHeaderNames) ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".urlencode($customId)."&target=".urlencode($targetElement)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
 		$this->signaturePartTwo = "|".$customId."|".$tableNumberToInclude ."|".intval($includeAllTables)."|".intval($includeHeaderNames)."|".$targetElement."|".$format."|".intval($requestAs)."|".$country;
@@ -114,6 +124,15 @@ class GrabzItClient
 	*/
 	public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestAs = 0, $customWaterMarkId = null, $quality = -1, $country = null)
 	{
+		if ($delay == null)
+		{
+			$this->startDelay = 0;
+		}
+		else
+		{
+			$this->startDelay = $delay;
+		}
+		
 		$pagesize = strtoupper($pagesize);
 		$orientation = ucfirst($orientation);
 
@@ -162,6 +181,9 @@ class GrabzItClient
 			return false;
 		}
 
+		//Wait for screenshot to be possibly ready
+		usleep((3000 + $this->startDelay) * 1000);
+		
 		//Wait for it to be ready.
 		while(true)
 		{
