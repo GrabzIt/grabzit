@@ -65,6 +65,7 @@ sub SetImageOptions($;$$$$$$$$$$$$)
 	$quality ||= -1;
 	$country ||= '';
 
+	$self->{startDelay} = $delay;
 	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".uri_escape($customId)."&delay=".$delay."&target=".uri_escape($targetElement)."&customwatermarkid=".uri_escape($customWaterMarkId)."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&quality=".$quality."&callback=";
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
 	$self->{signaturePartTwo} = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".$requestAs."|".$country."|".$quality;
@@ -95,6 +96,7 @@ sub SetTableOptions($;$$$$$$$$)
 	$requestAs ||= 0;
 	$country ||= '';
 
+	$self->{startDelay} = 0;
 	$self->{request} = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&includeAllTables=".$includeAllTables."&includeHeaderNames=".$includeHeaderNames ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".uri_escape($customId)."&target=".uri_escape($targetElement)."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&callback=";
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
 	$self->{signaturePartTwo} = "|".$customId."|".$tableNumberToInclude ."|".$includeAllTables."|".$includeHeaderNames."|".$targetElement."|".$format."|".$requestAs."|".$country;
@@ -148,6 +150,7 @@ sub SetPDFOptions($;$$$$$$$$$$$$$$$$)
 	$pagesize = uc($pagesize);
 	$orientation = ucfirst($orientation);
 
+	$self->{startDelay} = $delay;
 	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&quality=".$quality."&callback=";
 
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
@@ -198,6 +201,9 @@ sub SaveTo($)
 	{
 	    return 0;
 	}
+	
+	#Wait for it to be possibly ready
+	sleep(int((3000 + $self->{startDelay}) / 1000));
 	
 	#Wait for it to be ready.
 	while(1)
