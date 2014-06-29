@@ -24,6 +24,7 @@ class GrabzItClient:
                 self.signaturePartOne = ""
                 self.signaturePartTwo = ""
                 self.request = ""
+                self.startDelay = 0
                 self.requestParams = {}
                 
         #
@@ -40,12 +41,12 @@ class GrabzItClient:
         #targetElement - The id of the only HTML element in the web page to turn into a screenshot
         #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
         #customWaterMarkId - add a custom watermark to the image
-	#quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
+        #quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
         #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
         def SetImageOptions(self, url, customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
                 self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"format":str(format),"bwidth":int(browserWidth),"bheight":int(browserHeight),"customid":str(customId),"delay":int(delay),"target":str(targetElement),"customwatermarkid":str(customWaterMarkId), "requestmobileversion": int(requestAs), "country": str(country), "quality" : int(quality)}                   
-                
+                self.startDelay = delay
                 self.request = self.WebServicesBaseURL + "takepicture.ashx?"
                 self.signaturePartOne = self.applicationSecret+"|"+str(url)+"|"
                 self.signaturePartTwo = "|"+str(format)+"|"+str(int(height))+"|"+str(int(width))+"|"+str(int(browserHeight))+"|"+str(int(browserWidth))+"|"+str(customId)+"|"+str(int(delay))+"|"+str(targetElement)+"|"+str(customWaterMarkId)+"|"+str(int(requestAs))+"|"+str(country)+"|"+str(int(quality))
@@ -64,7 +65,7 @@ class GrabzItClient:
         #
         def SetTableOptions(self, url, customId = '', tableNumberToInclude = 1, format = 'csv', includeHeaderNames = True, includeAllTables = False, targetElement = '', requestAs = 0, country = ''):
                 self.requestParams = {"key":self.applicationKey, "url":url, "includeAllTables":int(includeAllTables),"includeHeaderNames":int(includeHeaderNames),"format":str(format),"tableToInclude":int(tableNumberToInclude),"customid":str(customId),"target":str(targetElement),"requestmobileversion":int(requestAs),"country":str(country)}                
-        
+                self.startDelay = 0        
                 self.request = self.WebServicesBaseURL + "taketable.ashx?"
                 
                 self.signaturePartOne = self.applicationSecret+"|"+url+"|"
@@ -89,13 +90,13 @@ class GrabzItClient:
         #delay - The number of milliseconds to wait before taking the screenshot
         #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
         #customWaterMarkId - add a custom watermark to each page of the PDF document
-	#quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+        #quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
         #
         def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
                 pagesize = pagesize.upper()
                 orientation = orientation.title()
-                
+                self.startDelay = delay
                 self.requestParams = {"key":self.applicationKey, "url":url, "background":int(includeBackground),"pagesize":str(pagesize),"orientation":str(orientation),"customid":str(customId),"customWaterMarkId":customWaterMarkId,"includelinks":int(includeLinks),"includeoutline":int(includeOutline),"title":str(title),"coverurl":str(coverURL),"mleft":int(marginLeft),"mright":int(marginRight),"mtop":int(marginTop),"mbottom":int(marginBottom),"delay":int(delay),"requestmobileversion":int(requestAs),"country":str(country), "quality":int(quality)}                                       
 
                 self.request = self.WebServicesBaseURL + "takepdf.ashx?"
@@ -122,22 +123,25 @@ class GrabzItClient:
                 
                 return self.GetResultObject(self.HTTPGet(currentRequest), "ID")
 
-	#
-	#Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
-	#it returns the screenshot byte data.
-	#
-	#WARNING this method is synchronous so will cause a application to pause while the result is processed.
-	#
-	#This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
-	#otherwise the method throws an exception.
-	#
+        #
+        #Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
+        #it returns the screenshot byte data.
+        #
+        #WARNING this method is synchronous so will cause a application to pause while the result is processed.
+        #
+        #This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
+        #otherwise the method throws an exception.
+        #
         def SaveTo(self, saveToFile = ''):
                 id = self.Save()
 
                 if (id == None or id == ""):
                         return False
 
-		#Wait for it to be ready.
+                #Wait for it to be possibly ready
+                sleep((3000 + self.startDelay) / 1000)
+
+                #Wait for it to be ready.
                 while(1):
                         status = self.GetStatus(id)
                         if not(status.Cached) and not(status.Processing):
@@ -153,12 +157,12 @@ class GrabzItClient:
                                         return result
                                         
                                 fo = open(saveToFile, "wb")
-                                fo.write(result)		
+                                fo.write(result)                
                                 fo.close()
                         
                                 break
 
-                        sleep(3)		    
+                        sleep(3)                    
                 return True
         
         #
@@ -465,7 +469,7 @@ class GrabzItClient:
                         break
                 
                 if len(message) > 0:
-                        raise GrabzItException.GrabzItException(message, code)		
+                        raise GrabzItException.GrabzItException(message, code)          
        
                 
         def GetFirstValue(self, node):
