@@ -45,6 +45,7 @@ public class GrabzItClient {
     private String request;
     private String signaturePartOne;
     private String signaturePartTwo;
+    private int startDelay;
     
     private final String BASE_URL = "http://grabz.it/services/";
 
@@ -80,6 +81,7 @@ public class GrabzItClient {
      */
     public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
+        this.startDelay = delay;        
         this.request = String.format("%stakepicture.ashx?url=%s&key=%s&width=%s&height=%s&bwidth=%s&bheight=%s&format=%s&customid=%s&delay=%s&target=%s&customwatermarkid=%s&requestmobileversion=%s&country=%s&quality=%s&callback=",
                                                               BASE_URL, encode(url), applicationKey, outputWidth, outputHeight,
                                                               browserWidth, browserHeight, format.getValue(), encode(customId), delay, encode(targetElement), encode(customWaterMarkId), requestAs.getValue(), country.getValue(), quality);
@@ -143,6 +145,7 @@ public class GrabzItClient {
      */
     public void SetTableOptions(String url, String customId, int tableNumberToInclude, TableFormat format, boolean includeHeaderNames, boolean includeAllTables, String targetElement, BrowserType requestAs, Country country) throws UnsupportedEncodingException
     {
+        this.startDelay = 0;        
         this.request = BASE_URL + "taketable.ashx?key=" + encode(applicationKey)+"&url="+encode(url)+"&includeAllTables="+ toInt(includeAllTables)+"&includeHeaderNames="+toInt(includeHeaderNames)+"&format="+format.getValue()+"&tableToInclude="+tableNumberToInclude+"&customid="+encode(customId)+"&target="+encode(targetElement)+"&requestmobileversion="+requestAs.getValue()+"&country="+country.getValue()+"&callback=";
         this.signaturePartOne = applicationSecret+"|"+url+"|";
         this.signaturePartTwo = "|"+customId+"|"+tableNumberToInclude+"|"+toInt(includeAllTables)+"|"+toInt(includeHeaderNames)+"|"+targetElement+"|"+format.getValue()+"|"+requestAs.getValue()+"|"+country.getValue();
@@ -210,6 +213,7 @@ public class GrabzItClient {
      */
     public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
+        this.startDelay = delay;
         this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&quality=" + quality + "&callback=";
         this.signaturePartOne = applicationSecret + "|" + url + "|";
         this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality;
@@ -309,6 +313,8 @@ public class GrabzItClient {
         {
             return null;
         }
+        
+        Thread.sleep(3000 + startDelay);
         
         //Wait for it to be ready.
         while (true)
