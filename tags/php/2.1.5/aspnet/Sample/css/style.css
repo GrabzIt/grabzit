@@ -1,0 +1,38 @@
+body
+{
+   color: #333333;
+   font-family: Century Gothic, sans-serif;
+   margin-left:3em;
+   margin-right:3em;
+}
+
+.error
+{
+   color:red;font-weight:bold;
+}
+
+h1
+{
+  border:1px solid #000; 
+  padding:0.5em;
+  text-align:center;
+}
+
+.result, .zoomedResult
+{
+   cursor: hand;
+   cursor: pointer; 
+}
+
+.result
+{
+   width:150px;
+   height:150px;
+   border:0;
+}
+
+.inputForms
+{
+   display:inline;
+   clear:none;
+}

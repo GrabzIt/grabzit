@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 GrabzIt Demo
+  p
+    |  Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the 
+    a(href="results/",target="_blank") results directory
+    |  . It may take a few seconds for it to appear! If nothing is happening check the 
+    a(href="http://grabz.it/account/diagnostics",target="_blank") diagnostics panel
+    |  to see if there is an error.
+
+  if success
+    p
+        span(style="color:green;font-weight:bold;") Processing screenshot.
+  else if !success && message != null
+    p
+        span(class="error")= message
+  form(action="/",method="post",class="inputForms")
+    label(style="font-weight:bold;margin-right:1em;") URL 
+    input(type="text",name="url")
+    select(name="type")
+        option(value="JPG") JPG
+        option(value="PDF") PDF
+    input(type="submit", value="Grabz It")
+  form(action="/delete",method="get",class="inputForms")
+    input(type="submit", value="Clear Results")
+
+  h2 Completed Screenshots
+  div(id="divResults")
