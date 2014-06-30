@@ -5,7 +5,7 @@
     "homepage": "http://grabz.it/",	
     "description": "Use our API to integrate screenshots or table capture into your website or application.",
 	"license": "MIT",
-	"version":"2.1.4",
+	"version":"2.1.5",
 	"support": {
         "issues": "http://grabz.it/support/"
     },
