@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Web Developer Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrabzIt", "GrabzIt\GrabzIt.csproj", "{FBE0E172-5653-4FA1-9013-90F1496904F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{A54E8044-37CC-4FEC-8641-14871E777CA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleConsole", "SampleConsole\SampleConsole.csproj", "{0A3766E8-DAFB-44A6-916B-AE6B12203116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBE0E172-5653-4FA1-9013-90F1496904F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBE0E172-5653-4FA1-9013-90F1496904F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBE0E172-5653-4FA1-9013-90F1496904F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBE0E172-5653-4FA1-9013-90F1496904F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A54E8044-37CC-4FEC-8641-14871E777CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A54E8044-37CC-4FEC-8641-14871E777CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A54E8044-37CC-4FEC-8641-14871E777CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A54E8044-37CC-4FEC-8641-14871E777CA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
