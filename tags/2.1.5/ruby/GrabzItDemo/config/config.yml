@@ -1,0 +1,13 @@
+defaults: &defaults
+  application_key: YOUR APPLICATION KEY
+  application_secret: YOUR APPLICATION SECRET
+  handler: URL OF YOUR GrabzIt Handler FILE (http://www.example.com/handler/index)
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

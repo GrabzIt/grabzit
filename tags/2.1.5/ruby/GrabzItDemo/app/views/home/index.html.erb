@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>GrabzIt Demo</title>
+<%= stylesheet_link_tag "style.css" %>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<%= javascript_include_tag "ui" %>
+</head>
+<body>
+<h1>GrabzIt Demo</h1>
+<p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the screenshots directory. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+<form method="post" action="/processScreenshot" class="inputForms">
+<p><span style="color:green;font-weight:bold;"><%= @SuccessMessage %></span><span class="error"><%= @ErrorMessage %></span></p>
+<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"></input> <select name="format">
+  <option value="jpg">JPG</option>
+  <option value="pdf">PDF</option>
+</select>
+<input type="submit" value="Grabz It"></input></form><form method="post" action="/clearScreenshots" class="inputForms">
+<input type="hidden" name="delete" value="1"></input>
+<input type="submit" value="Clear Results"></input>
+</form>
+    <br />
+    <h2>Completed Screenshots</h2>
+    <div id="divResults"></div>
+</body>
+</html>

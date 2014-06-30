@@ -1,0 +1,80 @@
+<Configuration>
+  <UnitTestRunner>
+    <CustomStartDirectory>
+    </CustomStartDirectory>
+    <UseShadowCopy>True</UseShadowCopy>
+    <UseCustomFolder>False</UseCustomFolder>
+    <EnableUnitTesting>True</EnableUnitTesting>
+    <Providers />
+  </UnitTestRunner>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:handler.ashx.cs" caret="0" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:SetCookiesResult.cs" caret="260" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:TakePictureResult.cs" caret="288" scrollPosition="0|0" />
+      <File id="0A3766E8-DAFB-44A6-916B-AE6B12203116/f:Program.cs" caret="808" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:ScreenShotStatus.cs" caret="0" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetStatusResult.cs" caret="344" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetCookiesResult.cs" caret="359" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="0" scrollPosition="0|0" />
+      <File id="A54E8044-37CC-4FEC-8641-14871E777CA1/f:Default.aspx.cs" caret="0" scrollPosition="0|0" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="12091" scrollPosition="0|130" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="7745" scrollPosition="0|79" />
+      <File id="0A3766E8-DAFB-44A6-916B-AE6B12203116/f:Program.cs" caret="981" scrollPosition="0|6" />
+      <File id="0A3766E8-DAFB-44A6-916B-AE6B12203116/f:Program.cs" caret="961" scrollPosition="0|6" />
+      <File id="0A3766E8-DAFB-44A6-916B-AE6B12203116/f:Program.cs" caret="42" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:ScreenShotStatus.cs" caret="186" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetCookiesResult.cs" caret="353" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetCookiesResult.cs" caret="13" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:SetCookiesResult.cs" caret="254" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:SetCookiesResult.cs" caret="13" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:TakePictureResult.cs" caret="13" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetStatusResult.cs" caret="951" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetStatusResult.cs" caret="951" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetStatusResult.cs" caret="733" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetStatusResult.cs" caret="13" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="13086" scrollPosition="0|162" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:TakePictureResult.cs" caret="288" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:SetCookiesResult.cs" caret="260" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetCookiesResult.cs" caret="359" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/d:Results/f:GetStatusResult.cs" caret="326" scrollPosition="0|0" />
+      <File id="0A3766E8-DAFB-44A6-916B-AE6B12203116/f:Program.cs" caret="581" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:ScreenShotStatus.cs" caret="0" scrollPosition="0|0" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="9917" scrollPosition="54|108" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="7876" scrollPosition="54|108" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="7233" scrollPosition="106|66" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="2349" scrollPosition="0|39" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="1673" scrollPosition="0|39" />
+      <File id="FBE0E172-5653-4FA1-9013-90F1496904F3/f:GrabzItClient.cs" caret="4795" scrollPosition="0|51" />
+      <File id="A54E8044-37CC-4FEC-8641-14871E777CA1/f:Default.aspx.cs" caret="255" scrollPosition="5|0" />
+      <File id="A54E8044-37CC-4FEC-8641-14871E777CA1/f:Default.aspx.cs" caret="824" scrollPosition="87|0" />
+    </RecentEdits>
+  </RecentFiles>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+      <setting name="UseSolutionBuilder">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="[]" priority="0" />
+      <Item value="Empty" priority="3" />
+      <Item value="SavePicture" priority="0" />
+      <Item value="ScreenShotStatus" priority="0" />
+      <Item value="Cached" priority="0" />
+      <Item value="Expired" priority="0" />
+      <Item value="Processing" priority="0" />
+      <Item value="Message" priority="0" />
+      <Item value="GetStatus" priority="0" />
+      <Item value="jpg" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>
