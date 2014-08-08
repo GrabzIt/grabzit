@@ -63,6 +63,74 @@ public class GrabzItClient {
     }
     
     /**
+     * This method sets the parameters required to turn an online video into a animated GIF.
+     * @param url The URL of the online video
+     * @param customId A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+     * @param width The width of the resulting animated GIF in pixels
+     * @param height The height of the resulting animated GIF in pixels
+     * @param start The starting position of the video that should be converted into a animated GIF
+     * @param duration The length in seconds of the video that should be converted into a animated GIF
+     * @param speed The speed of the animated GIF from 0.2 to 10 times the original speed
+     * @param framesPerSecond The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
+     * @param repeat The number of times to loop the animated GIF. If 0 it will loop forever
+     * @param reverse If true the frames of the animated GIF are reversed
+     * @param customWaterMarkId Add a custom watermark to the animated GIF
+     * @param quality The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+     * @param country Request the screenshot from different countries: Default, UK or US
+     * @throws UnsupportedEncodingException 
+     */
+    public void SetAnimationOptions(String url, String customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, boolean reverse, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
+    {
+        this.startDelay = 0;
+        this.request = String.format("%stakeanimation.ashx?url=%s&key=%s&width=%s&height=%s&duration=%s&speed=%s&start=%s&customid=%s&fps=%s&repeat=%s&customwatermarkid=%s&reverse=%s&country=%s&quality=%s&callback=",
+                                                          BASE_URL, encode(url), applicationKey, width, height, duration, toString(speed),
+                                                          start, encode(customId), toString(framesPerSecond), repeat, encode(customWaterMarkId), toInt(reverse), country.getValue(), quality);
+        this.signaturePartOne = applicationSecret + "|" + url + "|";
+        this.signaturePartTwo = "|" + height + "|" + width + "|" + customId + "|" + toString(framesPerSecond) + "|" + toString(speed) + "|" + duration + "|" + repeat + "|" + toInt(reverse) + "|" + start + "|" + customWaterMarkId + "|" + country.getValue() + "|" + quality;
+    }
+
+    /**
+    * This method sets the parameters required to turn an online video into a animated GIF.
+    * @param url The URL of the online video
+    * @param customId A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+    * @param width The width of the resulting animated GIF in pixels
+    * @param height The height of the resulting animated GIF in pixels
+    * @param start The starting position of the video that should be converted into a animated GIF
+    * @param duration The length in seconds of the video that should be converted into a animated GIF
+    * @param speed The speed of the animated GIF from 0.2 to 10 times the original speed
+    * @param framesPerSecond The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
+    * @param repeat The number of times to loop the animated GIF. If 0 it will loop forever
+    * @param reverse If true the frames of the animated GIF are reversed
+    * @param customWaterMarkId Add a custom watermark to the animated GIF
+    * @throws UnsupportedEncodingException 
+    */   
+    public void SetAnimationOptions(String url, String customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, boolean reverse, String customWaterMarkId) throws UnsupportedEncodingException
+    {
+        SetAnimationOptions(url, customId, width, height, start, duration, speed, framesPerSecond, repeat, reverse, customWaterMarkId, -1, Country.DEFAULT);
+    } 
+
+    /**
+    * This method sets the parameters required to turn an online video into a animated GIF.
+    * @param url The URL of the online video
+    * @param customId A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+    * @throws UnsupportedEncodingException 
+    */   
+    public void SetAnimationOptions(String url, String customId) throws UnsupportedEncodingException
+    {
+        SetAnimationOptions(url, customId, 0, 0, 0, 0, 0, 0, 0, false, "", -1, Country.DEFAULT);
+    } 
+    
+    /**
+    * This method sets the parameters required to turn an online video into a animated GIF.
+    * @param url The URL of the online video
+    * @throws UnsupportedEncodingException 
+    */   
+    public void SetAnimationOptions(String url) throws UnsupportedEncodingException
+    {
+        SetAnimationOptions(url, "", 0, 0, 0, 0, 0, 0, 0, false, "", -1, Country.DEFAULT);
+    }     
+    
+    /**
      * This method sets the parameters required to take a screenshot of a web page.
      * @param url The URL that the screenshot should be made of
      * @param customId A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified
@@ -88,8 +156,8 @@ public class GrabzItClient {
         this.signaturePartOne = applicationSecret + "|" + url + "|";
         this.signaturePartTwo = "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality;
     }
-
-        /**
+    
+    /**
      * This method sets the parameters required to take a screenshot of a web page.
      * @param url The URL that the screenshot should be made of
      * @param customId A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified
@@ -781,6 +849,15 @@ public class GrabzItClient {
         return (toTest == null || toTest.isEmpty());
     }
 
+    private String toString(float value)
+    {
+        if ((value % 1) == 0)
+        {
+            return String.valueOf(((int)value));
+        }
+        return String.valueOf(value);
+    }
+    
     private int toInt(boolean value)
     {
         return (value ? 1 : 0);

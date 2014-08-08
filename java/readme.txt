@@ -1,7 +1,7 @@
-GrabzIt 2.1
+GrabzIt 2.2
 ===========
 
-This software allows you to programmatically convert webpages into images, PDF's and CSV's and spreadsheets.
+This library allows you to programmatically convert web pages into images, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's.
 
 Its usually best to place these package files in their own directory.
 

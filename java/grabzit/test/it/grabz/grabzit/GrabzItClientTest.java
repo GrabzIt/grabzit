@@ -35,9 +35,9 @@ public class GrabzItClientTest {
     private GrabzItClient client;
     
     public GrabzItClientTest() {
-        applicationKey = "YOUR APPLICATION KEY";
-        applicationSecret = "YOUR APPLICATION SECRET";
-        isSubscribedAccount = false;
+        applicationKey = "c3VwcG9ydEBncmFiei5pdA==";
+        applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi=";
+        isSubscribedAccount = true;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
     
@@ -96,6 +96,20 @@ public class GrabzItClientTest {
             Assert.fail("An error occured when trying to take a image screenshot: " + ex.getMessage());
         }
     }
+    
+    @Test
+    public void testTakeAnimation() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            client.SetAnimationOptions("http://www.youtube.com");
+            Assert.assertNotNull("Failed to take animation using SetAnimationOptions method", client.Save());
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to create a animated gif: " + ex.getMessage());
+        }
+    }   
 
     @Test
     public void testSave() throws IOException, JAXBException, Exception
@@ -165,6 +179,8 @@ public class GrabzItClientTest {
             }
         }
 
+        Thread.sleep(4000);
+        
         Assert.assertEquals("Set cookie has not been found!", findCookie(), true);
     }
 
@@ -186,10 +202,14 @@ public class GrabzItClientTest {
                 return;
             }
         }
-
+        
+        Thread.sleep(4000);
+        
         Assert.assertEquals("Test cookie not found!", findCookie(), true);
 
         client.DeleteCookie(Cookie_Name, Cookie_Domain);
+        
+        Thread.sleep(4000);
 
         Assert.assertEquals("Failed to delete cookie!", findCookie(), false);
     }
@@ -220,10 +240,14 @@ public class GrabzItClientTest {
             }
         }
 
+        Thread.sleep(4000);
+        
         Assert.assertEquals("Test watermark not found!", findWaterMark(), true);
 
         client.DeleteWaterMark(WaterMark_Identifier);
 
+        Thread.sleep(4000);
+        
         Assert.assertEquals("Failed to delete watermark!", findWaterMark(), false);
     }
 
@@ -252,6 +276,8 @@ public class GrabzItClientTest {
                 return;
             }
         }
+        
+        Thread.sleep(4000);
         
         Assert.assertEquals("Set watermark has not been found!", findWaterMark(), true);
     }    
@@ -297,7 +323,9 @@ public class GrabzItClientTest {
     }
 
     private String getWaterMarkPath() {
-        URL path = GrabzItClientTest.class.getResource(WaterMark_Path);
-        return path.toString().replace("file:/", "");       
+        URL location = GrabzItClientTest.class.getProtectionDomain().getCodeSource().getLocation();
+        String path = location.getFile();
+        path = path.substring(1);
+        return path + WaterMark_Path;       
     }
 }
