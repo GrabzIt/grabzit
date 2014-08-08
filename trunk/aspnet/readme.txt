@@ -1,7 +1,7 @@
-GrabzIt 2.1
+GrabzIt 2.2
 ===========
 
-This software allows you to programmatically take screenshots of websites.
+This library allows you to programmatically convert web pages into images, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's.
 
 Its usually best to place these files in thier own directory.
 

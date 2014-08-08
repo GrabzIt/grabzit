@@ -90,6 +90,73 @@ namespace GrabzIt
         }
 
         /// <summary>
+        /// This method sets the parameters required to turn a online video into a animated GIF
+        /// </summary>
+        /// <param name="url">The URL of the online video</param>
+        public void SetAnimationOptions(string url)
+        {
+            SetAnimationOptions(url, string.Empty, 0, 0, 0, 0, 0, 0, 0, false, string.Empty, -1, Country.Default);
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to turn a online video into a animated GIF
+        /// </summary>
+        /// <param name="url">The URL of the online video</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified</param>
+        public void SetAnimationOptions(string url, string customId)
+        {
+            SetAnimationOptions(url, customId, 0, 0, 0, 0, 0, 0, 0, false, string.Empty, -1, Country.Default);
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to turn a online video into a animated GIF
+        /// </summary>
+        /// <param name="url">The URL of the online video</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified</param>
+        /// <param name="width">The width of the resulting animated GIF in pixels</param>
+        /// <param name="height">The height of the resulting animated GIF in pixels</param>
+        /// <param name="start">The starting position of the video that should be converted into a animated GIF</param>
+        /// <param name="duration">The length in seconds of the video that should be converted into a animated GIF</param>
+        /// <param name="speed">The speed of the animated GIF from 0.2 to 10 times the original speed</param>
+        /// <param name="framesPerSecond">The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60</param>
+        /// <param name="repeat">The number of times to loop the animated GIF. If 0 it will loop infinitley</param>
+        /// <param name="reverse">If true the frames of the animated GIF are reversed</param>
+        /// <param name="customWaterMarkId">Add a custom watermark to the animated GIF</param>
+        public void SetAnimationOptions(string url, string customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, bool reverse, string customWaterMarkId)
+        {
+            SetAnimationOptions(url, customId, width, height, start, duration, speed, framesPerSecond, repeat, reverse, customWaterMarkId, -1, Country.Default);
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to turn a online video into a animated GIF
+        /// </summary>
+        /// <param name="url">The URL of the online video</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified</param>
+        /// <param name="width">The width of the resulting animated GIF in pixels</param>
+        /// <param name="height">The height of the resulting animated GIF in pixels</param>
+        /// <param name="start">The starting position of the video that should be converted into a animated GIF</param>
+        /// <param name="duration">The length in seconds of the video that should be converted into a animated GIF</param>
+        /// <param name="speed">The speed of the animated GIF from 0.2 to 10 times the original speed</param>
+        /// <param name="framesPerSecond">The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60</param>
+        /// <param name="repeat">The number of times to loop the animated GIF. If 0 it will loop forever</param>
+        /// <param name="reverse">If true the frames of the animated GIF are reversed</param>
+        /// <param name="customWaterMarkId">Add a custom watermark to the animated GIF</param>
+        /// <param name="quality">The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</param>
+        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
+        public void SetAnimationOptions(string url, string customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, bool reverse, string customWaterMarkId, int quality, Country country)
+        {
+            lock (thisLock)
+            {
+                request.StartDelay = 0;
+                request.Request = string.Format("{0}takeanimation.ashx?url={1}&key={2}&width={3}&height={4}&duration={5}&speed={6}&start={7}&customid={8}&fps={9}&repeat={10}&customwatermarkid={11}&reverse={12}&country={13}&quality={14}&callback=",
+                                                              BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, width, height, duration, speed,
+                                                              start, HttpUtility.UrlEncode(customId), framesPerSecond, repeat, HttpUtility.UrlEncode(customWaterMarkId), Convert.ToInt32(reverse), ConvertCountryToString(country), quality);
+                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
+                request.SignaturePartTwo = "|" + height + "|" + width + "|" + customId + "|" + framesPerSecond + "|" + speed + "|" + duration + "|" + repeat + "|" + Convert.ToInt32(reverse) + "|" + start + "|" + customWaterMarkId + "|" + ConvertCountryToString(country) + "|" + quality;
+            }
+        }
+
+        /// <summary>
         /// This method sets the parameters required to take a screenshot of a web page.
         /// </summary>
         /// <param name="url">The URL that the screenshot should be made of</param>

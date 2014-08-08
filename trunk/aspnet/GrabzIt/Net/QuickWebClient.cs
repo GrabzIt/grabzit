@@ -12,6 +12,7 @@ namespace GrabzIt.Net
             HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
             if (request != null)
             {
+                request.Proxy = null;
                 request.KeepAlive = false;
             }
             return request;
