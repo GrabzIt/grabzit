@@ -26,7 +26,7 @@ namespace SampleConsole
                     {
                         format = ".pdf";
                     }
-                    string filename = url.Substring(url.IndexOf("://") + 3) + format;
+                    string filename = url.Substring(url.IndexOf("://") + 3).Replace("?", string.Empty).Replace("/", string.Empty) + format;
 
                     if (formatType == PDF)
                     {
