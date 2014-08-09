@@ -1,7 +1,7 @@
 {
   "name": "grabzit",
-  "description": "Automatically create screenshots of website for free, with GrabzIt. Screenshots can be output in a variety of formats including: JPEG, PNG, TIFF, BMP, PDF, CSV and XLSX.",
-  "version": "2.1.3",
+  "description": "Automatically create screenshots of websites for free, with GrabzIt. Screenshots can be output in a variety of formats including: JPEG, PNG, TIFF, BMP, PDF, CSV and XLSX. Additionally convert online videos into animated GIF's.",
+  "version": "2.2.0",
   "main": "./lib/grabzit",
   "keywords": [
     "screenshots",
@@ -10,6 +10,9 @@
     "api",
     "pdf",
     "image",
+    "animated gif",
+    "web page",
+    "video",
     "screen",
     "grab",
     "table",
