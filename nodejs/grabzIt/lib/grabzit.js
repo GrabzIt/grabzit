@@ -56,6 +56,15 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_MISSING_PARAMETERS: 143,
         PARAMETER_QUALITY_TOO_LARGE: 144,
         PARAMETER_QUALITY_TOO_SMALL: 145,
+        PARAMETER_REPEAT_TOO_SMALL: 149,
+        PARAMETER_INVALID_REVERSE: 150,
+        PARAMETER_FPS_TOO_LARGE: 151,
+        PARAMETER_FPS_TOO_SMALL: 152,
+        PARAMETER_SPEED_TOO_FAST: 153,
+        PARAMETER_SPEED_TOO_SLOW: 154,
+        PARAMETER_INVALID_DURATION_FPS_WIDTH_HEIGHT_COMBINATION: 155,
+        PARAMETER_START_TOO_SMALL: 156,
+        PARAMETER_DURATION_TOO_LARGE: 157,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -404,6 +413,54 @@ GrabzItClient.prototype.set_table_options = function (url, options) {
     this.signaturePartTwo = '|' + context['customId'] + '|' + parseInt(context['tableNumberToInclude']) + '|' + _toInt(context['includeAllTables']) + '|' + _toInt(context['includeHeaderNames']) + '|' + context['targetElement']
      + '|' + context['format'] + '|' + parseInt(context['requestAs']) + '|' + context['country'];
 
+};
+
+/*
+* Sets the parameters required to take convert a online video into a animated gif.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#setanimationoptions
+*/
+GrabzItClient.prototype.set_animation_options = function (url, options) {
+    var defaults = {
+        'customId': '',
+        'width': 0,
+        'height': 0,
+        'start': 0,
+        'duration': 0,
+        'speed': 0,
+        'framesPerSecond': 0,
+        'repeat': 0,
+        'reverse': false,
+        'customWaterMarkId': '',
+        'quality': -1,
+        'country': ''
+    };
+
+    context = _extend(defaults, options);
+
+    this.startDelay = 0;
+
+    this.requestParams = {
+        'key': this.applicationKey,
+        'url': url,
+        'width': parseInt(context['width']),
+        'height': parseInt(context['height']),
+        'duration': parseInt(context['duration']),
+        'speed': parseFloat(context['speed']),
+        'start': parseInt(context['start']),
+        'customid': context['customId'],
+        'fps': parseFloat(context['framesPerSecond']),
+        'repeat': parseInt(context['repeat']),
+        'customwatermarkid': context['customWaterMarkId'],
+        'reverse': _toInt(context['reverse']),
+        'country': context['country'],
+        'quality': parseInt(context['quality'])
+    };
+
+    this.request = 'takeanimation.ashx?';
+    this.signaturePartOne = this.applicationSecret + '|' + url + '|';
+    this.signaturePartTwo = '|' + parseInt(context['height']) + '|' + parseInt(context['width']) + '|' + context['customId'] + '|' + parseFloat(context['framesPerSecond']) + '|' +parseFloat(context['speed'])
+     + '|' + parseInt(context['duration']) + '|' + parseInt(context['repeat']) + '|' + _toInt(context['reverse']) + '|' + parseInt(context['start']) + '|' + context['customWaterMarkId'] + '|' + context['country'] + '|' + parseInt(context['quality']);
 };
 
 /*
