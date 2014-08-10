@@ -32,6 +32,46 @@ sub new
 }
 
 #
+# This method sets the parameters required to turn a online video into a animated GIF
+#
+# url - The URL of the online video
+# customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+# width - The width of the resulting animated GIF in pixels
+# height - The height of the resulting animated GIF in pixels
+# start - The starting position of the video that should be converted into a animated GIF
+# duration - The length in seconds of the video that should be converted into a animated GIF
+# speed - The speed of the animated GIF from 0.2 to 10 times the original speed
+# framesPerSecond - The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
+# repeat - The number of times to loop the animated GIF. If 0 it will loop forever
+# reverse - If true the frames of the animated GIF are reversed
+# customWaterMarkId - Add a custom watermark to the animated GIF
+# quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+# country - Request the screenshot from different countries: Default, UK or US
+#
+sub SetAnimationOptions($;$$$$$$$$$$$$)
+{
+	my ($self, $url, $customId, $width, $height, $start, $duration, $speed, $framesPerSecond, $repeat, $reverse, $customWaterMarkId, $quality, $country) = @_;	
+
+	$customId ||= '';
+	$width ||= 0;
+	$height ||= 0;
+	$start ||= 0;
+	$duration ||= 0;
+	$speed ||= 0;
+	$framesPerSecond ||= 0;	
+	$repeat ||= 0;
+	$reverse ||= 0;
+	$customWaterMarkId ||= '';
+	$quality ||= -1;
+	$country ||= '';
+
+	$self->{startDelay} = 0;
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "takeanimation.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&width=".$width."&height=".$height."&duration=".$duration."&speed=".$speed."&start=".$start."&customid=".uri_escape($customId)."&fps=".$framesPerSecond."&repeat=".$repeat."&customwatermarkid=".uri_escape($customWaterMarkId)."&reverse=".$reverse."&country=".uri_escape($country)."&quality=".$quality."&callback=";
+	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
+	$self->{signaturePartTwo} = "|".$height."|".$width."|".$customId."|".$framesPerSecond."|".$speed."|".$duration."|".$repeat."|".$reverse."|".$start."|".$customWaterMarkId."|".$country."|".$quality;
+}
+
+#
 #This method sets the parameters required to take a screenshot of a web page.
 #
 #url - The URL that the screenshot should be made of
