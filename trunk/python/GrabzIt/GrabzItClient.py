@@ -45,7 +45,7 @@ class GrabzItClient:
         # quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         # country - Request the screenshot from different countries: Default, UK or US
         #
-        def SetAnimationOptions(self, url, customId = '', width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = 0, customWaterMarkId = '', quality = -1, country = ''):
+        def SetAnimationOptions(self, url, customId = '', width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = False, customWaterMarkId = '', quality = -1, country = ''):
                 self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"duration":int(duration),"speed":self._toString(speed),"start":int(start),"customid":str(customId),"fps":self._toString(framesPerSecond),"repeat":int(repeat),"customwatermarkid":str(customWaterMarkId), "reverse": int(reverse), "country": str(country), "quality" : int(quality)}                                   
                 self.startDelay = 0;
                 self.request = self.WebServicesBaseURL + "takeanimation.ashx?"
