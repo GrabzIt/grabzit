@@ -9,10 +9,10 @@ class GrabzItTest < Test::Unit::TestCase
 	Screenshot_Path = "test/tmp.jpg"
 
 	def setup
-		@applicationKey = ""
-		@applicationSecret = ""
+		@applicationKey = "c3VwcG9ydEBncmFiei5pdA=="
+		@applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi="
 		#Set to true if the account is subscribed
-		@isSubscribedAccount = false
+		@isSubscribedAccount = true
 	end
 	
 	def test_application_key
@@ -58,6 +58,14 @@ class GrabzItTest < Test::Unit::TestCase
 		File.delete(Screenshot_Path)
 	end
 	
+	def test_save_animation
+		assert_nothing_raised "An error occured when trying to take a animation" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			grabzItClient.set_animation_options("http://www.youtube.com");
+			assert_not_equal(false, grabzItClient.save(), "Animation not taken")
+		end
+	end	
+	
 	def test_save_to_bytes
 		assert_nothing_raised "An error occured when trying to take a image screenshot" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
@@ -90,7 +98,9 @@ class GrabzItTest < Test::Unit::TestCase
 				  grabzItClient.set_cookie(Cookie_Name, Cookie_Domain)				  
 				end		
 				return
-			end			
+			end
+			
+			sleep(4)
 
 			assert(find_cookie(grabzItClient), "Set cookie has not been found!")
 		end	
@@ -108,9 +118,13 @@ class GrabzItTest < Test::Unit::TestCase
 				return
 			end			
 			
+			sleep(4)
+			
 			assert_equal(true, find_cookie(grabzItClient), "Test cookie not found!")
 			
 			grabzItClient.delete_cookie(Cookie_Name, Cookie_Domain)
+
+			sleep(4)
 
 			assert_equal(false, find_cookie(grabzItClient), "Failed to delete cookie!")
 		end	
@@ -133,9 +147,13 @@ class GrabzItTest < Test::Unit::TestCase
 				return
 			end			
 			
+			sleep(5)
+			
 			assert_equal(true, find_watermark(grabzItClient), "Test watermark not found!")
 			
 			grabzItClient.delete_watermark(WaterMark_Identifier)
+
+			sleep(5)
 
 			assert_equal(false, find_watermark(grabzItClient), "Failed to delete watermark!")
 		end	
@@ -155,7 +173,9 @@ class GrabzItTest < Test::Unit::TestCase
 				  grabzItClient.add_watermark(WaterMark_Identifier, WaterMark_Path, 2, 2)				  
 				end		
 				return
-			end			
+			end
+			
+			sleep(4)
 
 			assert(find_watermark(grabzItClient), "Set watermark has not been found!")
 		end	
