@@ -65,12 +65,12 @@ class GrabzItClient
 	# quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 	# country - Request the screenshot from different countries: Default, UK or US
 	#
-	public function SetAnimationOptions($url, $customId = '', $width = 0, $height = 0, $start = 0, $duration = 0, $speed = 0, $framesPerSecond = 0, $repeat = 0, $reverse = 0, $customWaterMarkId = '', $quality = -1, $country = '')
+	public function SetAnimationOptions($url, $customId = '', $width = 0, $height = 0, $start = 0, $duration = 0, $speed = 0, $framesPerSecond = 0, $repeat = 0, $reverse = false, $customWaterMarkId = '', $quality = -1, $country = '')
 	{	
 		$this->startDelay = 0;
-		$this->request = GrabzItClient::WebServicesBaseURL . "takeanimation.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&duration=".$duration."&speed=".$speed."&start=".$start."&customid=".urlencode($customId)."&fps=".$framesPerSecond."&repeat=".$repeat."&customwatermarkid=".urlencode($customWaterMarkId)."&reverse=".$reverse."&country=".urlencode($country)."&quality=".$quality."&callback=";
+		$this->request = GrabzItClient::WebServicesBaseURL . "takeanimation.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&duration=".$duration."&speed=".$speed."&start=".$start."&customid=".urlencode($customId)."&fps=".$framesPerSecond."&repeat=".$repeat."&customwatermarkid=".urlencode($customWaterMarkId)."&reverse=".intval($reverse)."&country=".urlencode($country)."&quality=".$quality."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$height."|".$width."|".$customId."|".$framesPerSecond."|".$speed."|".$duration."|".$repeat."|".$reverse."|".$start."|".$customWaterMarkId."|".$country."|".$quality;
+		$this->signaturePartTwo = "|".$height."|".$width."|".$customId."|".$framesPerSecond."|".$speed."|".$duration."|".$repeat."|".intval($reverse)."|".$start."|".$customWaterMarkId."|".$country."|".$quality;
 	}
 
 	/*
