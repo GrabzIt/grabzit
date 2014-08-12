@@ -45,6 +45,31 @@ module GrabzIt
 			@applicationSecret = applicationSecret
 		end
 
+		# This method sets the parameters required to turn a online video into a animated GIF
+		#
+		# @param url [String] the URL of the online video
+		# @param customId [String, nil] custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+		# @param width [Integer, 0] the width of the resulting animated GIF in pixels
+		# @param height [Integer, 0] the height of the resulting animated GIF in pixels
+		# @param start [Integer, 0] the starting position of the video that should be converted into a animated GIF
+		# @param duration [Integer, 0] the length in seconds of the video that should be converted into a animated GIF
+		# @param speed [Float, 0] the speed of the animated GIF from 0.2 to 10 times the original speed
+		# @param framesPerSecond [Float, 0] the number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
+		# @param repeat [Integer, 0] the number of times to loop the animated GIF. If 0 it will loop forever
+		# @param reverse [Boolean, false] if true the frames of the animated GIF are reversed
+		# @param customWaterMarkId [String, nil] add a custom watermark to the animated GIF
+		# @param quality [Integer, -1] the quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+		# @param country [String, nil] request the screenshot from different countries: Default, UK or US
+		# @return [void]		
+		def set_animation_options(url, customId = nil, width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = false, customWaterMarkId = '', quality = -1, country = '')
+			@@startDelay = 0;
+			@@request = WebServicesBaseURL + "takeanimation.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&width="+nil_int_check(width)+"&height="+nil_int_check(height)+"&duration="+nil_int_check(duration)+"&speed="+nil_float_check(speed)+"&start="+nil_int_check(start)+"&customid="+CGI.escape(nil_check(customId))+"&fps="+nil_float_check(framesPerSecond)+"&repeat="+nil_int_check(repeat)+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&reverse="+b_to_str(reverse)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="			
+			@@signaturePartOne = @applicationSecret+"|"+nil_check(url)+"|"
+			@@signaturePartTwo = "|"+nil_int_check(height)+"|"+nil_int_check(width)+"|"+nil_check(customId)+"|"+nil_float_check(framesPerSecond)+"|"+nil_float_check(speed)+"|"+nil_int_check(duration)+"|"+nil_int_check(repeat)+"|"+b_to_str(reverse)+"|"+nil_int_check(start)+"|"+nil_check(customWaterMarkId)+"|"+nil_check(country)+"|"+nil_int_check(quality)
+			return nil
+		end
+
+
 		# Sets the parameters required to take a screenshot of a web page.
 		#
 		# @param url [String] the URL that the screenshot should be made of
@@ -509,6 +534,16 @@ module GrabzIt
 		private
 		def nil_int_check(param)
 			return param.to_i.to_s
+		end
+
+		private
+		def nil_float_check(param)
+			val = param.to_f
+			if ((val % 1) == 0)
+				return val.to_i.to_s
+			end
+			
+			return val.to_s
 		end
 		
 		private
