@@ -463,6 +463,7 @@ public class GrabzItClient {
         {
             return null;
         }
+        
         return get(BASE_URL + "getstatus.ashx?id=" + id, Status.class);
     }
 
@@ -756,6 +757,11 @@ public class GrabzItClient {
      */
     public GrabzItFile GetResult(String id) throws IOException, Exception
     {
+        if (isNullOrEmpty(id))
+        {
+            return null;
+        }
+        
         String url = String.format("%sgetfile.ashx?id=%s", BASE_URL, id);
 
         URL requestUrl = new URL(url);

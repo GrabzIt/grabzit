@@ -203,6 +203,9 @@ class GrabzItClient:
         #This function returns the screenshot
         #
         def GetResult(self, id):
+                if (id == "" or id == None):
+                        return None
+                
                 result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURL + "getfile.ashx?id=" + id)).getvalue()
                 
                 if result == "":
