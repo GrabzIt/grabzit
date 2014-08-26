@@ -985,6 +985,11 @@ namespace GrabzIt
         /// <returns>GrabzItFile - which represents the screenshot</returns>
         public GrabzItFile GetResult(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
             lock (thisLock)
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(

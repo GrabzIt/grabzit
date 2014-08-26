@@ -279,6 +279,11 @@ class GrabzItClient
 	*/
 	public function GetResult($id)
 	{
+		if (empty($id))
+		{
+			return null;
+		}
+		
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getfile.ashx?id=" . $id);
 
 		if (empty($result))
@@ -557,7 +562,7 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
 			$data = curl_exec($ch);
-			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			if($httpCode == 403)
 			{
 				throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);

@@ -293,6 +293,13 @@ sub GetResult($)
 {
         my ($self, $id) = @_;   
         
+	$id ||= '';
+	
+	if ($id eq '')
+	{
+	    return;
+	}	
+	
         my $url = GrabzItClient::WebServicesBaseURL . "getfile.ashx?id=" . $id;
 	
         return $self->_get($url);
@@ -308,6 +315,13 @@ sub GetResult($)
 sub GetStatus($)
 {
 	my ($self, $id) = @_;	
+	
+	$id ||= '';
+	
+	if ($id eq '')
+	{
+	    return;
+	}
 	
 	my $url = GrabzItClient::WebServicesBaseURL . "getstatus.ashx?id=" . $id;
 	

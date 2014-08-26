@@ -265,6 +265,10 @@ module GrabzIt
 		# @return [Object] returns the screenshot
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def get_result(id)
+			if id == nil || id == ""
+				return nil
+			end
+			
 			return get(WebServicesBaseURL + "getfile.ashx?id=" + nil_check(id))
 		end
 
