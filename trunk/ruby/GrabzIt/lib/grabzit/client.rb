@@ -48,7 +48,7 @@ module GrabzIt
 		# This method sets the parameters required to turn a online video into a animated GIF
 		#
 		# @param url [String] the URL of the online video
-		# @param customId [String, nil] custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+		# @param customId [String, nil] custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
 		# @param width [Integer, 0] the width of the resulting animated GIF in pixels
 		# @param height [Integer, 0] the height of the resulting animated GIF in pixels
 		# @param start [Integer, 0] the starting position of the video that should be converted into a animated GIF
@@ -73,7 +73,7 @@ module GrabzIt
 		# Sets the parameters required to take a screenshot of a web page.
 		#
 		# @param url [String] the URL that the screenshot should be made of
-		# @param customId [String, nil] custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.	
+		# @param customId [String, nil] custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.	
 		# @param browserWidth [Integer, nil] the width of the browser in pixels
 		# @param browserHeight [Integer, nil] the height of the browser in pixels
 		# @param width [Integer, nil] the width of the resulting thumbnail in pixels
@@ -104,11 +104,11 @@ module GrabzIt
 		# Sets the parameters required to extract one or more tables from a web page.
 		#
 		# @param url [String] the URL that the should be used to extract tables
-		# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.	
+		# @param customId [String, nil] a custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.	
 		# @param tableNumberToInclude [Integer, 1] the index of the table to be converted, were all tables in a web page are ordered from the top of the web page to bottom
 		# @param format [String, 'csv'] the format the table should be in: csv, xlsx
 		# @param includeHeaderNames [Boolean, true] if true header names will be included in the table
-		# @param includeAllTables [Boolean, true] if true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
+		# @param includeAllTables [Boolean, true] if true all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet. Only available with the XLSX format.
 		# @param targetElement [String, nil] the id of the only HTML element in the web page that should be used to extract tables from
 		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"		
@@ -126,7 +126,7 @@ module GrabzIt
 		# Sets the parameters required to convert a web page into a PDF.
 		#
 		# @param url url [String] the URL that the should be converted into a pdf
-		# @param customId [String, nil] a custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
+		# @param customId [String, nil] a custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
 		# @param includeBackground [Boolean, true] if true the background of the web page should be included in the screenshot
 		# @param pagesize [String, 'A4'] the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
 		# @param orientation [String, 'Portrait'] the orientation of the PDF to be returned: 'Landscape' or 'Portrait'

@@ -65,7 +65,7 @@ public class GrabzItClient {
     /**
      * This method sets the parameters required to turn an online video into a animated GIF.
      * @param url The URL of the online video
-     * @param customId A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+     * @param customId A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
      * @param width The width of the resulting animated GIF in pixels
      * @param height The height of the resulting animated GIF in pixels
      * @param start The starting position of the video that should be converted into a animated GIF
@@ -92,7 +92,7 @@ public class GrabzItClient {
     /**
     * This method sets the parameters required to turn an online video into a animated GIF.
     * @param url The URL of the online video
-    * @param customId A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+    * @param customId A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
     * @param width The width of the resulting animated GIF in pixels
     * @param height The height of the resulting animated GIF in pixels
     * @param start The starting position of the video that should be converted into a animated GIF

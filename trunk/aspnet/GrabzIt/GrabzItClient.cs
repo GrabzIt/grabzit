@@ -102,7 +102,7 @@ namespace GrabzIt
         /// This method sets the parameters required to turn a online video into a animated GIF
         /// </summary>
         /// <param name="url">The URL of the online video</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified</param>
+        /// <param name="customId">A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified</param>
         public void SetAnimationOptions(string url, string customId)
         {
             SetAnimationOptions(url, customId, 0, 0, 0, 0, 0, 0, 0, false, string.Empty, -1, Country.Default);
@@ -112,7 +112,7 @@ namespace GrabzIt
         /// This method sets the parameters required to turn a online video into a animated GIF
         /// </summary>
         /// <param name="url">The URL of the online video</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified</param>
+        /// <param name="customId">A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified</param>
         /// <param name="width">The width of the resulting animated GIF in pixels</param>
         /// <param name="height">The height of the resulting animated GIF in pixels</param>
         /// <param name="start">The starting position of the video that should be converted into a animated GIF</param>
@@ -131,7 +131,7 @@ namespace GrabzIt
         /// This method sets the parameters required to turn a online video into a animated GIF
         /// </summary>
         /// <param name="url">The URL of the online video</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified</param>
+        /// <param name="customId">A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified</param>
         /// <param name="width">The width of the resulting animated GIF in pixels</param>
         /// <param name="height">The height of the resulting animated GIF in pixels</param>
         /// <param name="start">The starting position of the video that should be converted into a animated GIF</param>
@@ -160,7 +160,7 @@ namespace GrabzIt
         /// This method sets the parameters required to take a screenshot of a web page.
         /// </summary>
         /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.</param>
         /// <param name="browserWidth">The width of the browser in pixels</param>
         /// <param name="browserHeight">The height of the browser in pixels</param>
         /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
@@ -198,7 +198,7 @@ namespace GrabzIt
         /// This method sets the parameters required to take a screenshot of a web page.
         /// </summary>
         /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>        
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.</param>        
         public void SetImageOptions(string url, string customId)
         {
             SetImageOptions(url, customId, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, BrowserType.StandardBrowser, string.Empty);
@@ -208,7 +208,7 @@ namespace GrabzIt
         /// This method sets the parameters required to take a screenshot of a web page.
         /// </summary>
         /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.</param>
         /// <param name="browserWidth">The width of the browser in pixels</param>
         /// <param name="browserHeight">The height of the browser in pixels</param>
         /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
@@ -227,7 +227,7 @@ namespace GrabzIt
         /// This method sets the parameters required to extract all tables from a web page.
         /// </summary>
         /// <param name="url">The URL that the should be used to extract tables</param>
-        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
         /// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
         /// <param name="format">The format the tableshould be in: csv, xlsx</param>
         /// <param name="includeHeaderNames">If true header names will be included in the table</param>
@@ -250,7 +250,7 @@ namespace GrabzIt
         /// This method sets the parameters required to extract all tables from a web page.
         /// </summary>
         /// <param name="url">The URL that the should be used to extract tables</param>
-        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
         /// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
         /// <param name="format">The format the tableshould be in: csv, xlsx</param>
         /// <param name="includeHeaderNames">If true header names will be included in the table</param>
@@ -275,7 +275,7 @@ namespace GrabzIt
         /// This method sets the parameters required to extract all tables from a web page.
         /// </summary>
         /// <param name="url">The URL that the should be used to extract tables</param>
-        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
         public void SetTableOptions(string url, string customId)
         {
             SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
@@ -285,7 +285,7 @@ namespace GrabzIt
         /// This method sets the parameters required to convert a web page into a PDF.
         /// </summary>
         /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
         /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
         /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
         /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
@@ -326,7 +326,7 @@ namespace GrabzIt
         /// This method sets the parameters required to convert a web page into a PDF.
         /// </summary>
         /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>        
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>        
         public void SetPDFOptions(string url, string customId)
         {
             SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, BrowserType.StandardBrowser, string.Empty);
@@ -336,7 +336,7 @@ namespace GrabzIt
         /// This method sets the parameters required to convert a web page into a PDF.
         /// </summary>
         /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.</param>
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
         /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
         /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
         /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>

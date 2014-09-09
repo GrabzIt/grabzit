@@ -35,7 +35,7 @@ sub new
 # This method sets the parameters required to turn a online video into a animated GIF
 #
 # url - The URL of the online video
-# customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
+# customId - A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
 # width - The width of the resulting animated GIF in pixels
 # height - The height of the resulting animated GIF in pixels
 # start - The starting position of the video that should be converted into a animated GIF
@@ -79,7 +79,7 @@ sub SetAnimationOptions($;$$$$$$$$$$$$)
 #browserHeight - The height of the browser in pixels
 #outputHeight - The height of the resulting thumbnail in pixels
 #outputWidth - The width of the resulting thumbnail in pixels
-#customId - A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.
+#customId - A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.
 #format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
 #delay - The number of milliseconds to wait before taking the screenshot
 #targetElement - The id of the only HTML element in the web page to turn into a screenshot
@@ -116,9 +116,9 @@ sub SetImageOptions($;$$$$$$$$$$$$)
 #
 #url - The URL that the should be used to extract tables
 #format - The format the tableshould be in: csv, xlsx
-#customId - A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
+#customId - A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
 #includeHeaderNames - If true header names will be included in the table
-#includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
+#includeAllTables - If true all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet. Only available with the XLSX format.
 #targetElement - The id of the only HTML element in the web page that should be used to extract tables from
 #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
@@ -146,7 +146,7 @@ sub SetTableOptions($;$$$$$$$$)
 #This method sets the parameters required to convert a web page into a PDF.
 #
 #url - The URL that the should be converted into a pdf
-#customId - A custom identifier that you can pass through to the webservice. This will be returned with the callback URL you have specified.
+#customId - A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
 #includeBackground - If true the background of the web page should be included in the screenshot
 #pagesize - The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
 #orientation - The orientation of the PDF to be returned: 'Landscape' or 'Portrait'

@@ -629,6 +629,12 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getresult
 */
 GrabzItClient.prototype.get_result = function (id, oncomplete) {
+    if (id == '' || id == null) {
+        if (oncomplete != null) {
+            oncomplete(null, null);
+        }
+        return;
+    }    
     _get(this, 'getfile.ashx?id=' + id, 'binary', oncomplete)
 };
 
@@ -638,6 +644,12 @@ GrabzItClient.prototype.get_result = function (id, oncomplete) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getstatus
 */
 GrabzItClient.prototype.get_status = function (id, oncomplete) {
+    if (id == '' || id == null) {
+        if (oncomplete != null) {
+            oncomplete(null, null);
+        }
+        return;
+    }
     _get(this, 'getstatus.ashx?id=' + id, 'status', oncomplete);
 };
 
