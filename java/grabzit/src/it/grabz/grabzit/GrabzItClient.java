@@ -47,7 +47,7 @@ public class GrabzItClient {
     private String signaturePartTwo;
     private int startDelay;
     
-    private final String BASE_URL = "http://grabz.it/services/";
+    private final String BASE_URL = "http://api.grabz.it/services/";
 
     /**
      * Create a new instance of the Client class in order to access the GrabzIt API.
@@ -655,7 +655,7 @@ public class GrabzItClient {
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, identifier, String.valueOf(xpos.getValue()), String.valueOf(ypos.getValue())));
 
-        String url = String.format("%saddwatermark.ashx", BASE_URL);
+        String url = "http://grabz.it/services/addwatermark.ashx";
         
         Post post = new Post(url, "UTF-8");
  

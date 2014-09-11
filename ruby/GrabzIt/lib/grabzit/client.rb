@@ -25,7 +25,7 @@ module GrabzIt
 	# @see http://grabz.it/api/ruby/ GrabzIt Ruby API
 	class Client
 
-		WebServicesBaseURL = "http://grabz.it/services/"
+		WebServicesBaseURL = "http://api.grabz.it/services/"
 		private_constant :WebServicesBaseURL	
 		TrueString = "True"
 		private_constant :TrueString
@@ -61,7 +61,7 @@ module GrabzIt
 		# @param quality [Integer, -1] the quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 		# @param country [String, nil] request the screenshot from different countries: Default, UK or US
 		# @return [void]		
-		def set_animation_options(url, customId = nil, width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = false, customWaterMarkId = '', quality = -1, country = '')
+		def set_animation_options(url, customId = nil, width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = false, customWaterMarkId = nil, quality = -1, country = nil)
 			@@startDelay = 0;
 			@@request = WebServicesBaseURL + "takeanimation.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&width="+nil_int_check(width)+"&height="+nil_int_check(height)+"&duration="+nil_int_check(duration)+"&speed="+nil_float_check(speed)+"&start="+nil_int_check(start)+"&customid="+CGI.escape(nil_check(customId))+"&fps="+nil_float_check(framesPerSecond)+"&repeat="+nil_int_check(repeat)+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&reverse="+b_to_str(reverse)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="			
 			@@signaturePartOne = @applicationSecret+"|"+nil_check(url)+"|"
@@ -373,7 +373,7 @@ module GrabzIt
 
 			boundary = '--------------------------'+Time.now.to_f.to_s
 
-			url = WebServicesBaseURL + "addwatermark.ashx"
+			url = "http://grabz.it/services/addwatermark.ashx"
 			uri = URI.parse(url)
 
 			file = File.open(path, "rb")

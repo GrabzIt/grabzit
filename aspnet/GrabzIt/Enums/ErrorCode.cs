@@ -57,7 +57,7 @@ namespace GrabzIt.Enums
         ParameterFPSTooSmall = 152,
         ParameterSpeedTooFast = 153,
         ParameterSpeedTooSlow = 154,
-        ParameterInvalidDurationFPSWidthHeightCombination = 155,
+        ParameterInvalidAnimationCombination = 155,
         ParameterStartTooSmall = 156,
         ParameterDurationTooLarge = 157,
         NetworkServerOffline = 200,

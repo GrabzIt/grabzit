@@ -15,7 +15,7 @@ from GrabzIt import GrabzItException
 
 class GrabzItClient:
 
-        WebServicesBaseURL = "http://grabz.it/services/"
+        WebServicesBaseURL = "http://api.grabz.it/services/"
         TrueString = "True"
 
         def __init__(self, applicationKey, applicationSecret):

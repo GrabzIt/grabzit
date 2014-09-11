@@ -6,7 +6,7 @@ include_once("GrabzItException.class.php");
 
 class GrabzItClient
 {
-	const WebServicesBaseURL = "http://grabz.it/services/";
+	const WebServicesBaseURL = "http://api.grabz.it/services/";
 	const TrueString = "True";
 
 	private $applicationKey;
@@ -65,7 +65,7 @@ class GrabzItClient
 	# quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 	# country - Request the screenshot from different countries: Default, UK or US
 	#
-	public function SetAnimationOptions($url, $customId = '', $width = 0, $height = 0, $start = 0, $duration = 0, $speed = 0, $framesPerSecond = 0, $repeat = 0, $reverse = false, $customWaterMarkId = '', $quality = -1, $country = '')
+	public function SetAnimationOptions($url, $customId = null, $width = null, $height = null, $start = null, $duration = null, $speed = null, $framesPerSecond = null, $repeat = null, $reverse = false, $customWaterMarkId = null, $quality = -1, $country = null)
 	{	
 		$this->startDelay = 0;
 		$this->request = GrabzItClient::WebServicesBaseURL . "takeanimation.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&duration=".$duration."&speed=".$speed."&start=".$start."&customid=".urlencode($customId)."&fps=".$framesPerSecond."&repeat=".$repeat."&customwatermarkid=".urlencode($customWaterMarkId)."&reverse=".intval($reverse)."&country=".urlencode($country)."&quality=".$quality."&callback=";
@@ -426,7 +426,7 @@ class GrabzItClient
 
 		$context  = stream_context_create($opts);
 
-		$response = @file_get_contents(GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', false, $context);
+		$response = @file_get_contents('http://grabz.it/services/addwatermark.ashx', false, $context);
 		$this->checkResponseHeader($http_response_header);
 		return $this->isSuccessful($response);
 	}

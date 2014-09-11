@@ -62,7 +62,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_FPS_TOO_SMALL: 152,
         PARAMETER_SPEED_TOO_FAST: 153,
         PARAMETER_SPEED_TOO_SLOW: 154,
-        PARAMETER_INVALID_DURATION_FPS_WIDTH_HEIGHT_COMBINATION: 155,
+        PARAMETER_INVALID_ANIMATION_COMBINATION: 155,
         PARAMETER_START_TOO_SMALL: 156,
         PARAMETER_DURATION_TOO_LARGE: 157,
         NETWORK_SERVER_OFFLINE: 200,
@@ -229,7 +229,7 @@ function _getFormDataForPost(fields, files) {
 
 function _get(self, url, type, oncomplete){
     var options = {
-        host: 'grabz.it',
+        host: 'api.grabz.it',
         port: 80,
         path: '/services/'+url,
         headers: { 'Accept': 'application/json' }

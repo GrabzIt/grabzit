@@ -63,7 +63,7 @@ namespace GrabzIt
             set;
         }
 
-        private const string BaseURL = "http://grabz.it/services/";
+        private const string BaseURL = "http://api.grabz.it/services/";
 
         /// <summary>
         /// Create a new GrabzIt client.
@@ -872,7 +872,7 @@ namespace GrabzIt
 
             string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, identifier, (int)xpos, (int)ypos));
 
-            string url = string.Format("{0}addwatermark.ashx", BaseURL);
+            string url = "http://grabz.it/services/addwatermark.ashx";
 
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("key", ApplicationKey);
