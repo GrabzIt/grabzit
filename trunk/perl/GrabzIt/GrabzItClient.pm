@@ -14,7 +14,7 @@ use GrabzIt::ScreenShotStatus;
 use GrabzIt::GrabzItCookie;
 use GrabzIt::GrabzItWaterMark;
 
-use constant WebServicesBaseURL => "http://grabz.it/services/";
+use constant WebServicesBaseURL => "http://api.grabz.it/services/";
 use constant TrueString => "True";
 
 sub new
@@ -464,7 +464,7 @@ sub AddWaterMark($$$$)
 	
 	$ua = LWP::UserAgent->new();  
 		
-	$req = POST GrabzItClient::WebServicesBaseURL . 'addwatermark.ashx', 
+	$req = POST 'http://grabz.it/services/addwatermark.ashx', 
 	       content_type => 'multipart/form-data', 
 	       content      => [ 
 				 key => $self->{_applicationKey}, 
