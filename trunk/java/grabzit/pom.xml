@@ -68,9 +68,9 @@
 </plugins>
 </build>
 	<scm>
-	    <url>http://grabzit.googlecode.com/svn/tags/2.2.0</url>
-	    <connection>scm:svn:http://grabzit.googlecode.com/svn/tags/2.2.0</connection>
-            <developerConnection>scm:svn:https://grabzit.googlecode.com/svn/tags/2.2.0</developerConnection>	    
+	    <url>http://grabzit.googlecode.com/svn/trunk/java/grabzit/</url>
+	    <connection>scm:svn:http://grabzit.googlecode.com/svn/trunk/java/grabzit/</connection>
+            <developerConnection>scm:svn:https://grabzit.googlecode.com/svn/trunk/java/grabzit/</developerConnection>	    
 	</scm>	
 	<developers>
         <developer>
