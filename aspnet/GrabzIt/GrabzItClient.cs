@@ -484,6 +484,10 @@ namespace GrabzIt
                     result.Save(saveToFile);
                     break;
                 }
+                catch (GrabzItException e)
+                {
+                    throw e;
+                }
                 catch (Exception)
                 {
                     if (attempt < 3)

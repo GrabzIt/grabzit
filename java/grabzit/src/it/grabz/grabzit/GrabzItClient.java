@@ -435,6 +435,10 @@ public class GrabzItClient {
                 result.Save(saveToFile);
                 break;
             }
+            catch(GrabzItException e)
+            {
+                throw e;
+            }
             catch (Exception ex)
             {
                 if (attempt < 3)
