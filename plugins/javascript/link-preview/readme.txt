@@ -23,4 +23,4 @@ Feel free to alter the JavaScript or the CSS as you wish!
 Installing GrabzIt Preview on a Blog or CMS
 ===========================================
 
-GrabzIt Preview is full compatible with a blog or CMS, just open blog-or-cms-demo.txt this includes all the required JavaScript and CSS in one block. This can be inserted in a widget that accepts HTML in any blog or CMS. Remember to locate it at the bottom of the page after the content.
+GrabzIt Preview is full compatible with a blog or CMS, just open blog-or-cms-install.txt this includes all the required JavaScript and CSS in one block. This can be inserted into a widget that accepts raw HTML in most blog or Content Management Systems. Remember to locate it at the bottom of the page after the content.
