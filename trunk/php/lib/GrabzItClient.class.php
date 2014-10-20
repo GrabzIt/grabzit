@@ -27,7 +27,7 @@ class GrabzItClient
 	{
 		$this->connectionTimeout = $timeout;
 	}
-	
+
 	public function SetApplicationKey($applicationKey)
 	{
 		$this->applicationKey = $applicationKey;
@@ -47,7 +47,7 @@ class GrabzItClient
 	{
 		return $this->applicationSecret;
 	}
-	
+
 	#
 	# This method sets the parameters required to turn a online video into a animated GIF
 	#
@@ -66,7 +66,7 @@ class GrabzItClient
 	# country - Request the screenshot from different countries: Default, UK or US
 	#
 	public function SetAnimationOptions($url, $customId = null, $width = null, $height = null, $start = null, $duration = null, $speed = null, $framesPerSecond = null, $repeat = null, $reverse = false, $customWaterMarkId = null, $quality = -1, $country = null)
-	{	
+	{
 		$this->startDelay = 0;
 		$this->request = GrabzItClient::WebServicesBaseURL . "takeanimation.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&duration=".$duration."&speed=".$speed."&start=".$start."&customid=".urlencode($customId)."&fps=".$framesPerSecond."&repeat=".$repeat."&customwatermarkid=".urlencode($customWaterMarkId)."&reverse=".intval($reverse)."&country=".urlencode($country)."&quality=".$quality."&callback=";
 		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
@@ -157,7 +157,7 @@ class GrabzItClient
 		{
 			$this->startDelay = $delay;
 		}
-		
+
 		$pagesize = strtoupper($pagesize);
 		$orientation = ucfirst($orientation);
 
@@ -178,10 +178,10 @@ class GrabzItClient
 		{
 			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
-		
+
 		$sig =  md5($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
 		$currentRequest = $this->request;
-		
+
 		$currentRequest .= urlencode($callBackURL)."&sig=".$sig;
 		$obj = $this->getResultObject($this->Get($currentRequest));
 
@@ -208,7 +208,7 @@ class GrabzItClient
 
 		//Wait for screenshot to be possibly ready
 		usleep((3000 + $this->startDelay) * 1000);
-		
+
 		//Wait for it to be ready.
 		while(true)
 		{
@@ -227,12 +227,12 @@ class GrabzItClient
 					throw new GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT);
 					break;
 				}
-				
+
 				if (empty($saveToFile))
 				{
 					return $result;
-				}				
-				
+				}
+
 				file_put_contents($saveToFile, $result);
 				break;
 			}
@@ -283,7 +283,7 @@ class GrabzItClient
 		{
 			return null;
 		}
-		
+
 		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getfile.ashx?id=" . $id);
 
 		if (empty($result))
@@ -427,7 +427,12 @@ class GrabzItClient
 		$context  = stream_context_create($opts);
 
 		$response = @file_get_contents('http://grabz.it/services/addwatermark.ashx', false, $context);
-		$this->checkResponseHeader($http_response_header);
+
+		if (isset($http_response_header))
+		{
+			$this->checkResponseHeader($http_response_header);
+		}
+
 		return $this->isSuccessful($response);
 	}
 
@@ -551,11 +556,16 @@ class GrabzItClient
 			$timeout = array('http' => array('timeout' => $this->connectionTimeout));
 			$context = stream_context_create($timeout);
 			$response = @file_get_contents($url, false, $context);
-			
-			$this->checkResponseHeader($http_response_header);
+
+			if (isset($http_response_header))
+			{
+				$this->checkResponseHeader($http_response_header);
+			}
+
 			return $response;
 		}
-		else
+
+		if (function_exists('curl_version'))
 		{
 			$ch = curl_init();
 			curl_setopt($ch,CURLOPT_URL,$url);
@@ -563,26 +573,33 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
 			$data = curl_exec($ch);
 			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if($httpCode == 403)
-			{
-				throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
-			}
+
+			$this->checkHttpCode($httpCode);
+
 			curl_close($ch);
+
 			return $data;
 		}
+
+		throw new GrabzItException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItException::GENERIC_ERROR);
+	}
+
+	private function checkHttpCode($httpCode)
+	{
+	    if ($httpCode == 403)
+	    {
+			throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
+	    }
+	    else if ($httpCode >= 400)
+	    {
+			throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR);
+	    }
 	}
 
 	private function checkResponseHeader($header)
 	{
 	    list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
-	    if ($httpCode == 403)
-	    {
-		 throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
-	    }
-	    else if ($httpCode >= 400)
-	    {
-		 throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR);
-	    }
+		$this->checkHttpCode($httpCode);
 	}
 }
 ?>
