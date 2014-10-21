@@ -74,6 +74,10 @@ function GrabzItPreview(key, options)
 		{
 			var link = links[i];
 			var href = link.getAttribute("href");
+			if (link.getAttribute("grabzit-href") != null)
+			{
+				href = link.getAttribute("grabzit-href");
+			}	
 			var captionText = link.getAttribute("title");
 			var guid = that._guid();
 			
