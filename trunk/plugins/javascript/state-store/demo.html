@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var previousChildCount = 0;
+var decodePointer = 0;
+
+function encode()
+{
+	var encoded = '';
+	var container = document.getElementById('myForm');
+	encoded = encodeChildren(container);
+	alert(encoded);
+	decode(encoded);
+}
+
+function encodeChildren(container)
+{
+	var encoded = '';
+	
+	for(var i = 0;i < container.childNodes.length;i++)
+	{
+		var node = container.childNodes[i];
+		var tagName = node.tagName;
+		var childCount = 0;
+		
+		if (tagName === undefined)
+		{
+			continue;
+		}
+
+		if (encoded != '' && encoded[encoded.length-1] != '|')
+		{
+			encoded += '|';			
+		}
+		
+		tagName = tagName.toLowerCase();
+		
+		if (tagName == 'input')
+		{
+			encoded += 'i';
+		}
+		else if (tagName == 'br')
+		{
+			encoded += 'B';
+		}
+		else
+		{
+			encoded += tagName;
+		}
+		
+		if (node.childNodes.length > 0)
+		{
+			for(var x = 0;x < node.childNodes.length;x++)
+			{
+				var n = node.childNodes[x];
+				if (n.tagName)
+				{
+					childCount++;
+				}
+			}
+			encoded += ':' + childCount;
+		}
+		
+		encoded += '|';
+		
+		if (node.value != null)
+		{
+			encoded += 'v=' + node.value;
+		}
+		
+		for(var j = 0;j < node.attributes.length;j++)
+		{
+			var attribute = node.attributes[j];
+			var name = attribute.name;
+			var value = attribute.value;
+			
+			if (name == 'onclick' || name == 'value')
+			{
+				//ignore all events and values
+				continue;
+			}			
+			
+			if (encoded != '' && encoded[encoded.length-1] != '|')
+			{
+				encoded += '|';			
+			}
+
+			if (name == 'type')
+			{
+				encoded += 't=';
+				
+				if (value == 'text')
+				{
+					encoded += 't';
+				}
+				else if (value == 'button')
+				{
+					encoded += 'b';
+				}
+				else
+				{
+					encoded += value;
+				}				
+				
+				continue;
+			}
+			else
+			{
+				encoded += name + '=' + value;
+			}			
+		}	
+
+		if (childCount > 0)
+		{
+			if (encoded != '' && encoded[encoded.length-1] != '|')
+			{
+				encoded += '|';			
+			}					
+			encoded += encodeChildren(node);
+		}
+	}	
+	return encoded;
+}
+
+function decodeAttributeValue(attr, attrValue)
+{
+	if (attr == 't')
+	{
+		if (attrValue == 't')
+		{
+			return 'text';
+		}		
+		if (attrValue == 'b')
+		{
+			return 'button';
+		}
+	}
+	
+	return attrValue;
+}
+
+function decodeAttribute(attr)
+{
+	if (attr == 't')
+	{
+		return 'type';
+	}
+	if (attr == 'v')
+	{
+		return 'value';
+	}
+	
+	return attr;
+}
+
+function endTag(html, tagName)
+{
+	if (html != '' && html[html.length-1] != '>')
+	{
+		html += '>';
+	}
+	return html;
+}
+
+
+function closeTag(html, tagName)
+{
+	if (html != '' && tagName != '')
+	{
+		html += '</' + tagName + '>';
+	}
+	return html;
+}
+
+function decode(encoded)
+{
+	previousChildCount = 0;
+	decodePointer = 0;
+	var parts = encoded.split('|');
+	var decoded = decodeChildren(parts, 1);
+	
+	alert(decoded);
+}
+
+function decodeChildren(parts, limit)
+{
+	var decoded = '';
+	var tagName = '';	
+	var childCount = 0;
+	var decodeOffset = 0;
+	
+	while(decodePointer < parts.length)
+	{		
+		var part = parts[decodePointer];			
+		decodePointer++;
+		var index = part.indexOf('=');
+		if (index > -1)
+		{
+			if (decoded != '' && decoded[decoded.length-1] != ' ')
+			{
+				decoded += ' ';
+			}
+			
+			var attr = part.substring(0, index);
+			decoded += decodeAttribute(attr);
+			decoded += '="';
+			decoded += decodeAttributeValue(attr, part.substring(index+1, part.length));
+			decoded += '"';
+		}
+		else if (part != '')
+		{							
+			var countIndex = part.indexOf(':');			
+			if (countIndex > -1)
+			{
+				childCount = parseInt(part.substring(countIndex + 1, part.length));
+				part = part.substring(0, countIndex);
+			}
+			else
+			{
+				childCount = 0;
+			}			
+			
+			decoded = endTag(decoded, tagName);
+			
+			if (previousChildCount > 0)
+			{			
+				var lastCount = previousChildCount;
+				previousChildCount = childCount;
+				var tmp = decodeChildren(parts, lastCount);
+				decoded += tmp;	
+			}			
+			else
+			{	
+				previousChildCount = childCount;
+			}
+			
+			decoded = closeTag(decoded, tagName);
+			
+			if (decodeOffset >= limit)
+			{				
+				return decoded;
+			}								
+			
+			decodeOffset++;			
+			
+			if (part == 'B')
+			{			
+				//stops empty close tags
+				tagName = '';
+				decoded += '<br/>';		
+				continue; 
+			}		
+			
+			if (part == 'i')
+			{
+				tagName = 'input'; 
+			}
+			else
+			{
+				tagName = part;
+			}			
+			alert(tagName);
+			decoded += '<' + tagName;			
+		}					
+	}
+	
+	decoded = endTag(decoded, tagName);
+	decoded = closeTag(decoded, tagName);		
+	
+	return decoded;
+}
+</script>
+</head>
+<body>
+<p>xzxcxzc zx cxz cz c zxc zxc zxc zxc z cz c z gdfg df gf gdfg gdf gfd gfg d gfd g dfbbcbvcb cvbvb vb  fghghgf h hfgsf Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Cras in tempor enim, eget viverra nisi. Ut quam urna, sollicitudin eu erat id, blandit pulvinar nulla. Nunc rutrum ex eros, congue suscipit ligula viverra eu. In a feugiat velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc eu placerat quam. Etiam tincidunt odio erat, a semper odio aliquet non. Pellentesque at dictum ligula, quis ornare felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper ante iaculis purus pretium, nec hendrerit ex sagittis. Donec in dui vel lectus pharetra hendrerit. Nam ut sem convallis, dictum ex at, viverra velit. Suspendisse hendrerit vulputate mollis.</p><p>Nulla facilisi. Nulla non nunc ipsum. Nam consectetur velit arcu, ut congue elit bibendum a. Donec sed eleifend eros, sit amet venenatis magna. Donec mi augue, rhoncus vel imperdiet sit amet, porta nec erat. Donec libero mauris, dictum eget risus non, vulputate luctus ante. Fusce semper ante elit, ut lacinia dolor luctus in. Praesent condimentum sapien id tellus imperdiet fringilla. Nunc quis odio rhoncus, luctus lectus eget, blandit enim. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent purus lorem, aliquet in condimentum eu, pulvinar vitae neque. Maecenas non velit aliquet, egestas purus sit amet, feugiat sem. Nulla feugiat nunc volutpat augue ultrices, quis feugiat dui pharetra. Etiam eu dictum dui, aliquam dignissim magna. Etiam blandit ex eu vulputate malesuada.</p>
+<form method="get" id="myForm">
+<fieldset>
+<p class="hello"><input type="text" value=""/></p><br/>
+<input type="button" value="Send" onclick="encode();"/>
+</fieldset>
+</form>
+<p>Morbi quis scelerisque eros, cursus dignissim libero. Praesent finibus bibendum felis, ac iaculis ipsum mollis nec. Vestibulum consequat erat quis velit eleifend, ut ultrices ex convallis. Sed mi sapien, mollis vel metus ut, lobortis viverra nulla. Integer viverra elit nec neque vehicula, et vulputate lacus sollicitudin. Donec euismod aliquam pulvinar. Sed eget ante quis dui luctus tristique vel quis velit. Morbi sit amet nisi magna. Nulla dignissim mollis ex, vitae convallis metus sollicitudin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet velit enim, pellentesque volutpat sem tristique imperdiet. Nunc gravida sapien eget diam bibendum dignissim. Fusce viverra sagittis est eu dictum. Nam posuere vulputate magna, eget sollicitudin tortor ullamcorper a. Aenean ac dolor lobortis, malesuada velit placerat, dapibus nibh.</p><p>Maecenas convallis pulvinar justo, nec faucibus neque maximus maximus. <a href="http://www.spacex.com" title="Go to space" class="grabzit-preview">Morbi</a> tristique, orci finibus congue feugiat, nibh purus sagittis turpis, sit amet pellentesque nisl mi vel nisl. Nunc maximus neque at pellentesque luctus. Aliquam et posuere sapien. Maecenas tincidunt lacus vitae metus facilisis, in ornare nisl molestie. Aliquam est nibh, sodales vitae eros in, hendrerit eleifend erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ornare quam quis molestie volutpat. Nullam tempor lorem massa, quis hendrerit libero consectetur eu. Proin posuere leo vitae mattis consectetur. Integer auctor luctus lectus. Suspendisse mollis nibh vehicula augue rutrum, id vehicula lacus scelerisque.</p><p>Proin placerat auctor euismod. Mauris et leo velit. In hac habitasse platea dictumst. Maecenas nec bibendum ipsum. Nunc vel vehicula velit. Nam sodales tellus eu ultricies commodo. Ut id metus quam. Integer sed consectetur sem, eu aliquam mi. Fusce arcu sapien, efficitur non dictum vitae, dictum in dolor.
+</body>
+</html>
