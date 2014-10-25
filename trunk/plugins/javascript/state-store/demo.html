@@ -5,25 +5,92 @@
 var previousChildCount = 0;
 var decodePointer = 0;
 
+//alert(parseInt('2') == '2');
+
+function tokenize(encoded)
+{
+	var parts = encoded.split('|');
+	var tokenized = new Array();
+	
+	for(var i = 0; i < parts.length; i++)
+	{
+		if (tokenized[i] != null)
+		{
+			continue;
+		}
+		var found = false;
+		var subject = parts[i];
+		
+		if (subject.length <= 1)
+		{
+			tokenized[i] = subject;
+			continue;
+		}
+		
+		for (var j = i + 1; j < parts.length; j++)
+		{
+			var compare = parts[j];
+			
+			if (compare == subject)
+			{
+				tokenized[j] = i;
+			}
+		}
+		if (!found)
+		{
+			tokenized[i] = subject;
+		}
+	}
+	
+	return tokenized.join('|');
+}
+
+function untokenize(encoded)
+{
+	var parts = encoded.split('|');
+	var untokenized = new Array();
+	
+	for(var i = 0; i < parts.length; i++)
+	{
+		var subject = parts[i];
+		var iSubject = parseInt(subject);
+		if (iSubject == subject)
+		{
+			untokenized[i] = parts[iSubject];
+		}
+		else
+		{
+			untokenized[i] = subject;
+		}
+	}
+	
+	return untokenized.join('|');
+}
+
 function encode()
 {
 	var encoded = '';
 	var container = document.getElementById('myForm');
 	encoded = encodeChildren(container);
 	alert(encoded);
-	decode(encoded);
+	var tokenized = tokenize(encoded);
+	alert(tokenized);
+	var untokenized = untokenize(tokenized);
+	alert(untokenized);
+	decode(untokenized);
 }
 
 function encodeChildren(container)
 {
 	var encoded = '';
-	
+
 	for(var i = 0;i < container.childNodes.length;i++)
 	{
 		var node = container.childNodes[i];
 		var tagName = node.tagName;
+		var innerText = '';
 		var childCount = 0;
-		
+
 		if (tagName === undefined)
 		{
 			continue;
@@ -31,65 +98,93 @@ function encodeChildren(container)
 
 		if (encoded != '' && encoded[encoded.length-1] != '|')
 		{
-			encoded += '|';			
+			encoded += '|';
 		}
-		
+
 		tagName = tagName.toLowerCase();
-		
-		if (tagName == 'input')
+
+		if (tagName == 'br')
+		{
+			encoded += 'B';
+		}
+		else if (tagName == 'img')
+		{
+			encoded += 'I';
+		}
+		else if (tagName == 'input')
 		{
 			encoded += 'i';
 		}
-		else if (tagName == 'br')
+		else if (tagName == 'li')
 		{
-			encoded += 'B';
+			encoded += 'l';
+		}
+		else if (tagName == 'span')
+		{
+			encoded += 's';
+		}
+		else if (tagName == 'fieldset')
+		{
+			encoded += 'f';
+		}
+		else if (tagName == 'ul')
+		{
+			encoded += 'u';
 		}
 		else
 		{
 			encoded += tagName;
 		}
-		
+
 		if (node.childNodes.length > 0)
 		{
 			for(var x = 0;x < node.childNodes.length;x++)
 			{
 				var n = node.childNodes[x];
-				if (n.tagName)
+				if (n.nodeName)
 				{
 					childCount++;
 				}
 			}
-			encoded += ':' + childCount;
+			if (childCount > 0)
+			{
+				encoded += ':' + childCount;
+			}
 		}
-		
+
 		encoded += '|';
-		
-		if (node.value != null)
+
+		if (node.value != null && node.value != '')
 		{
-			encoded += 'v=' + node.value;
+			encoded += 'v=' + node.value + '|';
 		}
-		
+
+		if (node.firstChild != null && node.firstChild.nodeValue != null && node.firstChild.nodeValue.replace(/(\r\n|\n|\r)/gm,"") != '')
+		{
+			encoded += 'C=' + node.firstChild.nodeValue + '|';
+		}
+
 		for(var j = 0;j < node.attributes.length;j++)
 		{
 			var attribute = node.attributes[j];
 			var name = attribute.name;
 			var value = attribute.value;
-			
+
 			if (name == 'onclick' || name == 'value')
 			{
 				//ignore all events and values
 				continue;
-			}			
-			
+			}
+
 			if (encoded != '' && encoded[encoded.length-1] != '|')
 			{
-				encoded += '|';			
+				encoded += '|';
 			}
 
 			if (name == 'type')
 			{
 				encoded += 't=';
-				
+
 				if (value == 'text')
 				{
 					encoded += 't';
@@ -101,25 +196,39 @@ function encodeChildren(container)
 				else
 				{
 					encoded += value;
-				}				
-				
-				continue;
+				}
+			}
+			else if (name == 'name')
+			{
+				encoded += 'n' + '=' + value;
+			}
+			else if (name == 'id')
+			{
+				encoded += 'i' + '=' + value;
+			}
+			else if (name == 'href')
+			{
+				encoded += 'h' + '=' + encodeUrl(value);
+			}
+			else if (name == 'class')
+			{
+				encoded += 'c' + '=' + value;
 			}
 			else
 			{
 				encoded += name + '=' + value;
-			}			
-		}	
+			}
+		}
 
 		if (childCount > 0)
 		{
 			if (encoded != '' && encoded[encoded.length-1] != '|')
 			{
-				encoded += '|';			
-			}					
+				encoded += '|';
+			}
 			encoded += encodeChildren(node);
 		}
-	}	
+	}
 	return encoded;
 }
 
@@ -130,18 +239,26 @@ function decodeAttributeValue(attr, attrValue)
 		if (attrValue == 't')
 		{
 			return 'text';
-		}		
+		}
 		if (attrValue == 'b')
 		{
 			return 'button';
 		}
 	}
-	
+	if (attr == 'h')
+	{
+		return decodeUrl(attrValue);
+	}
+
 	return attrValue;
 }
 
 function decodeAttribute(attr)
 {
+	if (attr == 'c')
+	{
+		return 'class';
+	}
 	if (attr == 't')
 	{
 		return 'type';
@@ -150,7 +267,19 @@ function decodeAttribute(attr)
 	{
 		return 'value';
 	}
-	
+	if (attr == 'n')
+	{
+		return 'name';
+	}
+	if (attr == 'h')
+	{
+		return 'href';
+	}
+	if (attr == 'i')
+	{
+		return 'id';
+	}
+
 	return attr;
 }
 
@@ -173,26 +302,72 @@ function closeTag(html, tagName)
 	return html;
 }
 
+function encodeUrl(url)
+{
+	if (url.indexOf('http://www.') == 0)
+	{
+		return '^1' + url.substring(11, url.length);
+	}
+	if (url.indexOf('https://www.') == 0)
+	{
+		return '^2' + url.substring(12, url.length);
+	}	
+	if (url.indexOf('www.') == 0)
+	{
+		return '^3' + url.substring(4, url.length);
+	}
+	//Also do the current domain
+	return url;
+}
+
+function decodeUrl(url)
+{
+	if (url.indexOf('^1') == 0)
+	{
+		return 'http://www.' + url.substring(2, url.length);
+	}
+	if (url.indexOf('^2') == 0)
+	{
+		return 'https://www.' + url.substring(2, url.length);
+	}	
+	if (url.indexOf('^3') == 0)
+	{
+		return 'www.' + url.substring(2, url.length);
+	}
+	//Also do the current domain
+	return url;
+}
+
 function decode(encoded)
 {
 	previousChildCount = 0;
 	decodePointer = 0;
 	var parts = encoded.split('|');
-	var decoded = decodeChildren(parts, 1);
-	
+	var decoded = decodeChildren(parts, 1, false);
+
 	alert(decoded);
 }
 
-function decodeChildren(parts, limit)
+function decodeChildren(parts, limit, diving)
 {
 	var decoded = '';
-	var tagName = '';	
+	var tagName = '';
+	var tagContent = '';
 	var childCount = 0;
 	var decodeOffset = 0;
-	
+	var currentLoopCount=0;
+
+	if (diving)
+	{
+		decodePointer--;
+	}
+
+	var startingPart = parts[decodePointer];
+
 	while(decodePointer < parts.length)
-	{		
-		var part = parts[decodePointer];			
+	{
+		currentLoopCount++;
+		var part = parts[decodePointer];
 		decodePointer++;
 		var index = part.indexOf('=');
 		if (index > -1)
@@ -201,16 +376,24 @@ function decodeChildren(parts, limit)
 			{
 				decoded += ' ';
 			}
-			
+
 			var attr = part.substring(0, index);
+
+			if (attr == 'C')
+			{
+				//it's content!
+				tagContent = part.substring(index+1, part.length);
+				continue;
+			}
+
 			decoded += decodeAttribute(attr);
 			decoded += '="';
 			decoded += decodeAttributeValue(attr, part.substring(index+1, part.length));
 			decoded += '"';
 		}
 		else if (part != '')
-		{							
-			var countIndex = part.indexOf(':');			
+		{
+			var countIndex = part.indexOf(':');
 			if (countIndex > -1)
 			{
 				childCount = parseInt(part.substring(countIndex + 1, part.length));
@@ -219,55 +402,85 @@ function decodeChildren(parts, limit)
 			else
 			{
 				childCount = 0;
-			}			
-			
-			decoded = endTag(decoded, tagName);
-			
-			if (previousChildCount > 0)
-			{			
-				var lastCount = previousChildCount;
-				previousChildCount = childCount;
-				var tmp = decodeChildren(parts, lastCount);
-				decoded += tmp;	
-			}			
-			else
-			{	
-				previousChildCount = childCount;
 			}
-			
-			decoded = closeTag(decoded, tagName);
-			
-			if (decodeOffset >= limit)
-			{				
-				return decoded;
-			}								
-			
-			decodeOffset++;			
-			
+
+			decoded = endTag(decoded, tagName);
+
+			if (!diving || currentLoopCount > 1)
+			{
+				decoded += tagContent;
+				tagContent = '';
+				if (previousChildCount > 0)
+				{
+					var lastCount = previousChildCount;
+					previousChildCount = childCount;
+					var tmp = decodeChildren(parts, lastCount, true);
+					decoded += tmp;
+					continue;
+
+				}
+				else
+				{
+					previousChildCount = childCount;
+				}
+
+				decoded = closeTag(decoded, tagName);
+
+				if (decodeOffset >= limit)
+				{
+					decodePointer--;
+					return decoded;
+				}
+
+				tagName = '';
+			}
+
 			if (part == 'B')
-			{			
+			{
 				//stops empty close tags
 				tagName = '';
-				decoded += '<br/>';		
-				continue; 
-			}		
-			
+				decoded += '<br/>';
+				continue;
+			}
+
 			if (part == 'i')
 			{
-				tagName = 'input'; 
+				tagName = 'input';
+			}
+			else if (part == 'I')
+			{
+				tagName = 'img';
+			}
+			else if (part == 'l')
+			{
+				tagName = 'li';
+			}
+			else if (part == 'f')
+			{
+				tagName = 'fieldset';
+			}
+			else if (part == 's')
+			{
+				tagName = 'span';
+			}
+			else if (part == 'u')
+			{
+				tagName = 'ul';
 			}
 			else
 			{
 				tagName = part;
-			}			
-			alert(tagName);
-			decoded += '<' + tagName;			
-		}					
+			}
+
+			decoded += '<' + tagName;
+
+			decodeOffset++;
+		}
 	}
-	
+
 	decoded = endTag(decoded, tagName);
-	decoded = closeTag(decoded, tagName);		
-	
+	decoded = closeTag(decoded, tagName);
+
 	return decoded;
 }
 </script>
@@ -276,7 +489,11 @@ function decodeChildren(parts, limit)
 <p>xzxcxzc zx cxz cz c zxc zxc zxc zxc z cz c z gdfg df gf gdfg gdf gfd gfg d gfd g dfbbcbvcb cvbvb vb  fghghgf h hfgsf Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Cras in tempor enim, eget viverra nisi. Ut quam urna, sollicitudin eu erat id, blandit pulvinar nulla. Nunc rutrum ex eros, congue suscipit ligula viverra eu. In a feugiat velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc eu placerat quam. Etiam tincidunt odio erat, a semper odio aliquet non. Pellentesque at dictum ligula, quis ornare felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper ante iaculis purus pretium, nec hendrerit ex sagittis. Donec in dui vel lectus pharetra hendrerit. Nam ut sem convallis, dictum ex at, viverra velit. Suspendisse hendrerit vulputate mollis.</p><p>Nulla facilisi. Nulla non nunc ipsum. Nam consectetur velit arcu, ut congue elit bibendum a. Donec sed eleifend eros, sit amet venenatis magna. Donec mi augue, rhoncus vel imperdiet sit amet, porta nec erat. Donec libero mauris, dictum eget risus non, vulputate luctus ante. Fusce semper ante elit, ut lacinia dolor luctus in. Praesent condimentum sapien id tellus imperdiet fringilla. Nunc quis odio rhoncus, luctus lectus eget, blandit enim. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent purus lorem, aliquet in condimentum eu, pulvinar vitae neque. Maecenas non velit aliquet, egestas purus sit amet, feugiat sem. Nulla feugiat nunc volutpat augue ultrices, quis feugiat dui pharetra. Etiam eu dictum dui, aliquam dignissim magna. Etiam blandit ex eu vulputate malesuada.</p>
 <form method="get" id="myForm">
 <fieldset>
-<p class="hello"><input type="text" value=""/></p><br/>
+<p class="hello"><input type="text" name="name" value=""/><span id="job"><img/>
+<span id="it"><a href="www.google.com">hello<ul><li></li></ul></a></span>
+</span></p><br/>
+<input type="text" value="" name="age"/>
+<input type="text" value="" name="town"/>
 <input type="button" value="Send" onclick="encode();"/>
 </fieldset>
 </form>
