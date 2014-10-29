@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="lz-string-1.3.3-min.js"></script>
 <script type="text/javascript">
 var previousChildCount = 0;
 var decodePointer = 0;
-
-//alert(parseInt('2') == '2');
 
 function tokenize(encoded)
 {
@@ -70,20 +69,90 @@ function untokenize(encoded)
 function encode()
 {
 	var encoded = '';
-	var container = document.getElementById('myForm');
+	var container = document.documentElement;
+	var shadow = document.getElementById('grabzit-shadow');
+	
 	encoded = encodeChildren(container);
-	alert(encoded);
+	var shadowEncoded = encodeChildren(shadow);
+	
+	alert(normalizeEncoding(encoded, shadowEncoded));
+	
 	var tokenized = tokenize(encoded);
-	alert(tokenized);
-	var untokenized = untokenize(tokenized);
-	alert(untokenized);
+	var compressed = LZString.compressToBase64(tokenized);
+	/*
+	if (compressed.length > 1024)
+	{
+		alert('The size of the web data you are trying to send to GrabzIt is too large. Try to reduce this by specifiying a id of a element that more tightly wraps the data you are interested in recording.');
+		return;
+	}*/
+	
+	var decompressed  = LZString.decompressFromBase64(compressed);
+	var untokenized = untokenize(decompressed);
+	//alert(untokenized);
 	decode(untokenized);
+}
+
+function normalizeEncoding(encoded, shadowEncoded)
+{
+	var normalized = new Array();
+	var parts = encoded.split('|');
+	var shadowParts = shadowEncoded.split('|');
+	var index = 0;
+	
+	for(var i = 0;i < shadowParts.length;i++)
+	{
+		var shadowPart = shadowParts[i];		
+		
+		for(var j = index;j < parts.length;j++)
+		{
+			var part = parts[j];
+			
+			if (shadowPart.indexOf('=') > -1)
+			{
+				if (shadowPart != part)
+				{
+					//It has been removed
+					var bits = shadowPart.split('=');
+					normalized.push(bits[0] + '=');
+					break;
+				}
+				else
+				{
+					index++;
+					break;
+				}
+			}
+			else
+			{						
+				index++;
+				normalized.push(part);
+				
+				if (shadowPart != part)
+				{
+					break;
+				}
+			}
+		}
+	}
+	
+	return normalized.join('|');
+}
+
+function shadowCopy()
+{
+	var doc = document.documentElement.cloneNode(true);
+	var shadow = document.createElement("div");
+	shadow.setAttribute("id", "grabzit-shadow");
+	shadow.setAttribute("style", "display:none");
+	shadow.appendChild(doc);
+	
+	document.documentElement.appendChild(shadow);
 }
 
 function encodeChildren(container)
 {
-	var encoded = '';
-
+	var encoded = '';	
+	
 	for(var i = 0;i < container.childNodes.length;i++)
 	{
 		var node = container.childNodes[i];
@@ -127,6 +196,10 @@ function encodeChildren(container)
 		{
 			encoded += 'f';
 		}
+		else if (tagName == 'form')
+		{
+			encoded += 'F';
+		}	
 		else if (tagName == 'ul')
 		{
 			encoded += 'u';
@@ -156,12 +229,12 @@ function encodeChildren(container)
 
 		if (node.value != null && node.value != '')
 		{
-			encoded += 'v=' + node.value + '|';
+			encoded += 'v=' + encodeURIComponent(node.value) + '|';
 		}
 
 		if (node.firstChild != null && node.firstChild.nodeValue != null && node.firstChild.nodeValue.replace(/(\r\n|\n|\r)/gm,"") != '')
 		{
-			encoded += 'C=' + node.firstChild.nodeValue + '|';
+			encoded += 'C=' + encodeURIComponent(node.firstChild.nodeValue) + '|';
 		}
 
 		for(var j = 0;j < node.attributes.length;j++)
@@ -195,16 +268,33 @@ function encodeChildren(container)
 				}
 				else
 				{
-					encoded += value;
+					encoded += encodeURIComponent(value);
 				}
+			}
+			else if (name == 'method')
+			{
+				encoded += 'm=';
+				
+				if (value == 'get')
+				{
+					encoded += 'g';
+				}
+				else if (value == 'post')
+				{
+					encoded += 'p';
+				}
+				else
+				{
+					encoded += encodeURIComponent(value);
+				}				
 			}
 			else if (name == 'name')
 			{
-				encoded += 'n' + '=' + value;
+				encoded += 'n' + '=' + encodeURIComponent(value);
 			}
 			else if (name == 'id')
 			{
-				encoded += 'i' + '=' + value;
+				encoded += 'i' + '=' + encodeURIComponent(value);
 			}
 			else if (name == 'href')
 			{
@@ -212,11 +302,11 @@ function encodeChildren(container)
 			}
 			else if (name == 'class')
 			{
-				encoded += 'c' + '=' + value;
+				encoded += 'c' + '=' + encodeURIComponent(value);
 			}
 			else
 			{
-				encoded += name + '=' + value;
+				encoded += name + '=' + encodeURIComponent(value);
 			}
 		}
 
@@ -245,12 +335,23 @@ function decodeAttributeValue(attr, attrValue)
 			return 'button';
 		}
 	}
+	if (attr == 'm')
+	{
+		if (attrValue == 'g')
+		{
+			return 'get';
+		}
+		if (attrValue == 'p')
+		{
+			return 'post';
+		}
+	}	
 	if (attr == 'h')
 	{
 		return decodeUrl(attrValue);
 	}
 
-	return attrValue;
+	return decodeURIComponent(attrValue);
 }
 
 function decodeAttribute(attr)
@@ -267,6 +368,10 @@ function decodeAttribute(attr)
 	{
 		return 'value';
 	}
+	if (attr == 'm')
+	{
+		return 'method';
+	}	
 	if (attr == 'n')
 	{
 		return 'name';
@@ -304,17 +409,32 @@ function closeTag(html, tagName)
 
 function encodeUrl(url)
 {
+	if (document.location.hostname)
+	{
+		if (url.indexOf('http://'+document.location.hostname) == 0)
+		{
+			return '^1' + url.substring(('http://'+document.location.hostname).length, url.length);
+		}
+		if (url.indexOf('https://'+document.location.hostname) == 0)
+		{
+			return '^2' + url.substring(('https://'+document.location.hostname).length, url.length);
+		}	
+		if (url.indexOf(document.location.hostname) == 0)
+		{
+			return '^3' + url.substring(document.location.hostname.length, url.length);
+		}	
+	}	
 	if (url.indexOf('http://www.') == 0)
 	{
-		return '^1' + url.substring(11, url.length);
+		return '^4' + url.substring(11, url.length);
 	}
 	if (url.indexOf('https://www.') == 0)
 	{
-		return '^2' + url.substring(12, url.length);
+		return '^5' + url.substring(12, url.length);
 	}	
 	if (url.indexOf('www.') == 0)
 	{
-		return '^3' + url.substring(4, url.length);
+		return '^6' + url.substring(4, url.length);
 	}
 	//Also do the current domain
 	return url;
@@ -322,15 +442,30 @@ function encodeUrl(url)
 
 function decodeUrl(url)
 {
-	if (url.indexOf('^1') == 0)
+	if (document.location.hostname)
+	{
+		if (url.indexOf('^1') == 0)
+		{
+			return 'http://'+document.location.hostname + url.substring(2, url.length);
+		}
+		if (url.indexOf('^2') == 0)
+		{
+			return 'https://'+document.location.hostname + url.substring(2, url.length);
+		}	
+		if (url.indexOf('^3') == 0)
+		{
+			return document.location.hostname + url.substring(11, url.length);
+		}
+	}	
+	if (url.indexOf('^4') == 0)
 	{
 		return 'http://www.' + url.substring(2, url.length);
 	}
-	if (url.indexOf('^2') == 0)
+	if (url.indexOf('^5') == 0)
 	{
 		return 'https://www.' + url.substring(2, url.length);
 	}	
-	if (url.indexOf('^3') == 0)
+	if (url.indexOf('^6') == 0)
 	{
 		return 'www.' + url.substring(2, url.length);
 	}
@@ -382,7 +517,7 @@ function decodeChildren(parts, limit, diving)
 			if (attr == 'C')
 			{
 				//it's content!
-				tagContent = part.substring(index+1, part.length);
+				tagContent = decodeURIComponent(part.substring(index+1, part.length));
 				continue;
 			}
 
@@ -459,6 +594,10 @@ function decodeChildren(parts, limit, diving)
 			{
 				tagName = 'fieldset';
 			}
+			else if (part == 'F')
+			{
+				tagName = 'form';
+			}			
 			else if (part == 's')
 			{
 				tagName = 'span';
@@ -483,9 +622,12 @@ function decodeChildren(parts, limit, diving)
 
 	return decoded;
 }
+
+
+	shadowCopy();
 </script>
 </head>
-<body>
+<body id="mBody">
 <p>xzxcxzc zx cxz cz c zxc zxc zxc zxc z cz c z gdfg df gf gdfg gdf gfd gfg d gfd g dfbbcbvcb cvbvb vb  fghghgf h hfgsf Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Cras in tempor enim, eget viverra nisi. Ut quam urna, sollicitudin eu erat id, blandit pulvinar nulla. Nunc rutrum ex eros, congue suscipit ligula viverra eu. In a feugiat velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc eu placerat quam. Etiam tincidunt odio erat, a semper odio aliquet non. Pellentesque at dictum ligula, quis ornare felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper ante iaculis purus pretium, nec hendrerit ex sagittis. Donec in dui vel lectus pharetra hendrerit. Nam ut sem convallis, dictum ex at, viverra velit. Suspendisse hendrerit vulputate mollis.</p><p>Nulla facilisi. Nulla non nunc ipsum. Nam consectetur velit arcu, ut congue elit bibendum a. Donec sed eleifend eros, sit amet venenatis magna. Donec mi augue, rhoncus vel imperdiet sit amet, porta nec erat. Donec libero mauris, dictum eget risus non, vulputate luctus ante. Fusce semper ante elit, ut lacinia dolor luctus in. Praesent condimentum sapien id tellus imperdiet fringilla. Nunc quis odio rhoncus, luctus lectus eget, blandit enim. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent purus lorem, aliquet in condimentum eu, pulvinar vitae neque. Maecenas non velit aliquet, egestas purus sit amet, feugiat sem. Nulla feugiat nunc volutpat augue ultrices, quis feugiat dui pharetra. Etiam eu dictum dui, aliquam dignissim magna. Etiam blandit ex eu vulputate malesuada.</p>
 <form method="get" id="myForm">
 <fieldset>
