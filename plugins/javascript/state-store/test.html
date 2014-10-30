@@ -1,17 +1,22 @@
 <div id="a">
-<span>ddfsfds<br/></span>
+<span></br>abc<img src="bob.jpg"/></span>
+<p>Hello there</p>
 </div>
 <div id="b">
-<span class="hello">ddfsfds</span>
+<span class="hello">abc</span>
+<p>Hello there</p>
 </div>
 <script>
 
 function normalize(a, b)
-{
+{	
 	if (a == null)
 	{
 		return;
 	}
+	
+	var excludedNodes = new Array();
+	
 	if(a.isEqualNode(b))
 	{
 		if (typeof b.attributes != 'undefined')
@@ -21,16 +26,16 @@ function normalize(a, b)
 				b.removeAttribute(b.attributes[i].nodeName);
 			}
 		}
-		b = removeAllTextNodes(b);
+		b = removeAllTextNodes(b, function(o){excludedNodes.push(o);});
 	}
 	else if (a.tagName == b.tagName)
 	{
-		if (getNodeText(a) === getNodeText(b))
-		{
+		var aNodeText = getNodeText(a);
+		var bNodeText = getNodeText(b);
 		
-	alert(getNodeText(a));
-	alert(getNodeText(b));
-			b = removeAllTextNodes(b);
+		if (aNodeText == bNodeText && aNodeText != '' && bNodeText != '')
+		{		
+			b = removeAllTextNodes(b, function(o){excludedNodes.push(o);});
 		}
 	
 		if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
@@ -79,19 +84,20 @@ function normalize(a, b)
 		}
 	}
 	else
-	{
-		if (!containsNode(b.parentNode, a))
+	{	
+		if (b.parentNode == null || !containsNode(b.parentNode.childNodes, a))
 		{
 			if (typeof b.parentNode.attributes != 'undefined')
 			{
-				b.appendChild(a.cloneNode(true));
+				b.appendChild(a.cloneNode(true));				
 			}
 		}
-		else
+		else if (a.nodeType != 3)
 		{
 			var parent = b.parentNode;
 			parent.removeChild(b);
 		}
+		return;
 	}
 	var maximum = a.childNodes.length;
 	if (maximum < b.childNodes.length)
@@ -105,7 +111,7 @@ function normalize(a, b)
 	{
 		var nextA = a.childNodes[i];
 		var nextB = b.childNodes[i];
-		if (nextB == null)
+		if (nextB == null || nextB.nodeType != 1)
 		{
 			nextB = previousB;
 		}
@@ -121,6 +127,12 @@ function normalize(a, b)
 		{
 			previousA = nextA;
 		}
+		
+		if (containsNode(excludedNodes, nextA))
+		{
+			continue;
+		}
+		
 		normalize(nextA, nextB);
 	}	
 }
@@ -134,25 +146,35 @@ function getNodeText(o)
 			text += curNode.nodeValue;
 		}
 	}
+	text = text.replace(/(\r\n|\n|\r)/gm,"");
 	return text;
 }
 
-function removeAllTextNodes(o)
+function removeAllTextNodes(o, func)
 {
+	var emptied = false;
 	for (var i = 0; i < o.childNodes.length; i++) {
 		var curNode = o.childNodes[i];
 		if (curNode.nodeType == 3) {
+			func(curNode.cloneNode(false));
 			o.removeChild(curNode);
+			emptied = true;
 		}
 	}
+	
+	if (emptied)
+	{
+		o.setAttribute("grabzit-empty", "");
+	}
+	
 	return o;
 }
 
 function containsNode(haystack, needle)
 {
-	for(var i = 0;i < haystack.childNodes;i++)
+	for(var i = 0;i < haystack.length;i++)
 	{
-		if(needle.isEqualNode(haystack.childNodes[i]))
+		if(needle.isEqualNode(haystack[i]))
 		{
 			return true;
 		}
