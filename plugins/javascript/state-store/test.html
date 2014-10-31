@@ -1,22 +1,201 @@
 <div id="a">
-<span></br>abc<img src="bob.jpg"/></span>
+<span class="helly"></br>abcd<img class="a" src="bob.jpg"/></span>
 <p>Hello there</p>
+<div class="Jedi"><div class="Sith"></div><div class="Council"></div></div>
+<div class="Picard"></div>
 </div>
 <div id="b">
+<div><span class="hello">abc</span>
+<p>Hello there</p></div>
+</div>
+<div id="c">
 <span class="hello">abc</span>
 <p>Hello there</p>
 </div>
 <script>
 
-function normalize(a, b)
-{	
+function expand(a, b)
+{
 	if (a == null)
 	{
 		return;
 	}
-	
+
 	var excludedNodes = new Array();
+
+	if (a.tagName == b.tagName)
+	{
+		var aNodeText = getNodeText(a);
+		var bNodeText = getNodeText(b);
+		
+		if (aNodeText != bNodeText && bNodeText != '' && aNodeText != '')
+		{
+			excludedNodes.push(b);
+			b.innerHTML = a.innerHTML;
+		}
+		
+		if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
+		{		
+			for(var i = 0;i < a.attributes.length;i++)
+			{
+				var aAtt = a.attributes[i];
+				
+				if (aAtt.nodeName == 'grabzit-empty')
+				{
+					b = removeAllTextNodes(b, function(o){excludedNodes.push(o);});
+				}
+				
+				if (aAtt.value == '')
+				{
+					b.removeAttribute(aAtt.nodeName);
+				}
+				else
+				{
+					b.setAttribute(aAtt.nodeName, aAtt.value);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (b.parentNode == null || !containsNode(b.parentNode.childNodes, a))
+		{
+			if (a.nodeType != 3)
+			{
+				var add = a.cloneNode(true);
+				add.setAttribute('grabzit-added','');
+				
+				var parent = getCorrectParent(a, b);
+				parent.appendChild(add);
+			}
+		}
+		else if (a.nodeType != 3)
+		{
+			b.parentNode.removeChild(b);
+		}
+		return;
+	}	
 	
+	chooseNextNodes(a, b, excludedNodes, expand);
+}
+
+function getCorrectParent(a, b)
+{
+	if (a.parentNode.tagName == b.tagName && attributesEqual(a.parentNode, b))
+	{
+		return b;
+	}
+	
+	return getCorrectParent(a, b.parentNode);
+}
+
+function attributesEqual(a, b)
+{
+	if (b.attributes.length != a.attributes.length)
+	{
+		return false;
+	}
+	
+	for(var i = 0;i < a.attributes.length;i++)
+	{
+		var found = false;
+		var aAtt = a.attributes[i];
+		for(var j = 0;j < b.attributes.length;j++)
+		{
+			var bAtt = b.attributes[i];
+			
+			if (aAtt.nodeName == bAtt.nodeName && aAtt.nodeValue == bAtt.nodeValue)
+			{
+				found = true;
+			}
+		}
+		
+		if (!found)
+		{
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+function chooseNextNodes(a, b, excludedNodes, func)
+{
+	filterEmptyNodes(a);
+	filterEmptyNodes(b);
+	
+	var maximum = a.childNodes.length;
+	if (maximum < b.childNodes.length)
+	{
+		maximum = b.childNodes.length;
+	}
+
+	var initialA = a;
+	var initialB = b;
+	var previousA = a;
+	var previousB = b;
+	for(var i = 0;i < maximum;i++)
+	{
+		var nextA = a.childNodes[i];
+		var nextB = b.childNodes[i];
+		
+		if (nextB == null || nextB.nodeType != 1)
+		{
+			nextB = previousB;
+		}
+		else
+		{
+			previousB = nextB;
+		}
+		if (nextA == null)
+		{
+			nextA = previousA;
+		}
+		else
+		{
+			previousA = nextA;
+		}
+
+		if (containsNode(excludedNodes, nextA))
+		{
+			continue;
+		}
+		
+		if (nextB.nodeType != 3 && nextB.hasAttribute('grabzit-added'))
+		{
+			nextB = b;
+		}	
+
+		if (initialA === nextA && initialB === nextB)
+		{
+			return;
+		}
+		
+		func(nextA, nextB);
+	}
+}
+
+function filterEmptyNodes(o)
+{
+	for(var i = 0;i < o.childNodes.length;i++)
+	{
+		var node = o.childNodes[i];
+		if (node.nodeType == 3 && removeBreaks(node.nodeValue) == '')
+		{
+			o.removeChild(node);
+		}
+	}
+}
+
+function normalize(a, b)
+{
+	if (a == null)
+	{
+		return;
+	}
+
+	var excludedNodes = new Array();
+
 	if(a.isEqualNode(b))
 	{
 		if (typeof b.attributes != 'undefined')
@@ -32,33 +211,48 @@ function normalize(a, b)
 	{
 		var aNodeText = getNodeText(a);
 		var bNodeText = getNodeText(b);
-		
+
 		if (aNodeText == bNodeText && aNodeText != '' && bNodeText != '')
-		{		
+		{
 			b = removeAllTextNodes(b, function(o){excludedNodes.push(o);});
 		}
-	
+
+		if (aNodeText != bNodeText && bNodeText != '')
+		{
+			if (aNodeText == '')
+			{
+				//its been emptied
+				b = removeAllTextNodes(b, function(o){excludedNodes.push(o);});
+				b.setAttribute("grabzit-empty", "");				
+			}
+			else
+			{
+				excludedNodes.push(b);
+				b.innerHTML = a.innerHTML;
+			}
+		}
+
 		if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
 		{
 			var attributesToRemove = new Array();
-		
+
 			for(var j = 0;j < b.attributes.length;j++)
-			{		
+			{
 				attributesToRemove.push(b.attributes[j].nodeName);
 			}
-			
+
 			for(var i = 0;i < a.attributes.length;i++)
 			{
 				var aAtt = a.attributes[i];
 				attributesToRemove.pop(aAtt.nodeName);
 				var found = false;
-				
+
 				for(var j = 0;j < b.attributes;j++)
 				{
 					var bAtt = b.attributes[j];
 					if (aAtt.nodeName == bAtt.nodeName)
 					{
-						found = true;					
+						found = true;
 
 						if (aAtt.value != bAtt.value)
 						{
@@ -76,20 +270,24 @@ function normalize(a, b)
 					b.setAttribute(aAtt.nodeName, aAtt.value);
 				}
 			}
-			
+
 			for (var j = 0;j < attributesToRemove.length;j++)
-			{		
+			{
 				b.setAttribute(attributesToRemove[j], "");
 			}
 		}
 	}
 	else
-	{	
+	{
 		if (b.parentNode == null || !containsNode(b.parentNode.childNodes, a))
 		{
-			if (typeof b.parentNode.attributes != 'undefined')
+			if (a.nodeType != 3)
 			{
-				b.appendChild(a.cloneNode(true));				
+				var add = a.cloneNode(true);
+				add.setAttribute('grabzit-added','');
+				
+				var parent = getCorrectParent(a, b);
+				parent.appendChild(add);
 			}
 		}
 		else if (a.nodeType != 3)
@@ -99,42 +297,8 @@ function normalize(a, b)
 		}
 		return;
 	}
-	var maximum = a.childNodes.length;
-	if (maximum < b.childNodes.length)
-	{
-		maximum = b.childNodes.length;
-	}
 	
-	var previousA = a;
-	var previousB = b;
-	for(var i = 0;i < maximum;i++)
-	{
-		var nextA = a.childNodes[i];
-		var nextB = b.childNodes[i];
-		if (nextB == null || nextB.nodeType != 1)
-		{
-			nextB = previousB;
-		}
-		else
-		{
-			previousB = nextB;
-		}
-		if (nextA == null)
-		{
-			nextA = previousA;
-		}
-		else
-		{
-			previousA = nextA;
-		}
-		
-		if (containsNode(excludedNodes, nextA))
-		{
-			continue;
-		}
-		
-		normalize(nextA, nextB);
-	}	
+	chooseNextNodes(a, b, excludedNodes, normalize);
 }
 
 function getNodeText(o)
@@ -146,28 +310,46 @@ function getNodeText(o)
 			text += curNode.nodeValue;
 		}
 	}
-	text = text.replace(/(\r\n|\n|\r)/gm,"");
-	return text;
+	
+	return removeBreaks(text);
+}
+
+function removeBreaks(text)
+{
+	return text.replace(/(\r\n|\n|\r)/gm,"");
 }
 
 function removeAllTextNodes(o, func)
 {
-	var emptied = false;
 	for (var i = 0; i < o.childNodes.length; i++) {
 		var curNode = o.childNodes[i];
 		if (curNode.nodeType == 3) {
 			func(curNode.cloneNode(false));
 			o.removeChild(curNode);
-			emptied = true;
 		}
 	}
-	
-	if (emptied)
-	{
-		o.setAttribute("grabzit-empty", "");
-	}
-	
 	return o;
+}
+
+function replaceMisMatchingTextNodes(a, b, func)
+{
+	var emptied = false;
+	for (var i = 0; i < b.childNodes.length; i++)
+	{
+		var bNode = b.childNodes[i];
+		for (var j = 0; j < a.childNodes.length; j++)
+		{
+			var aNode = a.childNodes[i];
+			alert(aNode.nodeValue);
+			if (aNode.nodeType == 3 && bNode.nodeType == 3 && aNode.nodeValue != bNode.nodeValue) {
+				func(aNode.cloneNode(false));
+				bNode.nodeValue = aNode.nodeValue;
+				break;
+			}
+		}
+	}
+
+	return b;
 }
 
 function containsNode(haystack, needle)
@@ -182,5 +364,6 @@ function containsNode(haystack, needle)
 	return false;
 }
 
-normalize(document.getElementById('a'), document.getElementById('b'));
+normalize(document.getElementById('a'), document.getElementById('b').childNodes[1]);
+expand(document.getElementById('b').childNodes[1], document.getElementById('c'));
 </script>
