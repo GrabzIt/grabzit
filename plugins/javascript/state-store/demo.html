@@ -2,6 +2,7 @@
 <html>
 <head>
 <script type="text/javascript" src="lz-string-1.3.3-min.js"></script>
+<script type="text/javascript" src="HTMLReducer.js"></script>
 <script type="text/javascript">
 var previousChildCount = 0;
 var decodePointer = 0;
@@ -70,12 +71,15 @@ function encode()
 {
 	var encoded = '';
 	var container = document.documentElement;
-	var shadow = document.getElementById('grabzit-shadow');
+	var shadow = document.getElementById('grabzit-shadow').childNodes[0];
 	
-	encoded = encodeChildren(container);
-	var shadowEncoded = encodeChildren(shadow);
+	HTMLReducer.shrink(container, shadow);
 	
-	alert(normalizeEncoding(encoded, shadowEncoded));
+	encoded = encodeChildren(shadow);
+	alert(encoded);
+	//var shadowEncoded = encodeChildren(shadow);
+	
+//alert(normalizeEncoding(encoded, shadowEncoded));
 	
 	var tokenized = tokenize(encoded);
 	var compressed = LZString.compressToBase64(tokenized);
@@ -91,7 +95,7 @@ function encode()
 	//alert(untokenized);
 	decode(untokenized);
 }
-
+/*
 function normalizeEncoding(encoded, shadowEncoded)
 {
 	var normalized = new Array();
@@ -137,7 +141,7 @@ function normalizeEncoding(encoded, shadowEncoded)
 	
 	return normalized.join('|');
 }
-
+*/
 function shadowCopy()
 {
 	var doc = document.documentElement.cloneNode(true);
@@ -172,10 +176,18 @@ function encodeChildren(container)
 
 		tagName = tagName.toLowerCase();
 
-		if (tagName == 'br')
+		if (tagName == 'body')
+		{
+			encoded += 'y';
+		}		
+		else if (tagName == 'br')
 		{
 			encoded += 'B';
 		}
+		else if (tagName == 'head')
+		{
+			encoded += 'h';
+		}		
 		else if (tagName == 'img')
 		{
 			encoded += 'I';
@@ -192,6 +204,10 @@ function encodeChildren(container)
 		{
 			encoded += 's';
 		}
+		else if (tagName == 'script')
+		{
+			encoded += 'S';
+		}					
 		else if (tagName == 'fieldset')
 		{
 			encoded += 'f';
@@ -578,6 +594,14 @@ function decodeChildren(parts, limit, diving)
 				continue;
 			}
 
+			if (part == 'y')
+			{
+				tagName = 'body';
+			}			
+			if (part == 'h')
+			{
+				tagName = 'head';
+			}			
 			if (part == 'i')
 			{
 				tagName = 'input';
@@ -602,6 +626,10 @@ function decodeChildren(parts, limit, diving)
 			{
 				tagName = 'span';
 			}
+			else if (part == 'S')
+			{
+				tagName = 'script';
+			}			
 			else if (part == 'u')
 			{
 				tagName = 'ul';
@@ -622,9 +650,6 @@ function decodeChildren(parts, limit, diving)
 
 	return decoded;
 }
-
-
-	shadowCopy();
 </script>
 </head>
 <body id="mBody">
@@ -640,5 +665,8 @@ function decodeChildren(parts, limit, diving)
 </fieldset>
 </form>
 <p>Morbi quis scelerisque eros, cursus dignissim libero. Praesent finibus bibendum felis, ac iaculis ipsum mollis nec. Vestibulum consequat erat quis velit eleifend, ut ultrices ex convallis. Sed mi sapien, mollis vel metus ut, lobortis viverra nulla. Integer viverra elit nec neque vehicula, et vulputate lacus sollicitudin. Donec euismod aliquam pulvinar. Sed eget ante quis dui luctus tristique vel quis velit. Morbi sit amet nisi magna. Nulla dignissim mollis ex, vitae convallis metus sollicitudin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet velit enim, pellentesque volutpat sem tristique imperdiet. Nunc gravida sapien eget diam bibendum dignissim. Fusce viverra sagittis est eu dictum. Nam posuere vulputate magna, eget sollicitudin tortor ullamcorper a. Aenean ac dolor lobortis, malesuada velit placerat, dapibus nibh.</p><p>Maecenas convallis pulvinar justo, nec faucibus neque maximus maximus. <a href="http://www.spacex.com" title="Go to space" class="grabzit-preview">Morbi</a> tristique, orci finibus congue feugiat, nibh purus sagittis turpis, sit amet pellentesque nisl mi vel nisl. Nunc maximus neque at pellentesque luctus. Aliquam et posuere sapien. Maecenas tincidunt lacus vitae metus facilisis, in ornare nisl molestie. Aliquam est nibh, sodales vitae eros in, hendrerit eleifend erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ornare quam quis molestie volutpat. Nullam tempor lorem massa, quis hendrerit libero consectetur eu. Proin posuere leo vitae mattis consectetur. Integer auctor luctus lectus. Suspendisse mollis nibh vehicula augue rutrum, id vehicula lacus scelerisque.</p><p>Proin placerat auctor euismod. Mauris et leo velit. In hac habitasse platea dictumst. Maecenas nec bibendum ipsum. Nunc vel vehicula velit. Nam sodales tellus eu ultricies commodo. Ut id metus quam. Integer sed consectetur sem, eu aliquam mi. Fusce arcu sapien, efficitur non dictum vitae, dictum in dolor.
+<script>
+shadowCopy();
+</script>
 </body>
 </html>
