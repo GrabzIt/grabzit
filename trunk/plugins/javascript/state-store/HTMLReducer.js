@@ -1,7 +1,7 @@
 function HTMLReducer()
 {
 	this.expand = function(a, b, that)
-	{
+	{	
 		if (a == null)
 		{
 			return;
@@ -15,7 +15,7 @@ function HTMLReducer()
 		var excludedNodes = new Array();
 
 		if (a.tagName == b.tagName)
-		{
+		{		
 			var aNodeText = that.getNodeText(a);
 			var bNodeText = that.getNodeText(b);
 			
@@ -27,6 +27,7 @@ function HTMLReducer()
 			
 			if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
 			{		
+				var namesToRemove = new Array();
 				for(var i = 0;i < a.attributes.length;i++)
 				{
 					var aAtt = a.attributes[i];
@@ -38,25 +39,30 @@ function HTMLReducer()
 					
 					if (aAtt.value == '')
 					{
-						b.removeAttribute(aAtt.nodeName);
+						namesToRemove.push(aAtt.nodeName);
 					}
 					else
 					{
 						b.setAttribute(aAtt.nodeName, aAtt.value);
 					}
 				}
+				
+				for(var i = 0;i < namesToRemove.length;i++)
+				{				
+					b.removeAttribute(namesToRemove[i]);
+				}				
 			}
 		}
 		else
-		{
+		{				
 			if (b.parentNode == null || !that.containsNode(b.parentNode.childNodes, a))
-			{
+			{				
 				if (a.nodeType != 3)
-				{
+				{				
 					var add = a.cloneNode(true);
 					add.setAttribute('grabzit-added','');
 					
-					var parent = that.getCorrectParent(a, b);
+					var parent = that.getCorrectParent(a, b);					
 					parent.appendChild(add);
 				}
 			}
@@ -235,7 +241,8 @@ function HTMLReducer()
 			if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
 			{
 				var attributesToRemove = new Array();
-
+				var namesToRemove = new Array();
+				
 				for(var j = 0;j < b.attributes.length;j++)
 				{
 					attributesToRemove.push(b.attributes[j].nodeName);
@@ -260,7 +267,7 @@ function HTMLReducer()
 							}
 							else
 							{
-								b.removeAttribute(bAtt.nodeName);
+								namesToRemove.push(bAtt.nodeName);
 							}
 							break;
 						}
@@ -276,6 +283,11 @@ function HTMLReducer()
 				{
 					b.setAttribute(attributesToRemove[j], "");
 				}
+				
+				for (var j = 0;j < namesToRemove.length;j++)
+				{
+					b.removeAttribute(namesToRemove[j]);
+				}				
 			}
 		}
 		else
