@@ -501,6 +501,7 @@ function decodeChildren(parts, limit, diving)
 	var childCount = 0;
 	var decodeOffset = 0;
 	var currentLoopCount=0;
+	var closed = false;
 
 	if (diving)
 	{
@@ -561,16 +562,25 @@ function decodeChildren(parts, limit, diving)
 					previousChildCount = childCount;
 					var tmp = decodeChildren(parts, lastCount, true);
 					decoded += tmp;
+					
+					if (!closed)
+					{
+						closed = true;
+						decoded = closeTag(decoded, tagName);
+					}
 					continue;
-
 				}
 				else
 				{
 					previousChildCount = childCount;
 				}
 
-				decoded = closeTag(decoded, tagName);
-
+				if (!closed)
+				{
+					closed = true;
+					decoded = closeTag(decoded, tagName);
+				}
+				
 				if (decodeOffset >= limit)
 				{
 					decodePointer--;
@@ -633,6 +643,7 @@ function decodeChildren(parts, limit, diving)
 				tagName = part;
 			}
 
+			closed = false;
 			decoded += '<' + tagName;
 
 			decodeOffset++;
@@ -640,7 +651,12 @@ function decodeChildren(parts, limit, diving)
 	}
 
 	decoded = endTag(decoded, tagName);
-	decoded = closeTag(decoded, tagName);
+	
+	if (!closed)
+	{
+		closed = true;
+		decoded = closeTag(decoded, tagName);
+	}
 
 	return decoded;
 }
@@ -658,7 +674,7 @@ function decodeChildren(parts, limit, diving)
 <input type="button" value="Send" onclick="encode();"/>
 </fieldset>
 </form>
-<p>Morbi quis scelerisque eros, cursus dignissim libero. Praesent finibus bibendum felis, ac iaculis ipsum mollis nec. Vestibulum consequat erat quis velit eleifend, ut ultrices ex convallis. Sed mi sapien, mollis vel metus ut, lobortis viverra nulla. Integer viverra elit nec neque vehicula, et vulputate lacus sollicitudin. Donec euismod aliquam pulvinar. Sed eget ante quis dui luctus tristique vel quis velit. Morbi sit amet nisi magna. Nulla dignissim mollis ex, vitae convallis metus sollicitudin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet velit enim, pellentesque volutpat sem tristique imperdiet. Nunc gravida sapien eget diam bibendum dignissim. Fusce viverra sagittis est eu dictum. Nam posuere vulputate magna, eget sollicitudin tortor ullamcorper a. Aenean ac dolor lobortis, malesuada velit placerat, dapibus nibh.</p><p>Maecenas convallis pulvinar justo, nec faucibus neque maximus maximus. <a href="http://www.spacex.com" title="Go to space" class="grabzit-preview">Morbi</a> tristique, orci finibus congue feugiat, nibh purus sagittis turpis, sit amet pellentesque nisl mi vel nisl. Nunc maximus neque at pellentesque luctus. Aliquam et posuere sapien. Maecenas tincidunt lacus vitae metus facilisis, in ornare nisl molestie. Aliquam est nibh, sodales vitae eros in, hendrerit eleifend erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ornare quam quis molestie volutpat. Nullam tempor lorem massa, quis hendrerit libero consectetur eu. Proin posuere leo vitae mattis consectetur. Integer auctor luctus lectus. Suspendisse mollis nibh vehicula augue rutrum, id vehicula lacus scelerisque.</p><p>Proin placerat auctor euismod. Mauris et leo velit. In hac habitasse platea dictumst. Maecenas nec bibendum ipsum. Nunc vel vehicula velit. Nam sodales tellus eu ultricies commodo. Ut id metus quam. Integer sed consectetur sem, eu aliquam mi. Fusce arcu sapien, efficitur non dictum vitae, dictum in dolor.
+<p>Morbi quis scelerisque eros, cursus dignissim libero. Praesent finibus bibendum felis, ac iaculis ipsum mollis nec. Vestibulum consequat erat quis velit eleifend, ut ultrices ex convallis. Sed mi sapien, mollis vel metus ut, lobortis viverra nulla. Integer viverra elit nec neque vehicula, et vulputate lacus sollicitudin. Donec euismod aliquam pulvinar. Sed eget ante quis dui luctus tristique vel quis velit. Morbi sit amet nisi magna. Nulla dignissim mollis ex, vitae convallis metus sollicitudin sed. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet velit enim, pellentesque volutpat sem tristique imperdiet. Nunc gravida sapien eget diam bibendum dignissim. Fusce viverra sagittis est eu dictum. Nam posuere vulputate magna, eget sollicitudin tortor ullamcorper a. Aenean ac dolor lobortis, malesuada velit placerat, dapibus nibh.</p><p>Maecenas convallis pulvinar justo, nec faucibus neque maximus maximus. <a href="http://www.spacex.com" title="Go to space" class="grabzit-preview">Morbi</a> tristique, orci finibus congue feugiat, nibh purus sagittis turpis, sit amet pellentesque nisl mi vel nisl. Nunc maximus neque at pellentesque luctus. Aliquam et posuere sapien. Maecenas tincidunt lacus vitae metus facilisis, in ornare nisl molestie. Aliquam est nibh, sodales vitae eros in, hendrerit eleifend erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ornare quam quis molestie volutpat. Nullam tempor lorem massa, quis hendrerit libero consectetur eu. Proin posuere leo vitae mattis consectetur. Integer auctor luctus lectus. Suspendisse mollis nibh vehicula augue rutrum, id vehicula lacus scelerisque.</p><p>Proin placerat auctor euismod. Mauris et leo velit. In hac habitasse platea dictumst. Maecenas nec bibendum ipsum. Nunc vel vehicula velit. Nam sodales tellus eu ultricies commodo. Ut id metus quam. Integer sed consectetur sem, eu aliquam mi. Fusce arcu sapien, efficitur non dictum vitae, dictum in dolor.</p>
 <script>
 record();
 </script>
