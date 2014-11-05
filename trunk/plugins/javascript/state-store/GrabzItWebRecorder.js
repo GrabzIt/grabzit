@@ -1,9 +1,412 @@
+var GrabzItLZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",_f:String.fromCharCode,compressToBase64:function(e){if(e==null)return"";var t="";var n,r,i,s,o,u,a;var f=0;e=GrabzItLZString.compress(e);while(f<e.length*2){if(f%2==0){n=e.charCodeAt(f/2)>>8;r=e.charCodeAt(f/2)&255;if(f/2+1<e.length)i=e.charCodeAt(f/2+1)>>8;else i=NaN}else{n=e.charCodeAt((f-1)/2)&255;if((f+1)/2<e.length){r=e.charCodeAt((f+1)/2)>>8;i=e.charCodeAt((f+1)/2)&255}else r=i=NaN}f+=3;s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+GrabzItLZString._keyStr.charAt(s)+GrabzItLZString._keyStr.charAt(o)+GrabzItLZString._keyStr.charAt(u)+GrabzItLZString._keyStr.charAt(a)}return t},decompressFromBase64:function(e){if(e==null)return"";var t="",n=0,r,i,s,o,u,a,f,l,c=0,h=GrabzItLZString._f;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(c<e.length){u=GrabzItLZString._keyStr.indexOf(e.charAt(c++));a=GrabzItLZString._keyStr.indexOf(e.charAt(c++));f=GrabzItLZString._keyStr.indexOf(e.charAt(c++));l=GrabzItLZString._keyStr.indexOf(e.charAt(c++));i=u<<2|a>>4;s=(a&15)<<4|f>>2;o=(f&3)<<6|l;if(n%2==0){r=i<<8;if(f!=64){t+=h(r|s)}if(l!=64){r=o<<8}}else{t=t+h(r|i);if(f!=64){r=s<<8}if(l!=64){t+=h(r|o)}}n+=3}return GrabzItLZString.decompress(t)},compressToUTF16:function(e){if(e==null)return"";var t="",n,r,i,s=0,o=GrabzItLZString._f;e=GrabzItLZString.compress(e);for(n=0;n<e.length;n++){r=e.charCodeAt(n);switch(s++){case 0:t+=o((r>>1)+32);i=(r&1)<<14;break;case 1:t+=o(i+(r>>2)+32);i=(r&3)<<13;break;case 2:t+=o(i+(r>>3)+32);i=(r&7)<<12;break;case 3:t+=o(i+(r>>4)+32);i=(r&15)<<11;break;case 4:t+=o(i+(r>>5)+32);i=(r&31)<<10;break;case 5:t+=o(i+(r>>6)+32);i=(r&63)<<9;break;case 6:t+=o(i+(r>>7)+32);i=(r&127)<<8;break;case 7:t+=o(i+(r>>8)+32);i=(r&255)<<7;break;case 8:t+=o(i+(r>>9)+32);i=(r&511)<<6;break;case 9:t+=o(i+(r>>10)+32);i=(r&1023)<<5;break;case 10:t+=o(i+(r>>11)+32);i=(r&2047)<<4;break;case 11:t+=o(i+(r>>12)+32);i=(r&4095)<<3;break;case 12:t+=o(i+(r>>13)+32);i=(r&8191)<<2;break;case 13:t+=o(i+(r>>14)+32);i=(r&16383)<<1;break;case 14:t+=o(i+(r>>15)+32,(r&32767)+32);s=0;break}}return t+o(i+32)},decompressFromUTF16:function(e){if(e==null)return"";var t="",n,r,i=0,s=0,o=GrabzItLZString._f;while(s<e.length){r=e.charCodeAt(s)-32;switch(i++){case 0:n=r<<1;break;case 1:t+=o(n|r>>14);n=(r&16383)<<2;break;case 2:t+=o(n|r>>13);n=(r&8191)<<3;break;case 3:t+=o(n|r>>12);n=(r&4095)<<4;break;case 4:t+=o(n|r>>11);n=(r&2047)<<5;break;case 5:t+=o(n|r>>10);n=(r&1023)<<6;break;case 6:t+=o(n|r>>9);n=(r&511)<<7;break;case 7:t+=o(n|r>>8);n=(r&255)<<8;break;case 8:t+=o(n|r>>7);n=(r&127)<<9;break;case 9:t+=o(n|r>>6);n=(r&63)<<10;break;case 10:t+=o(n|r>>5);n=(r&31)<<11;break;case 11:t+=o(n|r>>4);n=(r&15)<<12;break;case 12:t+=o(n|r>>3);n=(r&7)<<13;break;case 13:t+=o(n|r>>2);n=(r&3)<<14;break;case 14:t+=o(n|r>>1);n=(r&1)<<15;break;case 15:t+=o(n|r);i=0;break}s++}return GrabzItLZString.decompress(t)},compress:function(e){if(e==null)return"";var t,n,r={},i={},s="",o="",u="",a=2,f=3,l=2,c="",h=0,p=0,d,v=GrabzItLZString._f;for(d=0;d<e.length;d+=1){s=e.charAt(d);if(!Object.prototype.hasOwnProperty.call(r,s)){r[s]=f++;i[s]=true}o=u+s;if(Object.prototype.hasOwnProperty.call(r,o)){u=o}else{if(Object.prototype.hasOwnProperty.call(i,u)){if(u.charCodeAt(0)<256){for(t=0;t<l;t++){h=h<<1;if(p==15){p=0;c+=v(h);h=0}else{p++}}n=u.charCodeAt(0);for(t=0;t<8;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}else{n=1;for(t=0;t<l;t++){h=h<<1|n;if(p==15){p=0;c+=v(h);h=0}else{p++}n=0}n=u.charCodeAt(0);for(t=0;t<16;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}delete i[u]}else{n=r[u];for(t=0;t<l;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}r[o]=f++;u=String(s)}}if(u!==""){if(Object.prototype.hasOwnProperty.call(i,u)){if(u.charCodeAt(0)<256){for(t=0;t<l;t++){h=h<<1;if(p==15){p=0;c+=v(h);h=0}else{p++}}n=u.charCodeAt(0);for(t=0;t<8;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}else{n=1;for(t=0;t<l;t++){h=h<<1|n;if(p==15){p=0;c+=v(h);h=0}else{p++}n=0}n=u.charCodeAt(0);for(t=0;t<16;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}delete i[u]}else{n=r[u];for(t=0;t<l;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}}a--;if(a==0){a=Math.pow(2,l);l++}}n=2;for(t=0;t<l;t++){h=h<<1|n&1;if(p==15){p=0;c+=v(h);h=0}else{p++}n=n>>1}while(true){h=h<<1;if(p==15){c+=v(h);break}else p++}return c},decompress:function(e){if(e==null)return"";if(e=="")return null;var t=[],n,r=4,i=4,s=3,o="",u="",a,f,l,c,h,p,d,v=GrabzItLZString._f,m={string:e,val:e.charCodeAt(0),position:32768,index:1};for(a=0;a<3;a+=1){t[a]=a}l=0;h=Math.pow(2,2);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}switch(n=l){case 0:l=0;h=Math.pow(2,8);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}d=v(l);break;case 1:l=0;h=Math.pow(2,16);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}d=v(l);break;case 2:return""}t[3]=d;f=u=d;while(true){if(m.index>m.string.length){return""}l=0;h=Math.pow(2,s);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}switch(d=l){case 0:l=0;h=Math.pow(2,8);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}t[i++]=v(l);d=i-1;r--;break;case 1:l=0;h=Math.pow(2,16);p=1;while(p!=h){c=m.val&m.position;m.position>>=1;if(m.position==0){m.position=32768;m.val=m.string.charCodeAt(m.index++)}l|=(c>0?1:0)*p;p<<=1}t[i++]=v(l);d=i-1;r--;break;case 2:return u}if(r==0){r=Math.pow(2,s);s++}if(t[d]){o=t[d]}else{if(d===i){o=f+f.charAt(0)}else{return null}}u+=o;t[i++]=f+o.charAt(0);r--;f=o;if(r==0){r=Math.pow(2,s);s++}}}};
+function GrabzItHTMLReducer()
+{
+	this.expand = function(a, b, that)
+	{	
+		if (a == null)
+		{
+			return;
+		}
+		
+		if (that == null)
+		{
+			that = this;
+		}	
+
+		var excludedNodes = new Array();
+
+		if (a.tagName == b.tagName)
+		{		
+			var aNodeText = that.getNodeText(a);
+			var bNodeText = that.getNodeText(b);
+			
+			if (aNodeText != bNodeText && bNodeText != '' && aNodeText != '')
+			{
+				excludedNodes.push(b);
+				b.innerHTML = a.innerHTML;
+			}
+			
+			if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
+			{		
+				var namesToRemove = new Array();
+				for(var i = 0;i < a.attributes.length;i++)
+				{
+					var aAtt = a.attributes[i];
+					
+					if (aAtt.nodeName == 'grabzit-empty')
+					{
+						b = that.removeAllTextNodes(b, function(o){excludedNodes.push(o);});
+					}
+					
+					if (aAtt.value == '')
+					{
+						namesToRemove.push(aAtt.nodeName);
+					}
+					else
+					{
+						b.setAttribute(aAtt.nodeName, aAtt.value);
+					}
+				}
+				
+				for(var i = 0;i < namesToRemove.length;i++)
+				{				
+					b.removeAttribute(namesToRemove[i]);
+				}				
+			}
+		}
+		else
+		{				
+			if (b.parentNode == null || !that.containsNode(b.parentNode.childNodes, a))
+			{				
+				if (a.nodeType != 3)
+				{				
+					var add = a.cloneNode(true);
+					add.setAttribute('grabzit-added','');
+					
+					var parent = that.getCorrectParent(a, b);					
+					parent.appendChild(add);
+				}
+			}
+			else if (a.nodeType != 3)
+			{
+				b.parentNode.removeChild(b);
+			}
+			return;
+		}	
+		
+		that.chooseNextNodes(a, b, excludedNodes, that.expand);
+	};
+	this.getCorrectParent = function(a, b)
+	{
+		if (a.parentNode.tagName == b.tagName && this.attributesEqual(a.parentNode, b))
+		{
+			return b;
+		}
+		
+		return this.getCorrectParent(a, b.parentNode);
+	};
+	this.attributesEqual = function(a, b)
+	{
+		if (b.attributes.length != a.attributes.length)
+		{
+			return false;
+		}
+		
+		for(var i = 0;i < a.attributes.length;i++)
+		{
+			var found = false;
+			var aAtt = a.attributes[i];
+			for(var j = 0;j < b.attributes.length;j++)
+			{
+				var bAtt = b.attributes[i];
+				
+				if (aAtt.nodeName == bAtt.nodeName && aAtt.value == bAtt.value)
+				{
+					found = true;
+				}
+			}
+			
+			if (!found)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	};
+	this.chooseNextNodes = function(a, b, excludedNodes, func)
+	{
+		this.filterEmptyNodes(a);
+		this.filterEmptyNodes(b);
+		
+		var maximum = a.childNodes.length;
+		if (maximum < b.childNodes.length)
+		{
+			maximum = b.childNodes.length;
+		}
+
+		var initialA = a;
+		var initialB = b;
+		var previousA = a;
+		var previousB = b;
+		for(var i = 0;i < maximum;i++)
+		{
+			var nextA = a.childNodes[i];
+			var nextB = b.childNodes[i];
+			
+			if (nextB == null || nextB.nodeType != 1)
+			{
+				nextB = previousB;
+			}
+			else
+			{
+				previousB = nextB;
+			}
+			if (nextA == null)
+			{
+				nextA = previousA;
+			}
+			else
+			{
+				previousA = nextA;
+			}
+
+			if (this.containsNode(excludedNodes, nextA))
+			{
+				continue;
+			}
+			
+			if (nextB.nodeType != 3 && nextB.hasAttribute('grabzit-added'))
+			{
+				nextB = b;
+			}	
+
+			if (initialA === nextA && initialB === nextB)
+			{
+				return;
+			}
+			
+			func(nextA, nextB, this);
+		}
+	};
+	this.filterEmptyNodes = function(o)
+	{
+		for(var i = 0;i < o.childNodes.length;i++)
+		{
+			var node = o.childNodes[i];
+			if (node.nodeType == 3 && this.removeBreaks(node.nodeValue) == '')
+			{
+				o.removeChild(node);
+			}
+		}
+	};
+	this.shrink = function(a, b, that)
+	{
+		if (a == null || a.getAttribute('id') == 'grabzit-shadow' || (b != null && b.getAttribute('id') == 'grabzit-shadow'))
+		{
+			return;
+		}
+		
+		if (that == null)
+		{
+			that = this;
+		}
+
+		var excludedNodes = new Array();
+
+		if(a.isEqualNode(b) && a.value == b.value)
+		{				
+			if (typeof b.attributes != 'undefined')
+			{
+				var names = new Array();
+				for(var i = 0;i < b.attributes.length;i++)
+				{
+					names.push(b.attributes[i].nodeName);
+				}
+				for(var i = 0;i < names.length;i++)
+				{
+					b.removeAttribute(names[i]);
+				}
+			}
+			
+			that.setNodeValue(a, b);
+			b = that.removeAllTextNodes(b, function(o){excludedNodes.push(o);});
+		}
+		else if (a.tagName == b.tagName)
+		{		
+			var aNodeText = that.getNodeText(a);
+			var bNodeText = that.getNodeText(b);
+
+			if (aNodeText == bNodeText && aNodeText != '' && bNodeText != '')
+			{
+				b = that.removeAllTextNodes(b, function(o){excludedNodes.push(o);});
+			}
+
+			that.setNodeValue(a, b);
+			
+			if (aNodeText != bNodeText && bNodeText != '')
+			{
+				if (aNodeText == '')
+				{
+					//its been emptied
+					b = that.removeAllTextNodes(b, function(o){excludedNodes.push(o);});
+					b.setAttribute("grabzit-empty", "");				
+				}
+				else
+				{
+					excludedNodes.push(b);
+					b.innerHTML = a.innerHTML;
+				}
+			}
+
+			if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
+			{
+				var attributesToRemove = new Array();
+				var namesToRemove = new Array();
+				
+				for(var j = 0;j < b.attributes.length;j++)
+				{
+					attributesToRemove.push(b.attributes[j].nodeName);
+				}
+
+				for(var i = 0;i < a.attributes.length;i++)
+				{
+					var aAtt = a.attributes[i];
+					attributesToRemove.pop(aAtt.nodeName);
+					var found = false;
+
+					for(var j = 0;j < b.attributes.length;j++)
+					{
+						var bAtt = b.attributes[j];
+						if (aAtt.nodeName == bAtt.nodeName)
+						{				
+							found = true;
+
+							if (aAtt.value != bAtt.value)
+							{
+								b.setAttribute(bAtt.nodeName, bAtt.value);
+							}
+							else
+							{
+								namesToRemove.push(bAtt.nodeName);
+							}
+							break;
+						}
+					}
+
+					if (!found)
+					{
+						b.setAttribute(aAtt.nodeName, aAtt.value);
+					}
+				}
+
+				for (var j = 0;j < attributesToRemove.length;j++)
+				{
+					b.setAttribute(attributesToRemove[j], "");
+				}
+				
+				for (var j = 0;j < namesToRemove.length;j++)
+				{
+					b.removeAttribute(namesToRemove[j]);
+				}				
+			}
+		}
+		else
+		{
+			if (b.parentNode == null || !that.containsNode(b.parentNode.childNodes, a))
+			{
+				if (a.nodeType != 3)
+				{
+					var add = a.cloneNode(true);
+					add.setAttribute('grabzit-added','');
+					
+					var parent = that.getCorrectParent(a, b);
+					parent.appendChild(add);
+				}
+			}
+			else if (a.nodeType != 3)
+			{
+				var parent = b.parentNode;
+				parent.removeChild(b);
+			}
+			return;
+		}
+		
+		that.chooseNextNodes(a, b, excludedNodes, that.shrink);
+	};
+	this.setNodeValue = function(a, b)
+	{
+		if (a.tagName == 'INPUT')
+		{
+			if (a.value != b.value)
+			{
+				b.setAttribute("value", a.value);				
+			}
+			else if (a.value == b.value && b.value != '')
+			{
+				b.setAttribute("value", "");
+			}
+		}
+		else if (a.tagName == 'TEXTAREA')
+		{
+			if (a.value != b.value)
+			{
+				b.value = a.value;				
+			}
+			else if (a.value == b.value && b.value != '')
+			{
+				b.setAttribute("grabzit-empty", "");
+			}			
+		}	
+	};
+	this.getNodeText = function(o)
+	{
+		var text = "";
+		for (var i = 0; i < o.childNodes.length; i++) {
+			var curNode = o.childNodes[i];
+			if (curNode.nodeType == 3) {
+				text += curNode.nodeValue;
+			}
+		}
+		
+		return this.removeBreaks(text);
+	};
+	this.removeBreaks = function(text)
+	{
+		return text.replace(/(\r\n|\n|\r)/gm,"");
+	};
+	this.removeAllTextNodes = function(o, func)
+	{
+		for (var i = 0; i < o.childNodes.length; i++) {
+			var curNode = o.childNodes[i];
+			if (curNode.nodeType == 3) {
+				func(curNode.cloneNode(false));
+				o.removeChild(curNode);
+			}
+		}
+		return o;
+	};
+	this.containsNode = function(haystack, needle)
+	{
+		for(var i = 0;i < haystack.length;i++)
+		{
+			if(needle.isEqualNode(haystack[i]))
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+}
 function GrabzItWebRecorder()
 {
 	this.previousChildCount = 0;
 	this.decodePointer = 0;
 	this.decodeDone = false;
+	this.timeoutIds = new Array();
+	this.intervalIds = new Array();
+	this.HTMLReducer = new GrabzItHTMLReducer();
 
+	this.freeze = function()
+	{
+		for(var i = 0;i < this.timeoutIds.length; i++)
+		{
+			clearTimeout(this.timeoutIds[i]);
+		}
+		for(var j = 0;j < this.intervalIds.length; j++)
+		{
+			clearInterval(this.intervalIds[j]);
+		}		
+		throw new Error('Frozen');
+	};
+	this.setTimeoutId = function(id)
+	{
+		this.timeoutIds.push(id);
+	};	
+	this.setIntervalId = function(id)
+	{
+		this.intervalIds.push(id);
+	};		
 	this.tokenize = function(encoded)
 	{
 		var parts = encoded.split('|');
@@ -71,12 +474,13 @@ function GrabzItWebRecorder()
 			return;
 		}	
 		
-		var decompressed  = LZString.decompressFromBase64(data);
+		var decompressed  = GrabzItLZString.decompressFromBase64(data);
 		var untokenized = this.untokenize(decompressed);			
 		var decoded = this.decode(untokenized);
 		var diffNode = document.createElement("html");
 		diffNode.innerHTML = decoded;
-		HTMLReducer.expand(diffNode, document.documentElement);
+		this.HTMLReducer.expand(diffNode, document.documentElement);
+		this.freeze();
 	};
 	this.appendURL = function(url)
 	{
@@ -110,7 +514,7 @@ function GrabzItWebRecorder()
 		
 		shadow = shadow.childNodes[0];
 		
-		HTMLReducer.shrink(container, shadow);
+		this.HTMLReducer.shrink(container, shadow);
 		
 		var encoded = '';
 		encoded += this.encodeTagName(container.tagName, encoded);
@@ -133,7 +537,7 @@ function GrabzItWebRecorder()
 		
 		encoded += this.encodeChildren(shadow);
 		var tokenized = this.tokenize(encoded);
-		var compressed = LZString.compressToBase64(tokenized);	
+		var compressed = GrabzItLZString.compressToBase64(tokenized);	
 		
 		if (compressed.length > 1024)
 		{
@@ -146,13 +550,19 @@ function GrabzItWebRecorder()
 	};
 	this.shadowCopy = function()
 	{
-		var doc = document.documentElement.cloneNode(true);
-		var shadow = document.createElement("div");
-		shadow.setAttribute("id", "grabzit-shadow");
-		shadow.setAttribute("style", "display:none");
-		shadow.appendChild(doc);
+		var shadow = document.getElementById('grabzit-shadow');
 		
-		document.documentElement.appendChild(shadow);
+		if (shadow == null)
+		{
+			//only create a shadow copy if one doesn't exist. A user may have specified one.
+			var doc = document.documentElement.cloneNode(true);
+			shadow = document.createElement("div");
+			shadow.setAttribute("id", "grabzit-shadow");
+			shadow.setAttribute("style", "display:none");
+			shadow.appendChild(doc);
+			
+			document.documentElement.appendChild(shadow);
+		}
 	};
 	this.getQueryStringValue = function(key) {  
 	  return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
@@ -161,7 +571,7 @@ function GrabzItWebRecorder()
 	{
 		var encoded = '';	
 			
-		HTMLReducer.filterEmptyNodes(container);	
+		this.HTMLReducer.filterEmptyNodes(container);	
 			
 		for(var i = 0;i < container.childNodes.length;i++)
 		{
@@ -181,7 +591,7 @@ function GrabzItWebRecorder()
 
 			encoded = this.encodeTagName(tagName, encoded);
 
-			HTMLReducer.filterEmptyNodes(node);
+			this.HTMLReducer.filterEmptyNodes(node);
 			
 			if (node.childNodes.length > 0)
 			{
@@ -217,60 +627,7 @@ function GrabzItWebRecorder()
 					encoded += '|';
 				}
 
-				if (name == 'type')
-				{
-					encoded += 't=';
-
-					if (value == 'text')
-					{
-						encoded += 't';
-					}
-					else if (value == 'button')
-					{
-						encoded += 'b';
-					}
-					else
-					{
-						encoded += encodeURIComponent(value);
-					}
-				}
-				else if (name == 'method')
-				{
-					encoded += 'm=';
-					
-					if (value == 'get')
-					{
-						encoded += 'g';
-					}
-					else if (value == 'post')
-					{
-						encoded += 'p';
-					}
-					else
-					{
-						encoded += encodeURIComponent(value);
-					}				
-				}
-				else if (name == 'name')
-				{
-					encoded += 'n' + '=' + encodeURIComponent(value);
-				}
-				else if (name == 'id')
-				{
-					encoded += 'i' + '=' + encodeURIComponent(value);
-				}
-				else if (name == 'href')
-				{
-					encoded += 'h' + '=' + encodeUrl(value);
-				}
-				else if (name == 'class')
-				{
-					encoded += 'c' + '=' + encodeURIComponent(value);
-				}
-				else
-				{
-					encoded += name + '=' + encodeURIComponent(value);
-				}
+				this.encodeAttribute(name, value, encoded);
 			}
 
 			if (node.childNodes.length > 0)
@@ -284,10 +641,96 @@ function GrabzItWebRecorder()
 		}
 		return encoded;
 	};
+	this.decodeTagName = function(part, tagName, decoded, openTags)
+	{
+		if (part == 'B')
+		{
+			//stops empty close tags
+			tagName = '';
+			decoded += '<br/>';
+		}
+		else
+		{
+			if (part == 'd')
+			{
+				tagName = 'div';
+			}
+			if (part == 'e')
+			{
+				tagName = 'select';
+			}
+			if (part == 'y')
+			{
+				tagName = 'body';
+			}			
+			else if (part == 'h')
+			{
+				tagName = 'head';
+			}
+			else if (part == 'H')
+			{
+				tagName = 'html';
+			}					
+			else if (part == 'I')
+			{
+				tagName = 'input';
+			}
+			else if (part == 'm')
+			{
+				tagName = 'img';
+			}
+			else if (part == 'l')
+			{
+				tagName = 'li';
+			}
+			else if (part == 'f')
+			{
+				tagName = 'fieldset';
+			}
+			else if (part == 'F')
+			{
+				tagName = 'form';
+			}			
+			else if (part == 'n')
+			{
+				tagName = 'span';
+			}
+			else if (part == 'o')
+			{
+				tagName = 'option';
+			}
+			else if (part == 'S')
+			{
+				tagName = 'script';
+			}			
+			else if (part == 't')
+			{
+				tagName = 'textarea';
+			}						
+			else if (part == 'U')
+			{
+				tagName = 'ul';
+			}
+			else
+			{
+				//Reserved letters: u, p, b, s, a, i, q
+				tagName = part;
+			}
+			
+			openTags++;
+			decoded += '<' + tagName;	
+		}
+		
+		return {tagName: tagName, decoded: decoded, openTags: openTags};
+	}
 	this.encodeTagName = function(tagName, encoded)
 	{
 		tagName = tagName.toLowerCase();
-		
+
+		if (tagName == 'div')
+		{
+			encoded += 'd';
+		}		
 		if (tagName == 'body')
 		{
 			encoded += 'y';
@@ -306,24 +749,36 @@ function GrabzItWebRecorder()
 		}			
 		else if (tagName == 'img')
 		{
-			encoded += 'I';
+			encoded += 'm';
 		}
 		else if (tagName == 'input')
 		{
-			encoded += 'i';
+			encoded += 'I';
 		}
 		else if (tagName == 'li')
 		{
 			encoded += 'l';
-		}
+		}		
+		else if (tagName == 'option')
+		{
+			encoded += 'o';
+		}			
+		else if (tagName == 'select')
+		{
+			encoded += 'e';
+		}		
 		else if (tagName == 'span')
 		{
-			encoded += 's';
+			encoded += 'n';
 		}
 		else if (tagName == 'script')
 		{
 			encoded += 'S';
-		}					
+		}
+		else if (tagName == 'textarea')
+		{
+			encoded += 't';
+		}				
 		else if (tagName == 'fieldset')
 		{
 			encoded += 'f';
@@ -334,7 +789,7 @@ function GrabzItWebRecorder()
 		}	
 		else if (tagName == 'ul')
 		{
-			encoded += 'u';
+			encoded += 'U';
 		}
 		else
 		{
@@ -343,6 +798,111 @@ function GrabzItWebRecorder()
 		
 		return encoded;
 	};
+	this.encodeAttribute = function(name, value, encoded)
+	{
+		if (name == 'type')
+		{
+			encoded += 't=';
+
+			if (value == 'text')
+			{
+				encoded += 't';
+			}
+			else if (value == 'button')
+			{
+				encoded += 'b';
+			}
+			else
+			{
+				encoded += encodeURIComponent(value);
+			}
+		}
+		else if (name == 'method')
+		{
+			encoded += 'm=';
+			
+			if (value == 'get')
+			{
+				encoded += 'g';
+			}
+			else if (value == 'post')
+			{
+				encoded += 'p';
+			}
+			else
+			{
+				encoded += encodeURIComponent(value);
+			}				
+		}
+		else if (name == 'disabled')
+		{
+			encoded += 'd=';
+			
+			if (value == 'true')
+			{
+				encoded += 't';
+			}
+			else if (value == 'false')
+			{
+				encoded += 'f';
+			}
+			else
+			{
+				encoded += encodeURIComponent(value);
+			}				
+		}		
+		else if (name == 'selected')
+		{
+			encoded += 'e=';
+			
+			if (value == 'selected')
+			{
+				encoded += 's';
+			}
+			else
+			{
+				encoded += encodeURIComponent(value);
+			}						
+		}
+		else if (name == 'name')
+		{
+			encoded += 'n' + '=' + encodeURIComponent(value);
+		}
+		else if (name == 'id')
+		{
+			encoded += 'i' + '=' + encodeURIComponent(value);
+		}
+		else if (name == 'href')
+		{
+			encoded += 'h' + '=' + encodeUrl(value);
+		}
+		else if (name == 'src')
+		{
+			encoded += 's' + '=' + encodeUrl(value);
+		}		
+		else if (name == 'style')
+		{
+			encoded += 'S' + '=' + encodeUrl(value);
+		}				
+		else if (name == 'title')
+		{
+			encoded += 'T' + '=' + encodeUrl(value);
+		}				
+		else if (name == 'class')
+		{
+			encoded += 'c' + '=' + encodeURIComponent(value);
+		}
+		else if (name == 'alt')
+		{
+			encoded += 'a' + '=' + encodeURIComponent(value);
+		}		
+		else
+		{
+			encoded += name + '=' + encodeURIComponent(value);
+		}	
+		
+		return encoded;
+	}
 	this.decodeAttributeValue = function(attr, attrValue)
 	{
 		if (attr == 't')
@@ -371,19 +931,42 @@ function GrabzItWebRecorder()
 		{
 			return this.decodeUrl(attrValue);
 		}
+		if (attr == 'd')
+		{
+			if (attrValue == 't')
+			{
+				return 'true';
+			}
+			if (attrValue == 'f')
+			{
+				return 'false';
+			}		
+		}
+		if (attr == 'e')
+		{
+			if (attrValue == 's')
+			{
+				return 'selected';
+			}
+			return attrValue;
+		}
 
 		return decodeURIComponent(attrValue);
 	};
 	this.decodeAttribute = function(attr)
 	{
+		if (attr == 'a')
+		{
+			return 'alt';
+		}			
 		if (attr == 'c')
 		{
 			return 'class';
 		}
-		if (attr == 't')
+		if (attr == 'd')
 		{
-			return 'type';
-		}
+			return 'disabled';
+		}		
 		if (attr == 'v')
 		{
 			return 'value';
@@ -404,6 +987,22 @@ function GrabzItWebRecorder()
 		{
 			return 'id';
 		}
+		if (attr == 's')
+		{
+			return 'src';
+		}		
+		if (attr == 'S')
+		{
+			return 'style';
+		}				
+		if (attr == 't')
+		{
+			return 'type';
+		}
+		if (attr == 'T')
+		{
+			return 'title';
+		}		
 
 		return attr;
 	};
@@ -605,65 +1204,11 @@ function GrabzItWebRecorder()
 				
 				decodeOffset++;			
 
-				if (part == 'B')
-				{
-					//stops empty close tags
-					tagName = '';
-					decoded += '<br/>';
-					continue;
-				}
-
-				if (part == 'y')
-				{
-					tagName = 'body';
-				}			
-				else if (part == 'h')
-				{
-					tagName = 'head';
-				}
-				else if (part == 'H')
-				{
-					tagName = 'html';
-				}					
-				else if (part == 'i')
-				{
-					tagName = 'input';
-				}
-				else if (part == 'I')
-				{
-					tagName = 'img';
-				}
-				else if (part == 'l')
-				{
-					tagName = 'li';
-				}
-				else if (part == 'f')
-				{
-					tagName = 'fieldset';
-				}
-				else if (part == 'F')
-				{
-					tagName = 'form';
-				}			
-				else if (part == 's')
-				{
-					tagName = 'span';
-				}
-				else if (part == 'S')
-				{
-					tagName = 'script';
-				}			
-				else if (part == 'u')
-				{
-					tagName = 'ul';
-				}
-				else
-				{
-					tagName = part;
-				}
+				var dec = that.decodeTagName(part, tagName, decoded, openTags);
 				
-				openTags++;
-				decoded += '<' + tagName;
+				tagName = dec.tagName;
+				decoded = dec.decoded;
+				openTags = dec.openTags;
 			}
 		}
 
@@ -682,13 +1227,26 @@ function GrabzItWebRecorder()
 		var old = window.onload;
 		window.onload = function()
 		{
+			that.record();
 			if (old != null)
 			{
 				old();
-			}
-			that.record();
+			}			
 		};	
 	}(this)	
 }
 
 var GrabzItWebRecorder = new GrabzItWebRecorder();
+
+window.GrabzItSetTimeout = window.setTimeout;
+window.setTimeout = function(code, timeout){
+	var id = window.GrabzItSetTimeout(code, timeout);
+	GrabzItWebRecorder.setTimeoutId(id);
+	return id;
+};
+window.GrabzItSetInterval = window.setInterval;
+window.setInterval = function(code, timeout){
+	var id = window.GrabzItSetInterval(code, timeout);
+	GrabzItWebRecorder.setIntervalId(id);
+	return id;
+};
