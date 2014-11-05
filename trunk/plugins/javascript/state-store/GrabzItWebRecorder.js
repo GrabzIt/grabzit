@@ -26,6 +26,11 @@ function GrabzItHTMLReducer()
 				b.innerHTML = a.innerHTML;
 			}
 			
+			if (a.value != b.value && a.value != '')
+			{
+				b.value = a.value;
+			}
+			
 			if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
 			{		
 				var namesToRemove = new Array();
@@ -237,7 +242,7 @@ function GrabzItHTMLReducer()
 					excludedNodes.push(b);
 					b.innerHTML = a.innerHTML;
 				}
-			}
+			}			
 
 			if (typeof b.attributes != 'undefined' && typeof a.attributes != 'undefined')
 			{
@@ -315,26 +320,28 @@ function GrabzItHTMLReducer()
 		that.chooseNextNodes(a, b, excludedNodes, that.shrink);
 	};
 	this.setNodeValue = function(a, b)
-	{
+	{	
 		if (a.tagName == 'INPUT')
 		{
 			if (a.value != b.value)
 			{
 				b.setAttribute("value", a.value);				
 			}
-			else if (a.value == b.value && b.value != '')
+			else if (a.value == b.value)
 			{
+				b.value = '';
 				b.setAttribute("value", "");
 			}
 		}
 		else if (a.tagName == 'TEXTAREA')
-		{
+		{			
 			if (a.value != b.value)
 			{
 				b.value = a.value;				
 			}
-			else if (a.value == b.value && b.value != '')
+			else if (a.value == b.value)
 			{
+				b.value = '';
 				b.setAttribute("grabzit-empty", "");
 			}			
 		}	
@@ -477,6 +484,7 @@ function GrabzItWebRecorder()
 		var decompressed  = GrabzItLZString.decompressFromBase64(data);
 		var untokenized = this.untokenize(decompressed);			
 		var decoded = this.decode(untokenized);
+		alert(decoded);
 		var diffNode = document.createElement("html");
 		diffNode.innerHTML = decoded;
 		this.HTMLReducer.expand(diffNode, document.documentElement);
@@ -536,6 +544,7 @@ function GrabzItWebRecorder()
 		}	
 		
 		encoded += this.encodeChildren(shadow);
+		alert(encoded);
 		var tokenized = this.tokenize(encoded);
 		var compressed = GrabzItLZString.compressToBase64(tokenized);	
 		
@@ -608,7 +617,7 @@ function GrabzItWebRecorder()
 			if (node.firstChild != null && node.firstChild.nodeValue != null && node.firstChild.nodeValue.replace(/(\r\n|\n|\r)/gm,"") != '')
 			{
 				encoded += 'C=' + encodeURIComponent(node.firstChild.nodeValue) + '|';
-			}
+			}		
 
 			for(var j = 0;j < node.attributes.length;j++)
 			{
@@ -616,7 +625,7 @@ function GrabzItWebRecorder()
 				var name = attribute.name;
 				var value = attribute.value;
 
-				if (name == 'onclick' || name == 'value')
+				if (name == 'value')
 				{
 					//ignore all events and values
 					continue;
@@ -682,6 +691,10 @@ function GrabzItWebRecorder()
 			else if (part == 'l')
 			{
 				tagName = 'li';
+			}
+			else if (part == 'L')
+			{
+				tagName = 'legend';
 			}
 			else if (part == 'f')
 			{
@@ -759,6 +772,10 @@ function GrabzItWebRecorder()
 		{
 			encoded += 'l';
 		}		
+		else if (tagName == 'legend')
+		{
+			encoded += 'L';
+		}
 		else if (tagName == 'option')
 		{
 			encoded += 'o';
@@ -1129,7 +1146,7 @@ function GrabzItWebRecorder()
 
 				var attr = part.substring(0, index);
 
-				if (attr == 'C')
+				if ((tagName == 'textarea' && attr == 'v') || attr == 'C')
 				{
 					//it's content!
 					tagContent = decodeURIComponent(part.substring(index+1, part.length));
