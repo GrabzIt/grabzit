@@ -1,3 +1,68 @@
+function GrabzIt(key)
+{
+	return new (function(key)
+	{	
+		this.key = key;
+		
+		this.Create = function(url, options)
+		{
+			var protocol = '//';
+			if (window.location.protocol != 'https' && window.location.protocol != 'http')
+			{
+				protocol = 'http://';
+			}
+
+			var grabzItUrl = protocol + 'api.grabz.it/services/javascript.ashx?key='+encodeURIComponent(this.key)+'&url=' + encodeURIComponent(url);
+
+			for(var k in options)
+			{
+				if (k != 'format' && k != 'cache' && k != 'customWaterMarkId' && k != 'quality'
+				&& k != 'country' && k != 'filename' && k != 'errorid' && k != 'errorclass' &&
+				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
+				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse')
+				{
+					throw "Option " + k + " not recognized!";
+				}
+				
+				var v = options[k];
+				if (v != null)
+                		{
+					grabzItUrl += '&' + k + '=' + encodeURIComponent(v);
+				}
+			}
+
+			var scriptNode = document.createElement('script');
+			scriptNode.src = grabzItUrl;
+
+			return scriptNode;
+		};		
+
+		this.AddTo = function(container, url, options)
+		{
+			var elem = null;
+			if (typeof container == 'string' || container instanceof String)
+			{
+				elem = document.getElementById(container);
+				if (elem == null)
+				{
+					throw "An element with the id " + container + " was not found";
+				}
+			}
+			else if (container.nodeType === 1)
+			{
+				elem = container;
+			}
+
+			if (elem == null)
+			{
+				throw "No valid element was provided to attach the screenshot to";
+			}
+
+			elem.appendChild(this.Create(url, options));
+		}
+	})(key);
+}
+
 function GrabzItPreviewFinished(id)
 {
 	var obj = document.getElementById("grabzit-screenshot-result");
@@ -41,15 +106,6 @@ function GrabzItPreview(key, options)
 		}
 		return "";
 	}
-	
-	this._appendParameter = function(paramName)
-	{
-		if (options != null && options[paramName] != null)
-		{
-			return "&" + paramName + "=" + encodeURIComponent(options[paramName]);
-		}
-		return "";
-	}
 
 	var __construct = function(that) 
 	{	
@@ -66,6 +122,10 @@ function GrabzItPreview(key, options)
 			{
 				height = options.height;
 			}
+		}
+		else		
+		{
+			options = new Array();
 		}
 		
 		var links = document.getElementsByClassName("grabzit-preview");
@@ -113,36 +173,23 @@ function GrabzItPreview(key, options)
 			divFrame.setAttribute("style","display:none;width:"+width+"px;height:"+height+"px;");
 			divFrame.className = "grabzit-preview-screenshot-frame";
 			
-			var script = document.createElement('script');
-			script.src = "http://api.grabz.it/services/javascript.ashx?key="+encodeURIComponent(key)
-			+"&url="+encodeURIComponent(href)
-			+"&width="+width
-			+"&height="+height
-			+that._appendParameter("format")
-			+that._appendParameter("delay")
-			+that._appendParameter("format")
-			+that._appendParameter("customWaterMarkId")
-			+that._appendParameter("cache")
-			+that._appendParameter("quality")
-			+that._appendParameter("country")
-			+that._appendParameter("bwidth")
-			+that._appendParameter("bheight")
-			+that._appendParameter("requestas")
-			+that._appendParameter("suppresserrors")
-			+that._appendParameter("start")
-			+that._appendParameter("duration")
-			+that._appendParameter("speed")
-			+that._appendParameter("fps")
-			+that._appendParameter("repeat")
-			+that._appendParameter("reverse")			
-			+"&displayid=grabzit-screenshot-result"
-			+"&errorid=grabzit-screenshot-result"
-			+"&errorclass=grabzit-preview-error"
-			+"&displayclass=grabzit-preview-screenshot"
-			+"&onfinish=GrabzItPreviewFinished"
-			+"&onerror=GrabzItPreviewFinished";
-
-			divFrame.appendChild(script);
+			options['width'] = width;
+			options['height'] = height;
+			options['displayid'] = 'grabzit-screenshot-result';
+			options['errorid'] = 'grabzit-screenshot-result';
+			options['errorclass'] = 'grabzit-preview-error';
+			options['displayclass'] = 'grabzit-preview-screenshot';
+			options['onfinish'] = 'GrabzItPreviewFinished';
+			options['onerror'] = 'GrabzItPreviewFinished';
+			
+			try
+			{
+				GrabzIt(key).AddTo(divFrame, href, options);			
+			}
+			catch(e)			
+			{
+				alert(e);
+			}
 			
 			div.appendChild(divFrame);			
 
