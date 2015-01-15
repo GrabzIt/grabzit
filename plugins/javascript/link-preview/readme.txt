@@ -6,7 +6,9 @@ application key found here: http://grabz.it/api/
 
 Also ensure the call to:
 
-new GrabzItPreview("YOUR APPLICATION KEY");
+
+	new GrabzItPreview("YOUR APPLICATION KEY");
+
 
 Is at the bottom of the page just below the body tag. 
 
@@ -16,7 +18,9 @@ You do not make any other configurations than that, however you can specify all 
 http://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 256 x 200 you could do 
 this like so:
 
-new GrabzItPreview("YOUR APPLICATION KEY", {"width": 250, "height": 200});
+
+	new GrabzItPreview("YOUR APPLICATION KEY", {"width": 250, "height": 200});
+
 
 If you want to specify a URL other than the one found in the href attribute. You can specify one by using the grabzit-href attribute for instance: <a href="http://example.com" grabzit-href="http://www.google.com" class="grabzit-preview">My Example</a>
 
