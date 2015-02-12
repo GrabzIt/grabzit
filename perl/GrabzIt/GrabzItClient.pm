@@ -3,6 +3,7 @@
 package GrabzItClient;
 
 use Digest::MD5  qw(md5_hex);
+use Encode;
 use LWP::Simple;
 use LWP::UserAgent;
 use HTTP::Request::Common qw(POST); 
@@ -213,7 +214,7 @@ sub Save($)
 		 die "No screenshot parameters have been set.";
 	}
 	
-	$sig =  md5_hex($self->{signaturePartOne}.$callBackURL.$self->{signaturePartTwo});
+	$sig =  $self->_encode($self->{signaturePartOne}.$callBackURL.$self->{signaturePartTwo});
 	$currentRequest = $self->{request};
 	$currentRequest .= uri_escape($callBackURL)."&sig=".$sig;
 	
@@ -346,7 +347,7 @@ sub GetCookies($)
 {
 	my ($self, $domain) = @_;
 	
-	$sig =  md5_hex($self->{_applicationSecret}."|".$domain);
+	$sig =  $self->_encode($self->{_applicationSecret}."|".$domain);
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&sig=".$sig;
 
 	my $url = GrabzItClient::WebServicesBaseURL . "getcookies.ashx?" . $qs;
@@ -402,7 +403,7 @@ sub SetCookie($$;$$$$)
 	$httponly ||= 0;
 	$expires ||= '';
 	
-	$sig =  md5_hex($self->{_applicationSecret}."|".$name."|".$domain."|".$value."|".$path."|".$httponly."|".$expires."|0");
+	$sig =  $self->_encode($self->{_applicationSecret}."|".$name."|".$domain."|".$value."|".$path."|".$httponly."|".$expires."|0");
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&value=".uri_escape($value)."&path=".uri_escape($path)."&httponly=".$httponly."&expires=".uri_escape($expires)."&sig=".$sig;
 
@@ -423,7 +424,7 @@ sub DeleteCookie($$)
 {
 	my ($self, $name, $domain) = @_;
 	
-	$sig =  md5_hex($self->{_applicationSecret}."|".$name."|".$domain."|1");
+	$sig =  $self->_encode($self->{_applicationSecret}."|".$name."|".$domain."|1");
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&delete=1&sig=".$sig;
 
@@ -454,7 +455,7 @@ sub AddWaterMark($$$$)
 		die "File: " . $path . " does not exist\n";
 	}
 
-        $sig = md5_hex($self->{_applicationSecret}."|".$identifier."|".$xpos."|".$ypos);	
+        $sig = $self->_encode($self->{_applicationSecret}."|".$identifier."|".$xpos."|".$ypos);	
 	
 	open FILE, $path or die "Couldn't open file: $!";
 	binmode FILE;
@@ -511,7 +512,7 @@ sub _getWaterMarks($)
 	
 	$identifier ||= '';
 	
-	$sig =  md5_hex($self->{_applicationSecret}."|".$identifier);
+	$sig =  $self->_encode($self->{_applicationSecret}."|".$identifier);
 	
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
@@ -553,7 +554,7 @@ sub DeleteWaterMark($)
 {
 	my ($self, $identifier) = @_;
 
-	$sig =  md5_hex($self->{_applicationSecret}."|".$identifier);
+	$sig =  $self->_encode($self->{_applicationSecret}."|".$identifier);
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
 	my $url = GrabzItClient::WebServicesBaseURL . "deletewatermark.ashx?" . $qs;
@@ -591,6 +592,14 @@ sub GetPicture($)
     my ($self, $id) = @_;
 	
     return $self->GetResult($id);
+}
+
+sub _encode($)
+{
+    my ($self, $text) = @_;
+    $text = decode_utf8($text);
+    $text =~ s/[^\x00-\x7F]/?/g;
+    return md5_hex($text);
 }
 
 sub _get($)

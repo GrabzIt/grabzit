@@ -2,9 +2,9 @@ var crypto = require('crypto');
 var file = require('fs');
 var http = require('http');
 var querystring = require('querystring');
-var path = require('path'); 
+var path = require('path');
 
-var TRUE = "True";   
+var TRUE = "True";
 
 function GrabzItClient(applicationKey, applicationSecret)
 {
@@ -74,7 +74,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         UPGRADE_REQUIRED: 500,
         FILE_SAVE_ERROR: 600,
         FILE_NON_EXISTANT_PATH: 601
-        };   
+        };
 
         this.request = '';
         this.requestParams = null;
@@ -82,7 +82,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         this.signaturePartTwo = '';
         this.startDelay = 0;
         this.applicationKey = applicationKey;
-        this.applicationSecret = applicationSecret;    
+        this.applicationSecret = applicationSecret;
 }
 
 function _extend() {
@@ -124,7 +124,7 @@ function _convert(data, type){
                 obj.path = cookie.Path;
                 obj.httponly = (cookie.HttpOnly == TRUE);
                 obj.expires = cookie.Expires;
-                obj.type = cookie.Type; 
+                obj.type = cookie.Type;
                 cookies.push(obj);
             }
         }
@@ -151,7 +151,8 @@ function _convert(data, type){
 
 function _createSignature(value){
     var md5 = crypto.createHash('md5');
-    md5.update(value);
+    //replace non-ascii with question mark
+    md5.update(value.replace(/[^\x00-\x7F]/g, "?"));
     return md5.digest('hex');
 }
 
@@ -181,7 +182,7 @@ function _getFormDataForPost(fields, files) {
             return_part += value + "\r\n";
             return return_part;
         }
-    
+
         function encodeFilePart(boundary,type,name,filename) {
             var return_part = "--" + boundary + "\r\n";
             return_part += "Content-Disposition: form-data; name=\"" + name + "\"; filename=\"" + filename + "\"\r\n";
@@ -191,7 +192,7 @@ function _getFormDataForPost(fields, files) {
 
         var boundary = Math.random();
         var post_data = [];
- 
+
         if (fields) {
             for (var key in fields) {
                 var value = fields[key];
@@ -202,15 +203,15 @@ function _getFormDataForPost(fields, files) {
         if (files) {
             for (var key in files) {
                 var value = files[key];
-                post_data.push(new Buffer(encodeFilePart(boundary, value.type, value.keyname, value.valuename), 'utf-8')); 
+                post_data.push(new Buffer(encodeFilePart(boundary, value.type, value.keyname, value.valuename), 'utf-8'));
                 post_data.push(new Buffer(value.data, 'utf-8'));
         }
     }
 
     post_data.push(new Buffer("\r\n--" + boundary + "--\r\n"),  'utf-8');;
-    
+
     var length = 0;
- 
+
     for(var i = 0; i < post_data.length; i++) {
         length += post_data[i].length;
     }
@@ -270,7 +271,7 @@ function _getError(self, res, data){
         var error = new Error();
         error.message = 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
         error.code = self.ERROR_CODES.NETWORK_DDOS_ATTACK;
-            
+
         return error;
     }
 
@@ -338,7 +339,7 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
     if (context['delay'] == '') {
         this.startDelay = 0;
     } else {
-        this.startDelay = context['delay'] 
+        this.startDelay = context['delay']
     }
 
     this.requestParams = {
@@ -348,7 +349,7 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
         'pagesize':pagesize,
         'orientation':orientation,
         'customid':context['customId'],
-        'customwatermarkid':context['customWaterMarkId'],        
+        'customwatermarkid':context['customWaterMarkId'],
         'delay':context['delay'],
         'target':context['targetElement'],
         'customwatermarkid':context['customWaterMarkId'],
@@ -489,7 +490,7 @@ GrabzItClient.prototype.set_image_options = function (url, options) {
     if (context['delay'] == '') {
         this.startDelay = 0;
     } else {
-        this.startDelay = context['delay'] 
+        this.startDelay = context['delay']
     }
 
     this.requestParams = {
@@ -634,7 +635,7 @@ GrabzItClient.prototype.get_result = function (id, oncomplete) {
             oncomplete(null, null);
         }
         return;
-    }    
+    }
     _get(this, 'getfile.ashx?id=' + id, 'binary', oncomplete)
 };
 
@@ -665,7 +666,7 @@ GrabzItClient.prototype.get_cookies = function (domain, oncomplete) {
         'key':this.applicationKey,
         'domain':domain,
         'sig':sig
-    };    
+    };
 
     _get(this, 'getcookies.ashx?' + querystring.stringify(params), 'cookies', oncomplete)
 };

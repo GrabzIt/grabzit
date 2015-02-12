@@ -179,7 +179,7 @@ module GrabzIt
 				  raise GrabzItException.new("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS)
 			end
 
-			sig = Digest::MD5.hexdigest(@@signaturePartOne+nil_check(callBackURL)+@@signaturePartTwo)
+			sig = encode(@@signaturePartOne+nil_check(callBackURL)+@@signaturePartTwo)
 			currentRequest = @@request
 			
 			currentRequest += CGI.escape(nil_check(callBackURL))+"&sig="+sig
@@ -278,7 +278,7 @@ module GrabzIt
 		# @return [Array<Cookie>] an array of cookies
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def get_cookies(domain)
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(domain))               
+			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(domain))               
 
 			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&sig="+sig
 
@@ -316,7 +316,7 @@ module GrabzIt
 		# @return [Boolean] returns true if the cookie was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def set_cookie(name, domain, value = "", path = "/", httponly = false, expires = "")
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|"+nil_check(value)+"|"+nil_check(path)+"|"+b_to_str(httponly)+"|"+nil_check(expires)+"|0")
+			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|"+nil_check(value)+"|"+nil_check(path)+"|"+b_to_str(httponly)+"|"+nil_check(expires)+"|0")
 
 			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&name="+CGI.escape(nil_check(name))+"&value="+CGI.escape(nil_check(value))+"&path="+CGI.escape(nil_check(path))+"&httponly="+b_to_str(httponly)+"&expires="+CGI.escape(nil_check(expires))+"&sig="+sig
 
@@ -330,7 +330,7 @@ module GrabzIt
 		# @return [Boolean] returns true if the cookie was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def delete_cookie(name, domain)
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|1")
+			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|1")
 
 			qs = "key=" + CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&name="+CGI.escape(nil_check(name))+"&delete=1&sig="+sig
 
@@ -369,7 +369,7 @@ module GrabzIt
 			if !File.file?(path)
 				raise "File: " + path + " does not exist"
 			end
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(identifier)+"|"+nil_int_check(xpos)+"|"+nil_int_check(ypos));
+			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(identifier)+"|"+nil_int_check(xpos)+"|"+nil_int_check(ypos));
 
 			boundary = '--------------------------'+Time.now.to_f.to_s
 
@@ -421,7 +421,7 @@ module GrabzIt
 		# @return [Boolean] returns true if the watermark was successfully deleted
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def delete_watermark(identifier)
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
+			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
 
 			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&identifier="+CGI.escape(nil_check(identifier))+"&sig="+sig
 
@@ -480,7 +480,7 @@ module GrabzIt
 
 		private
 		def get_watermarks(identifier = nil)
-			sig =  Digest::MD5.hexdigest(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
+			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
 
 			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&identifier="+CGI.escape(nil_check(identifier))+"&sig="+sig
 
@@ -562,6 +562,11 @@ module GrabzIt
 			if message != nil
 				raise GrabzItException.new(message, code)
 			end			
+		end
+
+		private
+		def encode(text)
+			return Digest::MD5.hexdigest(text.encode('ascii', {:invalid => :replace, :undef => :replace, :replace => '?'}))			
 		end
 
 		private 
