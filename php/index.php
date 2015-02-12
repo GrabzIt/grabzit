@@ -43,6 +43,7 @@ if (count($_POST) > 0)
 <head>
 <title>GrabzIt Demo</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="ajax/ui.js"></script>
 </head>
