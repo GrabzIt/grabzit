@@ -1,0 +1,15 @@
+{
+    "name": "grabzit/grabzit",
+	"type": "library",
+	"keywords": ["screenshots","PDF","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion"],
+    "homepage": "http://grabz.it/",	
+    "description": "Use our API to integrate screenshots or table capture into your website or application. Additionally GrabzIt allows you to convert online videos into animated GIF's.",
+	"license": "MIT",
+	"version":"2.2.2",
+	"support": {
+        "issues": "http://grabz.it/support/"
+    },
+    "require": {
+        "php": ">=5.0.0"
+    }
+}
