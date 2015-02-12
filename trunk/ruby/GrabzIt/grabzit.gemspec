@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'grabzit'
-  s.version     = '2.2.0'
+  s.version     = '2.2.1'
   s.date        = Date.today.to_s
   s.summary     = "GrabzIt Ruby Client"
   s.description = "Automatically create screenshots of website for free, with GrabzIt. Screenshots can be output in a variety of formats including: JPEG, PNG, TIFF, BMP, PDF, CSV and XLSX. Additionally GrabzIt allows you to convert online videos into animated GIF's."

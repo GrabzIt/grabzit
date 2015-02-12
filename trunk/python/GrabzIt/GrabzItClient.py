@@ -560,5 +560,5 @@ class GrabzItClient:
 
         def CreateSignature(self, value):
                 md5 = hashlib.md5()
-                md5.update(value.encode('utf-8'))
+                md5.update(value.encode('ascii', 'replace'))
                 return md5.hexdigest()

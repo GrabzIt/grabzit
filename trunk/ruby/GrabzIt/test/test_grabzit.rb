@@ -9,10 +9,10 @@ class GrabzItTest < Test::Unit::TestCase
 	Screenshot_Path = "test/tmp.jpg"
 
 	def setup
-		@applicationKey = "c3VwcG9ydEBncmFiei5pdA=="
-		@applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi="
+		@applicationKey = "YOUR APPLICATION KEY"
+		@applicationSecret = "YOUR APPLICATION SECRET"
 		#Set to true if the account is subscribed
-		@isSubscribedAccount = true
+		@isSubscribedAccount = false
 	end
 	
 	def test_application_key
@@ -45,6 +45,14 @@ class GrabzItTest < Test::Unit::TestCase
 			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using set_image_options method")
 		end	
 	end
+	
+	def test_take_unicode_url_image
+		assert_nothing_raised "An error occured when trying to take a image screenshot with a unicode URL" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			grabzItClient.set_image_options("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0066\u006f\u0072\u0075\u006d\u002e\u0074\u0068\u0061\u0069\u007a\u0061\u002e\u0063\u006f\u006d\u002f\u0074\u0065\u0063\u0068\u006e\u006f\u006c\u006f\u0067\u0079\u002f\u004e\u0065\u0064\u0061\u0061\u002d\u0e08\u0e31\u0e1a\u0e21\u0e37\u0e2d\u002d\u0048\u0079\u0074\u0065\u0072\u0061\u002d\u0e43\u0e2b\u0e49\u0e1a\u0e23\u0e34\u0e01\u0e32\u0e23\u0e23\u0e30\u0e1a\u0e1a\u0e27\u0e34\u0e17\u0e22\u0e38\u0e21\u0e32\u0e15\u0e23\u0e10\u0e32\u0e19\u002d\u0054\u0045\u0054\u0052\u0041\u002d\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e40\u0e27\u0e34\u0e25\u0e14\u0e4c\u0e04\u0e25\u0e32\u0e2a\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a\u0e01\u0e32\u002f\u0036\u0033\u0037\u0037\u0035\u0037\u002f".encode('utf-8'))
+			assert_not_nil(grabzItClient.save(), "Failed to take screenshot or a unicode URL")
+		end	
+	end	
 	
 	def test_save_picture
 		if File.file?(Screenshot_Path)
