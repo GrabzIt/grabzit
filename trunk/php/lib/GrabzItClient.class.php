@@ -179,7 +179,7 @@ class GrabzItClient
 			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
 
-		$sig =  md5($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
+		$sig =  $this->encode($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
 		$currentRequest = $this->request;
 
 		$currentRequest .= urlencode($callBackURL)."&sig=".$sig;
@@ -303,7 +303,7 @@ class GrabzItClient
 	*/
 	public function GetCookies($domain)
 	{
-		$sig =  md5($this->applicationSecret."|".$domain);
+		$sig =  $this->encode($this->applicationSecret."|".$domain);
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&sig=".$sig;
 
@@ -345,7 +345,7 @@ class GrabzItClient
 	*/
 	public function SetCookie($name, $domain, $value = "", $path = "/", $httponly = false, $expires = "")
 	{
-		$sig =  md5($this->applicationSecret."|".$name."|".$domain."|".$value."|".$path."|".((int)$httponly)."|".$expires."|0");
+		$sig =  $this->encode($this->applicationSecret."|".$name."|".$domain."|".$value."|".$path."|".((int)$httponly)."|".$expires."|0");
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".urlencode($expires)."&sig=".$sig;
 
@@ -362,7 +362,7 @@ class GrabzItClient
 	*/
 	public function DeleteCookie($name, $domain)
 	{
-		$sig =  md5($this->applicationSecret."|".$name."|".$domain."|1");
+		$sig =  $this->encode($this->applicationSecret."|".$name."|".$domain."|1");
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
 
@@ -385,7 +385,7 @@ class GrabzItClient
 		{
 			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
 		}
-		$sig =  md5($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
+		$sig =  $this->encode($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
 
 		$boundary = '--------------------------'.microtime(true);
 
@@ -445,7 +445,7 @@ class GrabzItClient
 	*/
 	public function DeleteWaterMark($identifier)
 	{
-		$sig = md5($this->applicationSecret."|".$identifier);
+		$sig = $this->encode($this->applicationSecret."|".$identifier);
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
@@ -483,7 +483,7 @@ class GrabzItClient
 
 	private function _getWaterMarks($identifier = null)
 	{
-		$sig =  md5($this->applicationSecret."|".$identifier );
+		$sig =  $this->encode($this->applicationSecret."|".$identifier );
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
@@ -547,6 +547,11 @@ class GrabzItClient
 		}
 
 		return $obj;
+	}
+
+	private function encode($text)
+	{
+		return md5(mb_convert_encoding($text, "ASCII", mb_detect_encoding($text)));
 	}
 
 	private function Get($url)
