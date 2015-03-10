@@ -132,7 +132,7 @@ function GrabzItWebRecorder()
 		{
 			node.setAttribute("checked", "checked");
 		}
-		else if (node === undefined)
+		else if (node.tagName && node.tagName.toLowerCase() == "input")
 		{
 			node.removeAttribute("checked");
 		}
