@@ -31,6 +31,11 @@ function GrabzItWebRecorder()
 	};
 	this.load = function()
 	{
+		if (this.targetId == null || this.targetId == '')
+		{
+			alert('Please use the record() method to specify a target element to record.');
+		}
+
 		var data = this.getQueryStringValue("grabzit");
 		if (data == '')
 		{
@@ -86,9 +91,13 @@ function GrabzItWebRecorder()
 
 		this.formatNode(target);
 
-		var compressed = GrabzItLZString.compressToBase64(target.innerHTML);
+		var cloned = target.cloneNode(true);
+		this.minifyNode(cloned);
+		var html = cloned.innerHTML.replace(/\>(\r\n|\n|\r)/gm,">");
+		alert(html);
+		var compressed = GrabzItLZString.compressToBase64(html);
 
-		if (compressed.length > 1536)
+		if (compressed.length > 2048)
 		{
 			//if its larger than this it could cause issues
 			alert('The size of the web data you are trying to send to GrabzIt is too large. Try to reduce this by specifiying a id of a element that more tightly wraps the data you are interested in recording.');
@@ -97,6 +106,102 @@ function GrabzItWebRecorder()
 		}
 		return compressed;
 	};
+	this.minifyNode = function(node)
+	{
+		if (node === undefined)
+		{
+			return;
+		}
+		if (node.tagName && node.tagName.toLowerCase() == "a")
+		{
+			var href = node.getAttribute("href");
+			if (href != null && href != '')
+			{
+				node.setAttribute("href", "#");
+			}
+		}
+		if (node.tagName && node.tagName.toLowerCase() == "img")
+		{
+			var src = node.getAttribute("src");
+			if (src != null)
+			{
+				node.setAttribute("src", src.replace(/^(https?):\/\//, '//'));
+			}
+		}
+		if (node.nodeType == 1)
+		{
+			var val = node.getAttribute("value");
+			if (val == null || val == '' || (node.tagName != null && node.tagName.toLowerCase() == "input" && (node.getAttribute("type") != null && (node.getAttribute("type").toLowerCase() == "checkbox" || node.getAttribute("type").toLowerCase() == "radio"))))
+			{
+				node.removeAttribute("value");
+			}
+
+			if(node.tagName != null && node.tagName.toLowerCase() == "select")
+			{
+				for(var i = 0;i < node.childNodes.length;i++)
+				{
+					if(node.childNodes[i].tagName && node.childNodes[i].getAttribute("selected") == null)
+					{
+						node.removeChild(node.childNodes[i]);
+					}
+					if(node.childNodes[i].tagName && node.childNodes[i].tagName.toLowerCase() == "option")
+					{
+						node.childNodes[i].removeAttribute("selected");
+					}
+				}
+			}
+
+			node.removeAttribute("alt");
+			node.removeAttribute("title");
+			node.removeAttribute("onclick");
+			node.removeAttribute("onchange");
+			node.removeAttribute("onload");
+			node.removeAttribute("onafterprint");
+			node.removeAttribute("onbeforeprint");
+			node.removeAttribute("onbeforeunload");
+			node.removeAttribute("onerror");
+			node.removeAttribute("onhashchange");
+			node.removeAttribute("onmessage");
+			node.removeAttribute("onoffline");
+			node.removeAttribute("online");
+			node.removeAttribute("onpagehide");
+			node.removeAttribute("onpageshow");
+			node.removeAttribute("onpopstate");
+			node.removeAttribute("onresize");
+			node.removeAttribute("onstorage");
+			node.removeAttribute("onunload");
+			node.removeAttribute("onblur");
+			node.removeAttribute("oncontextmenu");
+			node.removeAttribute("onfocus");
+			node.removeAttribute("oninput");
+			node.removeAttribute("oninvalid");
+			node.removeAttribute("onreset");
+			node.removeAttribute("onsearch");
+			node.removeAttribute("onselect");
+			node.removeAttribute("onkeydown");
+			node.removeAttribute("onkeypress");
+			node.removeAttribute("onkeyup");
+			node.removeAttribute("ondblclick");
+			node.removeAttribute("ondrag");
+			node.removeAttribute("ondragend");
+			node.removeAttribute("ondragenter");
+			node.removeAttribute("ondragstart");
+			node.removeAttribute("ondrop");
+			node.removeAttribute("onmousedown");
+			node.removeAttribute("onmousemove");
+			node.removeAttribute("onmouseout");
+			node.removeAttribute("onmouseover");
+			node.removeAttribute("onmouseup");
+			node.removeAttribute("onmousewheel");
+			node.removeAttribute("onscroll");
+			node.removeAttribute("onwheel");
+		}
+
+		for(var i = 0;i < node.childNodes.length;i++)
+		{
+			this.minifyNode(node.childNodes[i]);
+		}
+	}
 	this.formatNode = function(node)
 	{
 		if (node === undefined)
@@ -123,7 +228,7 @@ function GrabzItWebRecorder()
 					}
 				}
 			}
-			else
+			else if (node.value != null && node.value != '')
 			{
 				node.setAttribute("value", node.value);
 			}
