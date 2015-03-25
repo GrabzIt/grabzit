@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Grabzit by GrabzIt</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Grabzit</h1>
+        <p>GrabzIt enables you to take web screenshots in a variety of programming languages and formats. Or convert online videos to animated GIF&#39;s or HTML tables to spreadsheets.</p>
+
+        <p class="view"><a href="https://github.com/GrabzIt/grabzit">View the Project on GitHub <small>GrabzIt/grabzit</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/GrabzIt/grabzit/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/GrabzIt/grabzit/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/GrabzIt/grabzit">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="turn-websites-into-screenshots" class="anchor" href="#turn-websites-into-screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Turn Websites into Screenshots!</h1>
+
+<p>GrabzIt aspires to allow any programming language no matter how basic to turn a website into Image, PDF and table screenshots.</p>
+
+<p>To do this we provide client libraries that allow a language to send a request to make a screenshot, to our server that then sends the callback with the completed screenshot.</p>
+
+<p>While we currently support <a href="http://grabz.it/api/aspnet/">ASP.NET</a>, <a href="http://grabz.it/api/java/">Java</a>, <a href="http://grabz.it/api/javascript/">Javascript</a>, <a href="http://grabz.it/api/nodejs/">Node.js</a>, <a href="http://grabz.it/api/php/">PHP</a>, <a href="http://grabz.it/api/perl/">Perl</a>, <a href="http://grabz.it/api/python/">Python</a> and <a href="http://grabz.it/api/ruby/">Ruby</a> we aim to create a library for as many programming languages as possible. If you would like to help us achieve this please do!</p>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>We have made the programming libraries as simple as possible to use. To create a screenshot you must first call the SetImageOptions method followed by the Save method. You will need a application key and application secret, you can get these from <a href="http://grabz.it">http://grabz.it</a>.</p>
+
+<pre><code>include("GrabzItClient.class.php");
+
+//Create the GrabzItClient class
+//Replace "APPLICATION KEY", "APPLICATION SECRET" with the values from your account!
+$grabzIt = new GrabzItClient("APPLICATION KEY", "APPLICATION SECRET");
+//Take the picture the method will return the unique identifier assigned to this task
+$grabzIt-&gt;SetImageOptions("http://www.google.com");
+$id = $grabzIt-&gt;Save("http://www.example.com/handler.php");
+</code></pre>
+
+<p>Notice that in the above example the location of the handler.php is defined this is used to handle the call back when the screenshot service has completed taking the screenshot.</p>
+
+<p>The handler that accepts the call back and saves the image is below.</p>
+
+<pre><code>include("GrabzItClient.class.php");
+
+$message = $_GET["message"];
+$customId = $_GET["customid"];
+$id = $_GET["id"];
+$filename = $_GET["filename"];
+$format = $_GET["format"];
+
+//Custom id can be used to store user ids or whatever is needed for the later processing of the
+//resulting screenshot
+
+$grabzIt = new GrabzItClient("APPLICATION KEY", "APPLICATION SECRET");
+$result = $grabzIt-&gt;GetResult($id);
+
+if (!$result)
+{
+    return;
+}
+
+//Ensure that the application has the correct rights for this directory.
+file_put_contents("results" . DIRECTORY_SEPARATOR . $filename, $result);
+</code></pre>
+
+<p>And that's it! Your website should now be taking screenshots!</p>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>For further more in depth documentation go to <a href="http://grabz.it/api">http://grabz.it/api</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/GrabzIt">GrabzIt</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-7283715-9");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
