@@ -1,4 +1,4 @@
-GrabzIt Web Recorder Readme Version 1.00
+GrabzIt Web Recorder Readme Version 1.01
 ========================================
 
 GrabzIt Web Recorder allows you to take screenshots of HTML elements after they have been altered by the user or other means.
@@ -32,11 +32,11 @@ calls below will work.
 	<div id="screenshot"></div>
 	<script>
 	//Call One
-	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', 'screenshot', 'http://www.google.com');
+	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', 'screenshot');
 
 	//Call Two
 	var elem = document.getElementById('screenshot');
-	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', elem, 'http://www.google.com');
+	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', elem);
 	</script>
 	</body>
 	</html>
@@ -45,4 +45,4 @@ calls below will work.
 The options parameter takes all of the parameters found here (excluding the URL and application key parameters): http://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 256 x 200 you could do this like so:
 
 
-	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', 'div_id', 'http://www.google.com', {"width": 250, "height": 200});
+	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', 'div_id', {"width": 250, "height": 200});
