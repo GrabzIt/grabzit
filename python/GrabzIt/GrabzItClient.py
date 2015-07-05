@@ -1,9 +1,19 @@
 #!/usr/bin/python
 
 import os
-import urllib.request
-import hashlib
-import http.client
+
+try:
+	from urllib.parse import urlencode	
+	from urllib.request import urlopen
+	from urllib.parse import urlparse
+	import http.client as httpClient
+except ImportError:
+	from urllib import urlopen
+	from urlparse import urlparse	
+	from urllib import urlencode	
+	import httplib as httpClient
+
+import hashlib	
 import mimetypes
 import io
 from xml.dom import minidom
@@ -144,7 +154,7 @@ class GrabzItClient:
                           raise GrabzItException.GrabzItException("No screenshot parameters have been set.", GrabzItException.GrabzItException.PARAMETER_MISSING_PARAMETERS)
                 
                 self.requestParams["callback"] = str(callBackURL)
-                encoded_qs = urllib.parse.urlencode(self.requestParams)
+                encoded_qs = urlencode(self.requestParams)
                 
                 sig = self.CreateSignature(self.signaturePartOne+str(callBackURL)+self.signaturePartTwo)                               
                 currentRequest = self.request
@@ -275,7 +285,7 @@ class GrabzItClient:
         def GetCookies(self, domain):
                 sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(domain))
                 qs = {"key":self.applicationKey, "domain":domain}
-                encoded_qs = urllib.urlencode(qs)
+                encoded_qs = urlencode(qs)
                 
                 encoded_qs += "&sig="+sig
 
@@ -320,7 +330,7 @@ class GrabzItClient:
 
                 qs = {"key":self.applicationKey, "domain":domain, "name":name, "value":value, "path":path, "httponly":int(httponly), "expires":expires}
 
-                encoded_qs = urllib.urlencode(qs)
+                encoded_qs = urlencode(qs)
                 
                 encoded_qs += "&sig="+sig;
 
@@ -339,7 +349,7 @@ class GrabzItClient:
 
                 qs = {"key":self.applicationKey, "domain":domain, "name":name, "delete":1}
 
-                encoded_qs = urllib.urlencode(qs)
+                encoded_qs = urlencode(qs)
                 
                 encoded_qs += "&sig="+sig;
 
@@ -385,7 +395,7 @@ class GrabzItClient:
 
                 qs = {"key":self.applicationKey, "identifier":identifier}
 
-                encoded_qs = urllib.urlencode(qs)
+                encoded_qs = urlencode(qs)
                 
                 encoded_qs += "&sig="+sig
 
@@ -417,7 +427,7 @@ class GrabzItClient:
 
                 qs = {"key":self.applicationKey, "identifier":identifier}
 
-                encoded_qs = urllib.urlencode(qs)
+                encoded_qs = urlencode(qs)
                 
                 encoded_qs += "&sig="+sig;             
 
@@ -512,7 +522,7 @@ class GrabzItClient:
                 
         def HTTPPost(self, host, selector, fields, files):
             content_type, body = self.EncodeMultipartFormdata(fields, files)
-            h = http.client.HTTP(host)
+            h = httpClient.HTTPConnection(host)
             h.putrequest('POST', selector)
             h.putheader('content-type', content_type)
             h.putheader('content-length', str(len(body)))
@@ -547,7 +557,7 @@ class GrabzItClient:
             return mimetypes.guess_type(filename)[0] or 'application/octet-stream'
         
         def HTTPGet(self, url):
-                connection = urllib.request.urlopen(url)
+                connection = urlopen(url)
                 self.CheckResponseHeader(connection.getcode())
                 return connection.read()
         

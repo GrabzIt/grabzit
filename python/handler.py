@@ -3,7 +3,10 @@
 import os
 import cgi
 from GrabzIt import GrabzItClient
-from configparser import SafeConfigParser
+try:
+	from configparser import SafeConfigParser
+except ImportError:
+	from ConfigParser import SafeConfigParser
 
 form = cgi.FieldStorage()
 

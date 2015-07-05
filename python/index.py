@@ -4,12 +4,18 @@ import os
 import cgi
 import cgitb
 import glob
-import configparser
+try:
+	import configparser
+except ImportError:
+	import ConfigParser as configparser
 
 cgitb.enable()
 
 from GrabzIt import GrabzItClient
-from configparser import SafeConfigParser
+try:
+	from configparser import SafeConfigParser
+except ImportError:
+	from ConfigParser import SafeConfigParser
 
 message = ""
 if os.environ['REQUEST_METHOD'] == 'POST':
