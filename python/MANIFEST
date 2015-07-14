@@ -1,0 +1,16 @@
+README.txt
+config.ini
+handler.py
+index.py
+setup.py
+GrabzIt\GrabzItClient.py
+GrabzIt\GrabzItCookie.py
+GrabzIt\GrabzItException.py
+GrabzIt\GrabzItWaterMark.py
+GrabzIt\ScreenShotStatus.py
+GrabzIt\__init__.py
+ajax\results.py
+ajax\ui.js
+css\pdf.png
+css\style.css
+results\results.txt
