@@ -1,0 +1,16 @@
+<html>
+    <script language="JScript">
+    	try
+    	{
+			var grabzit = new ActiveXObject("GrabzIt.GrabzItClient");
+			grabzit.ApplicationKey = "APPLICATION KEY";
+			grabzit.ApplicationSecret = "APPLICATION SECRET";
+			grabzit.SetImageOptions_2("http://www.google.com");
+			grabzit.SaveTo_2("C:\\tmp\\test.jpg");
+		}
+		catch(e)
+		{
+			alert(e.description);
+		}
+	</script>
+</html>
