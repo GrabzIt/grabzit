@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Web;
 
 namespace GrabzIt
 {
+    [ComVisible(false)]
     public class Handler : IHttpHandler
     {
         private const string ID = "id";

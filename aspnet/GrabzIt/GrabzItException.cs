@@ -1,9 +1,12 @@
 ﻿using System;
 using GrabzIt.Enums;
+using GrabzIt.COM;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt
 {
-    public class GrabzItException : Exception
+    [ClassInterface(ClassInterfaceType.None)]
+    public class GrabzItException : Exception, IGrabzItException
     {
         public ErrorCode code;
 

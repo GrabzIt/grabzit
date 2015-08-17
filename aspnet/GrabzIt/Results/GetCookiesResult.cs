@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Xml.Serialization;
 using GrabzIt.Cookies;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt.Results
 {
     [Serializable]
     [XmlType(TypeName = "WebResult")]
+    [ComVisible(false)]
     public class GetCookiesResult : IException
     {
         [XmlArray("Cookies")]

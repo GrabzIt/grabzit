@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using GrabzIt.COM;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt.Screenshots
 {
-    public class GrabzItFile
+    [ClassInterface(ClassInterfaceType.None)]
+    public class GrabzItFile : IGrabzItFile
     {
         public GrabzItFile(byte[] bytes)
         {

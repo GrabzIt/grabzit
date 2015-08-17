@@ -1,10 +1,32 @@
-﻿namespace GrabzIt.Screenshots
+﻿using GrabzIt.COM;
+using System.Runtime.InteropServices;
+namespace GrabzIt.Screenshots
 {
-    public class Status
+    [ClassInterface(ClassInterfaceType.None)]
+    public class Status : IStatus
     {
-        public bool Processing;
-        public bool Cached;
-        public bool Expired;
-        public string Message;
+        public bool Processing
+        {
+            get;
+            internal set;
+        }
+
+        public bool Cached
+        {
+            get;
+            internal set;
+        }
+
+        public bool Expired
+        {
+            get;
+            internal set;
+        }
+
+        public string Message
+        {
+            get;
+            internal set;
+        }
     }
 }

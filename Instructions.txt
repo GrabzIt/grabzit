@@ -1,0 +1,3 @@
+To create Python distrubution ready to upload to the Python Index through the web form, navigate to the python directory and call:
+
+python setup.py sdist

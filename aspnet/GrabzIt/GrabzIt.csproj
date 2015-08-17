@@ -34,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +56,9 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -64,6 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="COM\IGrabzItException.cs" />
+    <Compile Include="COM\IStatus.cs" />
+    <Compile Include="COM\IWaterMark.cs" />
+    <Compile Include="COM\IGrabzItCookie.cs" />
+    <Compile Include="COM\IGrabzItFile.cs" />
+    <Compile Include="COM\IGrabzItClient.cs" />
     <Compile Include="Enums\BrowserType.cs" />
     <Compile Include="Enums\Country.cs" />
     <Compile Include="Enums\ErrorCode.cs" />

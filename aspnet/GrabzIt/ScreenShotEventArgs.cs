@@ -1,5 +1,7 @@
-﻿namespace GrabzIt
+﻿using System.Runtime.InteropServices;
+namespace GrabzIt
 {
+    [ComVisible(false)]
     public class ScreenShotEventArgs
     {
         public string Filename { get; internal set; }

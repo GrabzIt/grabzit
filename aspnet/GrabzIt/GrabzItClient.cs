@@ -13,10 +13,13 @@ using GrabzIt.Results;
 using GrabzIt.Enums;
 using GrabzIt.Screenshots;
 using GrabzIt.Net;
+using GrabzIt.COM;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt
 {
-    public class GrabzItClient
+    [ClassInterface(ClassInterfaceType.None)]
+    public class GrabzItClient : IGrabzItClient
     {
         private static GrabzItClient grabzItClient;        
 
@@ -64,6 +67,12 @@ namespace GrabzIt
         }
 
         private const string BaseURL = "http://api.grabz.it/services/";
+
+        //Required by COM
+        public GrabzItClient()
+            : this(string.Empty, string.Empty, false)
+        {
+        }
 
         /// <summary>
         /// Create a new GrabzIt client.
@@ -562,6 +571,7 @@ namespace GrabzIt
         /// <param name="url">The URL that the screenshot should be made of</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         [Obsolete("Use the SetImageOptions and Save methods instead")]
+        [ComVisible(false)]
         public string TakePicture(string url)
         {
             return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, ImageFormat.jpg, 0, string.Empty);
@@ -574,6 +584,7 @@ namespace GrabzIt
         /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         [Obsolete("Use the SetImageOptions and Save methods instead")]
+        [ComVisible(false)]
         public string TakePicture(string url, string callback)
         {
             return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, ImageFormat.jpg, 0, string.Empty);
@@ -587,6 +598,7 @@ namespace GrabzIt
         /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         [Obsolete("Use the SetImageOptions and Save methods instead")]
+        [ComVisible(false)]
         public string TakePicture(string url, string callback, string customId)
         {
             return TakePicture(url, callback, 0, 0, 0, 0, customId, ImageFormat.jpg, 0, string.Empty);
@@ -606,6 +618,7 @@ namespace GrabzIt
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         [Obsolete("Use the SetImageOptions and Save methods instead")]
+        [ComVisible(false)]
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay)
         {
             return TakePicture(url, callback, browserWidth, browserHeight, outputHeight, outputWidth, customId, format, delay, string.Empty);
@@ -626,6 +639,7 @@ namespace GrabzIt
         /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
         [Obsolete("Use the SetImageOptions and Save methods instead")]
+        [ComVisible(false)]
         public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay, string targetElement)
         {
             SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, 0, string.Empty);
@@ -639,6 +653,7 @@ namespace GrabzIt
         /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
         [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
+        [ComVisible(false)]
         public bool SavePicture(string url, string saveToFile)
         {
             return SavePicture(url, saveToFile, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty);
@@ -657,6 +672,7 @@ namespace GrabzIt
         /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
         [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
+        [ComVisible(false)]
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay)
         {
             return SavePicture(url, saveToFile, browserWidth, browserHeight, outputHeight, outputWidth, format, delay, string.Empty);
@@ -677,6 +693,7 @@ namespace GrabzIt
         /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
         /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
         [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
+        [ComVisible(false)]
         public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay, string targetElement)
         {
             SetImageOptions(url, string.Empty, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, BrowserType.StandardBrowser, string.Empty);
@@ -959,6 +976,7 @@ namespace GrabzIt
         /// </summary>
         /// <param name="id">The unique identifier of the screenshot, returned by the callback handler or the TakePicture method</param>
         /// <returns>The screenshot</returns>
+        [ComVisible(false)]
         public Image GetPicture(string id)
         {
             lock (thisLock)
@@ -1141,6 +1159,7 @@ namespace GrabzIt
         /// <param name="applicationKey">The application key of your GrabzIt account</param>
         /// <param name="applicationSecret">The application secret of your GrabzIt account</param>
         /// <returns>GrabzItClient</returns>
+        [ComVisible(false)]
         public static GrabzItClient Create(string applicationKey, string applicationSecret)
         {
             if (grabzItClient == null)
