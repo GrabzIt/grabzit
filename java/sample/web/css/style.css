@@ -11,6 +11,11 @@ body
    color:red;font-weight:bold;
 }
 
+.hidden
+{
+   display:none;
+}
+
 h1
 {
   border:1px solid #000; 

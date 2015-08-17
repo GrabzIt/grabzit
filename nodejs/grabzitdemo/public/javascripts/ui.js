@@ -6,14 +6,14 @@ function checkForResults() {
 	//read result directory and display
 	$.getJSON('ajax/results?r='+Math.floor((Math.random()*100000)+1), function(data) {
 		$.each(data, function(key, val) {
-                        if (val.indexOf(".pdf") !== -1)
-                        {
-			    $('#divResults').append('<a title="Click to open" target="_blank" href="/results/'+val+'"><img class="result" src="/images/pdf.png"></img></a>');
-                        }
-                        else
-                        {
-			    $('#divResults').append('<img title="Click to zoom in" class="result" onclick="zoom(\''+val+'\')" src="/results/'+val+'"></img>');
-                        }
+			if (val.indexOf(".pdf") !== -1)
+			{
+				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="css/pdf.png"></img></a>');
+			}
+			else
+			{
+				$('#divResults').append('<img title="Click to zoom in" class="result" onclick="zoom(\''+val+'\')" src="'+val+'"></img>');
+			}
 		});
 	});
 	timeout = setTimeout("checkForResults()", 5000);
@@ -22,7 +22,7 @@ function checkForResults() {
 function zoom(url)
 {
 	clearTimeout(timeout);
-	$('#divResults').html('<img class="zoomedResult" title="Click to zoom out" onclick="zoomout()" src="/results/'+url+'">');
+	$('#divResults').html('<img class="zoomedResult" title="Click to zoom out" onclick="zoomout()" src="'+url+'">');
 }
 
 function zoomout()
@@ -30,6 +30,17 @@ function zoomout()
 	checkForResults();
 }
 
+function selectChanged(select) {
+    if ($(select).val() == 'gif') {
+        $('#spnGif').show();
+        $('#spnScreenshot').hide();
+    }
+    else {
+        $('#spnScreenshot').show();
+        $('#spnGif').hide();
+    }
+}
+
 $(document).ready(function() {
-        checkForResults();
+	checkForResults();
 });

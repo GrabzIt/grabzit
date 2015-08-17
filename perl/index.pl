@@ -29,6 +29,10 @@ if ($cgi->request_method() eq 'POST')
 		{
 		    $grabzIt->SetPDFOptions($url);
 		}
+		if ($format eq "gif")
+		{
+		    $grabzIt->SetAnimationOptions($url);
+		}		
 		else
 		{
 		    $grabzIt->SetImageOptions($url);
@@ -57,7 +61,7 @@ print <<'HEADER';
 <body>
 <h1>GrabzIt Demo</h1>
 <form method="post" action="index.pl" class="inputForms">
-<p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+<p><span id="spnScreenshot">Enter the URL of the website you want to take a screenshot of. The resulting screenshot</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 
 HEADER
 
@@ -71,14 +75,15 @@ if ($cgi->request_method() eq 'POST' && $cgi->param("delete") != "1")
 	}
 	else
 	{
-		print '<p><span style="color:green;font-weight:bold;">Processing screenshot.</span></p>';
+		print '<p><span style="color:green;font-weight:bold;">Processing...</span></p>';
 	}
 }
 
 print <<'FOOTER';
-<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format">
+<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format" onchange="selectChanged(this)">
   <option value="jpg">JPG</option>
   <option value="pdf">PDF</option>
+  <option value="gif">GIF</option>
 </select>
 <input type="submit" value="Grabz It"></input>
 </form>

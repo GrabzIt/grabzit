@@ -24,12 +24,16 @@ namespace Sample
                 {
                     grabzItClient.SetImageOptions(txtURL.Text);
                 }
+                else if (ddlFormat.SelectedValue == "gif")
+                {
+                    grabzItClient.SetAnimationOptions(txtURL.Text);
+                }
                 else
                 {
                     grabzItClient.SetPDFOptions(txtURL.Text);
                 }
                 grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
-                lblMessage.Text = "Processing screenshot.";
+                lblMessage.Text = "Processing...";
                 lblMessage.CssClass = string.Empty;
                 lblMessage.Style.Add("color", "green");
                 lblMessage.Style.Add("font-weight", "bold");

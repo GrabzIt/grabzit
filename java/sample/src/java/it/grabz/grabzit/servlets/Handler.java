@@ -8,6 +8,8 @@ import it.grabz.grabzit.GrabzItClient;
 import it.grabz.grabzit.GrabzItFile;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +30,13 @@ public class Handler extends HttpServlet{
 
         GrabzItClient client = new GrabzItClient(Config.getApplicationKey(), Config.getApplicationSecret());
 
-        GrabzItFile file = client.GetResult(id);
+        GrabzItFile file = null;
+        
+        try {
+            file = client.GetResult(id);
+        } catch (Exception ex) {
+            Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (file == null)
         {

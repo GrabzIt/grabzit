@@ -28,6 +28,10 @@ public class TakeScreenshot extends HttpServlet{
             {
                 client.SetPDFOptions(url);
             }
+            else if (format.equals("gif"))
+            {
+                client.SetAnimationOptions(url);
+            }
             else
             {
                 client.SetImageOptions(url);
@@ -39,6 +43,6 @@ public class TakeScreenshot extends HttpServlet{
             response.sendRedirect("/grabzit/?error=" + URLEncoder.encode(ex.getMessage(), "UTF-8"));
             return;
         }
-        response.sendRedirect("/grabzit/?message=" + URLEncoder.encode("Processing screenshot.", "UTF-8"));
+        response.sendRedirect("/grabzit/?message=" + URLEncoder.encode("Processing...", "UTF-8"));
     }
 }

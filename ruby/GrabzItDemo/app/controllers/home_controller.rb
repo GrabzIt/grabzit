@@ -13,6 +13,8 @@ class HomeController < ActionController::Base
   	
   	if format == "jpg"
   		grabzItClient.set_image_options(url)
+  	elsif format == "gif"
+	  	grabzItClient.set_animation_options(url)
   	else
   		grabzItClient.set_pdf_options(url)
   	end
@@ -22,8 +24,8 @@ class HomeController < ActionController::Base
   	
   	begin
 		grabzItClient.save(app_config['handler'])
-		@SuccessMessage = "Processing screenshot."
-	rescue RuntimeError => e
+		@SuccessMessage = "Processing..."
+	rescue RuntimeError, GrabzIt::GrabzItException => e
 		@ErrorMessage = e
 	end
 	

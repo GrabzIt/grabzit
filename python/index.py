@@ -4,18 +4,12 @@ import os
 import cgi
 import cgitb
 import glob
-try:
-	import configparser
-except ImportError:
-	import ConfigParser as configparser
+import configparser
 
 cgitb.enable()
 
 from GrabzIt import GrabzItClient
-try:
-	from configparser import SafeConfigParser
-except ImportError:
-	from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 message = ""
 if os.environ['REQUEST_METHOD'] == 'POST':
@@ -31,9 +25,11 @@ if os.environ['REQUEST_METHOD'] == 'POST':
                 grabzIt = GrabzItClient.GrabzItClient(parser.get("GrabzIt", "applicationKey"), parser.get("GrabzIt", "applicationSecret"))
                 if form.getvalue("format") == "pdf":
                     grabzIt.SetPDFOptions(form.getvalue("url"))
+                elif form.getvalue("format") == "gif":
+                    grabzIt.SetAnimationOptions(form.getvalue("url"))
                 else:
                     grabzIt.SetImageOptions(form.getvalue("url"))
-                    grabzIt.Save(parser.get("GrabzIt", "handlerUrl"))
+                grabzIt.Save(parser.get("GrabzIt", "handlerUrl"))
             except Exception as e:
                 message = str(e)
 
@@ -49,7 +45,7 @@ print ('''<html>
 <body>
 <h1>GrabzIt Demo</h1>
 <form method="post" action="index.py" class="inputForms">
-<p>Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>''')
+<p><span id="spnScreenshot">Enter the URL of the website you want to take a screenshot of. The resulting screenshot</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>''')
 
 if os.environ['REQUEST_METHOD'] == 'POST' and form.getvalue("delete") != "1":
     if message != '':
@@ -57,11 +53,12 @@ if os.environ['REQUEST_METHOD'] == 'POST' and form.getvalue("delete") != "1":
         print (message)
         print ('</span></p>')
     else:
-        print ('<p><span style="color:green;font-weight:bold;">Processing screenshot.</span></p>')
+        print ('<p><span style="color:green;font-weight:bold;">Processing...</span></p>')
         
-print ('''<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format">
-<option value="jpg">JPG</option>
+print ('''<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format" onchange="selectChanged(this)">
+  <option value="jpg">JPG</option>
   <option value="pdf">PDF</option>
+  <option value="gif">GIF</option>
 </select>
 <input type="submit" value="Grabz It"></input>
 </form>

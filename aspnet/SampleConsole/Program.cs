@@ -8,13 +8,15 @@ namespace SampleConsole
     class Program
     {
         private static string PDF = "P";
+        private static string GIF = "G";
+
         static void Main(string[] args)
         {
             while (true)
             {
                 Console.WriteLine("Please specify a URL to take picture of. For example http://www.google.com");
                 string url = Console.ReadLine();
-                Console.WriteLine("Return URL as PDF (P) or JPEG (J)? Enter P or J.");
+                Console.WriteLine("Return URL as PDF (P), JPEG (J) or Animated GIF (G)? Enter P, J or G.");
                 string formatType = Console.ReadLine();
                 GrabzItClient grabzIt = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], 
                                                                 ConfigurationManager.AppSettings["ApplicationSecret"]);
@@ -26,11 +28,20 @@ namespace SampleConsole
                     {
                         format = ".pdf";
                     }
+                    else if (formatType == GIF)
+                    {
+                        format = ".gif";
+                    }
+
                     string filename = url.Substring(url.IndexOf("://") + 3).Replace("?", string.Empty).Replace("/", string.Empty) + format;
 
                     if (formatType == PDF)
                     {
                         grabzIt.SetPDFOptions(url);
+                    }
+                    else if (formatType == GIF)
+                    {
+                        grabzIt.SetAnimationOptions(url);
                     }
                     else
                     {
@@ -38,7 +49,14 @@ namespace SampleConsole
                     }                    
                     if (grabzIt.SaveTo(filename))
                     {
-                        Console.WriteLine("Screenshot has been saved to: " + filename);
+                        if (formatType == GIF)
+                        {
+                            Console.WriteLine("Animated GIF has been saved to: " + filename);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Screenshot has been saved to: " + filename);
+                        }
                     }                    
                 }
                 catch (Exception ex)

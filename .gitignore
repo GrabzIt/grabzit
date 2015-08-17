@@ -1,0 +1,17 @@
+aspnet/GrabzIt/bin/Release/GrabzIt.dll
+aspnet/GrabzIt/bin/Release/GrabzIt.pdb
+aspnet/GrabzIt/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
+*.tlb
+aspnet/GrabzIt/obj/Release/GrabzIt.csproj.FileListAbsolute.txt
+aspnet/GrabzIt/obj/Release/GrabzIt.dll
+*.pdb
+aspnet/GrabzIt/obj/Release/GrabzIt.csprojResolveAssemblyReference.cache
+*.cache
+*.cache
+aspnet/Sample/obj/Debug/Sample.csproj.FileListAbsolute.txt
+aspnet/Sample/obj/Release/Sample.csproj.FileListAbsolute.txt
+*.cache
+aspnet/Sample/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
+*.exe
+aspnet/SampleConsole/bin/Debug/SampleConsole.exe.config
+*.exe

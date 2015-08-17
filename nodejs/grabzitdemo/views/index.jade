@@ -3,7 +3,9 @@ extends layout
 block content
   h1 GrabzIt Demo
   p
-    |  Enter the URL of the website you want to take a screenshot of. Then resulting screenshot should be saved in the 
+    span(id="spnScreenshot") Enter the URL of the website you want to take a screenshot of. The resulting screenshot
+    span(class="hidden",id="spnGif") Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF
+    |  should then be saved in the 
     a(href="results/",target="_blank") results directory
     |  . It may take a few seconds for it to appear! If nothing is happening check the 
     a(href="http://grabz.it/account/diagnostics",target="_blank") diagnostics panel
@@ -11,16 +13,17 @@ block content
 
   if success
     p
-        span(style="color:green;font-weight:bold;") Processing screenshot.
+        span(style="color:green;font-weight:bold;") Processing...
   else if !success && message != null
     p
         span(class="error")= message
   form(action="/",method="post",class="inputForms")
     label(style="font-weight:bold;margin-right:1em;") URL 
     input(type="text",name="url")
-    select(name="type")
-        option(value="JPG") JPG
-        option(value="PDF") PDF
+    select(name="type",onchange="selectChanged(this)")
+        option(value="jpg") JPG
+        option(value="pdf") PDF
+        option(value="gif") GIF
     input(type="submit", value="Grabz It")
   form(action="/delete",method="get",class="inputForms")
     input(type="submit", value="Clear Results")

@@ -33,7 +33,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 
 app.get('/ajax/results', function (req, res) {
-    file.readdir(path.join('public', 'results'), function (err, files) { 
+    file.readdir(path.join('public', 'results'), function (err, files) {
     res.writeHead(200, {"Content-Type": "application/json"});
     res.end(JSON.stringify(files));});
 });
@@ -62,7 +62,7 @@ app.get('/handler', function (req, res) {
     var client = new grabzit(config.applicationKey, config.applicationSecret);
 
     client.get_result(id, function(err, result){
-        if (err != null) {            
+        if (err != null) {
             return;
         }
 
@@ -75,8 +75,11 @@ app.get('/handler', function (req, res) {
 app.post('/', function (req, res) {
     var targetUrl = req.body.url;
     var client = new grabzit(config.applicationKey, config.applicationSecret);
-    if (req.body.type == "JPG") {
+    if (req.body.type == "jpg") {
         client.set_image_options(targetUrl);
+    }
+    if (req.body.type == "gif") {
+	    client.set_animation_options(targetUrl);
     }
     else {
         client.set_pdf_options(targetUrl);
@@ -85,10 +88,10 @@ app.post('/', function (req, res) {
     client.save(config.callbackHandlerUrl, function (error, id){
         if (error != null){
             res.render('index', {'message': error.message, 'success': false});
-            return;     
-        }   
-        res.render('index', {'success': true}); 
-    });    
+            return;
+        }
+        res.render('index', {'success': true});
+    });
 });
 
 http.createServer(app).listen(app.get('port'), function(){
