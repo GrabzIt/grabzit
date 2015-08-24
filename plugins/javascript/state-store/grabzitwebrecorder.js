@@ -102,7 +102,7 @@ function GrabzItWebRecorder()
 			alert('Please use the record() method to specify a target element to record.');
 		}
 
-		var data = this.getQueryStringValue("grabzit");
+		var data = this.getQueryStringValue();
 		if (data == '')
 		{
 			return;
@@ -148,8 +148,11 @@ function GrabzItWebRecorder()
 	{
 		return GrabzIt(key).Create(this.AppendURL(), options);
 	}
-	this.getQueryStringValue = function(key) {
-	  return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+	this.getQueryStringValue = function() {
+	  return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape("grabzit").replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+	};
+	this.isRecording = function() {
+		  return this.getQueryStringValue() != '';
 	};
 	this.getState = function()
 	{
