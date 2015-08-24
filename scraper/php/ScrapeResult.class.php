@@ -1,13 +1,18 @@
 <?php
 class ScrapeResult
 {
-	private $extension;
+    private $extension;
+    private $filename;
 	private $data;
 
-	public function __construct($data = null, $extension = null)
+	public function __construct($path = null)
 	{
-		$this->data = $data;
-		$this->extension = $extension;
+        if ($path != null)
+        {
+		    $this->data = file_get_contents($path);
+		    $this->extension = pathinfo($path, PATHINFO_EXTENSION);
+            $this->filename = pathinfo($path, PATHINFO_BASENAME);
+        }
 	}
 
 	public function __toString()
@@ -42,6 +47,15 @@ class ScrapeResult
 		return null;
 	}
 
+    public function getFilename()
+	{
+		if ($this->filename == null && $_FILES['file']['name'] != null)
+		{
+			$this->filename = pathinfo($_FILES['file']['name'], PATHINFO_BASENAME);
+		}
+		return $this->filename;
+	}
+
 	public function getExtension()
 	{
 		if ($this->extension == null && $_FILES['file']['name'] != null)
@@ -51,8 +65,14 @@ class ScrapeResult
 		return $this->extension;
 	}
 
-	public function save($filename)
+	public function save($path)
 	{
-		return file_put_contents($filename, $this->toString()) !== false;
+        $dat = $this->toString();        
+        if ($dat != null)
+        {
+		    return file_put_contents($path, $dat) !== false;
+        }        
+        return false;
 	}
 }
+?>
