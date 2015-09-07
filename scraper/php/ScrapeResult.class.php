@@ -10,8 +10,12 @@ class ScrapeResult
         if ($path != null)
         {
 		    $this->data = file_get_contents($path);
-		    $this->extension = pathinfo($path, PATHINFO_EXTENSION);
+		    $this->extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
             $this->filename = pathinfo($path, PATHINFO_BASENAME);
+        }
+        else if ($_SERVER['HTTP_USER_AGENT'] != 'GrabzIt')
+        {
+        	throw new Exception("A call originating from a non-GrabzIt server has been detected");
         }
 	}
 
@@ -60,18 +64,18 @@ class ScrapeResult
 	{
 		if ($this->extension == null && $_FILES['file']['name'] != null)
 		{
-			$this->extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+			$this->extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 		}
 		return $this->extension;
 	}
 
 	public function save($path)
 	{
-        $dat = $this->toString();        
+        $dat = $this->toString();
         if ($dat != null)
         {
 		    return file_put_contents($path, $dat) !== false;
-        }        
+        }
         return false;
 	}
 }
