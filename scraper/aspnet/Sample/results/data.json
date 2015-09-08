@@ -1,0 +1,16 @@
+{
+  "Emails": [
+    {
+      "Addresses": "test@test.com"
+    },
+    {
+      "Addresses": "dom@example.co.uk"
+    },
+    {
+      "Addresses": "dummy@bbc.co.uk"
+    },
+    {
+      "Addresses": "editor@cnn.com"
+    }
+  ]
+}
