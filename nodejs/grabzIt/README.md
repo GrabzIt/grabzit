@@ -3,7 +3,7 @@ GrabzIt 2.2
 
 This library allows you to programmatically convert web pages into images, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's. For more help please read our [documentation](http://grabz.it/api/nodejs).
 
-Its usually best to place these files in their own directory.
+It is usually best to place these files in their own directory.
 
 Before the package can be used you must [register](http://grabz.it/register.aspx) to get your application key and secret. Once you have this you can take a screenshot like so:
 

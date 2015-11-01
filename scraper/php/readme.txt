@@ -3,7 +3,7 @@ GrabzIt Scraper 1.0
 
 This library enables you to process scraped data and integrate it into your own application.
 
-Its usually best to place these package files in their own directory.
+It is usually best to place these package files in their own directory.
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 + For your application to be reachable by GrabzIt it must first be deployed to a publicly accessible web server.+
