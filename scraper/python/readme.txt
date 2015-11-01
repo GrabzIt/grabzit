@@ -5,11 +5,16 @@ This library enables you to process scraped data and integrate it into your own 
 
 Its usually best to place these package files in their own directory.
 
-To run this example create a scrape here: http://grabz.it/scraper/scrapes.aspx
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ For your application to be reachable by GrabzIt it must first be deployed to a publicly accessible web server.+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-On the Export Options tab choose "Callback URL" option from the Send Results Via drop down.
+Running the Demo Application
+----------------------------
 
-Then enter the URL of the handler.py so for instance http://www.example.com/scrape/handler.py
+First create a scrape here: http://grabz.it/scraper/scrapes.aspx On the Export Options tab choose "Callback URL" option from the Send Results Via drop down.
+
+Next enter the URL of the handler.py so for instance http://www.example.com/scrape/handler.py
 
 Ensure your Python application has read and write access to the "results" directory.
 

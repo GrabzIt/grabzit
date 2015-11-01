@@ -5,9 +5,13 @@ This library allows you to programmatically convert web pages into images, PDF's
 
 Its usually best to place these files in thier own directory.
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ As this example uses a callback handler it must be deployed to a publicly accessible web server.+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 To run the sample
 
-Open config.ini and change the three parameters to match your settings the first two parameters can be got from http://grabz.it/api
+Open config.ini and change the three parameters to match your settings the first two parameters can be got from http://grabz.it/api/
 the third parameter is the location you have placed the handler.pl on your website.
 
 
@@ -20,4 +24,4 @@ Ensure your application has read and write access to the "results" directory.
 
 Finally run the index.pl to start taking screenshots.
 
-More documentation can be found at: http://grabz.it/api/perl
+More documentation can be found at: http://grabz.it/api/perl/

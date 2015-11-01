@@ -14,8 +14,8 @@ Running the Demo Application
 
 First create a scrape here: http://grabz.it/scraper/scrapes.aspx On the Export Options tab choose "Callback URL" option from the Send Results Via drop down.
 
-Next enter the URL of the handler.php so for instance http://www.example.com/scrape/handler.php
+Next enter the URL of the handler so for instance http://www.example.com/scrape/handler
 
-Ensure your PHP application has read and write access to the "results" directory.
+Ensure your ASP.NET application has read and write access to the "results" directory.
 
-More documentation can be found at: http://grabz.it/scraper/api/php/
+More documentation can be found at: http://grabz.it/scraper/api/aspnet/

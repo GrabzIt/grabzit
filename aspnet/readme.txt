@@ -12,7 +12,13 @@ Open the GrabzIt solution file.
 Screenshots in Web Applications
 ===============================
 
-The solution contains a project called Sample, which is a example web application. To configure this do the following:
+The solution contains a project called Sample, which is a example web application.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ As this example uses a callback handler it must be deployed to a publicly accessible web server.+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+To configure this do the following:
 
 Then open web.config and change the application key and application secret to match your settings the first two parameters can be got from http://grabz.it/api
 
