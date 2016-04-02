@@ -15,6 +15,7 @@ using GrabzIt.Screenshots;
 using GrabzIt.Net;
 using GrabzIt.COM;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace GrabzIt
 {
@@ -1056,10 +1057,44 @@ namespace GrabzIt
 
         private static string Encrypt(string plainText)
         {
-            byte[] bs = Encoding.ASCII.GetBytes(plainText);
+            byte[] bs = Encoding.ASCII.GetBytes(EncodeNonAsciiCharacters(plainText));
             using (MD5CryptoServiceProvider hasher = new MD5CryptoServiceProvider())
             {
                 return toHex(hasher.ComputeHash(bs));
+            }
+        }
+
+        private static string EncodeNonAsciiCharacters(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (int codePoint in AsCodePoints(value))
+            {
+                if (codePoint > 127)
+                {
+                    sb.Append("?");
+                }
+                else
+                {
+                    sb.Append(Char.ConvertFromUtf32(codePoint));
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        private static IEnumerable<int> AsCodePoints(string s)
+        {
+            for (int i = 0; i < s.Length; ++i)
+            {
+                yield return char.ConvertToUtf32(s, i);
+                if (char.IsHighSurrogate(s, i))
+                {
+                    i++;
+                }
             }
         }
 
