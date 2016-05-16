@@ -4,7 +4,9 @@
  */
 package it.grabz.grabzit;
 
+import it.grabz.grabzit.enums.BrowserType;
 import it.grabz.grabzit.enums.HorizontalPosition;
+import it.grabz.grabzit.enums.ImageFormat;
 import it.grabz.grabzit.enums.VerticalPosition;
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +69,20 @@ public class GrabzItClientTest {
     public void testApplicationSecret()
     {
         Assert.assertNotNull("Please set your application secret in the constructor", applicationSecret);
+    }
+    
+    @Test
+    public void testNullValues()
+    {
+        try
+        {
+            client.SetImageOptions("http://ca.linkedin.com/pub/theresa-bradshaw/9b/742/820", null, 1024, -1, -1, -1, ImageFormat.JPG, 0, null, BrowserType.STANDARDBROWSER, null);
+            Assert.assertTrue("Null check passed", true);
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An null exception occured, message: " + ex.getMessage());
+        }
     }
 
     @Test

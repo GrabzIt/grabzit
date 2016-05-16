@@ -81,6 +81,10 @@ public class GrabzItClient {
      */
     public void SetAnimationOptions(String url, String customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, boolean reverse, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
+        url = nullCheck(url);
+        customId = nullCheck(customId);
+        customWaterMarkId = nullCheck(customWaterMarkId);        
+                
         this.startDelay = 0;
         this.request = String.format("%stakeanimation.ashx?url=%s&key=%s&width=%s&height=%s&duration=%s&speed=%s&start=%s&customid=%s&fps=%s&repeat=%s&customwatermarkid=%s&reverse=%s&country=%s&quality=%s&callback=",
                                                           BASE_URL, encode(url), applicationKey, width, height, duration, toString(speed),
@@ -149,6 +153,11 @@ public class GrabzItClient {
      */
     public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
+        url = nullCheck(url);
+        customId = nullCheck(customId);
+        targetElement = nullCheck(targetElement);
+        customWaterMarkId = nullCheck(customWaterMarkId);
+        
         this.startDelay = delay;        
         this.request = String.format("%stakepicture.ashx?url=%s&key=%s&width=%s&height=%s&bwidth=%s&bheight=%s&format=%s&customid=%s&delay=%s&target=%s&customwatermarkid=%s&requestmobileversion=%s&country=%s&quality=%s&callback=",
                                                               BASE_URL, encode(url), applicationKey, outputWidth, outputHeight,
@@ -213,6 +222,10 @@ public class GrabzItClient {
      */
     public void SetTableOptions(String url, String customId, int tableNumberToInclude, TableFormat format, boolean includeHeaderNames, boolean includeAllTables, String targetElement, BrowserType requestAs, Country country) throws UnsupportedEncodingException
     {
+        url = nullCheck(url);
+        customId = nullCheck(customId);
+        targetElement = nullCheck(targetElement);
+        
         this.startDelay = 0;        
         this.request = BASE_URL + "taketable.ashx?key=" + encode(applicationKey)+"&url="+encode(url)+"&includeAllTables="+ toInt(includeAllTables)+"&includeHeaderNames="+toInt(includeHeaderNames)+"&format="+format.getValue()+"&tableToInclude="+tableNumberToInclude+"&customid="+encode(customId)+"&target="+encode(targetElement)+"&requestmobileversion="+requestAs.getValue()+"&country="+country.getValue()+"&callback=";
         this.signaturePartOne = applicationSecret+"|"+url+"|";
@@ -281,6 +294,12 @@ public class GrabzItClient {
      */
     public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
+        url = nullCheck(url);
+        customId = nullCheck(customId);
+        title = nullCheck(title);
+        coverURL = nullCheck(coverURL);        
+        customWaterMarkId = nullCheck(customWaterMarkId);
+        
         this.startDelay = delay;
         this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&quality=" + quality + "&callback=";
         this.signaturePartOne = applicationSecret + "|" + url + "|";
@@ -340,6 +359,8 @@ public class GrabzItClient {
      */
     public String Save(String callBackURL) throws Exception
     {
+        callBackURL = nullCheck(callBackURL);
+        
         if (isNullOrEmpty(this.signaturePartOne) && isNullOrEmpty(this.signaturePartTwo) && isNullOrEmpty(this.request))
         {
             throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.PARAMETERMISSINGPARAMETERS);
@@ -479,6 +500,8 @@ public class GrabzItClient {
      */
     public Cookie[] GetCookies(String domain) throws Exception
     {
+        domain = nullCheck(domain);
+        
         String sig = encrypt(String.format("%s|%s", this.applicationSecret, domain));
 
         String url = String.format("%sgetcookies.ashx?domain=%s&key=%s&sig=%s",
@@ -599,6 +622,11 @@ public class GrabzItClient {
             expiresStr = df.format(expires);
         }
         
+        name = nullCheck(name);
+        domain = nullCheck(domain);
+        value = nullCheck(value);
+        path = nullCheck(path);        
+        
         String sig = encrypt(String.format("%s|%s|%s|%s|%s|%s|%s|%s", applicationSecret, name, domain,
                                       value, path, (httponly ? 1 : 0), expiresStr, 0));
         
@@ -624,6 +652,9 @@ public class GrabzItClient {
      */
     public boolean DeleteCookie(String name, String domain) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
+        name = nullCheck(name);
+        domain = nullCheck(domain);
+        
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, name, domain, 1));
 
         String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&delete=1&key=%s&sig=%s",
@@ -651,6 +682,8 @@ public class GrabzItClient {
      */
     public boolean AddWaterMark(String identifier, String path, HorizontalPosition xpos, VerticalPosition ypos) throws UnsupportedEncodingException, NoSuchAlgorithmException, MalformedURLException, IOException, JAXBException, Exception
     {
+        identifier = nullCheck(identifier);
+        
         File fileToUpload = new File(path);
         if(!fileToUpload.exists())
         {
@@ -686,6 +719,8 @@ public class GrabzItClient {
      */
     public boolean DeleteWaterMark(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, Exception
     {
+        identifier = nullCheck(identifier);
+        
         String sig = encrypt(String.format("%s|%s", applicationSecret, identifier));
 
         String url = String.format("%sdeletewatermark.ashx?key=%s&identifier=%s&sig=%s",
@@ -735,6 +770,8 @@ public class GrabzItClient {
 
     private WaterMark[] getWaterMarks(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
+        identifier = nullCheck(identifier);
+        
         String sig =  encrypt(String.format("%s|%s", applicationSecret, identifier));
 
         String url = String.format("%sgetwatermarks.ashx?key=%s&identifier=%s&sig=%s",
@@ -854,6 +891,15 @@ public class GrabzItClient {
         return URLEncoder.encode(value, "UTF-8");
     }
 
+    private String nullCheck(String value)
+    {
+        if (value == null)
+        {
+            return "";
+        }
+        return value;
+    }
+    
     private boolean isNullOrEmpty(String toTest)
     {
         return (toTest == null || toTest.isEmpty());
