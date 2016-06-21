@@ -211,7 +211,7 @@ module GrabzIt
 				status = get_status(id)
 
 				if !status.cached && !status.processing
-					raise GrabzItException.new("The screenshot did not complete with the error: " + status.Message, GrabzItException::RENDERING_ERROR)
+					raise GrabzItException.new("The screenshot did not complete with the error: " + status.message, GrabzItException::RENDERING_ERROR)
 					break
 				elsif status.cached
 					result = get_result(id)
