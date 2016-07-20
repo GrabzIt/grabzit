@@ -11,6 +11,7 @@ package it.grabz.grabzit.enums;
  */
 public enum TableFormat {
     CSV("csv"),
+    JSON("json"),
     XLSX("xlsx");
 
     private String value;
