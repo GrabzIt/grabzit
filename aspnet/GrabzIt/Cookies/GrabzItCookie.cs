@@ -12,43 +12,43 @@ namespace GrabzIt.Cookies
         public string Name
         {
             get;
-            private set;
+            set;
         }
 
         public string Value
         {
             get;
-            private set;
+            set;
         }
 
         public string Domain
         {
             get;
-            private set;
+            set;
         }
 
         public string Path
         {
             get;
-            private set;
+            set;
         }
 
         public string HttpOnly
         {
             get;
-            private set;
+            set;
         }
 
         public string Expires
         {
             get;
-            private set;
+            set;
         }
 
         public string Type
         {
             get;
-            private set;
+            set;
         }
 
         public GrabzItCookie()
