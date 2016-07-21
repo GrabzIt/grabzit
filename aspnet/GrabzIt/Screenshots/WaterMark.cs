@@ -14,25 +14,25 @@ namespace GrabzIt.Screenshots
         public string Identifier
         {
             get;
-            private set;
+            set;
         }
 
         public string Format
         {
             get;
-            private set;
+            set;
         }
 
         public int XPosition
         {
             get;
-            private set;
+            set;
         }
 
         public int YPosition
         {
             get;
-            private set;
+            set;
         }
 
         public WaterMark()

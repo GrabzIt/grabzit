@@ -9,5 +9,6 @@ namespace GrabzIt.COM
             get;
         }
         void Save(string path);
+        string ToString();
     }
 }
