@@ -41,6 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\ErrorCode.cs" />
+    <Compile Include="Enums\ScrapeStatus.cs" />
+    <Compile Include="GrabzItScrapeException.cs" />
+    <Compile Include="GrabzItScrapeClient.cs" />
+    <Compile Include="Net\QuickWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Results\GenericResult.cs" />
+    <Compile Include="Results\GetScrapesResult.cs" />
+    <Compile Include="Results\GrabzItScrape.cs" />
+    <Compile Include="Results\IException.cs" />
     <Compile Include="ScrapeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
