@@ -18,4 +18,6 @@ Next enter the URL of the handler so for instance http://www.example.com/scrape/
 
 Ensure your ASP.NET application has read and write access to the "results" directory.
 
+To see how you can control your scrapes automatically view the index.aspx file in a browser.
+
 More documentation can be found at: http://grabz.it/scraper/api/aspnet/

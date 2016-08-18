@@ -27,7 +27,7 @@ namespace GrabzIt.Scraper
             private set;
         }
 
-        private const string BaseURL = "http://api.grabz.it/services/scraper/";
+        private const string BaseURL = "http://localhost:1313/services/scraper/";
 
         public GrabzItScrapeClient(string applicationKey, string applicationSecret)
         {
@@ -37,10 +37,25 @@ namespace GrabzIt.Scraper
 
         public GrabzItScrape[] GetScrapes()
         {
-            string sig = Encrypt(string.Format("{0}|", ApplicationSecret));
+            return GetScrapes(string.Empty);
+        }
 
-            string url = string.Format("{0}getscrapes.ashx?key={1}&sig={2}",
-                                                      BaseURL, ApplicationKey, sig);
+        public GrabzItScrape GetScrape(string identifier)
+        {
+            GrabzItScrape[] scrapes = GetScrapes(identifier);
+            if (scrapes.Length == 1)
+            {
+                return scrapes[0];
+            }
+            return null;
+        }
+
+        private GrabzItScrape[] GetScrapes(string identifier)
+        {
+            string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
+
+            string url = string.Format("{0}getscrapes.ashx?key={1}&identifier={2}&sig={3}",
+                                                      BaseURL, ApplicationKey, identifier, sig);
 
             GetScrapesResult webResult = Get<GetScrapesResult>(url);
 

@@ -18,4 +18,6 @@ Next enter the URL of the handler.php so for instance http://www.example.com/scr
 
 Ensure your PHP application has read and write access to the "results" directory.
 
+To see how you can control your scrapes automatically call the index.php file in a browser.
+
 More documentation can be found at: http://grabz.it/scraper/api/php/
