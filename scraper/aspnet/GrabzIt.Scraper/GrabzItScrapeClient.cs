@@ -27,7 +27,7 @@ namespace GrabzIt.Scraper
             private set;
         }
 
-        private const string BaseURL = "http://localhost:1313/services/scraper/";
+        private const string BaseURL = "http://api.grabz.it/services/scraper/";
 
         public GrabzItScrapeClient(string applicationKey, string applicationSecret)
         {

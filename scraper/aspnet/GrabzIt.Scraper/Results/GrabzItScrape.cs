@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace GrabzIt.Scraper.Results
 {
     [Serializable]
     public class GrabzItScrape
     {
-        public string Identifier
+        [XmlElement("Identifier")]
+        public string ID
         {
             get;
             set;

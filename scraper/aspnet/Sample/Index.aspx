@@ -24,10 +24,10 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                    <asp:Button id="btnStart" runat="server" OnClick="btnStart_Click" Text="Start" CommandArgument='<%# Eval("Identifier") %>'/>
-                    <asp:Button id="btnStop" runat="server" OnClick="btnStop_Click" Text="Stop" CommandArgument='<%# Eval("Identifier") %>'/>
-                    <asp:Button id="btnEnable" runat="server" OnClick="btnEnable_Click" Text="Enable" CommandArgument='<%# Eval("Identifier") %>'/>
-                    <asp:Button id="btnDisable" runat="server" OnClick="btnDisable_Click" Text="Disable" CommandArgument='<%# Eval("Identifier") %>'/>
+                    <asp:Button id="btnStart" runat="server" OnClick="btnStart_Click" Text="Start" CommandArgument='<%# Eval("ID") %>'/>
+                    <asp:Button id="btnStop" runat="server" OnClick="btnStop_Click" Text="Stop" CommandArgument='<%# Eval("ID") %>'/>
+                    <asp:Button id="btnEnable" runat="server" OnClick="btnEnable_Click" Text="Enable" CommandArgument='<%# Eval("ID") %>'/>
+                    <asp:Button id="btnDisable" runat="server" OnClick="btnDisable_Click" Text="Disable" CommandArgument='<%# Eval("ID") %>'/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

@@ -61,8 +61,8 @@ class GrabzItScrapeClient
 
 		foreach ($obj->Scrapes->Scrape as $scrape)
 		{
-			$grabzitScrape = new GrabzScrape();
-			$grabzitScrape->Identifier = (string)$scrape->Identifier;
+			$grabzitScrape = new GrabzItScrape();
+			$grabzitScrape->ID = (string)$scrape->Identifier;
 			$grabzitScrape->Name = (string)$scrape->Name;
 			$grabzitScrape->Status = (string)$scrape->Status;
 			$grabzitScrape->NextRun = (string)$scrape->NextRun;

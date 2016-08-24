@@ -1,7 +1,7 @@
 <?php
-class GrabzScrape
+class GrabzItScrape
 {
-  public $Identifier;
+  public $ID;
   public $Name;
   public $Status;
   public $NextRun;

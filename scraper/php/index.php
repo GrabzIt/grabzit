@@ -48,7 +48,7 @@ foreach($scrapes as $scrape)
 	echo $scrape->Name;
 	?></td><td><?php
 	echo $scrape->Status;
-	?></td><td><a href="index.php?id=<?php	echo $scrape->id;?>&status=Start">Start</a> <a href="index.php?id=<?php	echo $scrape->id;?>&status=Stop">Stop</a> <a href="index.php?id=<?php	echo $scrape->id;?>&status=Disable">Disable</a> <a href="index.php?id=<?php	echo $scrape->id;?>&status=Enable">Enable</a>
+	?></td><td><a href="index.php?id=<?php echo $scrape->ID;?>&status=Start">Start</a> <a href="index.php?id=<?php echo $scrape->ID;?>&status=Stop">Stop</a> <a href="index.php?id=<?php echo $scrape->ID;?>&status=Disable">Disable</a> <a href="index.php?id=<?php echo $scrape->ID;?>&status=Enable">Enable</a>
 	</td></tr><?php
 }
 ?>
