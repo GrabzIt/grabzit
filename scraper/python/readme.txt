@@ -1,4 +1,4 @@
-GrabzIt Scraper 1.0
+GrabzIt Scraper 1.1
 ===================
 
 This library enables you to process scraped data and integrate it into your own application.
@@ -17,5 +17,7 @@ First create a scrape here: http://grabz.it/scraper/scrapes.aspx On the Export O
 Next enter the URL of the handler.py so for instance http://www.example.com/scrape/handler.py
 
 Ensure your Python application has read and write access to the "results" directory.
+
+To see how you can control your scrapes automatically call the index.py file in a browser.
 
 More documentation can be found at: http://grabz.it/scraper/api/python/

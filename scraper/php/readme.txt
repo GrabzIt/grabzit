@@ -1,4 +1,4 @@
-GrabzIt Scraper 1.0
+GrabzIt Scraper 1.1
 ===================
 
 This library enables you to process scraped data and integrate it into your own application.
