@@ -34,7 +34,7 @@ if (count($_GET) > 0)
 	}
 	else
 	{
-	    ?><p><span style="color:green;font-weight:bold;">Succesfully update scrape</span></p><?php
+	    ?><p><span style="color:green;font-weight:bold;">Succesfully updated scrape</span></p><?php
 	}
 }
 ?>

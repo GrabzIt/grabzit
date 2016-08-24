@@ -76,8 +76,6 @@ class GrabzItScrapeClient
 	/*
 	Sets the status of a scrape.
 
-	This can be useful if a websites functionality is controlled by cookies.
-
 	id - The id of the scrape to set.
 	status - The scrape status to set the scrape to. Options include Start, Stop, Enable and Disable
 
