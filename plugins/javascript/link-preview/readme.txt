@@ -10,7 +10,7 @@ Also ensure the call to:
 	new GrabzItPreview("YOUR APPLICATION KEY");
 
 
-Is at the bottom of the page just below the body tag. 
+Is at the bottom of the page just above the closing body tag. 
 
 To add the preview ability to a link simply add the "grabzit-preview" class to the link. This will then be read automatically and a preview generated. 
 
