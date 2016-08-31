@@ -14,7 +14,7 @@ Is at the bottom of the page just above the closing body tag.
 
 To add the preview ability to a link simply add the "grabzit-preview" class to the link. This will then be read automatically and a preview generated. 
 
-You do not make any other configurations than that, however you can specify all of the general, image and animated GIF parameters found here: 
+You do not have to set any other configurations options than that, however you can specify all of the general, image and animated GIF parameters found here: 
 http://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 256 x 200 you could do 
 this like so:
 
