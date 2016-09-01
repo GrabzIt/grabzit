@@ -47,7 +47,7 @@ The options parameter takes all of the parameters found here (excluding the URL 
 
 	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', 'div_id', {"width": 250, "height": 200});
 	
-If you need to test to see if the GrabzIt is currently being accessed by GrabzIt's screenshot servers then use the isRecording method. This could be useful to disable unwanted page features etc.
+If you need to test to see if the target webpage is currently being accessed by GrabzIt's screenshot servers then use the isRecording method. This could be useful to disable unwanted page features etc.
 
 	if (GrabzItWebRecorder.isRecording())
 	{
