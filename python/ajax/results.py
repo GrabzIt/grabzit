@@ -12,10 +12,10 @@ print ("Content-Type: application/json\n\n")
 
 results = []
 
-for infile in glob.glob("."  + os.sep + "results" + os.sep + "*.*"):
+for infile in glob.glob(".."  + os.sep + "results" + os.sep + "*.*"):
     if ".txt" in infile:
-    	continue
+        continue
     
     results.append(infile.replace("." + os.sep, "").replace(os.sep, "/"));
     
-print (json.dumps(results));
+print (json.dumps(results))
