@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='GrabzIt',
-      version='2.2.2.4',
+      version='2.3.0',
       summary='Capture websites as screenshots, CSVs and animated GIFs',
       author='GrabzIt',
       url='http://grabz.it/api/python/',

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'grabzit'
-  s.version     = '2.2.2'
+  s.version     = '2.3.0'
   s.date        = Date.today.to_s
   s.summary     = "GrabzIt Ruby Client"
   s.description = "Use GrabzIt to take PDF or image screenshots of websites. These screenshots have highly customizable options include altering quality, delay, size, browser type, geographic location and much more. Additionally GrabzIt can even convert HTML tables on the web into a CSV or Excel spreadsheet. As well as enabling online video's to be converted into animated GIF's."
