@@ -4,9 +4,9 @@ import os
 import cgi
 import cgitb
 try:
-	from configparser import SafeConfigParser
+    from configparser import SafeConfigParser
 except ImportError:
-	from ConfigParser import SafeConfigParser
+    from ConfigParser import SafeConfigParser
 	
 cgitb.enable()
 
@@ -38,5 +38,5 @@ if result != None:
 	fo = open("results" + os.sep + filename, "wb")
 	fo.write(result)
 	fo.close()
-	
+    
 print ("Content-type: text/html\n\n")
