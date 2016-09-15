@@ -3,7 +3,7 @@
       <groupId>it.grabz.grabzit</groupId>
       <artifactId>grabzit</artifactId>
       <name>GrabzIt client</name>
-      <version>2.3.0.0</version>
+      <version>2.3.0</version>
       <description>GrabzIt enables web pages to be converted into a image or PDF. Alternatively HTML tables can be extracted from the page as a CSV or Excel spreadsheet. Additionally GrabzIt allows you to convert online videos into animated GIF's.</description>
       <url>http://grabz.it</url>
 <packaging>jar</packaging>     
