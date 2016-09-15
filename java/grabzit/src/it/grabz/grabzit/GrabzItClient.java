@@ -294,16 +294,45 @@ public class GrabzItClient {
      */
     public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
     {
+        SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, "", customWaterMarkId, quality, country);
+    }    
+    
+    /**
+     * This method sets the parameters required to convert a web page into a PDF.
+     * @param url The URL that the should be converted into a PDF
+     * @param customId A custom identifier that you can pass through to the webs ervice. This will be returned with the callback URL you have specified
+     * @param includeBackground If true the background of the web page should be included in the screenshot
+     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'
+     * @param orientation The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
+     * @param includeLinks True if links should be included in the PDF
+     * @param includeOutline True if the PDF outline should be included
+     * @param title Provide a title to the PDF document
+     * @param coverURL The URL of a web page that should be used as a cover page for the PDF
+     * @param marginTop The margin that should appear at the top of the PDF document page
+     * @param marginLeft The margin that should appear at the left of the PDF document page
+     * @param marginBottom The margin that should appear at the bottom of the PDF document page
+     * @param marginRight The margin that should appear at the right of the PDF document
+     * @param delay The number of milliseconds to wait before taking the screenshot
+     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
+     * @param templateId Add a PDF template ID that specifies the header and footer of the PDF document
+     * @param customWaterMarkId Add a custom watermark to each page of the PDF document
+     * @param quality The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+     * @param country Request the screenshot from different countries: Default, UK or US
+     * @throws UnsupportedEncodingException
+     */
+    public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String templateId, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
+    {
         url = nullCheck(url);
         customId = nullCheck(customId);
         title = nullCheck(title);
         coverURL = nullCheck(coverURL);        
         customWaterMarkId = nullCheck(customWaterMarkId);
+        templateId = nullCheck(templateId);
         
         this.startDelay = delay;
-        this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&quality=" + quality + "&callback=";
+        this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&templateid=" + encode(templateId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&quality=" + quality + "&callback=";
         this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality;
+        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality + "|" + templateId;
     }
 
    /**

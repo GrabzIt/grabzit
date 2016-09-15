@@ -2,6 +2,14 @@
 
 import os
 import cgi
+import cgitb
+try:
+	from configparser import SafeConfigParser
+except ImportError:
+	from ConfigParser import SafeConfigParser
+	
+cgitb.enable()
+
 from GrabzIt import GrabzItClient
 try:
 	from configparser import SafeConfigParser

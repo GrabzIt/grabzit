@@ -318,6 +318,7 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
         'marginRight': 10,
         'delay': '',
         'requestAs': 0,
+        'templateId': '',
         'customWaterMarkId': '',
         'quality': -1,
         'country': ''
@@ -349,10 +350,10 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
         'pagesize':pagesize,
         'orientation':orientation,
         'customid':context['customId'],
+        'templateid':context['templateId'],
         'customwatermarkid':context['customWaterMarkId'],
         'delay':context['delay'],
         'target':context['targetElement'],
-        'customwatermarkid':context['customWaterMarkId'],
         'includelinks':_toInt(context['includeLinks']),
         'includeoutline':_toInt(context['includeOutline']),
         'title':context['title'],
@@ -372,7 +373,7 @@ GrabzItClient.prototype.set_pdf_options = function (url, options) {
     this.signaturePartTwo = '|' + context['customId'] + '|' + _toInt(context['includeBackground']) + '|' + pagesize + '|' + orientation + '|' + context['customWaterMarkId']
      + '|' + _toInt(context['includeLinks']) + '|' + _toInt(context['includeOutline']) + '|' + context['title'] + '|' + context['coverUrl'] + '|' + parseInt(context['marginTop'])
      + '|' +  parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
-     + '|' +  parseInt(context['requestAs'])  + '|' + context['country'] + '|' + context['quality'];
+     + '|' +  parseInt(context['requestAs'])  + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'];
 };
 
 /*

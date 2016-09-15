@@ -314,12 +314,39 @@ namespace GrabzIt
         /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
         public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId, int quality, Country country)
         {
+            SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, string.Empty, customWaterMarkId, quality, country);
+        }
+
+        /// <summary>
+        /// This method sets the parameters required to convert a web page into a PDF.
+        /// </summary>
+        /// <param name="url">The URL that the should be converted into a pdf</param>
+        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
+        /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
+        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
+        /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
+        /// <param name="includeLinks">True if links should be included in the PDF</param>
+        /// <param name="includeOutline">True if the PDF outline should be included</param>
+        /// <param name="title">Provide a title to the PDF document</param>
+        /// <param name="coverURL">The URL of a web page that should be used as a cover page for the PDF</param>
+        /// <param name="marginTop">The margin that should appear at the top of the PDF document page</param>
+        /// <param name="marginLeft">The margin that should appear at the left of the PDF document page</param>
+        /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
+        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
+        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
+        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
+        /// <param name="templateId">Add a PDF template ID that specifies the header and footer of the PDF document</param>
+        /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
+        /// <param name="quality">The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</param>        
+        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
+        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string templateId, string customWaterMarkId, int quality, Country country)
+        {
             lock (thisLock)
             {
                 request.StartDelay = delay;
-                request.Request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&quality=" + quality + "&callback=";
+                request.Request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&templateid=" + HttpUtility.UrlEncode(templateId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&quality=" + quality + "&callback=";
                 request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
-                request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize.ToString().ToUpper() + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country) + "|" + quality;
+                request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize.ToString().ToUpper() + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country) + "|" + quality + "|" + templateId;
             }
         }
 

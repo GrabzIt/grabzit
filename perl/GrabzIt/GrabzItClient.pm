@@ -161,13 +161,14 @@ sub SetTableOptions($;$$$$$$$$)
 #marginRight - The margin that should appear at the right of the PDF document
 #delay - The number of milliseconds to wait before taking the screenshot
 #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-#customWaterMarkId - add a custom watermark to each page of the PDF document
+#templateId - Add a PDF template ID that specifies the header and footer of the PDF document
+#customWaterMarkId - Add a custom watermark to each page of the PDF document
 #quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
 #
-sub SetPDFOptions($;$$$$$$$$$$$$$$$$)
+sub SetPDFOptions($;$$$$$$$$$$$$$$$$$)
 {
-	my ($self, $url, $customId, $includeBackground, $pagesize, $orientation, $includeLinks, $includeOutline, $title, $coverURL, $marginTop, $marginLeft, $marginBottom, $marginRight, $delay, $requestAs, $customWaterMarkId, $quality, $country) = @_;	
+	my ($self, $url, $customId, $includeBackground, $pagesize, $orientation, $includeLinks, $includeOutline, $title, $coverURL, $marginTop, $marginLeft, $marginBottom, $marginRight, $delay, $requestAs, $templateId, $customWaterMarkId, $quality, $country) = @_;	
 	
 	$tableNumberToInclude ||= 1;
 	$customId ||= '';
@@ -187,15 +188,16 @@ sub SetPDFOptions($;$$$$$$$$$$$$$$$$)
 	$customWaterMarkId ||= '';
 	$quality ||= -1;
 	$country ||= '';
+	$templateId ||= '';
 	
 	$pagesize = uc($pagesize);
 	$orientation = ucfirst($orientation);
 
 	$self->{startDelay} = $delay;
-	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&quality=".$quality."&callback=";
+	$self->{request} = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .uri_escape($self->{_applicationKey})."&url=".uri_escape($url)."&background=".$includeBackground ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".uri_escape($customId)."&templateid=".uri_escape($templateId)."&customwatermarkid=".uri_escape($customWaterMarkId)."&includelinks=".$includeLinks."&includeoutline=".$includeOutline."&title=".uri_escape($title)."&coverurl=".uri_escape($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".$requestAs."&country=".uri_escape($country)."&quality=".$quality."&callback=";
 
 	$self->{signaturePartOne} = $self->{_applicationSecret}."|".$url."|";
-	$self->{signaturePartTwo} = "|".$customId ."|".$includeBackground ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".$includeLinks."|".$includeOutline."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".$requestAs."|".$country."|".$quality;
+	$self->{signaturePartTwo} = "|".$customId ."|".$includeBackground ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".$includeLinks."|".$includeOutline."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".$requestAs."|".$country."|".$quality."|".$templateId;
 }
 
 #

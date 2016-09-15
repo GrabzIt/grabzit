@@ -140,11 +140,12 @@ module GrabzIt
 		# @param marginRight [Integer, 10] the margin that should appear at the right of the PDF document
 		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
 		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
+		# @param templateId [String, nil] add a PDF template ID that specifies the header and footer of the PDF document
 		# @param customWaterMarkId [String, nil] add a custom watermark to each page of the PDF document
 		# @param quality [Integer, -1] the quality of the PDF where 0 is poor and 100 excellent
 		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"				
 		# @return [void]
-		def set_pdf_options(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, customWaterMarkId = nil, quality = -1, country = nil)
+		def set_pdf_options(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, templateId = nil, customWaterMarkId = nil, quality = -1, country = nil)
 			pagesize = nil_check(pagesize).upcase
 			$orientation = nil_check(orientation).capitalize
 			
@@ -154,10 +155,10 @@ module GrabzIt
 				@@startDelay = delay
 			end	
 
-			@@request = WebServicesBaseURL + "takepdf.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&background="+b_to_str(includeBackground)+"&pagesize="+pagesize+"&orientation="+orientation+"&customid="+CGI.escape(nil_check(customId))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&includelinks="+b_to_str(includeLinks)+"&includeoutline="+b_to_str(includeOutline)+"&title="+CGI.escape(nil_check(title))+"&coverurl="+CGI.escape(nil_check(coverURL))+"&mleft="+nil_int_check(marginLeft)+"&mright="+nil_int_check(marginRight)+"&mtop="+nil_int_check(marginTop)+"&mbottom="+nil_int_check(marginBottom)+"&delay="+nil_int_check(delay)+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="
+			@@request = WebServicesBaseURL + "takepdf.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&background="+b_to_str(includeBackground)+"&pagesize="+pagesize+"&orientation="+orientation+"&customid="+CGI.escape(nil_check(customId))+"&templateid="+CGI.escape(nil_check(templateId))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&includelinks="+b_to_str(includeLinks)+"&includeoutline="+b_to_str(includeOutline)+"&title="+CGI.escape(nil_check(title))+"&coverurl="+CGI.escape(nil_check(coverURL))+"&mleft="+nil_int_check(marginLeft)+"&mright="+nil_int_check(marginRight)+"&mtop="+nil_int_check(marginTop)+"&mbottom="+nil_int_check(marginBottom)+"&delay="+nil_int_check(delay)+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="
 
 			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
-			@@signaturePartTwo = "|"+nil_check(customId)+"|"+b_to_str(includeBackground)+"|"+pagesize +"|"+orientation+"|"+nil_check(customWaterMarkId)+"|"+b_to_str(includeLinks)+"|"+b_to_str(includeOutline)+"|"+nil_check(title)+"|"+nil_check(coverURL)+"|"+nil_int_check(marginTop)+"|"+nil_int_check(marginLeft)+"|"+nil_int_check(marginBottom)+"|"+nil_int_check(marginRight)+"|"+nil_int_check(delay)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)+"|"+nil_int_check(quality)
+			@@signaturePartTwo = "|"+nil_check(customId)+"|"+b_to_str(includeBackground)+"|"+pagesize +"|"+orientation+"|"+nil_check(customWaterMarkId)+"|"+b_to_str(includeLinks)+"|"+b_to_str(includeOutline)+"|"+nil_check(title)+"|"+nil_check(coverURL)+"|"+nil_int_check(marginTop)+"|"+nil_int_check(marginLeft)+"|"+nil_int_check(marginBottom)+"|"+nil_int_check(marginRight)+"|"+nil_int_check(delay)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)+"|"+nil_int_check(quality)+"|"+nil_check(templateId)
 
 			return nil		
 		end
