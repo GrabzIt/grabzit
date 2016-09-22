@@ -58,7 +58,7 @@ if (count($_POST) > 0)
 <?php
 if ($grabzItHandlerUrl == "URL OF YOUR handler.php FILE (http://www.example.com/grabzit/handler.php)")
 {
-        ?><p><span class="error">You must set your call back to a valid public URL.</span></p><?php
+        ?><p><span class="error">Please update the $grabzItHandlerUrl variable found in config.php file to match the URL of the handler.php file found in this demo app.</span></p><?php
 }
 if (!is_writable("results"))
 {
