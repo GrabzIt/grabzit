@@ -1,0 +1,17 @@
+<style>
+.grabzit-pdf-save-progress
+{
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+}
+
+.grabzit-pdf-save
+{
+}
+</style>
+<script type="text/javascript">
+function GrabzIt(a){return new function(a){this.key=a,this.Create=function(a,b){var c="//";"https"!=window.location.protocol&&"http"!=window.location.protocol&&(c="http://");var d=c+"api.grabz.it/services/javascript.ashx?key="+encodeURIComponent(this.key)+"&url="+encodeURIComponent(a);for(var e in b){if("format"!=e&&"cache"!=e&&"customWaterMarkId"!=e&&"quality"!=e&&"country"!=e&&"filename"!=e&&"errorid"!=e&&"errorclass"!=e&&"onfinish"!=e&&"onerror"!=e&&"delay"!=e&&"bwidth"!=e&&"bheight"!=e&&"height"!=e&&"width"!=e&&"target"!=e&&"requestas"!=e&&"download"!=e&&"suppresserrors"!=e&&"displayid"!=e&&"displayclass"!=e&&"background"!=e&&"pagesize"!=e&&"orientation"!=e&&"includelinks"!=e&&"includeoutline"!=e&&"title"!=e&&"coverurl"!=e&&"mtop"!=e&&"mleft"!=e&&"mbottom"!=e&&"mright"!=e&&"tabletoinclude"!=e&&"includeheadernames"!=e&&"includealltables"!=e&&"start"!=e&&"duration"!=e&&"speed"!=e&&"fps"!=e&&"repeat"!=e&&"reverse"!=e)throw"Option "+e+" not recognized!";var f=b[e];null!=f&&(d+="&"+e+"="+encodeURIComponent(f))}var g=document.createElement("script");return g.src=d,g},this.AddTo=function(a,b,c){var d=null;if("string"==typeof a||a instanceof String){if(d=document.getElementById(a),null==d)throw"An element with the id "+a+" was not found"}else 1===a.nodeType&&(d=a);if(null==d)throw"No valid element was provided to attach the screenshot to";d.appendChild(this.Create(b,c))}}(a)}function GrabzItSaveAsPDF(a,b){this.options=b,this.key=a,this.pluuginId=null,this.clicked=function(c){if(null==c||c.className.indexOf("grabzit-pdf-save-progress")!==-1)return!1;c.className+=" grabzit-pdf-save-progress";var d=c.getAttribute("grabzit-id"),e=null;null!=c.getAttribute("grabzit-url")&&(e=c.getAttribute("grabzit-url")),null==e&&(e=location.href);var f=null;d||(d=Math.floor(Math.random()*(1e9+1)),c.setAttribute("grabzit-id",d),f="grabzit"+d,window[f]=function(){for(var a=document.getElementsByClassName("grabzit-pdf-save-progress"),b=0;b<a.length;b++){var c=a[b];c.getAttribute("grabzit-id")==d&&(c.className=c.className.replace(/\b grabzit-pdf-save-progress\b/,""))}}),f="grabzit"+d;var g=JSON.parse(JSON.stringify(b));g.onfinish=f,g.onerror=f;try{GrabzIt(a).AddTo(document.documentElement,e,g)}catch(a){alert(a)}return!1},this._getJSFunction=function(a){return null!=a?a+";":""};(function(a){a.pluginId="grabzItSaveToPDF"+Math.floor(Math.random()*(1e9+1)),null==b&&(b={},b.filename=document.title+".pdf"),null!=b&&(b.format="pdf");for(var c=document.getElementsByClassName("grabzit-pdf-save"),d=0;d<c.length;d++){var e=c[d],f="";null!=e.getAttribute("onclick")&&(f=e.getAttribute("onclick")),e.setAttribute("onclick",a._getJSFunction(f+"return "+a.pluginId+".clicked(this)"))}window[a.pluginId]=a})(this)}
+
+new GrabzItSaveAsPDF("YOUR APPLICAYION KEY");
+</script>
