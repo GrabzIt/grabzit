@@ -1,20 +1,26 @@
 <?php
 include_once("GrabzItCookie.class.php");
 include_once("GrabzItStatus.class.php");
+include_once("GrabzItRequest.class.php");
+include_once("GrabzItPDFOptions.class.php");
+include_once("GrabzItImageOptions.class.php");
+include_once("GrabzItAnimationOptions.class.php");
+include_once("GrabzItTableOptions.class.php");
 include_once("GrabzItWaterMark.class.php");
 include_once("GrabzItException.class.php");
 
 class GrabzItClient
 {
-	const WebServicesBaseURL = "http://api.grabz.it/services/";
+    const WebServicesBaseURL_GET = "http://api.grabz.it/services/";
+	const WebServicesBaseURL_POST = "http://grabz.it/services/";
+	const TakePicture = "takepicture.ashx";
+	const TakeTable = "taketable.ashx";
+	const TakePDF = "takepdf.ashx";
 	const TrueString = "True";
 
 	private $applicationKey;
 	private $applicationSecret;
-	private $signaturePartOne;
-	private $signaturePartTwo;
 	private $request;
-	private $startDelay;
 	private $connectionTimeout = 600;
 
 	public function __construct($applicationKey, $applicationSecret)
@@ -48,125 +54,165 @@ class GrabzItClient
 		return $this->applicationSecret;
 	}
 
-	#
-	# This method sets the parameters required to turn a online video into a animated GIF
-	#
-	# url - The URL of the online video
-	# customId - A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
-	# width - The width of the resulting animated GIF in pixels
-	# height - The height of the resulting animated GIF in pixels
-	# start - The starting position of the video that should be converted into a animated GIF
-	# duration - The length in seconds of the video that should be converted into a animated GIF
-	# speed - The speed of the animated GIF from 0.2 to 10 times the original speed
-	# framesPerSecond - The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
-	# repeat - The number of times to loop the animated GIF. If 0 it will loop forever
-	# reverse - If true the frames of the animated GIF are reversed
-	# customWaterMarkId - Add a custom watermark to the animated GIF
-	# quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-	# country - Request the screenshot from different countries: Default, UK or US
-	#
-	public function SetAnimationOptions($url, $customId = null, $width = null, $height = null, $start = null, $duration = null, $speed = null, $framesPerSecond = null, $repeat = null, $reverse = false, $customWaterMarkId = null, $quality = -1, $country = null)
+	/*
+	This method specifies the URL of the online video that should be converted into a animated GIF.
+
+	url - The URL to convert into a animated GIF.
+	options - A instance of the GrabzItAnimationOptions class that defines any special parameters to use when creating the animated GIF.
+	*/
+	public function URLToAnimation($url, $options = null)
 	{
-		$this->startDelay = 0;
-		$this->request = GrabzItClient::WebServicesBaseURL . "takeanimation.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&duration=".$duration."&speed=".$speed."&start=".$start."&customid=".urlencode($customId)."&fps=".$framesPerSecond."&repeat=".$repeat."&customwatermarkid=".urlencode($customWaterMarkId)."&reverse=".intval($reverse)."&country=".urlencode($country)."&quality=".$quality."&callback=";
-		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$height."|".$width."|".$customId."|".$framesPerSecond."|".$speed."|".$duration."|".$repeat."|".intval($reverse)."|".$start."|".$customWaterMarkId."|".$country."|".$quality;
+		if ($options == null)
+		{
+			$options = new GrabzItAnimationOptions();			
+		}		
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_GET . "takeanimation.ashx", false, $options, $url);
 	}
 
 	/*
-	This method sets the parameters required to take a screenshot of a web page.
+	This method specifies the URL that should be converted into a image screenshot.
 
-	url - The URL that the screenshot should be made of
-	browserWidth - The width of the browser in pixels
-	browserHeight - The height of the browser in pixels
-	outputHeight - The height of the resulting thumbnail in pixels
-	outputWidth - The width of the resulting thumbnail in pixels
-	customId - A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.
-	format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
-	delay - The number of milliseconds to wait before taking the screenshot
-	targetElement - The id of the only HTML element in the web page to turn into a screenshot
-	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-	customWaterMarkId - add a custom watermark to the image
-	quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
-	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
+	url - The URL to capture as a screenshot.
+	options - A instance of the GrabzItImageOptions class that defines any special parameters to use when creating the screenshot.
 	*/
-	public function SetImageOptions($url, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null, $requestAs = 0, $customWaterMarkId = null, $quality = -1, $country = null)
+	public function URLToImage($url, $options = null)
 	{
-		if ($delay == null)
+		if ($options == null)
 		{
-			$this->startDelay = 0;
-		}
-		else
-		{
-			$this->startDelay = $delay;
-		}
-		$this->request = GrabzItClient::WebServicesBaseURL . "takepicture.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&width=".$width."&height=".$height."&format=".$format."&bwidth=".$browserWidth."&bheight=".$browserHeight."&customid=".urlencode($customId)."&delay=".$delay."&target=".urlencode($targetElement)."&customwatermarkid=".urlencode($customWaterMarkId)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&quality=".$quality."&callback=";
-		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$format."|".$height."|".$width."|".$browserHeight."|".$browserWidth."|".$customId."|".$delay."|".$targetElement."|".$customWaterMarkId."|".intval($requestAs)."|".$country."|".$quality;
+			$options = new GrabzItImageOptions();			
+		}		
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_GET . GrabzItClient::TakePicture, false, $options, $url);
 	}
 
 	/*
-	This method sets the parameters required to extract all tables from a web page.
+	This method specifies the HTML that should be converted into a image screenshot.
 
-	url - The URL that the should be used to extract tables
-	format - The format the tableshould be in: csv, xlsx
-	customId - A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
-	includeHeaderNames - If true header names will be included in the table
-	includeAllTables - If true all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet. Only available with the XLSX format.
-	targetElement - The id of the only HTML element in the web page that should be used to extract tables from
-	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
-	*/
-	public function SetTableOptions($url, $customId = null, $tableNumberToInclude = 1, $format = 'csv', $includeHeaderNames = true, $includeAllTables = false, $targetElement = null, $requestAs = 0, $country = null)
+	html - The HTML to convert into a screenshot.
+	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the screenshot.
+	*/	
+	public function HTMLToImage($html, $options = null)
 	{
-		$this->startDelay = 0;
-		$this->request = GrabzItClient::WebServicesBaseURL . "taketable.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&includeAllTables=".intval($includeAllTables)."&includeHeaderNames=".intval($includeHeaderNames) ."&format=".$format."&tableToInclude=".$tableNumberToInclude."&customid=".urlencode($customId)."&target=".urlencode($targetElement)."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&callback=";
-		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$customId."|".$tableNumberToInclude ."|".intval($includeAllTables)."|".intval($includeHeaderNames)."|".$targetElement."|".$format."|".intval($requestAs)."|".$country;
+		if ($options == null)
+		{
+			$options = new GrabzItImageOptions();			
+		}		
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_POST . GrabzItClient::TakePicture, true, $options, $html);
 	}
 
 	/*
-	This method sets the parameters required to convert a web page into a PDF.
+	This method specifies a HTML file that should be converted into a image screenshot.
 
-	url - The URL that the should be converted into a pdf
-	customId - A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
-	includeBackground - If true the background of the web page should be included in the screenshot
-	pagesize - The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
-	orientation - The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-	includeLinks - True if links should be included in the PDF
-	includeOutline - True if the PDF outline should be included
-	title - Provide a title to the PDF document
-	coverURL - The URL of a web page that should be used as a cover page for the PDF
-	marginTop - The margin that should appear at the top of the PDF document page
-	marginLeft - The margin that should appear at the left of the PDF document page
-	marginBottom - The margin that should appear at the bottom of the PDF document page
-	marginRight - The margin that should appear at the right of the PDF document
-	delay - The number of milliseconds to wait before taking the screenshot
-	requestAs - Request screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-	templateId - Add a PDF template ID that specifies the header and footer of the PDF document
-	customWaterMarkId - add a custom watermark to the image
-	quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-	country - Request the screenshot from different countries: Default = "", UK = "UK", US = "US"
-	*/
-	public function SetPDFOptions($url, $customId = null, $includeBackground = true, $pagesize = 'A4', $orientation = 'Portrait', $includeLinks = true, $includeOutline = false, $title = null, $coverURL = null, $marginTop = 10, $marginLeft = 10, $marginBottom = 10, $marginRight = 10, $delay = null, $requestAs = 0, $templateId = null, $customWaterMarkId = null, $quality = -1, $country = null)
+	path - The file path of a HTML file to convert into a screenshot.
+	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the screenshot.
+	*/		
+	public function FileToImage($path, $options = null)
 	{
-		if ($delay == null)
+		if (!file_exists($path))
 		{
-			$this->startDelay = 0;
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
 		}
-		else
+		
+		$this->HTMLToImage(file_get_contents($path), $options);
+	}	
+
+	/*
+	This method specifies the URL that the HTML tables should be extracted from.
+
+	url - The URL to extract HTML tables from.
+	options - A instance of the GrabzItTableOptions class that defines any special parameters to use when converting the HTML table.	
+	*/
+	public function URLToTable($url, $options = null)
+	{
+		if ($options == null)
 		{
-			$this->startDelay = $delay;
-		}
+			$options = new GrabzItTableOptions();			
+		}		
 
-		$pagesize = strtoupper($pagesize);
-		$orientation = ucfirst($orientation);
-
-		$this->request = GrabzItClient::WebServicesBaseURL . "takepdf.ashx?key=" .urlencode($this->applicationKey)."&url=".urlencode($url)."&background=".intval($includeBackground) ."&pagesize=".$pagesize."&orientation=".$orientation."&customid=".urlencode($customId)."&templateid=".urlencode($templateId)."&customwatermarkid=".urlencode($customWaterMarkId)."&includelinks=".intval($includeLinks)."&includeoutline=".intval($includeOutline)."&title=".urlencode($title)."&coverurl=".urlencode($coverURL)."&mleft=".$marginLeft."&mright=".$marginRight."&mtop=".$marginTop."&mbottom=".$marginBottom."&delay=".$delay."&requestmobileversion=".intval($requestAs)."&country=".urlencode($country)."&quality=".$quality."&callback=";
-
-		$this->signaturePartOne = $this->applicationSecret."|".$url."|";
-		$this->signaturePartTwo = "|".$customId ."|".intval($includeBackground) ."|".$pagesize ."|".$orientation."|".$customWaterMarkId."|".intval($includeLinks)."|".intval($includeOutline)."|".$title."|".$coverURL."|".$marginTop."|".$marginLeft."|".$marginBottom."|".$marginRight."|".$delay."|".intval($requestAs)."|".$country."|".$quality."|".$templateId;
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_GET . GrabzItClient::TakeTable, false, $options, $url);
 	}
+	
+	/*
+	This method specifies the HTML that the HTML tables should be extracted from.
+
+	html - The HTML to extract HTML tables from.
+	options - A instance of the GrabzItTableOptions class that defines any special parameters to use when converting the HTML table.	
+	*/
+	public function HTMLToTable($html, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItTableOptions();			
+		}		
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_POST . GrabzItClient::TakeTable, true, $options, $html);
+	}	
+	
+	/*
+	This method specifies a HTML file that the HTML tables should be extracted from.
+
+	path - The file path of a HTML file to extract HTML tables from.
+	options - A instance of the GrabzItTableOptions class that defines any special parameters to use when converting the HTML table.
+	*/	
+	public function FileToTable($path, $options = null)
+	{
+		if (!file_exists($path))
+		{
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
+		}
+		
+		$this->HTMLToTable(file_get_contents($path), $options);
+	}	
+
+	/*
+	This method specifies the URL that should be converted into a PDF.
+
+	url - The URL to capture as a PDF.
+	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the PDF.
+	*/
+	public function URLToPDF($url, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItPDFOptions();			
+		}		
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_GET . GrabzItClient::TakePDF, false, $options, $url);
+	}
+
+	/*
+	This method specifies the HTML that should be converted into a PDF.
+
+	html - The HTML to convert into a PDF.
+	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the PDF.
+	*/	
+	public function HTMLToPDF($html, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItPDFOptions();			
+		}
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_POST . GrabzItClient::TakePDF, true, $options, $html);
+	}
+
+	/*
+	This method specifies a HTML file that should be converted into a PDF.
+
+	path - The file path of a HTML file to convert into a PDF.
+	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the PDF.
+	*/	
+	public function FileToPDF($path, $options = null)
+	{
+		if (!file_exists($path))
+		{
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
+		}
+		
+		$this->HTMLToPDF(file_get_contents($path), $options);
+	}	
 
 	/*
 	This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the GetResult method.
@@ -175,16 +221,22 @@ class GrabzItClient
 	*/
 	public function Save($callBackURL = null)
 	{
-		if (empty($this->signaturePartOne) && empty($this->signaturePartTwo) && empty($this->request))
+		if (empty($this->signaturePartOne) && empty($this->signaturePartTwo) && $this->request == null)
 		{
 			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
 
-		$sig =  $this->encode($this->signaturePartOne.$callBackURL.$this->signaturePartTwo);
-		$currentRequest = $this->request;
+		$sig =  $this->encode($this->request->getOptions()->_getSignatureString($this->applicationSecret, $callBackURL, $this->request->getTargetUrl()));
 
-		$currentRequest .= urlencode($callBackURL)."&sig=".$sig;
-		$obj = $this->getResultObject($this->Get($currentRequest));
+		$obj = null;
+		if (!$this->request->isPost())
+		{
+			$obj = $this->getResultObject($this->Get($this->request->getUrl().'?'.http_build_query($this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'url', $this->request->getData()))));
+		}
+		else
+		{
+			$obj = $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', $this->request->getData())));
+		}
 
 		return $obj->ID;
 	}
@@ -208,7 +260,7 @@ class GrabzItClient
 		}
 
 		//Wait for screenshot to be possibly ready
-		usleep((3000 + $this->startDelay) * 1000);
+		usleep((3000 + $this->request->getOptions()->_getStartDelay()) * 1000);
 
 		//Wait for it to be ready.
 		while(true)
@@ -258,7 +310,7 @@ class GrabzItClient
 			return null;
 		}
 
-		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getstatus.ashx?id=" . $id);
+		$result = $this->Get(GrabzItClient::WebServicesBaseURL_GET . "getstatus.ashx?id=" . $id);
 
 		$obj = simplexml_load_string($result);
 
@@ -285,7 +337,7 @@ class GrabzItClient
 			return null;
 		}
 
-		$result = $this->Get(GrabzItClient::WebServicesBaseURL . "getfile.ashx?id=" . $id);
+		$result = $this->Get(GrabzItClient::WebServicesBaseURL_GET . "getfile.ashx?id=" . $id);
 
 		if (empty($result))
 		{
@@ -308,7 +360,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get(GrabzItClient::WebServicesBaseURL . "getcookies.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get(GrabzItClient::WebServicesBaseURL_GET . "getcookies.ashx?" . $qs));
 
 		$result = array();
 
@@ -350,7 +402,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".urlencode($expires)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs));
+		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL_GET . "setcookie.ashx?" . $qs));
 	}
 
 	/*
@@ -367,7 +419,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
 
-		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL . "setcookie.ashx?" . $qs));
+		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL_GET . "setcookie.ashx?" . $qs));
 	}
 
 	/*
@@ -411,7 +463,7 @@ class GrabzItClient
 				"Content-Disposition: form-data; name=\"ypos\"\r\n\r\n".
 				intval($ypos) . "\r\n";
 
-				$content .= "--".$boundary."\r\n".
+		$content .= "--".$boundary."\r\n".
 				"Content-Disposition: form-data; name=\"sig\"\r\n\r\n".
 				$sig. "\r\n";
 
@@ -450,7 +502,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL . "deletewatermark.ashx?" . $qs));
+		return $this->isSuccessful($this->Get(GrabzItClient::WebServicesBaseURL_GET . "deletewatermark.ashx?" . $qs));
 	}
 
 	/*
@@ -488,7 +540,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get(GrabzItClient::WebServicesBaseURL . "getwatermarks.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get(GrabzItClient::WebServicesBaseURL_GET . "getwatermarks.ashx?" . $qs));
 
 		$result = array();
 
@@ -504,32 +556,6 @@ class GrabzItClient
 		}
 
 		return $result;
-	}
-
-	/*
-	DEPRECATED - Use GetResult method instead
-	*/
-	public function GetPicture($id)
-	{
-		return $this->GetResult($id);
-	}
-
-	/*
-	DEPRECATED - Use the SetImageOptions and SaveTo methods instead
-	*/
-	public function SavePicture($url, $saveToFile, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
-	{
-		$this->SetImageOptions($url, '', $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
-		return $this->SaveTo($saveToFile);
-	}
-
-	/*
-	DEPRECATED - Use SetImageOptions and Save method instead
-	*/
-	public function TakePicture($url, $callback = null, $customId = null, $browserWidth = null, $browserHeight = null, $width = null, $height = null, $format = null, $delay = null, $targetElement = null)
-	{
-		$this->SetImageOptions($url, $customId, $browserWidth, $browserHeight, $width, $height, $format, $delay, $targetElement);
-		return $this->Save($callback);
 	}
 
 	private function isSuccessful($result)
@@ -553,6 +579,56 @@ class GrabzItClient
 	private function encode($text)
 	{
 		return md5(mb_convert_encoding($text, "ASCII", mb_detect_encoding($text)));
+	}
+
+	private function Post($url, $parameters)
+	{
+		if (ini_get('allow_url_fopen'))
+		{
+			$options = array(
+				'http' => array(
+					'timeout' => $this->connectionTimeout,
+					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => http_build_query($parameters)
+				)
+			);
+
+			$context  = stream_context_create($options);
+			$response = @file_get_contents($url, false, $context);
+
+			if (isset($http_response_header))
+			{
+				$this->checkResponseHeader($http_response_header);
+			}
+
+			return $response;
+		}
+		
+		if (function_exists('curl_version'))
+		{
+			$ch = curl_init();
+
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch,CURLOPT_URL, $url);
+			curl_setopt($ch,CURLOPT_POST, count($parameters));
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
+			curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($parameters));
+
+			//execute post
+			$data = curl_exec($ch);
+
+			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+			$this->checkHttpCode($httpCode);
+
+			//close connection
+			curl_close($ch);
+
+			return $data;
+		}
+		
+		throw new GrabzItException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItException::GENERIC_ERROR);
 	}
 
 	private function Get($url)
