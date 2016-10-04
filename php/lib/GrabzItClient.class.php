@@ -462,9 +462,9 @@ class GrabzItClient
     */
 	public function GetWaterMark($identifier)
 	{
-		$watermarks[] = _getWaterMarks($identifier);
+		$watermarks = $this->_getWaterMarks($identifier);
 
-		if ($watermarks != null && count($watermarks) == 1)
+		if (!empty($watermarks) && count($watermarks) == 1)
 		{
 			return $watermarks[0];
 		}
@@ -479,7 +479,7 @@ class GrabzItClient
 	*/
 	public function GetWaterMarks()
 	{
-		return _getWaterMarks();
+		return $this->_getWaterMarks();
 	}
 
 	private function _getWaterMarks($identifier = null)
