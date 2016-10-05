@@ -58,7 +58,7 @@ class GrabzItClient
 	This method specifies the URL of the online video that should be converted into a animated GIF.
 
 	url - The URL to convert into a animated GIF.
-	options - A instance of the GrabzItAnimationOptions class that defines any special parameters to use when creating the animated GIF.
+	options - A instance of the GrabzItAnimationOptions class that defines any special options to use when creating the animated GIF.
 	*/
 	public function URLToAnimation($url, $options = null)
 	{
@@ -74,7 +74,7 @@ class GrabzItClient
 	This method specifies the URL that should be converted into a image screenshot.
 
 	url - The URL to capture as a screenshot.
-	options - A instance of the GrabzItImageOptions class that defines any special parameters to use when creating the screenshot.
+	options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the screenshot.
 	*/
 	public function URLToImage($url, $options = null)
 	{
@@ -89,8 +89,8 @@ class GrabzItClient
 	/*
 	This method specifies the HTML that should be converted into a image screenshot.
 
-	html - The HTML to convert into a screenshot.
-	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the screenshot.
+	html - The HTML to convert into a image.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the screenshot.
 	*/	
 	public function HTMLToImage($html, $options = null)
 	{
@@ -106,7 +106,7 @@ class GrabzItClient
 	This method specifies a HTML file that should be converted into a image screenshot.
 
 	path - The file path of a HTML file to convert into a screenshot.
-	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the screenshot.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the screenshot.
 	*/		
 	public function FileToImage($path, $options = null)
 	{
@@ -122,7 +122,7 @@ class GrabzItClient
 	This method specifies the URL that the HTML tables should be extracted from.
 
 	url - The URL to extract HTML tables from.
-	options - A instance of the GrabzItTableOptions class that defines any special parameters to use when converting the HTML table.	
+	options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table.	
 	*/
 	public function URLToTable($url, $options = null)
 	{
@@ -138,7 +138,7 @@ class GrabzItClient
 	This method specifies the HTML that the HTML tables should be extracted from.
 
 	html - The HTML to extract HTML tables from.
-	options - A instance of the GrabzItTableOptions class that defines any special parameters to use when converting the HTML table.	
+	options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table.	
 	*/
 	public function HTMLToTable($html, $options = null)
 	{
@@ -154,7 +154,7 @@ class GrabzItClient
 	This method specifies a HTML file that the HTML tables should be extracted from.
 
 	path - The file path of a HTML file to extract HTML tables from.
-	options - A instance of the GrabzItTableOptions class that defines any special parameters to use when converting the HTML table.
+	options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table.
 	*/	
 	public function FileToTable($path, $options = null)
 	{
@@ -170,7 +170,7 @@ class GrabzItClient
 	This method specifies the URL that should be converted into a PDF.
 
 	url - The URL to capture as a PDF.
-	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the PDF.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
 	*/
 	public function URLToPDF($url, $options = null)
 	{
@@ -186,7 +186,7 @@ class GrabzItClient
 	This method specifies the HTML that should be converted into a PDF.
 
 	html - The HTML to convert into a PDF.
-	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the PDF.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
 	*/	
 	public function HTMLToPDF($html, $options = null)
 	{
@@ -202,7 +202,7 @@ class GrabzItClient
 	This method specifies a HTML file that should be converted into a PDF.
 
 	path - The file path of a HTML file to convert into a PDF.
-	options - A instance of the GrabzItPDFOptions class that defines any special parameters to use when creating the PDF.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
 	*/	
 	public function FileToPDF($path, $options = null)
 	{
