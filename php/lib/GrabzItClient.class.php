@@ -87,10 +87,10 @@ class GrabzItClient
 	}
 
 	/*
-	This method specifies the HTML that should be converted into a image screenshot.
+	This method specifies the HTML that should be converted into a image.
 
 	html - The HTML to convert into a image.
-	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the screenshot.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the image.
 	*/	
 	public function HTMLToImage($html, $options = null)
 	{
@@ -103,10 +103,10 @@ class GrabzItClient
 	}
 
 	/*
-	This method specifies a HTML file that should be converted into a image screenshot.
+	This method specifies a HTML file that should be converted into a image.
 
-	path - The file path of a HTML file to convert into a screenshot.
-	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the screenshot.
+	path - The file path of a HTML file to convert into a image.
+	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the image.
 	*/		
 	public function FileToImage($path, $options = null)
 	{
