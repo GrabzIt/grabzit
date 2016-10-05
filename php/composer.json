@@ -1,11 +1,11 @@
 {
     "name": "grabzit/grabzit",
 	"type": "library",
-	"keywords": ["screenshots","PDF","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion"],
+	"keywords": ["screenshots","PDF","HTML","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion"],
     "homepage": "http://grabz.it/",	
-    "description": "Use our API to integrate image and PDF screenshots into your website or application. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
+    "description": "Use our API to allow your app to create images and PDF's from URL's or raw HTML. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
 	"license": "MIT",
-	"version":"2.3.0",
+	"version":"3.0.0",
 	"support": {
         "issues": "http://grabz.it/support/"
     },
