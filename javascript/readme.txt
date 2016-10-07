@@ -6,7 +6,7 @@ This library allows you to dynamically add a screenshot to any HTML element or w
 An example of the GrabzIt in action can be found in the demo.html file. Remember to replace the "Your Application Key" with your actual
 application key found here: http://grabz.it/api/
 
-GrabzIt JavaScript library provides three methods:
+GrabzIt JavaScript library provides four methods:
 
 - ConvertURL([url to capture], [options])
 - ConvertHTML([html to convert], [options])
