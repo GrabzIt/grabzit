@@ -32,18 +32,23 @@ function GrabzIt(key)
 		this._post = function(qs)
 		{
 			var xhttp;
-			if (window.XMLHttpRequest) {
+			if (window.XMLHttpRequest) 
+			{
 				xhttp = new XMLHttpRequest();
-				} else {
+			}
+			else
+			{
 				xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 			
 			var that = this;
 			
-			xhttp.onreadystatechange = function() {
-			  if (this.readyState == 4 && this.status == 200) {					  
-				  that.elem.appendChild(that._handlePost(JSON.parse(this.responseText)));
-			  }
+			xhttp.onreadystatechange = function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{					  
+					that.elem.appendChild(that._handlePost(JSON.parse(this.responseText)));
+				}
 			};
 				
 			xhttp.open("POST", this._getBaseWebServiceUrl(), true);
