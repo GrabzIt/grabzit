@@ -3,8 +3,60 @@ function GrabzIt(key)
 	return new (function(key)
 	{	
 		this.key = key;
+		this.data = null;
+		this.dataKey = null;
+		this.options = null;
+		this.post = false;
+		this.elem = null;
 		
-		this.Create = function(url, options)
+		this.ConvertURL = function(url, options)
+		{
+			this.data = url;
+			this.dataKey = 'url';
+			this.options = options;
+			this.post = false;
+			
+			return this;
+		};
+		
+		this.ConvertHTML = function(html, options)
+		{
+			this.data = html;
+			this.dataKey = 'html';
+			this.options = options;
+			this.post = true;
+
+			return this;			
+		};		
+		
+		this._post = function(qs)
+		{
+			var xhttp;
+			if (window.XMLHttpRequest) 
+			{
+				xhttp = new XMLHttpRequest();
+			}
+			else
+			{
+				xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			var that = this;
+			
+			xhttp.onreadystatechange = function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{					  
+					that.elem.appendChild(that._handlePost(JSON.parse(this.responseText)));
+				}
+			};
+				
+			xhttp.open("POST", this._getBaseWebServiceUrl(), true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(qs);
+		};
+		
+		this._getBaseWebServiceUrl = function()
 		{
 			var protocol = '//';
 			if (window.location.protocol != 'https' && window.location.protocol != 'http')
@@ -12,9 +64,19 @@ function GrabzIt(key)
 				protocol = 'http://';
 			}
 
-			var grabzItUrl = protocol + 'api.grabz.it/services/javascript.ashx?key='+encodeURIComponent(this.key)+'&url=' + encodeURIComponent(url);
-
-			for(var k in options)
+			return protocol + 'api.grabz.it/services/javascript.ashx';			
+		}
+		
+		this._createQueryString = function(sKey, sValue)
+		{			
+			var qs = 'key='+encodeURIComponent(this.key)+'&'+sKey+'=' + encodeURIComponent(sValue);
+		
+			if (this.options == null)
+			{
+				return qs;
+			}
+		
+			for(var k in this.options)
 			{
 				if (k != 'format' && k != 'cache' && k != 'customWaterMarkId' && k != 'quality'
 				&& k != 'country' && k != 'filename' && k != 'errorid' && k != 'errorclass' &&
@@ -24,41 +86,73 @@ function GrabzIt(key)
 					throw "Option " + k + " not recognized!";
 				}
 				
-				var v = options[k];
+				var v = this.options[k];
 				if (v != null)
-                		{
-					grabzItUrl += '&' + k + '=' + encodeURIComponent(v);
+                {
+					qs += '&' + k + '=' + encodeURIComponent(v);
 				}
-			}
-
+			}			
+			
+			return qs;
+		}
+		
+		this._createScriptNode = function(sUrl)
+		{
 			var scriptNode = document.createElement('script');
-			scriptNode.src = grabzItUrl;
+			scriptNode.src = sUrl;
 
 			return scriptNode;
-		};		
-
-		this.AddTo = function(container, url, options)
+		}
+		
+		this._handlePost = function(obj)
 		{
-			var elem = null;
+			if (obj != null)
+			{
+				if (obj.ID == null || obj.ID == '')
+				{
+					throw obj.Message;
+				}
+				return this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString('id', obj.ID));
+			}
+		}
+		
+		this.Create = function()
+		{
+			var defaultNode = document.documentElement;
+			if (document.body != null)
+			{
+				defaultNode = document.body;
+			}
+			this.AddTo(defaultNode);
+		};
+
+		this.AddTo = function(container)
+		{			
 			if (typeof container == 'string' || container instanceof String)
 			{
-				elem = document.getElementById(container);
-				if (elem == null)
+				this.elem = document.getElementById(container);
+				if (this.elem == null)
 				{
 					throw "An element with the id " + container + " was not found";
 				}
 			}
 			else if (container.nodeType === 1)
 			{
-				elem = container;
+				this.elem = container;
 			}
 
-			if (elem == null)
+			if (this.elem == null)
 			{
 				throw "No valid element was provided to attach the screenshot to";
+			}			
+			
+			if (this.post)
+			{
+				this._post(this._createQueryString(this.dataKey, this.data));
+				return;
 			}
-
-			elem.appendChild(this.Create(url, options));
+			
+			this.elem.appendChild(this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data)));
 		}
 	})(key);
 }
@@ -184,7 +278,7 @@ function GrabzItPreview(key, options)
 			
 			try
 			{
-				GrabzIt(key).AddTo(divFrame, href, options);			
+				GrabzIt(key).ConvertURL(href, options).AddTo(divFrame);			
 			}
 			catch(e)			
 			{
