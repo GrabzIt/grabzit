@@ -205,7 +205,6 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['bheight'] = $this->nullToEmpty($this->browserHeight);
 		$params['delay'] = $this->nullToEmpty($this->delay);
 		$params['target'] = $this->nullToEmpty($this->targetElement);
-		$params['delay'] = $this->nullToEmpty($this->delay);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));		
 		$params['quality'] = $this->nullToEmpty($this->quality);			
 		
