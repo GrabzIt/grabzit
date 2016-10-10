@@ -68,6 +68,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="COM\IImageOptions.cs" />
+    <Compile Include="COM\IPDFOptions.cs" />
+    <Compile Include="COM\ITableOptions.cs" />
+    <Compile Include="COM\IAnimationOptions.cs" />
     <Compile Include="COM\IGrabzItException.cs" />
     <Compile Include="COM\IStatus.cs" />
     <Compile Include="COM\IWaterMark.cs" />
@@ -85,6 +89,11 @@
     <Compile Include="Net\QuickWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Parameters\AnimationOptions.cs" />
+    <Compile Include="Parameters\BaseOptions.cs" />
+    <Compile Include="Parameters\ImageOptions.cs" />
+    <Compile Include="Parameters\PDFOptions.cs" />
+    <Compile Include="Parameters\TableOptions.cs" />
     <Compile Include="Results\GetWatermarksResult.cs" />
     <Compile Include="Results\IException.cs" />
     <Compile Include="Screenshots\GrabzItFile.cs" />

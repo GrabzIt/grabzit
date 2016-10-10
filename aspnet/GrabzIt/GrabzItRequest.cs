@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GrabzIt.Parameters;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,18 +8,20 @@ namespace GrabzIt
     internal class GrabzItRequest
     {
         [ThreadStatic]
-        private static string static_request;
-        [ThreadStatic]
-        private static string static_signaturePartOne;
-        [ThreadStatic]
-        private static string static_signaturePartTwo;
-        [ThreadStatic]
-        private static int static_startDelay;
+        private static BaseOptions static_options;
+        private BaseOptions instance_options;
 
-        private string instance_request;
-        private string instance_signaturePartOne;
-        private string instance_signaturePartTwo;
-        private int instance_startDelay;
+        [ThreadStatic]
+        private static bool static_post;
+        private bool instance_post;
+
+        [ThreadStatic]
+        private static string static_ws_url;
+        private string instance_ws_url;
+
+        [ThreadStatic]
+        private static string static_data;
+        private string instance_data;
 
         private bool isStatic;
 
@@ -27,96 +30,96 @@ namespace GrabzIt
             this.isStatic = isStatic;
         }
 
-        internal string Request
+        internal void Store(string wsUrl, bool post, BaseOptions options)
+        {
+            Store(wsUrl, post, options, null);
+        }
+
+        internal void Store(string wsUrl, bool post, BaseOptions options, string data)
+        {
+            if (isStatic)
+            {
+                static_ws_url = wsUrl;
+                static_post = post;
+                static_options = options;
+                static_data = data;
+                return;
+            }
+            instance_ws_url = wsUrl;
+            instance_post = post;
+            instance_options = options;
+            instance_data = data;
+        }
+
+        internal BaseOptions Options
         {
             get
             {
                 if (isStatic)
                 {
-                    return static_request;
+                    return static_options;
                 }
-                return instance_request;
+                return instance_options;
             }
             set
             {
                 if (isStatic)
                 {
-                    static_request = value;
+                    static_options = value;
                 }
                 else
                 {
-                    instance_request = value;
+                    instance_options = value;
                 }
             }
         }
 
-        internal string SignaturePartOne
+        internal bool IsPost
         {
             get
             {
                 if (isStatic)
                 {
-                    return static_signaturePartOne;
+                    return static_post;
                 }
-                return instance_signaturePartOne;
-            }
-            set
-            {
-                if (isStatic)
-                {
-                    static_signaturePartOne = value;
-                }
-                else
-                {
-                    instance_signaturePartOne = value;
-                }
+                return instance_post;
             }
         }
 
-        internal string SignaturePartTwo
+        internal string Data
         {
             get
             {
                 if (isStatic)
                 {
-                    return static_signaturePartTwo;
+                    return static_data;
                 }
-                return instance_signaturePartTwo;
-            }
-            set
-            {
-                if (isStatic)
-                {
-                    static_signaturePartTwo = value;
-                }
-                else
-                {
-                    instance_signaturePartTwo = value;
-                }
+                return instance_data;
             }
         }
 
-        internal int StartDelay
+        internal string WebServiceURL
         {
             get
             {
                 if (isStatic)
                 {
-                    return static_startDelay;
+                    return static_ws_url;
                 }
-                return instance_startDelay;
-            }
-            set
-            {
-                if (isStatic)
-                {
-                    static_startDelay = value;
-                }
-                else
-                {
-                    instance_startDelay = value;
-                }
+                return instance_ws_url;
             }
         }
+
+	    internal string TargetUrl
+	    {
+            get
+            {
+                if (IsPost)
+                {
+                    return string.Empty;
+                }
+                return Data;
+            }
+	    }
     }
 }

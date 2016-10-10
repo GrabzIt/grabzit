@@ -22,15 +22,29 @@ namespace Sample
                 grabzItClient.ScreenShotComplete += grabzIt_ScreenShotComplete;
                 if (ddlFormat.SelectedValue == "jpg")
                 {
-                    grabzItClient.SetImageOptions(txtURL.Text);
+                    if (ddlConvert.SelectedValue == "html")
+                    {
+                        grabzItClient.HTMLToImage(txtHTML.Text);
+                    }
+                    else
+                    {
+                        grabzItClient.URLToImage(txtURL.Text);
+                    }
                 }
                 else if (ddlFormat.SelectedValue == "gif")
                 {
-                    grabzItClient.SetAnimationOptions(txtURL.Text);
+                    grabzItClient.URLToAnimation(txtURL.Text);
                 }
                 else
                 {
-                    grabzItClient.SetPDFOptions(txtURL.Text);
+                    if (ddlConvert.SelectedValue == "html")
+                    {
+                        grabzItClient.HTMLToPDF(txtHTML.Text);
+                    }
+                    else
+                    {
+                        grabzItClient.URLToPDF(txtURL.Text);
+                    }
                 }
                 grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
                 lblMessage.Text = "Processing...";

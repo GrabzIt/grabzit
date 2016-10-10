@@ -16,6 +16,7 @@ using GrabzIt.Net;
 using GrabzIt.COM;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using GrabzIt.Parameters;
 
 namespace GrabzIt
 {
@@ -67,7 +68,11 @@ namespace GrabzIt
             set;
         }
 
-        private const string BaseURL = "http://api.grabz.it/services/";
+        private const string BaseURLGet = "http://api.grabz.it/services/";
+        private const string BaseURLPost = "http://grabz.it/services/";
+        private const string TakePDF = "takepdf.ashx";
+        private const string TakeTable = "taketable.ashx";
+        private const string TakeImage = "takepicture.ashx";
 
         //Required by COM
         public GrabzItClient()
@@ -100,298 +105,275 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// This method sets the parameters required to turn a online video into a animated GIF
+        /// This method specifies the URL of the online video that should be converted into a animated GIF.
         /// </summary>
-        /// <param name="url">The URL of the online video</param>
-        public void SetAnimationOptions(string url)
+        /// <param name="url">The URL to convert into a animated GIF.</param>
+        public void URLToAnimation(string url)
         {
-            SetAnimationOptions(url, string.Empty, 0, 0, 0, 0, 0, 0, 0, false, string.Empty, -1, Country.Default);
+            URLToAnimation(url, null);
         }
 
         /// <summary>
-        /// This method sets the parameters required to turn a online video into a animated GIF
+        /// This method specifies the URL of the online video that should be converted into a animated GIF.
         /// </summary>
-        /// <param name="url">The URL of the online video</param>
-        /// <param name="customId">A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified</param>
-        public void SetAnimationOptions(string url, string customId)
-        {
-            SetAnimationOptions(url, customId, 0, 0, 0, 0, 0, 0, 0, false, string.Empty, -1, Country.Default);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to turn a online video into a animated GIF
-        /// </summary>
-        /// <param name="url">The URL of the online video</param>
-        /// <param name="customId">A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified</param>
-        /// <param name="width">The width of the resulting animated GIF in pixels</param>
-        /// <param name="height">The height of the resulting animated GIF in pixels</param>
-        /// <param name="start">The starting position of the video that should be converted into a animated GIF</param>
-        /// <param name="duration">The length in seconds of the video that should be converted into a animated GIF</param>
-        /// <param name="speed">The speed of the animated GIF from 0.2 to 10 times the original speed</param>
-        /// <param name="framesPerSecond">The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60</param>
-        /// <param name="repeat">The number of times to loop the animated GIF. If 0 it will loop infinitley</param>
-        /// <param name="reverse">If true the frames of the animated GIF are reversed</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to the animated GIF</param>
-        public void SetAnimationOptions(string url, string customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, bool reverse, string customWaterMarkId)
-        {
-            SetAnimationOptions(url, customId, width, height, start, duration, speed, framesPerSecond, repeat, reverse, customWaterMarkId, -1, Country.Default);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to turn a online video into a animated GIF
-        /// </summary>
-        /// <param name="url">The URL of the online video</param>
-        /// <param name="customId">A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified</param>
-        /// <param name="width">The width of the resulting animated GIF in pixels</param>
-        /// <param name="height">The height of the resulting animated GIF in pixels</param>
-        /// <param name="start">The starting position of the video that should be converted into a animated GIF</param>
-        /// <param name="duration">The length in seconds of the video that should be converted into a animated GIF</param>
-        /// <param name="speed">The speed of the animated GIF from 0.2 to 10 times the original speed</param>
-        /// <param name="framesPerSecond">The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60</param>
-        /// <param name="repeat">The number of times to loop the animated GIF. If 0 it will loop forever</param>
-        /// <param name="reverse">If true the frames of the animated GIF are reversed</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to the animated GIF</param>
-        /// <param name="quality">The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</param>
-        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
-        public void SetAnimationOptions(string url, string customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, bool reverse, string customWaterMarkId, int quality, Country country)
+        /// <param name="url">The URL to convert into a animated GIF.</param>
+        /// <param name="options">A instance of the AnimationOptions class that defines any special options to use when creating the animated GIF.</param>
+        public void URLToAnimation(string url, AnimationOptions options)
         {
             lock (thisLock)
             {
-                request.StartDelay = 0;
-                request.Request = string.Format("{0}takeanimation.ashx?url={1}&key={2}&width={3}&height={4}&duration={5}&speed={6}&start={7}&customid={8}&fps={9}&repeat={10}&customwatermarkid={11}&reverse={12}&country={13}&quality={14}&callback=",
-                                                              BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, width, height, duration, speed,
-                                                              start, HttpUtility.UrlEncode(customId), framesPerSecond, repeat, HttpUtility.UrlEncode(customWaterMarkId), Convert.ToInt32(reverse), ConvertCountryToString(country), quality);
-                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
-                request.SignaturePartTwo = "|" + height + "|" + width + "|" + customId + "|" + framesPerSecond + "|" + speed + "|" + duration + "|" + repeat + "|" + Convert.ToInt32(reverse) + "|" + start + "|" + customWaterMarkId + "|" + ConvertCountryToString(country) + "|" + quality;
+                if (options == null)
+                {
+                    options = new AnimationOptions();
+                }
+
+                request.Store(BaseURLGet + "takeanimation.ashx", false, options, url);
             }
         }
 
         /// <summary>
-        /// This method sets the parameters required to take a screenshot of a web page.
+        /// This method specifies the URL that should be converted into a image screenshot.
         /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="browserWidth">The width of the browser in pixels</param>
-        /// <param name="browserHeight">The height of the browser in pixels</param>
-        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
-        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
-        /// <param name="format">The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png</param>
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="targetElement">The id of the only HTML element in the web page to turn into a screenshot</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to the image</param>
-        /// <param name="quality">The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format</param>
-        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
-        public void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, BrowserType requestAs, string customWaterMarkId, int quality, Country country)
+        /// <param name="url">The URL to capture as a screenshot.</param>
+        public void URLToImage(string url)
+        {
+            URLToImage(url, null);
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a image screenshot.
+        /// </summary>
+        /// <param name="url">The URL to capture as a screenshot.</param>
+        /// <param name="options">A instance of the ImageOptions class that defines any special options to use when creating the screenshot.</param>
+        public void URLToImage(string url, ImageOptions options)
         {
             lock (thisLock)
             {
-                request.StartDelay = delay;
-                request.Request = string.Format("{0}takepicture.ashx?url={1}&key={2}&width={3}&height={4}&bwidth={5}&bheight={6}&format={7}&customid={8}&delay={9}&target={10}&customwatermarkid={11}&requestmobileversion={12}&country={13}&quality={14}&callback=",
-                                                              BaseURL, HttpUtility.UrlEncode(url), ApplicationKey, outputWidth, outputHeight,
-                                                              browserWidth, browserHeight, format, HttpUtility.UrlEncode(customId), delay, HttpUtility.UrlEncode(targetElement), HttpUtility.UrlEncode(customWaterMarkId), (int)requestAs, ConvertCountryToString(country), quality);
-                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
-                request.SignaturePartTwo = "|" + format + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + (int)requestAs + "|" + ConvertCountryToString(country) + "|" + quality;
+                if (options == null)
+                {
+                    options = new ImageOptions();
+                }
+
+                request.Store(BaseURLGet + TakeImage, false, options, url);
             }
         }
 
         /// <summary>
-        /// This method sets the parameters required to take a screenshot of a web page.
+        /// This method specifies the HTML that should be converted into a image.
         /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        public void SetImageOptions(string url)
+        /// <param name="html">The HTML to convert into a image.</param>
+        public void HTMLToImage(string html)
         {
-            SetImageOptions(url, string.Empty, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, BrowserType.StandardBrowser, string.Empty);
+            HTMLToImage(html, null);
         }
 
         /// <summary>
-        /// This method sets the parameters required to take a screenshot of a web page.
+        /// This method specifies the HTML that should be converted into a image.
         /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.</param>        
-        public void SetImageOptions(string url, string customId)
-        {
-            SetImageOptions(url, customId, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty, BrowserType.StandardBrowser, string.Empty);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to take a screenshot of a web page.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="browserWidth">The width of the browser in pixels</param>
-        /// <param name="browserHeight">The height of the browser in pixels</param>
-        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
-        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
-        /// <param name="format">The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png</param>
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="targetElement">The id of the only HTML element in the web page to turn into a screenshot</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to the image</param>
-        public void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, BrowserType requestAs, string customWaterMarkId)
-        {
-            SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, requestAs, customWaterMarkId, -1, Country.Default);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to extract all tables from a web page.
-        /// </summary>
-        /// <param name="url">The URL that the should be used to extract tables</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
-        /// <param name="format">The format the tableshould be in: csv, xlsx</param>
-        /// <param name="includeHeaderNames">If true header names will be included in the table</param>
-        /// <param name="includeAllTables">If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.</param>
-        /// <param name="targetElement">The id of the only HTML element in the web page that should be used to extract tables from</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
-        public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs, Country country)
+        /// <param name="html">The HTML to convert into a image.</param>
+        /// <param name="options">A instance of the ImageOptions class that defines any special options to use when creating the screenshot.</param>
+        public void HTMLToImage(string html, ImageOptions options)
         {
             lock (thisLock)
             {
-                request.StartDelay = 0;
-                request.Request = BaseURL + "taketable.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&includeAllTables=" + Convert.ToInt32(includeAllTables) + "&includeHeaderNames=" + Convert.ToInt32(includeHeaderNames) + "&format=" + format + "&tableToInclude=" + tableNumberToInclude + "&customid=" + HttpUtility.UrlEncode(customId) + "&target=" + HttpUtility.UrlEncode(targetElement) + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&callback=";
-                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
-                request.SignaturePartTwo = "|" + customId + "|" + tableNumberToInclude + "|" + Convert.ToInt32(includeAllTables) + "|" + Convert.ToInt32(includeHeaderNames) + "|" + targetElement + "|" + format + "|" + (int)requestAs + "|" + ConvertCountryToString(country);
+                if (options == null)
+                {
+                    options = new ImageOptions();
+                }
+
+                request.Store(BaseURLPost + TakeImage, true, options, html);
             }
         }
 
         /// <summary>
-        /// This method sets the parameters required to extract all tables from a web page.
+        /// This method specifies a HTML file that should be converted into a image.
         /// </summary>
-        /// <param name="url">The URL that the should be used to extract tables</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="tableNumberToInclude">Which table to include, in order from the begining of the page to the end</param>
-        /// <param name="format">The format the tableshould be in: csv, xlsx</param>
-        /// <param name="includeHeaderNames">If true header names will be included in the table</param>
-        /// <param name="includeAllTables">If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.</param>
-        /// <param name="targetElement">The id of the only HTML element in the web page that should be used to extract tables from</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        public void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs)
+        /// <param name="path">The file path of a HTML file to convert into a image.</param>
+        public void FileToImage(string path)
         {
-            SetTableOptions(url, customId, tableNumberToInclude, format, includeHeaderNames, includeAllTables, targetElement, requestAs, Country.Default);
+            FileToImage(path, null);
         }
 
         /// <summary>
-        /// This method sets the parameters required to extract all tables from a web page.
+        /// This method specifies a HTML file that should be converted into a image.
         /// </summary>
-        /// <param name="url">The URL that the should be used to extract tables</param>
-        public void SetTableOptions(string url)
-        {
-            SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to extract all tables from a web page.
-        /// </summary>
-        /// <param name="url">The URL that the should be used to extract tables</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
-        public void SetTableOptions(string url, string customId)
-        {
-            SetTableOptions(url, string.Empty, 1, TableFormat.csv, true, false, string.Empty, BrowserType.StandardBrowser, Country.Default);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to convert a web page into a PDF.
-        /// </summary>
-        /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
-        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
-        /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
-        /// <param name="includeLinks">True if links should be included in the PDF</param>
-        /// <param name="includeOutline">True if the PDF outline should be included</param>
-        /// <param name="title">Provide a title to the PDF document</param>
-        /// <param name="coverURL">The URL of a web page that should be used as a cover page for the PDF</param>
-        /// <param name="marginTop">The margin that should appear at the top of the PDF document page</param>
-        /// <param name="marginLeft">The margin that should appear at the left of the PDF document page</param>
-        /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
-        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
-        /// <param name="quality">The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</param>        
-        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
-        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId, int quality, Country country)
-        {
-            SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, string.Empty, customWaterMarkId, quality, country);
-        }
-
-        /// <summary>
-        /// This method sets the parameters required to convert a web page into a PDF.
-        /// </summary>
-        /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
-        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
-        /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
-        /// <param name="includeLinks">True if links should be included in the PDF</param>
-        /// <param name="includeOutline">True if the PDF outline should be included</param>
-        /// <param name="title">Provide a title to the PDF document</param>
-        /// <param name="coverURL">The URL of a web page that should be used as a cover page for the PDF</param>
-        /// <param name="marginTop">The margin that should appear at the top of the PDF document page</param>
-        /// <param name="marginLeft">The margin that should appear at the left of the PDF document page</param>
-        /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
-        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        /// <param name="templateId">Add a PDF template ID that specifies the header and footer of the PDF document</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
-        /// <param name="quality">The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</param>        
-        /// <param name="country">Request the screenshot from different countries: Default, UK or US</param>
-        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string templateId, string customWaterMarkId, int quality, Country country)
+        /// <param name="path">The file path of a HTML file to convert into a image.</param>
+        /// <param name="options">A instance of the ImageOptions class that defines any special options to use when creating the screenshot.</param>
+        public void FileToImage(string path, ImageOptions options)
         {
             lock (thisLock)
             {
-                request.StartDelay = delay;
-                request.Request = BaseURL + "takepdf.ashx?key=" + HttpUtility.UrlEncode(ApplicationKey) + "&url=" + HttpUtility.UrlEncode(url) + "&background=" + Convert.ToInt32(includeBackground) + "&pagesize=" + pagesize + "&orientation=" + orientation + "&customid=" + HttpUtility.UrlEncode(customId) + "&templateid=" + HttpUtility.UrlEncode(templateId) + "&customwatermarkid=" + HttpUtility.UrlEncode(customWaterMarkId) + "&includelinks=" + Convert.ToInt32(includeLinks) + "&includeoutline=" + Convert.ToInt32(includeOutline) + "&title=" + HttpUtility.UrlEncode(title) + "&coverurl=" + HttpUtility.UrlEncode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + (int)requestAs + "&country=" + ConvertCountryToString(country) + "&quality=" + quality + "&callback=";
-                request.SignaturePartOne = ApplicationSecret + "|" + url + "|";
-                request.SignaturePartTwo = "|" + customId + "|" + Convert.ToInt32(includeBackground) + "|" + pagesize.ToString().ToUpper() + "|" + orientation + "|" + customWaterMarkId + "|" + Convert.ToInt32(includeLinks) + "|" + Convert.ToInt32(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + (int)requestAs + "|" + ConvertCountryToString(country) + "|" + quality + "|" + templateId;
+                if (!File.Exists(path))
+                {
+                    throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+                }
+
+                HTMLToImage(File.ReadAllText(path), options);
             }
         }
 
         /// <summary>
-        /// This method sets the parameters required to convert a web page into a PDF.
+        /// This method specifies the URL that the HTML tables should be extracted from.
         /// </summary>
-        /// <param name="url">The URL that the should be converted into a pdf</param>
-        public void SetPDFOptions(string url)
+        /// <param name="url">The URL to extract HTML tables from.</param>
+        public void URLToTable(string url)
         {
-            SetPDFOptions(url, string.Empty, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, BrowserType.StandardBrowser, string.Empty);
+            URLToTable(url, null);
         }
 
         /// <summary>
-        /// This method sets the parameters required to convert a web page into a PDF.
+        /// This method specifies the URL that the HTML tables should be extracted from.
         /// </summary>
-        /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>        
-        public void SetPDFOptions(string url, string customId)
+        /// <param name="url">The URL to extract HTML tables from.</param>
+        /// <param name="options">A instance of the TableOptions class that defines any special options to use when converting the HTML table.</param>
+        public void URLToTable(string url, TableOptions options)
         {
-            SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.Portrait, true, false, string.Empty, string.Empty, 10, 10, 10, 10, 0, BrowserType.StandardBrowser, string.Empty);
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new TableOptions();
+                }
+
+                request.Store(BaseURLGet + TakeTable, false, options, url);
+            }
         }
 
         /// <summary>
-        /// This method sets the parameters required to convert a web page into a PDF.
+        /// This method specifies the HTML that the HTML tables should be extracted from.
+        /// </summary>
+        /// <param name="html">The HTML to extract HTML tables from.</param>
+        /// <param name="options">A instance of the TableOptions class that defines any special options to use when converting the HTML table.</param>
+        public void HTMLToTable(string html)
+        {
+            HTMLToTable(html, null);
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that the HTML tables should be extracted from.
+        /// </summary>
+        /// <param name="html">The HTML to extract HTML tables from.</param>
+        /// <param name="options">A instance of the TableOptions class that defines any special options to use when converting the HTML table.</param>
+        public void HTMLToTable(string html, TableOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new TableOptions();
+                }
+
+                request.Store(BaseURLPost + TakeTable, true, options, html);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that the HTML tables should be extracted from.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to extract HTML tables from.</param>
+        public void FileToTable(string path)
+        {
+            FileToTable(path, null);
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that the HTML tables should be extracted from.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to extract HTML tables from.</param>
+        /// <param name="options">A instance of the TableOptions class that defines any special options to use when converting the HTML table.</param>
+        public void FileToTable(string path, TableOptions options)
+        {
+            lock (thisLock)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+                }
+
+                HTMLToTable(File.ReadAllText(path), options);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a PDF.
         /// </summary>
         /// <param name="url">The URL that the should be converted into a pdf</param>
-        /// <param name="customId">A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.</param>
-        /// <param name="includeBackground">If true the background of the web page should be included in the screenshot</param>
-        /// <param name="pagesize">The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.</param>
-        /// <param name="orientation">The orientation of the PDF to be returned: 'Landscape' or 'Portrait'</param>
-        /// <param name="includeLinks">True if links should be included in the PDF</param>
-        /// <param name="includeOutline">True if the PDF outline should be included</param>
-        /// <param name="title">Provide a title to the PDF document</param>
-        /// <param name="coverURL">The URL of a web page that should be used as a cover page for the PDF</param>
-        /// <param name="marginTop">The margin that should appear at the top of the PDF document page</param>
-        /// <param name="marginLeft">The margin that should appear at the left of the PDF document page</param>
-        /// <param name="marginBottom">The margin that should appear at the bottom of the PDF document page</param>
-        /// <param name="marginRight">The margin that should appear at the right of the PDF document</param>                
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="requestAs">Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine</param>
-        /// <param name="customWaterMarkId">Add a custom watermark to each page of the PDF document</param>
-        public void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId)
+        public void URLToPDF(string url)
         {
-            SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, customWaterMarkId, -1, Country.Default);
+            URLToPDF(url, null);
         }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a PDF.
+        /// </summary>
+        /// <param name="url">The URL that the should be converted into a pdf</param>
+        /// <param name="options">A instance of the PDFOptions class that defines any special options to use when creating the PDF.</param>
+        public void URLToPDF(string url, PDFOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new PDFOptions();
+                }
+
+                request.Store(BaseURLGet + TakePDF, false, options, url);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into a PDF.
+        /// </summary>
+        /// <param name="html">The HTML to convert into a PDF.</param>
+        public void HTMLToPDF(string html)
+        {
+            HTMLToPDF(html, null);
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into a PDF.
+        /// </summary>
+        /// <param name="html">The HTML to convert into a PDF.</param>
+        /// <param name="options">A instance of the PDFOptions class that defines any special options to use when creating the PDF.</param>
+        public void HTMLToPDF(string html, PDFOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new PDFOptions();
+                }
+
+                request.Store(BaseURLPost + TakePDF, true, options, html);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into a PDF.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into a PDF.</param>
+        public void FileToPDF(string path)
+        {
+            FileToPDF(path, null);
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into a PDF.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into a PDF.</param>
+        /// <param name="options">A instance of the PDFOptions class that defines any special options to use when creating the PDF.</param>
+        public void FileToPDF(string path, PDFOptions options)
+        {
+            lock (thisLock)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+                }
+
+                HTMLToPDF(File.ReadAllText(path), options);
+            }
+        }        
 
         /// <summary>
         /// Calls the GrabzIt web service to take the screenshot
@@ -431,16 +413,22 @@ namespace GrabzIt
         {
             lock (thisLock)
             {
-                if (string.IsNullOrEmpty(request.SignaturePartOne) && string.IsNullOrEmpty(request.SignaturePartTwo) && string.IsNullOrEmpty(request.Request))
+                if (this.request == null || this.request.Options == null)
                 {
                     throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.ParameterMissingParameters);
                 }
-                string sig = Encrypt(request.SignaturePartOne + callBackURL + request.SignaturePartTwo);
-                //this allows multiple calls with the same parameters
-                string currentRequest = request.Request;
-                currentRequest += HttpUtility.UrlEncode(callBackURL) + "&sig=" + HttpUtility.UrlEncode(sig);
+                string sig = Encrypt(request.Options.GetSignatureString(this.ApplicationSecret, callBackURL, request.TargetUrl));
 
-                TakePictureResult webResult = Get<TakePictureResult>(currentRequest);
+                TakePictureResult webResult = null;
+
+                if (request.IsPost)
+                {
+                    webResult = Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", this.request.Data));
+                }
+                else
+                {
+                    webResult = Get<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
+                }
 
                 CheckForException(webResult);
 
@@ -467,7 +455,7 @@ namespace GrabzIt
                 }
 
                 //Wait until it is possible to be ready
-                Thread.Sleep(3000 + request.StartDelay);
+                Thread.Sleep(3000 + request.Options.GetStartDelay());
 
                 //Wait for it to be ready.
                 while (true)
@@ -556,6 +544,24 @@ namespace GrabzIt
             }
         }
 
+        private T Post<T>(string url, string parameters)
+        {
+            using (QuickWebClient client = new QuickWebClient())
+            {
+                try
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                    string result = client.UploadString(url, parameters);
+                    return DeserializeResult<T>(result);
+                }
+                catch (WebException e)
+                {
+                    HandleWebException(e);
+                    return default(T);
+                }
+            }
+        }
+
         private void HandleWebException(WebException e)
         {
             if (e == null)
@@ -594,141 +600,6 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// This method calls the GrabzIt web service to take the screenshot.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
-        [Obsolete("Use the SetImageOptions and Save methods instead")]
-        [ComVisible(false)]
-        public string TakePicture(string url)
-        {
-            return TakePicture(url, string.Empty, 0, 0, 0, 0, string.Empty, ImageFormat.jpg, 0, string.Empty);
-        }
-
-        /// <summary>
-        /// This method calls the GrabzIt web service to take the screenshot.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
-        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
-        [Obsolete("Use the SetImageOptions and Save methods instead")]
-        [ComVisible(false)]
-        public string TakePicture(string url, string callback)
-        {
-            return TakePicture(url, callback, 0, 0, 0, 0, string.Empty, ImageFormat.jpg, 0, string.Empty);
-        }
-
-        /// <summary>
-        /// This method calls the GrabzIt web service to take the screenshot.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
-        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
-        [Obsolete("Use the SetImageOptions and Save methods instead")]
-        [ComVisible(false)]
-        public string TakePicture(string url, string callback, string customId)
-        {
-            return TakePicture(url, callback, 0, 0, 0, 0, customId, ImageFormat.jpg, 0, string.Empty);
-        }
-
-        /// <summary>
-        /// This method calls the GrabzIt web service to take the screenshot.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
-        /// <param name="browserWidth">The width of the browser in pixels</param>
-        /// <param name="browserHeight">The height of the browser in pixels</param>
-        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
-        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
-        /// <param name="format">The format the screenshot should be in.</param>
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
-        [Obsolete("Use the SetImageOptions and Save methods instead")]
-        [ComVisible(false)]
-        public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay)
-        {
-            return TakePicture(url, callback, browserWidth, browserHeight, outputHeight, outputWidth, customId, format, delay, string.Empty);
-        }
-
-        /// <summary>
-        /// This method calls the GrabzIt web service to take the screenshot.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="callback">The handler the GrabzIt web service should call after it has completed its work</param>
-        /// <param name="browserWidth">The width of the browser in pixels</param>
-        /// <param name="browserHeight">The height of the browser in pixels</param>
-        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
-        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
-        /// <param name="customId">A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.</param>
-        /// <param name="format">The format the screenshot should be in.</param>
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
-        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetPicture method.</returns>
-        [Obsolete("Use the SetImageOptions and Save methods instead")]
-        [ComVisible(false)]
-        public string TakePicture(string url, string callback, int browserWidth, int browserHeight, int outputHeight, int outputWidth, string customId, ImageFormat format, int delay, string targetElement)
-        {
-            SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, 0, string.Empty);
-            return Save(callback);
-        }
-
-        /// <summary>
-        /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
-        /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
-        [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
-        [ComVisible(false)]
-        public bool SavePicture(string url, string saveToFile)
-        {
-            return SavePicture(url, saveToFile, 0, 0, 0, 0, ImageFormat.jpg, 0, string.Empty);
-        }
-
-        /// <summary>
-        /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
-        /// <param name="browserWidth">The width of the browser in pixels</param>
-        /// <param name="browserHeight">The height of the browser in pixels</param>
-        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
-        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
-        /// <param name="format">The format the screenshot should be in.</param>
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
-        [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
-        [ComVisible(false)]
-        public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay)
-        {
-            return SavePicture(url, saveToFile, browserWidth, browserHeight, outputHeight, outputWidth, format, delay, string.Empty);
-        }
-
-
-        /// <summary>
-        /// This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous.
-        /// </summary>
-        /// <param name="url">The URL that the screenshot should be made of</param>
-        /// <param name="saveToFile">The file path that the screenshot should saved to: e.g. images/test.jpg</param>
-        /// <param name="browserWidth">The width of the browser in pixels</param>
-        /// <param name="browserHeight">The height of the browser in pixels</param>
-        /// <param name="outputHeight">The height of the resulting thumbnail in pixels</param>
-        /// <param name="outputWidth">The width of the resulting thumbnail in pixels</param>
-        /// <param name="format">The format the screenshot should be in.</param>
-        /// <param name="delay">The number of milliseconds to wait before taking the screenshot</param>
-        /// <param name="targetElement">The id of the only HTML element in the web page to take a screenshot of.</param>
-        /// <returns>This function returns the true if it is successfull otherwise it throws an exception.</returns>
-        [Obsolete("Use the SetImageOptions and SaveTo methods instead")]
-        [ComVisible(false)]
-        public bool SavePicture(string url, string saveToFile, int browserWidth, int browserHeight, int outputHeight, int outputWidth, ImageFormat format, int delay, string targetElement)
-        {
-            SetImageOptions(url, string.Empty, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, BrowserType.StandardBrowser, string.Empty);
-            return SaveTo(saveToFile);
-        }
-
-        /// <summary>
         /// Get the current status of a GrabzIt screenshot
         /// </summary>
         /// <param name="id">The id of the screenshot</param>
@@ -743,7 +614,7 @@ namespace GrabzIt
                 }
 
                 string url = string.Format("{0}getstatus.ashx?id={1}",
-                                                          BaseURL, id);
+                                                          BaseURLGet, id);
                 GetStatusResult webResult = Get<GetStatusResult>(url);
 
                 if (webResult == null)
@@ -767,7 +638,7 @@ namespace GrabzIt
                 string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, domain));
 
                 string url = string.Format("{0}getcookies.ashx?domain={1}&key={2}&sig={3}",
-                                                          BaseURL, domain, ApplicationKey, sig);
+                                                          BaseURLGet, domain, ApplicationKey, sig);
 
                 GetCookiesResult webResult = Get<GetCookiesResult>(url);
 
@@ -866,7 +737,7 @@ namespace GrabzIt
                                                value, path, (httponly ? 1 : 0), expiresStr, 0));
 
                 string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
-                                                           BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
+                                                           BaseURLGet, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
 
@@ -894,7 +765,7 @@ namespace GrabzIt
                 string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, name, domain, 1));
 
                 string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
-                                                          BaseURL, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
+                                                          BaseURLGet, HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
 
@@ -949,7 +820,7 @@ namespace GrabzIt
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}deletewatermark.ashx?key={1}&identifier={2}&sig={3}",
-                                                          BaseURL, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
+                                                          BaseURLGet, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
 
             GenericResult webResult = Get<GenericResult>(url);
@@ -990,42 +861,13 @@ namespace GrabzIt
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}getwatermarks.ashx?key={1}&identifier={2}&sig={3}",
-                                                          BaseURL, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
+                                                          BaseURLGet, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
             GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
 
             CheckForException(webResult);
 
             return webResult.WaterMarks;
-        }
-
-        /// <summary>
-        /// This method returns the image itself. If nothing is returned then something has gone wrong or the image is not ready yet.
-        /// </summary>
-        /// <param name="id">The unique identifier of the screenshot, returned by the callback handler or the TakePicture method</param>
-        /// <returns>The screenshot</returns>
-        [ComVisible(false)]
-        public Image GetPicture(string id)
-        {
-            lock (thisLock)
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
-                                                                                "{0}getfile.ashx?id={1}",
-                                                                                BaseURL, id));
-                request.KeepAlive = false;
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (response.ContentLength == 0)
-                    {
-                        return null;
-                    }
-                    using (Stream stream = response.GetResponseStream())
-                    {
-                        return Image.FromStream(stream, true, false);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -1044,7 +886,7 @@ namespace GrabzIt
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
                                                                                 "{0}getfile.ashx?id={1}",
-                                                                                BaseURL, id));
+                                                                                BaseURLGet, id));
                 request.KeepAlive = false;
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -1123,15 +965,6 @@ namespace GrabzIt
                     i++;
                 }
             }
-        }
-
-        private static string ConvertCountryToString(Country country)
-        {
-            if (country == Country.Default)
-            {
-                return string.Empty;
-            }
-            return country.ToString();
         }
 
         private static string toHex(byte[] bytes)

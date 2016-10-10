@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Windows.Forms;
 using GrabzIt;
+using GrabzIt.Enums;
 
 namespace SampleConsole
 {
@@ -14,10 +15,27 @@ namespace SampleConsole
         {
             while (true)
             {
-                Console.WriteLine("Please specify a URL to take picture of. For example http://www.google.com");
-                string url = Console.ReadLine();
-                Console.WriteLine("Return URL as PDF (P), JPEG (J) or Animated GIF (G)? Enter P, J or G.");
+                Console.WriteLine("Return Capture as PDF (P), JPEG (J) or Animated GIF (G)? Enter P, J or G.");
                 string formatType = Console.ReadLine();
+
+                bool convertUrl = true;
+                if (formatType != GIF)
+                {
+                    Console.WriteLine("Do you want to convert a URL (U) or to convert HTML (H)? Enter U or H.");
+                    convertUrl = (Console.ReadLine() == "U");
+                }
+
+                if (convertUrl)
+                {
+                    Console.WriteLine("Please specify a URL to capture. For example http://www.google.com");
+                }
+                else
+                {
+                    Console.WriteLine("Please specify some HTML to convert.");
+                }
+
+                string inputData = Console.ReadLine();
+
                 GrabzItClient grabzIt = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], 
                                                                 ConfigurationManager.AppSettings["ApplicationSecret"]);
 
@@ -33,19 +51,33 @@ namespace SampleConsole
                         format = ".gif";
                     }
 
-                    string filename = url.Substring(url.IndexOf("://") + 3).Replace("?", string.Empty).Replace("/", string.Empty) + format;
+                    string filename = Guid.NewGuid().ToString() + format;
 
                     if (formatType == PDF)
                     {
-                        grabzIt.SetPDFOptions(url);
+                        if (convertUrl)
+                        {
+                            grabzIt.URLToPDF(inputData);
+                        }
+                        else
+                        {
+                            grabzIt.HTMLToPDF(inputData);
+                        }
                     }
                     else if (formatType == GIF)
                     {
-                        grabzIt.SetAnimationOptions(url);
+                        grabzIt.URLToAnimation(inputData);
                     }
                     else
                     {
-                        grabzIt.SetImageOptions(url);
+                        if (convertUrl)
+                        {
+                            grabzIt.URLToImage(inputData);
+                        }
+                        else
+                        {
+                            grabzIt.HTMLToImage(inputData);
+                        }
                     }                    
                     if (grabzIt.SaveTo(filename))
                     {
@@ -53,9 +85,13 @@ namespace SampleConsole
                         {
                             Console.WriteLine("Animated GIF has been saved to: " + filename);
                         }
+                        else if (formatType == PDF)
+                        {
+                            Console.WriteLine("PDF has been saved to: " + filename);
+                        }
                         else
                         {
-                            Console.WriteLine("Screenshot has been saved to: " + filename);
+                            Console.WriteLine("Image has been saved to: " + filename);
                         }
                     }                    
                 }

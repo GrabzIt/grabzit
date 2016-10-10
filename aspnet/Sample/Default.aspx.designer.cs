@@ -31,6 +31,24 @@ namespace Sample {
         protected global::System.Web.UI.WebControls.Label lblMessage;
         
         /// <summary>
+        /// ddlConvert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlConvert;
+        
+        /// <summary>
+        /// txtHTML control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtHTML;
+        
+        /// <summary>
         /// txtURL control.
         /// </summary>
         /// <remarks>

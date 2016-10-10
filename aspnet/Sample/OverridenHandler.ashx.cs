@@ -2,6 +2,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Web;
 using GrabzIt;
+using GrabzIt.Screenshots;
 
 namespace Sample
 {
@@ -10,9 +11,9 @@ namespace Sample
         protected override void Process(HttpContext context, string filename, string id, string message, string customId, string format)
         {
             GrabzItClient grabzItClient = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], ConfigurationManager.AppSettings["ApplicationSecret"]);
-            Image image = grabzItClient.GetPicture(id);
+            GrabzItFile file = grabzItClient.GetResult(id);
             //Ensure that the application has the correct rights for this directory.
-            image.Save(context.Server.MapPath("~/results/" + filename));
+            file.Save(context.Server.MapPath("~/results/" + filename));
         }
     }
 }

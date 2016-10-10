@@ -1,5 +1,6 @@
 using GrabzIt.Cookies;
 using GrabzIt.Enums;
+using GrabzIt.Parameters;
 using GrabzIt.Screenshots;
 using System;
 
@@ -9,22 +10,26 @@ namespace GrabzIt.COM
     {
         string ApplicationKey { get; set; }
         string ApplicationSecret { get; set; }
-        void SetAnimationOptions(string url);
-        void SetAnimationOptions(string url, string customId);
-        void SetAnimationOptions(string url, string customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, bool reverse, string customWaterMarkId);
-        void SetAnimationOptions(string url, string customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, bool reverse, string customWaterMarkId, int quality, Country country);
-        void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, BrowserType requestAs, string customWaterMarkId, int quality, Country country);
-        void SetImageOptions(string url);
-        void SetImageOptions(string url, string customId);
-        void SetImageOptions(string url, string customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, string targetElement, BrowserType requestAs, string customWaterMarkId);
-        void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs, Country country);
-        void SetTableOptions(string url, string customId, int tableNumberToInclude, TableFormat format, bool includeHeaderNames, bool includeAllTables, string targetElement, BrowserType requestAs);
-        void SetTableOptions(string url);
-        void SetTableOptions(string url, string customId);
-        void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId, int quality, Country country);
-        void SetPDFOptions(string url);
-        void SetPDFOptions(string url, string customId);
-        void SetPDFOptions(string url, string customId, bool includeBackground, PageSize pagesize, PageOrientation orientation, bool includeLinks, bool includeOutline, string title, string coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, string customWaterMarkId);
+        void URLToAnimation(string url);
+        void URLToAnimation(string url, AnimationOptions options);
+        void URLToImage(string url);
+        void URLToImage(string url, ImageOptions options);        
+        void HTMLToImage(string html);
+        void HTMLToImage(string html, ImageOptions options);
+        void FileToImage(string path);
+        void FileToImage(string path, ImageOptions options);
+        void URLToTable(string url);
+        void URLToTable(string url, TableOptions options);
+        void HTMLToTable(string html);
+        void HTMLToTable(string html, TableOptions options);
+        void FileToTable(string path);
+        void FileToTable(string path, TableOptions options);
+        void URLToPDF(string url);
+        void URLToPDF(string url, PDFOptions options);
+        void HTMLToPDF(string html);
+        void HTMLToPDF(string html, PDFOptions options);
+        void FileToPDF(string path);
+        void FileToPDF(string path, PDFOptions options);
         string Save();
         string Save(string callBackURL);
         GrabzItFile SaveTo();
