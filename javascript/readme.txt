@@ -13,7 +13,7 @@ GrabzIt JavaScript library provides four methods:
 - AddTo([element | element id])
 - Create()
 
-The ConvertURL or ConvertHTML must be called and then the AddTo or Create method must be called. The AddTo method must specify the id of a element or the element 
+The ConvertURL or ConvertHTML method must be called and then the AddTo or Create method. The AddTo method must specify the id of a element or the element 
 were the capture should be displayed, so the first two calls below will work. The Create method just creates the capture on the body tag or the root element of 
 the HTML document if the body tag doesn't exist. An example of this is shown in calls three and four below. 
 
