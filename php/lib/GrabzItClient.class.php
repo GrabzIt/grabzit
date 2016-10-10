@@ -221,7 +221,7 @@ class GrabzItClient
 	*/
 	public function Save($callBackURL = null)
 	{
-		if (empty($this->signaturePartOne) && empty($this->signaturePartTwo) && $this->request == null)
+		if ($this->request == null)
 		{
 			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
