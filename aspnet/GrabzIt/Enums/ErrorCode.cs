@@ -60,6 +60,7 @@ namespace GrabzIt.Enums
         ParameterInvalidAnimationCombination = 155,
         ParameterStartTooSmall = 156,
         ParameterDurationTooLarge = 157,
+        ParameterNoHTML = 163,
         NetworkServerOffline = 200,
         NetworkGeneralError = 201,
         NetworkDDOSAttack = 202,
