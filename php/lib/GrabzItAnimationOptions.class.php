@@ -110,7 +110,7 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 	}	
 	
 	/*
-	Set the width of the resulting screenshot in pixels. Use -1 to not reduce the width of the screenshot.
+	Set the width of the resulting animated GIF in pixels.
 	*/
 	public function setWidth($value)
 	{
@@ -118,7 +118,7 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the width of the resulting screenshot in pixels.
+	Get the width of the resulting animated GIF in pixels.
 	*/
 	public function getWidth()
 	{
@@ -126,7 +126,7 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the height of the resulting screenshot in pixels. Use -1 to not reduce the height of the screenshot.
+	Set the height of the resulting animated GIF in pixels.
 	*/
 	public function setHeight($value)
 	{
@@ -134,7 +134,7 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the height of the resulting screenshot in pixels.
+	Get the height of the resulting animated GIF in pixels.
 	*/
 	public function getHeight()
 	{
@@ -166,7 +166,7 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the quality of the screenshot.
+	Get the quality of the animated GIF.
 	*/
 	public function getQuality()
 	{

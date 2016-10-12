@@ -11,7 +11,7 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	private $includeAllTables = false;
 
 	/*
-	Set to true to extract every table on the web page into a separate spreadsheet sheet. Only available with the XLSX format.
+	Set to true to extract every table on the web page into a separate spreadsheet sheet. Only available with the XLSX and JSON formats.
 	*/
 	public function setIncludeAllTables($value)
 	{

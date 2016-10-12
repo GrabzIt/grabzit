@@ -36,7 +36,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}	
 	
 	/*
-	Set to true if the background of the web page should be included in the screenshot.
+	Set to true if the background of the web page should be included in the PDF.
 	*/
 	public function setIncludeBackground($value)
 	{
@@ -44,7 +44,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get if the background of the web page should be included in the screenshot.
+	Get if the background of the web page should be included in the PDF.
 	*/
 	public function getIncludeBackground()
 	{

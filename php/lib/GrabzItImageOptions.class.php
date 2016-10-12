@@ -30,7 +30,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	}	
 
 	/*
-	Set the height of the browser in pixels. Use -1 to sceenshot  the whole web page.
+	Set the height of the browser in pixels. Use -1 to screenshot the whole web page.
 	*/
 	public function setBrowserHeight($value)
 	{
