@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This class represents the custom watermarks stored in GrabzIt
  *
- * @version 2.0
+ * @version 3.0
  * @author GrabzIt
  */
 @XmlRootElement(name="WaterMark")

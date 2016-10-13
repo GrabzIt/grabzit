@@ -4,24 +4,25 @@
  */
 package it.grabz.grabzit;
 
-import it.grabz.grabzit.enums.BrowserType;
-import it.grabz.grabzit.enums.Country;
 import it.grabz.grabzit.enums.ErrorCode;
 import it.grabz.grabzit.enums.HorizontalPosition;
-import it.grabz.grabzit.enums.TableFormat;
-import it.grabz.grabzit.enums.PageOrientation;
 import it.grabz.grabzit.enums.VerticalPosition;
-import it.grabz.grabzit.enums.ImageFormat;
-import it.grabz.grabzit.enums.PageSize;
+import it.grabz.grabzit.parameters.AnimationOptions;
+import it.grabz.grabzit.parameters.ImageOptions;
+import it.grabz.grabzit.parameters.PDFOptions;
+import it.grabz.grabzit.parameters.ParameterUtility;
+import it.grabz.grabzit.parameters.TableOptions;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,21 +35,21 @@ import javax.xml.bind.JAXBException;
  * This client provides access to the GrabzIt web services
  * This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
  *
- * @version 2.0
+ * @version 3.0
  * @author GrabzIt
  * @see <a href="http://grabz.it/api/java/">GrabzIt Java API</a>
  */
 public class GrabzItClient {
-    private String applicationKey;
-    private String applicationSecret;
+    private final String applicationKey;
+    private final String applicationSecret;
 
-    private String request;
-    private String signaturePartOne;
-    private String signaturePartTwo;
-    private int startDelay;
+    private Request request;
     
-    private final String BASE_URL = "http://api.grabz.it/services/";
-
+    private final String BASE_URL_GET = "http://api.grabz.it/services/";
+    private final String BASE_URL_POST = "http://grabz.it/services/";
+    private final String TAKE_PDF = "takepdf.ashx";
+    private final String TAKE_TABLE = "taketable.ashx";
+    private final String TAKE_PICTURE = "takepicture.ashx";
     /**
      * Create a new instance of the Client class in order to access the GrabzIt API.
      *
@@ -63,322 +64,285 @@ public class GrabzItClient {
     }
     
     /**
-     * This method sets the parameters required to turn an online video into a animated GIF.
-     * @param url The URL of the online video
-     * @param customId A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
-     * @param width The width of the resulting animated GIF in pixels
-     * @param height The height of the resulting animated GIF in pixels
-     * @param start The starting position of the video that should be converted into a animated GIF
-     * @param duration The length in seconds of the video that should be converted into a animated GIF
-     * @param speed The speed of the animated GIF from 0.2 to 10 times the original speed
-     * @param framesPerSecond The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
-     * @param repeat The number of times to loop the animated GIF. If 0 it will loop forever
-     * @param reverse If true the frames of the animated GIF are reversed
-     * @param customWaterMarkId Add a custom watermark to the animated GIF
-     * @param quality The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-     * @param country Request the screenshot from different countries: Default, UK or US
-     * @throws UnsupportedEncodingException 
-     */
-    public void SetAnimationOptions(String url, String customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, boolean reverse, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
-    {
-        url = nullCheck(url);
-        customId = nullCheck(customId);
-        customWaterMarkId = nullCheck(customWaterMarkId);        
-                
-        this.startDelay = 0;
-        this.request = String.format("%stakeanimation.ashx?url=%s&key=%s&width=%s&height=%s&duration=%s&speed=%s&start=%s&customid=%s&fps=%s&repeat=%s&customwatermarkid=%s&reverse=%s&country=%s&quality=%s&callback=",
-                                                          BASE_URL, encode(url), applicationKey, width, height, duration, toString(speed),
-                                                          start, encode(customId), toString(framesPerSecond), repeat, encode(customWaterMarkId), toInt(reverse), country.getValue(), quality);
-        this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + height + "|" + width + "|" + customId + "|" + toString(framesPerSecond) + "|" + toString(speed) + "|" + duration + "|" + repeat + "|" + toInt(reverse) + "|" + start + "|" + customWaterMarkId + "|" + country.getValue() + "|" + quality;
-    }
-
-    /**
-    * This method sets the parameters required to turn an online video into a animated GIF.
-    * @param url The URL of the online video
-    * @param customId A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
-    * @param width The width of the resulting animated GIF in pixels
-    * @param height The height of the resulting animated GIF in pixels
-    * @param start The starting position of the video that should be converted into a animated GIF
-    * @param duration The length in seconds of the video that should be converted into a animated GIF
-    * @param speed The speed of the animated GIF from 0.2 to 10 times the original speed
-    * @param framesPerSecond The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
-    * @param repeat The number of times to loop the animated GIF. If 0 it will loop forever
-    * @param reverse If true the frames of the animated GIF are reversed
-    * @param customWaterMarkId Add a custom watermark to the animated GIF
-    * @throws UnsupportedEncodingException 
-    */   
-    public void SetAnimationOptions(String url, String customId, int width, int height, int start, int duration, float speed, float framesPerSecond, int repeat, boolean reverse, String customWaterMarkId) throws UnsupportedEncodingException
-    {
-        SetAnimationOptions(url, customId, width, height, start, duration, speed, framesPerSecond, repeat, reverse, customWaterMarkId, -1, Country.DEFAULT);
-    } 
-
-    /**
-    * This method sets the parameters required to turn an online video into a animated GIF.
-    * @param url The URL of the online video
-    * @param customId A custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified
-    * @throws UnsupportedEncodingException 
-    */   
-    public void SetAnimationOptions(String url, String customId) throws UnsupportedEncodingException
-    {
-        SetAnimationOptions(url, customId, 0, 0, 0, 0, 0, 0, 0, false, "", -1, Country.DEFAULT);
-    } 
-    
-    /**
-    * This method sets the parameters required to turn an online video into a animated GIF.
-    * @param url The URL of the online video
-    * @throws UnsupportedEncodingException 
-    */   
-    public void SetAnimationOptions(String url) throws UnsupportedEncodingException
-    {
-        SetAnimationOptions(url, "", 0, 0, 0, 0, 0, 0, 0, false, "", -1, Country.DEFAULT);
-    }     
-    
-    /**
-     * This method sets the parameters required to take a screenshot of a web page.
-     * @param url The URL that the screenshot should be made of
-     * @param customId A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified
-     * @param browserWidth The width of the browser in pixels
-     * @param browserHeight The height of the browser in pixels
-     * @param outputWidth The height of the resulting screenshot in pixels
-     * @param outputHeight The width of the resulting screenshot in pixels
-     * @param format The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png
-     * @param delay The number of milliseconds to wait before taking the screenshot
-     * @param targetElement The id of the only HTML element in the web page to turn into a screenshot
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @param customWaterMarkId Add a custom watermark to the image
-     * @param quality The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
-     * @param country Request the screenshot from different countries: Default, UK or US
+     * This method specifies the URL of the online video that should be converted into a animated GIF.
+     * @param url The URL to convert into a animated GIF.
+     * @param options A instance of the AnimationOptions class that defines any special options to use when creating the animated GIF.
      * @throws UnsupportedEncodingException
      */
-    public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
+    public void URLToAnimation(String url, AnimationOptions options) throws UnsupportedEncodingException
     {
-        url = nullCheck(url);
-        customId = nullCheck(customId);
-        targetElement = nullCheck(targetElement);
-        customWaterMarkId = nullCheck(customWaterMarkId);
-        
-        this.startDelay = delay;        
-        this.request = String.format("%stakepicture.ashx?url=%s&key=%s&width=%s&height=%s&bwidth=%s&bheight=%s&format=%s&customid=%s&delay=%s&target=%s&customwatermarkid=%s&requestmobileversion=%s&country=%s&quality=%s&callback=",
-                                                              BASE_URL, encode(url), applicationKey, outputWidth, outputHeight,
-                                                              browserWidth, browserHeight, format.getValue(), encode(customId), delay, encode(targetElement), encode(customWaterMarkId), requestAs.getValue(), country.getValue(), quality);
-        this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight + "|" + browserWidth + "|" + customId + "|" + delay + "|" + targetElement + "|" + customWaterMarkId + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality;
-    }
-    
-    /**
-     * This method sets the parameters required to take a screenshot of a web page.
-     * @param url The URL that the screenshot should be made of
-     * @param customId A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified
-     * @param browserWidth The width of the browser in pixels
-     * @param browserHeight The height of the browser in pixels
-     * @param outputWidth The height of the resulting screenshot in pixels
-     * @param outputHeight The width of the resulting screenshot in pixels
-     * @param format The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png
-     * @param delay The number of milliseconds to wait before taking the screenshot
-     * @param targetElement The id of the only HTML element in the web page to turn into a screenshot
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @param customWaterMarkId Add a custom watermark to the image
-     * @throws UnsupportedEncodingException
-     */
-    public void SetImageOptions(String url, String customId, int browserWidth, int browserHeight, int outputWidth, int outputHeight, ImageFormat format, int delay, String targetElement, BrowserType requestAs, String customWaterMarkId) throws UnsupportedEncodingException
-    {
-        SetImageOptions(url, customId, browserWidth, browserHeight, outputWidth, outputHeight, format, delay, targetElement, requestAs, customWaterMarkId, -1, Country.DEFAULT);
-    }
-
-    /**
-     * This method sets the parameters required to take a screenshot of a web page.
-     * @param url The URL that the screenshot should be made of
-     * @throws UnsupportedEncodingException
-     */
-    public void SetImageOptions(String url) throws UnsupportedEncodingException
-    {
-        SetImageOptions(url, "", 0, 0, 0, 0, ImageFormat.JPG, 0, "", BrowserType.STANDARDBROWSER, "");
-    }
-
-    /**
-     * This method sets the parameters required to take a screenshot of a web page.
-     * @param url The URL that the screenshot should be made of
-     * @param customId A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified
-     * @throws UnsupportedEncodingException
-     */
-    public void SetImageOptions(String url, String customId) throws UnsupportedEncodingException
-    {
-        SetImageOptions(url, customId, 0, 0, 0, 0, ImageFormat.JPG, 0, "", BrowserType.STANDARDBROWSER, "");
-    }
-
-    /**
-     * This method sets the parameters required to extract all tables from a web page.
-     * @param url The URL that the should be used to extract tables
-     * @param customId A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified
-     * @param tableNumberToInclude Which table to include, in order from the beginning of the page to the end
-     * @param format The format the table should be in: csv, xlsx
-     * @param includeHeaderNames If true header names will be included in the table
-     * @param includeAllTables If true all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet. Only available with the XLSX format
-     * @param targetElement The id of the only HTML element in the web page that should be used to extract tables from
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @param country Request the screenshot from different countries: Default, UK or US
-     * @throws UnsupportedEncodingException
-     */
-    public void SetTableOptions(String url, String customId, int tableNumberToInclude, TableFormat format, boolean includeHeaderNames, boolean includeAllTables, String targetElement, BrowserType requestAs, Country country) throws UnsupportedEncodingException
-    {
-        url = nullCheck(url);
-        customId = nullCheck(customId);
-        targetElement = nullCheck(targetElement);
-        
-        this.startDelay = 0;        
-        this.request = BASE_URL + "taketable.ashx?key=" + encode(applicationKey)+"&url="+encode(url)+"&includeAllTables="+ toInt(includeAllTables)+"&includeHeaderNames="+toInt(includeHeaderNames)+"&format="+format.getValue()+"&tableToInclude="+tableNumberToInclude+"&customid="+encode(customId)+"&target="+encode(targetElement)+"&requestmobileversion="+requestAs.getValue()+"&country="+country.getValue()+"&callback=";
-        this.signaturePartOne = applicationSecret+"|"+url+"|";
-        this.signaturePartTwo = "|"+customId+"|"+tableNumberToInclude+"|"+toInt(includeAllTables)+"|"+toInt(includeHeaderNames)+"|"+targetElement+"|"+format.getValue()+"|"+requestAs.getValue()+"|"+country.getValue();
-    }
-    
-     /**
-     * This method sets the parameters required to extract all tables from a web page.
-     * @param url The URL that the should be used to extract tables
-     * @param customId A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified
-     * @param tableNumberToInclude Which table to include, in order from the beginning of the page to the end
-     * @param format The format the table should be in: csv, xlsx
-     * @param includeHeaderNames If true header names will be included in the table
-     * @param includeAllTables If true all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet. Only available with the XLSX format
-     * @param targetElement The id of the only HTML element in the web page that should be used to extract tables from
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @throws UnsupportedEncodingException
-     */
-    public void SetTableOptions(String url, String customId, int tableNumberToInclude, TableFormat format, boolean includeHeaderNames, boolean includeAllTables, String targetElement, BrowserType requestAs) throws UnsupportedEncodingException
-    {
-        SetTableOptions(url, customId, tableNumberToInclude, format, includeHeaderNames, includeAllTables, targetElement, requestAs, Country.DEFAULT);
+        if (options == null)
+        {
+            options = new AnimationOptions();
+        }
+        this.request = new Request(BASE_URL_GET + "takeanimation.ashx", false, options, url);        
     }   
-
+    
     /**
-     * This method sets the parameters required to extract all tables from a web page.
-     * @param url The URL that the should be used to extract tables
-     * @param customId A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified
+     * This method specifies the URL of the online video that should be converted into a animated GIF.
+     * @param url The URL to convert into a animated GIF.
      * @throws UnsupportedEncodingException
      */
-    public void SetTableOptions(String url, String customId) throws UnsupportedEncodingException
+    public void URLToAnimation(String url) throws UnsupportedEncodingException
     {
-        SetTableOptions(url, customId, 1, TableFormat.CSV, true, false, "", BrowserType.STANDARDBROWSER);
-    }
-
-    /**
-     * This method sets the parameters required to extract all tables from a web page.
-     * @param url The URL that the should be used to extract tables
-     * @throws UnsupportedEncodingException
-     */
-    public void SetTableOptions(String url) throws UnsupportedEncodingException
-    {
-        SetTableOptions(url, "", 1, TableFormat.CSV, true, false, "", BrowserType.STANDARDBROWSER);
-    }
-
-    /**
-     * This method sets the parameters required to convert a web page into a PDF.
-     * @param url The URL that the should be converted into a PDF
-     * @param customId A custom identifier that you can pass through to the webs ervice. This will be returned with the callback URL you have specified
-     * @param includeBackground If true the background of the web page should be included in the screenshot
-     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'
-     * @param orientation The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-     * @param includeLinks True if links should be included in the PDF
-     * @param includeOutline True if the PDF outline should be included
-     * @param title Provide a title to the PDF document
-     * @param coverURL The URL of a web page that should be used as a cover page for the PDF
-     * @param marginTop The margin that should appear at the top of the PDF document page
-     * @param marginLeft The margin that should appear at the left of the PDF document page
-     * @param marginBottom The margin that should appear at the bottom of the PDF document page
-     * @param marginRight The margin that should appear at the right of the PDF document
-     * @param delay The number of milliseconds to wait before taking the screenshot
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @param customWaterMarkId Add a custom watermark to each page of the PDF document
-     * @param quality The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-     * @param country Request the screenshot from different countries: Default, UK or US
-     * @throws UnsupportedEncodingException
-     */
-    public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
-    {
-        SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, "", customWaterMarkId, quality, country);
+        URLToAnimation(url, null);
     }    
     
     /**
-     * This method sets the parameters required to convert a web page into a PDF.
-     * @param url The URL that the should be converted into a PDF
-     * @param customId A custom identifier that you can pass through to the webs ervice. This will be returned with the callback URL you have specified
-     * @param includeBackground If true the background of the web page should be included in the screenshot
-     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'
-     * @param orientation The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-     * @param includeLinks True if links should be included in the PDF
-     * @param includeOutline True if the PDF outline should be included
-     * @param title Provide a title to the PDF document
-     * @param coverURL The URL of a web page that should be used as a cover page for the PDF
-     * @param marginTop The margin that should appear at the top of the PDF document page
-     * @param marginLeft The margin that should appear at the left of the PDF document page
-     * @param marginBottom The margin that should appear at the bottom of the PDF document page
-     * @param marginRight The margin that should appear at the right of the PDF document
-     * @param delay The number of milliseconds to wait before taking the screenshot
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @param templateId Add a PDF template ID that specifies the header and footer of the PDF document
-     * @param customWaterMarkId Add a custom watermark to each page of the PDF document
-     * @param quality The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-     * @param country Request the screenshot from different countries: Default, UK or US
+     * This method specifies the URL that should be converted into a image screenshot.
+     * @param url The URL to capture as a screenshot.
+     * @param options A instance of the ImageOptions class that defines any special options to use when creating the screenshot.
      * @throws UnsupportedEncodingException
      */
-    public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String templateId, String customWaterMarkId, int quality, Country country) throws UnsupportedEncodingException
+    public void URLToImage(String url, ImageOptions options) throws UnsupportedEncodingException
     {
-        url = nullCheck(url);
-        customId = nullCheck(customId);
-        title = nullCheck(title);
-        coverURL = nullCheck(coverURL);        
-        customWaterMarkId = nullCheck(customWaterMarkId);
-        templateId = nullCheck(templateId);
-        
-        this.startDelay = delay;
-        this.request = BASE_URL + "takepdf.ashx?key=" + encode(applicationKey) + "&url=" + encode(url) + "&background=" + toInt(includeBackground) + "&pagesize=" + pagesize.getValue() + "&orientation=" + orientation.getValue() + "&customid=" + encode(customId) + "&templateid=" + encode(templateId) + "&customwatermarkid=" + encode(customWaterMarkId) + "&includelinks=" + toInt(includeLinks) + "&includeoutline=" + toInt(includeOutline) + "&title=" + encode(title) + "&coverurl=" + encode(coverURL) + "&mleft=" + marginLeft + "&mright=" + marginRight + "&mtop=" + marginTop + "&mbottom=" + marginBottom + "&delay=" + delay + "&requestmobileversion=" + requestAs.getValue() + "&country=" + country.getValue() + "&quality=" + quality + "&callback=";
-        this.signaturePartOne = applicationSecret + "|" + url + "|";
-        this.signaturePartTwo = "|" + customId + "|" + toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() + "|" + customWaterMarkId + "|" + toInt(includeLinks) + "|" + toInt(includeOutline) + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight + "|" + delay + "|" + requestAs.getValue() + "|" + country.getValue() + "|" + quality + "|" + templateId;
+        if (options == null)
+        {
+            options = new ImageOptions();
+        }
+        this.request = new Request(BASE_URL_GET + TAKE_PICTURE, false, options, url);        
     }
-
-   /**
-     * This method sets the parameters required to convert a web page into a PDF.
-     * @param url The URL that the should be converted into a PDF
-     * @param customId A custom identifier that you can pass through to the webs ervice. This will be returned with the callback URL you have specified
-     * @param includeBackground If true the background of the web page should be included in the screenshot
-     * @param pagesize The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'
-     * @param orientation The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-     * @param includeLinks True if links should be included in the PDF
-     * @param includeOutline True if the PDF outline should be included
-     * @param title Provide a title to the PDF document
-     * @param coverURL The URL of a web page that should be used as a cover page for the PDF
-     * @param marginTop The margin that should appear at the top of the PDF document page
-     * @param marginLeft The margin that should appear at the left of the PDF document page
-     * @param marginBottom The margin that should appear at the bottom of the PDF document page
-     * @param marginRight The margin that should appear at the right of the PDF document
-     * @param delay The number of milliseconds to wait before taking the screenshot
-     * @param requestAs Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
-     * @param customWaterMarkId Add a custom watermark to each page of the PDF document
-     * @throws UnsupportedEncodingException
-     */
-    public void SetPDFOptions(String url, String customId, boolean includeBackground, PageSize pagesize, PageOrientation orientation, boolean includeLinks, boolean includeOutline, String title, String coverURL, int marginTop, int marginLeft, int marginBottom, int marginRight, int delay, BrowserType requestAs, String customWaterMarkId) throws UnsupportedEncodingException
-    {
-        SetPDFOptions(url, customId, includeBackground, pagesize, orientation, includeLinks, includeOutline, title, coverURL, marginTop, marginLeft, marginBottom, marginRight, delay, requestAs, customWaterMarkId, -1, Country.DEFAULT);
-    }
+    
     /**
-     * This method sets the parameters required to convert a web page into a PDF.
-     * @param url The URL that the should be converted into a PDF
-     * @param customId A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified
+     * This method specifies the URL that should be converted into a image screenshot.
+     * @param url The URL to capture as a screenshot.
      * @throws UnsupportedEncodingException
      */
-    public void SetPDFOptions(String url, String customId)  throws UnsupportedEncodingException
+    public void URLToImage(String url) throws UnsupportedEncodingException
     {
-        SetPDFOptions(url, customId, true, PageSize.A4, PageOrientation.PORTRAIT, true, false, "", "", 10, 10, 10, 10, 0, BrowserType.STANDARDBROWSER, "");
-    }
+        URLToImage(url, null);
+    }    
+    
+    /**
+     * This method specifies the HTML that should be converted into a image.
+     * @param html The HTML to convert into a image.
+     * @param options A instance of the PDFOptions class that defines any special options to use when creating the image.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToImage(String html, ImageOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new ImageOptions();
+        }
+        this.request = new Request(BASE_URL_POST + TAKE_PICTURE, true, options, html);
+    }   
+    
+    /**
+     * This method specifies the HTML that should be converted into a image.
+     * @param html The HTML to convert into a image.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToImage(String html) throws UnsupportedEncodingException
+    {
+        HTMLToImage(html, null);
+    }    
+    
+    /**
+     * This method specifies a HTML file that should be converted into a image.
+     * @param path The file path of a HTML file to convert into a image.
+     * @param options A instance of the ImageOptions class that defines any special options to use when creating the image.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToImage(String path, ImageOptions options) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        this.HTMLToImage(fileToHTML(path), options);
+    }        
 
     /**
-     * This method sets the parameters required to convert a web page into a PDF.
+     * This method specifies a HTML file that should be converted into a image.
+     * @param path The file path of a HTML file to convert into a image.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToImage(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        FileToImage(path, null);
+    }    
+    
+    /**
+     * This method specifies the URL that the HTML tables should be extracted from.
+     * @param url The URL that the should be used to extract tables
+     * @param options A instance of the TableOptions class that defines any special options to use when converting the HTML table.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToTable(String url, TableOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new TableOptions();
+        }
+        this.request = new Request(BASE_URL_GET + TAKE_TABLE, false, options, url);        
+    }    
+    
+    /**
+     * This method specifies the URL that the HTML tables should be extracted from.
+     * @param url The URL that the should be used to extract tables
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToTable(String url) throws UnsupportedEncodingException
+    {
+        URLToTable(url, null);
+    }    
+    
+    /**
+     * This method specifies the HTML that the HTML tables should be extracted from.
+     * @param html The HTML to extract HTML tables from.
+     * @param options A instance of the TableOptions class that defines any special options to use when converting the HTML table.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToTable(String html, TableOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new TableOptions();
+        }
+        this.request = new Request(BASE_URL_POST + TAKE_TABLE, true, options, html);
+    }    
+    
+    /**
+     * This method specifies the HTML that the HTML tables should be extracted from.
+     * @param html The HTML to extract HTML tables from.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToTable(String html) throws UnsupportedEncodingException
+    {
+        HTMLToTable(html, null);
+    }    
+    
+    /**
+     * This method specifies a HTML file that the HTML tables should be extracted from.
+     * @param path The file path of a HTML file to extract HTML tables from.
+     * @param options A instance of the TableOptions class that defines any special options to use when converting the HTML table.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToTable(String path, TableOptions options) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        this.HTMLToTable(fileToHTML(path), options);
+    }    
+
+    /**
+     * This method specifies a HTML file that the HTML tables should be extracted from.
+     * @param path The file path of a HTML file to extract HTML tables from.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToTable(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        FileToTable(path, null);
+    }    
+    
+    /**
+     * This method specifies the URL that should be converted into a PDF.
+     * @param url The URL that the should be converted into a PDF
+     * @param options A instance of the PDFOptions class that defines any special options to use when creating the PDF.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToPDF(String url, PDFOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new PDFOptions();
+        }
+        this.request = new Request(BASE_URL_GET + TAKE_PDF, false, options, url);
+    }
+    
+    /**
+     * This method specifies the URL that should be converted into a PDF.
      * @param url The URL that the should be converted into a PDF
      * @throws UnsupportedEncodingException
      */
-    public void SetPDFOptions(String url)  throws UnsupportedEncodingException
+    public void URLToPDF(String url) throws UnsupportedEncodingException
     {
-        SetPDFOptions(url, "", true, PageSize.A4, PageOrientation.PORTRAIT, true, false, "", "", 10, 10, 10, 10, 0, BrowserType.STANDARDBROWSER, "");
-    }
+        URLToPDF(url, null);
+    }    
+    
+    /**
+     * This method specifies the HTML that should be converted into a PDF.
+     * @param html The HTML to convert into a PDF.
+     * @param options A instance of the PDFOptions class that defines any special options to use when creating the PDF.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToPDF(String html, PDFOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new PDFOptions();
+        }
+        this.request = new Request(BASE_URL_POST + TAKE_PDF, true, options, html);
+    }    
+
+    /**
+     * This method specifies the HTML that should be converted into a PDF.
+     * @param html The HTML to convert into a PDF.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToPDF(String html) throws UnsupportedEncodingException
+    {
+        HTMLToPDF(html, null);
+    }    
+    
+    /**
+     * This method specifies a HTML file that should be converted into a PDF.
+     * @param path The file path of a HTML file to convert into a PDF.
+     * @param options A instance of the PDFOptions class that defines any special options to use when creating the PDF.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToPDF(String path, PDFOptions options) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        this.HTMLToPDF(fileToHTML(path), options);
+    }       
+    
+    /**
+     * This method specifies a HTML file that should be converted into a PDF.
+     * @param path The file path of a HTML file to convert into a PDF.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToPDF(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        FileToPDF(path, null);
+    }    
+
+    private String fileToHTML(String path) throws IOException, GrabzItException {
+        File fileToConvert = new File(path);
+        if(!fileToConvert.exists())
+        {
+            throw new GrabzItException("File: " + path + " does not exist", ErrorCode.FILENONEXISTANTPATH);
+        }
+        FileReader reader = null;
+        String html = "";
+        try
+        {
+            reader = new FileReader(fileToConvert);
+            char[] chars = new char[(int) fileToConvert.length()];
+            reader.read(chars);
+            html = new String(chars);            
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                reader.close();
+            }
+        }
+        return html;
+    }       
 
     /**
      * Calls the GrabzIt web service to take the screenshot.
@@ -388,19 +352,25 @@ public class GrabzItClient {
      */
     public String Save(String callBackURL) throws Exception
     {
-        callBackURL = nullCheck(callBackURL);
+        callBackURL = ParameterUtility.nullCheck(callBackURL);
         
-        if (isNullOrEmpty(this.signaturePartOne) && isNullOrEmpty(this.signaturePartTwo) && isNullOrEmpty(this.request))
+        if (this.request == null)
         {
-            throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.PARAMETERMISSINGPARAMETERS);
+            throw new GrabzItException("No parameters have been set.", ErrorCode.PARAMETERMISSINGPARAMETERS);
         }
-
-        String sig = encrypt(this.signaturePartOne + callBackURL + this.signaturePartTwo);
-        String currentRequest = this.request;
         
-        currentRequest += encode(callBackURL) + "&sig=" + encode(sig);
-
-        TakeScreenShotResult result = get(currentRequest, TakeScreenShotResult.class);
+        String sig = encrypt(this.request.getOptions()._getSignatureString(applicationSecret, callBackURL, this.request.getTargetUrl()));
+        
+        TakeScreenShotResult result = null;
+        if (this.request.isIsPost())
+        {   
+            result = post(this.request.getUrl(), this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "html", this.request.getData()), TakeScreenShotResult.class);            
+        }
+        else
+        {
+            result = get(this.request.getUrl() + "?" + this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "url", this.request.getData()), TakeScreenShotResult.class);
+        }
+        
         checkForError(result);
 
         return result.getId();
@@ -432,7 +402,7 @@ public class GrabzItClient {
             return null;
         }
         
-        Thread.sleep(3000 + startDelay);
+        Thread.sleep(3000 + request.getOptions()._startDelay());
         
         //Wait for it to be ready.
         while (true)
@@ -518,7 +488,7 @@ public class GrabzItClient {
             return null;
         }
         
-        return get(BASE_URL + "getstatus.ashx?id=" + id, Status.class);
+        return get(BASE_URL_GET + "getstatus.ashx?id=" + id, Status.class);
     }
 
     /**
@@ -529,12 +499,12 @@ public class GrabzItClient {
      */
     public Cookie[] GetCookies(String domain) throws Exception
     {
-        domain = nullCheck(domain);
+        domain = ParameterUtility.nullCheck(domain);
         
         String sig = encrypt(String.format("%s|%s", this.applicationSecret, domain));
 
         String url = String.format("%sgetcookies.ashx?domain=%s&key=%s&sig=%s",
-                                                  BASE_URL, domain, applicationKey, sig);
+                                                  BASE_URL_GET, domain, applicationKey, sig);
         Cookies cookies = get(url, Cookies.class);
         
         checkForError(cookies);
@@ -651,16 +621,16 @@ public class GrabzItClient {
             expiresStr = df.format(expires);
         }
         
-        name = nullCheck(name);
-        domain = nullCheck(domain);
-        value = nullCheck(value);
-        path = nullCheck(path);        
+        name = ParameterUtility.nullCheck(name);
+        domain = ParameterUtility.nullCheck(domain);
+        value = ParameterUtility.nullCheck(value);
+        path = ParameterUtility.nullCheck(path);        
         
         String sig = encrypt(String.format("%s|%s|%s|%s|%s|%s|%s|%s", applicationSecret, name, domain,
                                       value, path, (httponly ? 1 : 0), expiresStr, 0));
         
         String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
-                                                  BASE_URL, encode(name), encode(domain), encode(value), encode(path), (httponly ? 1 : 0), encode(expiresStr), applicationKey, sig);
+                                                  BASE_URL_GET, ParameterUtility.encode(name), ParameterUtility.encode(domain), ParameterUtility.encode(value), ParameterUtility.encode(path), (httponly ? 1 : 0), ParameterUtility.encode(expiresStr), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -681,13 +651,13 @@ public class GrabzItClient {
      */
     public boolean DeleteCookie(String name, String domain) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
-        name = nullCheck(name);
-        domain = nullCheck(domain);
+        name = ParameterUtility.nullCheck(name);
+        domain = ParameterUtility.nullCheck(domain);
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, name, domain, 1));
 
         String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&delete=1&key=%s&sig=%s",
-                                                  BASE_URL, encode(name), encode(domain), applicationKey, sig);
+                                                  BASE_URL_GET, ParameterUtility.encode(name), ParameterUtility.encode(domain), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -711,7 +681,7 @@ public class GrabzItClient {
      */
     public boolean AddWaterMark(String identifier, String path, HorizontalPosition xpos, VerticalPosition ypos) throws UnsupportedEncodingException, NoSuchAlgorithmException, MalformedURLException, IOException, JAXBException, Exception
     {
-        identifier = nullCheck(identifier);
+        identifier = ParameterUtility.nullCheck(identifier);
         
         File fileToUpload = new File(path);
         if(!fileToUpload.exists())
@@ -748,12 +718,12 @@ public class GrabzItClient {
      */
     public boolean DeleteWaterMark(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, Exception
     {
-        identifier = nullCheck(identifier);
+        identifier = ParameterUtility.nullCheck(identifier);
         
         String sig = encrypt(String.format("%s|%s", applicationSecret, identifier));
 
         String url = String.format("%sdeletewatermark.ashx?key=%s&identifier=%s&sig=%s",
-                                                              BASE_URL, encode(applicationKey), encode(identifier), sig);
+                                                              BASE_URL_GET, ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -799,12 +769,12 @@ public class GrabzItClient {
 
     private WaterMark[] getWaterMarks(String identifier) throws UnsupportedEncodingException, NoSuchAlgorithmException, IOException, JAXBException, Exception
     {
-        identifier = nullCheck(identifier);
+        identifier = ParameterUtility.nullCheck(identifier);
         
         String sig =  encrypt(String.format("%s|%s", applicationSecret, identifier));
 
         String url = String.format("%sgetwatermarks.ashx?key=%s&identifier=%s&sig=%s",
-                                                          BASE_URL, encode(applicationKey), encode(identifier), sig);
+                                                          BASE_URL_GET, ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
 
         WaterMarks watermarks = get(url, WaterMarks.class);
 
@@ -832,7 +802,7 @@ public class GrabzItClient {
             return null;
         }
         
-        String url = String.format("%sgetfile.ashx?id=%s", BASE_URL, id);
+        String url = String.format("%sgetfile.ashx?id=%s", BASE_URL_GET, id);
 
         URL requestUrl = new URL(url);
         URLConnection connection = (URLConnection) requestUrl.openConnection();
@@ -883,8 +853,8 @@ public class GrabzItClient {
     {
         try
         {
-            URL request = new URL(url);
-            URLConnection connection = (URLConnection) request.openConnection();
+            URL req = new URL(url);
+            URLConnection connection = (URLConnection) req.openConnection();
             HttpUtility.CheckResponse(connection);        
             Response response = new Response();        
             return response.Parse(connection, clazz);
@@ -892,6 +862,38 @@ public class GrabzItClient {
         catch(UnknownHostException e)
         {
             throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NETWORKGENERALERROR);
+        }
+    }
+    
+    private <T> T post(String targetUrl, String parameters, Class<T> clazz) throws IOException, JAXBException, Exception
+    {
+        URL url = new URL(targetUrl);
+        URLConnection conn = url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded"); 
+        OutputStreamWriter writer = null;
+        
+        try 
+        {
+            writer = new OutputStreamWriter(conn.getOutputStream());
+            writer.write(parameters);
+            writer.flush();
+            
+            HttpUtility.CheckResponse(conn);
+            
+            Response response = new Response();        
+            return response.Parse(conn, clazz);
+        }
+        catch(UnknownHostException e)
+        {
+            throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NETWORKGENERALERROR);
+        }        
+        finally
+        {
+            if (writer != null)
+            {
+                writer.close();
+            }
         }
     }
 
@@ -914,37 +916,9 @@ public class GrabzItClient {
 
         return sb.toString();
     }
-
-    private String encode(String value) throws UnsupportedEncodingException
-    {
-        return URLEncoder.encode(value, "UTF-8");
-    }
-
-    private String nullCheck(String value)
-    {
-        if (value == null)
-        {
-            return "";
-        }
-        return value;
-    }
     
     private boolean isNullOrEmpty(String toTest)
     {
         return (toTest == null || toTest.isEmpty());
-    }
-
-    private String toString(float value)
-    {
-        if ((value % 1) == 0)
-        {
-            return String.valueOf(((int)value));
-        }
-        return String.valueOf(value);
-    }
-    
-    private int toInt(boolean value)
-    {
-        return (value ? 1 : 0);
     }
 }

@@ -4,10 +4,9 @@
  */
 package it.grabz.grabzit;
 
-import it.grabz.grabzit.enums.BrowserType;
 import it.grabz.grabzit.enums.HorizontalPosition;
-import it.grabz.grabzit.enums.ImageFormat;
 import it.grabz.grabzit.enums.VerticalPosition;
+import it.grabz.grabzit.parameters.ImageOptions;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,13 +31,14 @@ public class GrabzItClientTest {
     private boolean isSubscribedAccount;
     private final String WaterMark_Identifier = "test_java_watermark";
     private final String WaterMark_Path = "test.png";
+    private final String HTML_Path = "test.html";
     private final String Cookie_Name = "test_cookie";
     private final String Cookie_Domain = ".example.com";
     private GrabzItClient client;
     
     public GrabzItClientTest() {
-        applicationKey = "APPLICATION KEY";
-        applicationSecret = "APPLICATION SECRET";
+        applicationKey = "YOUR APPLICATION KEY";
+        applicationSecret = "YOUR APPLICATION SECRET";
         isSubscribedAccount = false;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
@@ -76,7 +76,14 @@ public class GrabzItClientTest {
     {
         try
         {
-            client.SetImageOptions("http://ca.linkedin.com/pub/theresa-bradshaw/9b/742/820", null, 1024, -1, -1, -1, ImageFormat.JPG, 0, null, BrowserType.STANDARDBROWSER, null);
+            ImageOptions options = new ImageOptions();
+            options.setBrowserHeight(-1);
+            options.setBrowserWidth(1024);
+            options.setOutputHeight(-1);
+            options.setOutputWidth(-1);
+            options.setTargetElement(null);
+            options.setCustomWaterMarkId(null);
+            client.URLToImage("http://ca.linkedin.com/pub/theresa-bradshaw/9b/742/820", options);
             Assert.assertTrue("Null check passed", true);
         }
         catch(Exception ex)
@@ -90,22 +97,22 @@ public class GrabzItClientTest {
     {
         try
         {
-            client.SetPDFOptions("http://www.google.com");
-            Assert.assertNotNull("Failed to take screenshot using SetPDFOptions method", client.Save());
+            client.URLToPDF("http://www.google.com");
+            Assert.assertNotNull("Failed to take screenshot using URLToPDF method", client.Save());
         }
         catch(Exception ex)
         {
             Assert.fail("An error occured when trying to take a PDF screenshot: " + ex.getMessage());
         }
-    }
+    }    
 
     @Test
     public void testTakeImage() throws IOException, JAXBException, Exception
     {
         try
         {
-            client.SetImageOptions("http://www.google.com");
-            Assert.assertNotNull("Failed to take screenshot using SetImageOptions method", client.Save());
+            client.URLToImage("http://www.google.com");
+            Assert.assertNotNull("Failed to take screenshot using URLToImage method", client.Save());
         }
         catch(Exception ex)
         {
@@ -114,12 +121,26 @@ public class GrabzItClientTest {
     }
     
     @Test
+    public void testHTMLToImage() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            client.HTMLToImage("<h1>Hello World</h1>");
+            Assert.assertNotNull("Failed to take screenshot using HTMLToImage method", client.Save());
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to take a create a image: " + ex.getMessage());
+        }
+    }    
+    
+    @Test
     public void testTakeAnimation() throws IOException, JAXBException, Exception
     {
         try
         {
-            client.SetAnimationOptions("http://www.youtube.com");
-            Assert.assertNotNull("Failed to take animation using SetAnimationOptions method", client.Save());
+            client.URLToAnimation("https://www.youtube.com/watch?v=k85mRPqvMbE");
+            Assert.assertNotNull("Failed to take animation using URLToAnimation method", client.Save());
         }
         catch(Exception ex)
         {
@@ -130,7 +151,7 @@ public class GrabzItClientTest {
     @Test
     public void testSave() throws IOException, JAXBException, Exception
     {
-        String screenshotPath = getWaterMarkPath();
+        String screenshotPath = getResourcePath(WaterMark_Path);
         screenshotPath.replace(WaterMark_Path, "test.jpg");
         File file = new File(screenshotPath);
         if (file.exists())
@@ -139,7 +160,7 @@ public class GrabzItClientTest {
         }
         try
         {
-            client.SetImageOptions("http://www.google.com");
+            client.URLToImage("http://www.google.com");
             Assert.assertEquals("Screenshot not saved", client.SaveTo(screenshotPath), true);
             file = new File(screenshotPath);
             Assert.assertEquals("Not saved screenshot file", file.exists(), true);
@@ -155,7 +176,7 @@ public class GrabzItClientTest {
     {
         try
         {
-            client.SetImageOptions("http://www.google.com");
+            client.URLToImage("http://www.google.com");
             GrabzItFile grabzItFile = client.SaveTo();
             Assert.assertNotNull("Screenshot object not returned", grabzItFile);
             Assert.assertNotSame("Screenshot not saved", grabzItFile.getBytes().length, 0);
@@ -170,7 +191,7 @@ public class GrabzItClientTest {
     @Test
     public void testStatus() throws IOException, JAXBException, Exception 
     {
-        client.SetImageOptions("http://www.google.com");
+        client.URLToImage("http://www.google.com");
         String id = client.Save();
         Status status = client.GetStatus(id);
         Assert.assertEquals("Failed to get correct screenshot status!", true, (status.isProcessing() || status.isCached()));              
@@ -241,13 +262,13 @@ public class GrabzItClientTest {
         }
         if (isSubscribedAccount)
         {
-            client.AddWaterMark(WaterMark_Identifier, getWaterMarkPath(), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
+            client.AddWaterMark(WaterMark_Identifier, getResourcePath(WaterMark_Path), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
         }
         else
         {
             try
             {
-                client.AddWaterMark(WaterMark_Identifier, getWaterMarkPath(), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
+                client.AddWaterMark(WaterMark_Identifier, getResourcePath(WaterMark_Path), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
                 Assert.fail("User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method");
             }
             catch(Exception ex)
@@ -278,13 +299,13 @@ public class GrabzItClientTest {
         }
         if (isSubscribedAccount)
         {
-            client.AddWaterMark(WaterMark_Identifier, getWaterMarkPath(), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
+            client.AddWaterMark(WaterMark_Identifier, getResourcePath(WaterMark_Path), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
         }
         else
         {
             try
             {
-                client.AddWaterMark(WaterMark_Identifier, getWaterMarkPath(), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
+                client.AddWaterMark(WaterMark_Identifier, getResourcePath(WaterMark_Path), HorizontalPosition.CENTER, VerticalPosition.MIDDLE);
                 Assert.fail("User not subscribed should throw error. If user is subscribed please set @isSubscribedAccount in the setup method");
             }
             catch(Exception ex)
@@ -338,10 +359,10 @@ public class GrabzItClientTest {
         return (waterMark != null);
     }
 
-    private String getWaterMarkPath() {
+    private String getResourcePath(String item) {
         URL location = GrabzItClientTest.class.getProtectionDomain().getCodeSource().getLocation();
         String path = location.getFile();
         path = path.substring(1);
-        return path + WaterMark_Path;       
+        return path + item;       
     }
 }

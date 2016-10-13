@@ -20,21 +20,38 @@ public class TakeScreenshot extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         String url = request.getParameter("url");
+        String html = request.getParameter("html");
         String format = request.getParameter("format");
+        boolean isHtml = request.getParameter("convert").equals("html");
+        
         try
         {
             GrabzItClient client = new GrabzItClient(Config.getApplicationKey(), Config.getApplicationSecret());
             if (format.equals("pdf"))
             {
-                client.SetPDFOptions(url);
+                if (isHtml)
+                {
+                    client.HTMLToPDF(html);
+                }
+                else
+                {                    
+                    client.URLToPDF(url);
+                }
             }
             else if (format.equals("gif"))
             {
-                client.SetAnimationOptions(url);
+                client.URLToAnimation(url);
             }
             else
             {
-                client.SetImageOptions(url);
+                if (isHtml)
+                {
+                    client.HTMLToImage(html);
+                }
+                else
+                {                    
+                    client.URLToImage(url);
+                }
             }
             client.Save(Config.getHandlerUrl());
         }

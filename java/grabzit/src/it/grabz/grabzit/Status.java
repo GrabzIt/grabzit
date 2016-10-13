@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * This class represents the screenshot status
  *
- * @version 2.0
+ * @version 3.0
  * @author GrabzIt
  */
 @XmlRootElement(name="WebResult")
