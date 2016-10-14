@@ -1,7 +1,7 @@
-GrabzIt 2.3
+GrabzIt 3.0
 ===========
 
-This library allows you to programmatically convert web pages into images, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's. For more help please read our [documentation](http://grabz.it/api/nodejs).
+This library allows you to programmatically convert HTML and web pages into images, PDF's, CSV's, spreadsheets and JSON. Additionally GrabzIt allows you to convert online videos into animated GIF's. For more help please read our [documentation](http://grabz.it/api/nodejs).
 
 It is usually best to place these files in their own directory.
 
@@ -9,7 +9,7 @@ Before the package can be used you must [register](http://grabz.it/register.aspx
 
     var grabzit = require("grabzit");
     var client = new grabzit("YOUR APPLICATION KEY", "YOUR APPLICATION SECRET");
-    client.set_image_options("http://www.google.com");
+    client.url_to_image("http://www.google.com");
     client.save(http://www.mysite.com/handler");
 
 The handler then gets passed the following query string parameters:

@@ -74,15 +74,26 @@ app.get('/handler', function (req, res) {
 
 app.post('/', function (req, res) {
     var targetUrl = req.body.url;
+    var isHtml = req.body.convert == "html";
     var client = new grabzit(config.applicationKey, config.applicationSecret);
     if (req.body.type == "jpg") {
-        client.set_image_options(targetUrl);
+		if (isHtml){
+			client.html_to_image(req.body.html);
+		}
+		else {
+        	client.url_to_image(targetUrl);
+		}
     }
-    if (req.body.type == "gif") {
-	    client.set_animation_options(targetUrl);
+    else if (req.body.type == "gif") {
+	    client.url_to_animation(targetUrl);
     }
     else {
-        client.set_pdf_options(targetUrl);
+		if (isHtml){
+			client.html_to_pdf(req.body.html);
+		}
+		else {
+			client.url_to_pdf(targetUrl);
+		}
     }
 
     client.save(config.callbackHandlerUrl, function (error, id){

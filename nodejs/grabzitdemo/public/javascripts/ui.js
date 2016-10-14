@@ -33,11 +33,27 @@ function zoomout()
 function selectChanged(select) {
     if ($(select).val() == 'gif') {
         $('#spnGif').show();
+		$('#divURL').show();
+		$('#divHTML').hide();
+		$('#divConvert').hide();
         $('#spnScreenshot').hide();
     }
     else {
+		$('#divConvert select').change();
+		$('#divConvert').show();
         $('#spnScreenshot').show();
         $('#spnGif').hide();
+    }
+}
+
+function selectConvertChanged(select) {
+    if ($(select).val() == 'url') {
+		$('#divURL').show();
+		$('#divHTML').hide();
+    }
+    else {
+		$('#divHTML').show();
+		$('#divURL').hide();
     }
 }
 
