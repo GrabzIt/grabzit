@@ -1,39 +1,47 @@
 # The public REST API for http://grabz.it
 # @example To include the GrabzIt module do the following
 #    require 'grabzit'
-module GrabzIt
+module GrabzIt	
 	require 'digest/md5'
 	require 'net/http'
 	require 'rexml/document'
 	require 'cgi'
 	require 'uri'
+	require File.join(File.dirname(__FILE__), 'utility')
 	require File.join(File.dirname(__FILE__), 'screenshotstatus')
 	require File.join(File.dirname(__FILE__), 'cookie')
 	require File.join(File.dirname(__FILE__), 'watermark')
 	require File.join(File.dirname(__FILE__), 'exception')
-
+	require File.join(File.dirname(__FILE__), 'animationoptions')
+	require File.join(File.dirname(__FILE__), 'imageoptions')
+	require File.join(File.dirname(__FILE__), 'tableoptions')
+	require File.join(File.dirname(__FILE__), 'pdfoptions')	
+	
 	# This client provides access to the GrabzIt web services
 	# This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
 	# @example Example usage
 	#    require 'grabzit'	
 	#
 	#    grabzItClient = GrabzIt::Client.new("YOUR APPLICATION KEY", "YOUR APPLICATION SECRET")
-	#    grabzItClient.set_image_options("http://www.google.com")
+	#    grabzItClient.url_to_image("http://www.google.com")
 	#    grabzItClient.save("http://www.mysite.com/grabzit/handler")
-	# @version 2.1
+	# @version 3.0
 	# @author GrabzIt
 	# @see http://grabz.it/api/ruby/ GrabzIt Ruby API
 	class Client
 
-		WebServicesBaseURL = "http://api.grabz.it/services/"
-		private_constant :WebServicesBaseURL	
+		WebServicesBaseURLGet = "http://api.grabz.it/services/"
+		private_constant :WebServicesBaseURLGet	
+		WebServicesBaseURLPost = "http://grabz.it/services/"
+		private_constant :WebServicesBaseURLPost
+		TakePicture = "takepicture.ashx"	
+		private_constant :TakePicture
+		TakeTable = "taketable.ashx"
+		private_constant :TakeTable
+		TakePDF = "takepdf.ashx"
+		private_constant :TakePDF
 		TrueString = "True"
 		private_constant :TrueString
-
-		@@signaturePartOne;
-		@@signaturePartTwo;
-		@@startDelay;		
-		@@request;
 		
 		# Create a new instance of the Client class in order to access the GrabzIt API.
 		#
@@ -45,129 +53,143 @@ module GrabzIt
 			@applicationSecret = applicationSecret
 		end
 
-		# This method sets the parameters required to turn a online video into a animated GIF
+		# This method specifies the URL of the online video that should be converted into a animated GIF
 		#
-		# @param url [String] the URL of the online video
-		# @param customId [String, nil] custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
-		# @param width [Integer, 0] the width of the resulting animated GIF in pixels
-		# @param height [Integer, 0] the height of the resulting animated GIF in pixels
-		# @param start [Integer, 0] the starting position of the video that should be converted into a animated GIF
-		# @param duration [Integer, 0] the length in seconds of the video that should be converted into a animated GIF
-		# @param speed [Float, 0] the speed of the animated GIF from 0.2 to 10 times the original speed
-		# @param framesPerSecond [Float, 0] the number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
-		# @param repeat [Integer, 0] the number of times to loop the animated GIF. If 0 it will loop forever
-		# @param reverse [Boolean, false] if true the frames of the animated GIF are reversed
-		# @param customWaterMarkId [String, nil] add a custom watermark to the animated GIF
-		# @param quality [Integer, -1] the quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-		# @param country [String, nil] request the screenshot from different countries: Default, UK or US
+		# @param url [String] The URL of the video to convert into a animated GIF
+		# @param options [AnimationOptions, nil] a instance of the AnimationOptions class that defines any special options to use when creating the animated GIF
 		# @return [void]		
-		def set_animation_options(url, customId = nil, width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = false, customWaterMarkId = nil, quality = -1, country = nil)
-			@@startDelay = 0;
-			@@request = WebServicesBaseURL + "takeanimation.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&width="+nil_int_check(width)+"&height="+nil_int_check(height)+"&duration="+nil_int_check(duration)+"&speed="+nil_float_check(speed)+"&start="+nil_int_check(start)+"&customid="+CGI.escape(nil_check(customId))+"&fps="+nil_float_check(framesPerSecond)+"&repeat="+nil_int_check(repeat)+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&reverse="+b_to_str(reverse)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="			
-			@@signaturePartOne = @applicationSecret+"|"+nil_check(url)+"|"
-			@@signaturePartTwo = "|"+nil_int_check(height)+"|"+nil_int_check(width)+"|"+nil_check(customId)+"|"+nil_float_check(framesPerSecond)+"|"+nil_float_check(speed)+"|"+nil_int_check(duration)+"|"+nil_int_check(repeat)+"|"+b_to_str(reverse)+"|"+nil_int_check(start)+"|"+nil_check(customWaterMarkId)+"|"+nil_check(country)+"|"+nil_int_check(quality)
-			return nil
-		end
-
-
-		# Sets the parameters required to take a screenshot of a web page.
-		#
-		# @param url [String] the URL that the screenshot should be made of
-		# @param customId [String, nil] custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.	
-		# @param browserWidth [Integer, nil] the width of the browser in pixels
-		# @param browserHeight [Integer, nil] the height of the browser in pixels
-		# @param width [Integer, nil] the width of the resulting thumbnail in pixels
-		# @param height [Integer, nil] the height of the resulting thumbnail in pixels		
-		# @param format [String, nil] the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
-		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
-		# @param targetElement [String, nil] the id of the only HTML element in the web page to turn into a screenshot
-		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-		# @param customWaterMarkId [String, nil] add a custom watermark to the image
-		# @param quality [Integer, -1] the quality of the image where 0 is poor and 100 excellent
-		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"
-		# @return [void]		
-		def set_image_options(url, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil, requestAs = 0, customWaterMarkId = nil, quality = -1, country = nil)
-
-			if delay == nil
-				@@startDelay = 0
-			else
-				@@startDelay = delay
+		def url_to_animation(url, options = nil)
+		
+			if options == nil
+				options = AnimationOptions.new()
 			end
-			
-			@@request = WebServicesBaseURL + "takepicture.ashx?key="+CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&width="+nil_int_check(width)+"&height="+nil_int_check(height)+"&format="+CGI.escape(nil_check(format))+"&bwidth="+nil_int_check(browserWidth)+"&bheight="+nil_int_check(browserHeight)+"&customid="+CGI.escape(nil_check(customId))+"&delay="+nil_int_check(delay)+"&target="+CGI.escape(nil_check(targetElement))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="
-			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
-			@@signaturePartTwo = "|"+nil_check(format)+"|"+nil_int_check(height)+"|"+nil_int_check(width)+"|"+nil_int_check(browserHeight)+"|"+nil_int_check(browserWidth)+"|"+nil_check(customId)+"|"+nil_int_check(delay)+"|"+nil_check(targetElement)+"|"+nil_check(customWaterMarkId)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)+"|"+nil_int_check(quality)
-
+		
+			@request = Request.new(WebServicesBaseURLGet + "takeanimation.ashx", false, options, url)
 			return nil
 		end
 
-		# Sets the parameters required to extract one or more tables from a web page.
+		# This method specifies the URL that should be converted into a image screenshot
 		#
-		# @param url [String] the URL that the should be used to extract tables
-		# @param customId [String, nil] a custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.	
-		# @param tableNumberToInclude [Integer, 1] the index of the table to be converted, were all tables in a web page are ordered from the top of the web page to bottom
-		# @param format [String, 'csv'] the format the table should be in: csv, xlsx
-		# @param includeHeaderNames [Boolean, true] if true header names will be included in the table
-		# @param includeAllTables [Boolean, true] if true all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet. Only available with the XLSX format.
-		# @param targetElement [String, nil] the id of the only HTML element in the web page that should be used to extract tables from
-		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"		
-		# @return [void]
-		def set_table_options(url, customId = nil, tableNumberToInclude = 1, format = 'csv', includeHeaderNames = true, includeAllTables = false, targetElement = nil, requestAs = 0, country = nil)
-			@@startDelay = 0
-			
-			@@request = WebServicesBaseURL + "taketable.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(url)+"&includeAllTables="+b_to_str(includeAllTables)+"&includeHeaderNames="+b_to_str(includeHeaderNames)+"&format="+CGI.escape(nil_check(format))+"&tableToInclude="+nil_int_check(tableNumberToInclude)+"&customid="+CGI.escape(nil_check(customId))+"&target="+CGI.escape(nil_check(targetElement))+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&callback="
-			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
-			@@signaturePartTwo = "|"+nil_check(customId)+"|"+nil_int_check(tableNumberToInclude)+"|"+b_to_str(includeAllTables)+"|"+b_to_str(includeHeaderNames)+"|"+nil_check(targetElement)+"|"+nil_check(format)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)
+		# @param url [String] the URL to capture as a screenshot
+		# @param options [ImageOptions, nil] a instance of the ImageOptions class that defines any special options to use when creating the screenshot
+		# @return [void]		
+		def url_to_image(url, options = nil)		
 
+			if options == nil
+				options = ImageOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLGet + TakePicture, false, options, url)
 			return nil
+		end
+
+		# This method specifies the HTML that should be converted into a image
+		#
+		# @param html [String] the HTML to convert into a image
+		# @param options [ImageOptions, nil] a instance of the ImageOptions class that defines any special options to use when creating the image
+		# @return [void]		
+		def html_to_image(html, options = nil)		
+
+			if options == nil
+				options = ImageOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLPost + TakePicture, true, options, html)
+			return nil
+		end		
+
+		# This method specifies a HTML file that should be converted into a image
+		#
+		# @param path [String] the file path of a HTML file to convert into a image
+		# @param options [ImageOptions, nil] a instance of the ImageOptions class that defines any special options to use when creating the image
+		# @return [void]		
+		def file_to_image(path, options = nil)		
+			html_to_image(read_html_file(path), options)
+		end
+		
+		# This method specifies the URL that the HTML tables should be extracted from
+		#
+		# @param url [String] the URL to extract HTML tables from
+		# @param options [TableOptions, nil] a instance of the TableOptions class that defines any special options to use when converting the HTML table		
+		# @return [void]
+		def url_to_table(url, options = nil)
+		
+			if options == nil
+				options = TableOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLGet + TakeTable, false, options, url)
+			return nil			
 		end	
-
-		# Sets the parameters required to convert a web page into a PDF.
+		
+		# This method specifies the HTML that the HTML tables should be extracted from
 		#
-		# @param url url [String] the URL that the should be converted into a pdf
-		# @param customId [String, nil] a custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
-		# @param includeBackground [Boolean, true] if true the background of the web page should be included in the screenshot
-		# @param pagesize [String, 'A4'] the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
-		# @param orientation [String, 'Portrait'] the orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-		# @param includeLinks [Boolean, true] true if links should be included in the PDF
-		# @param includeOutline [Boolean, false] True if the PDF outline should be included
-		# @param title [String, nil] provide a title to the PDF document
-		# @param coverURL [String, nil] the URL of a web page that should be used as a cover page for the PDF
-		# @param marginTop [Integer, 10] the margin that should appear at the top of the PDF document page
-		# @param marginLeft [Integer, 10] the margin that should appear at the left of the PDF document page
-		# @param marginBottom [Integer, 10] the margin that should appear at the bottom of the PDF document page
-		# @param marginRight [Integer, 10] the margin that should appear at the right of the PDF document
-		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
-		# @param requestAs [Integer, 0] request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-		# @param templateId [String, nil] add a PDF template ID that specifies the header and footer of the PDF document
-		# @param customWaterMarkId [String, nil] add a custom watermark to each page of the PDF document
-		# @param quality [Integer, -1] the quality of the PDF where 0 is poor and 100 excellent
-		# @param country [String, nil] request the screenshot from different countries: Default = "", UK = "UK", US = "US"				
+		# @param html [String] the HTML to extract HTML tables from
+		# @param options [TableOptions, nil] a instance of the TableOptions class that defines any special options to use when converting the HTML table
+		# @return [void]		
+		def html_to_table(html, options = nil)		
+
+			if options == nil
+				options = TableOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLPost + TakeTable, true, options, html)
+			return nil
+		end		
+
+		# This method specifies a HTML file that the HTML tables should be extracted from
+		#
+		# @param path [String] the file path of a HTML file to extract HTML tables from
+		# @param options [TableOptions, nil] a instance of the TableOptions class that defines any special options to use when converting the HTML table
+		# @return [void]		
+		def file_to_table(path, options = nil)		
+			html_to_table(read_html_file(path), options)
+		end		
+		
+		# This method specifies the URL that should be converted into a PDF
+		#
+		# @param url [String] the URL to capture as a PDF
+		# @param options [PDFOptions, nil] a instance of the PDFOptions class that defines any special options to use when creating the PDF		
 		# @return [void]
-		def set_pdf_options(url, customId = nil, includeBackground = true, pagesize = 'A4', orientation = 'Portrait', includeLinks = true, includeOutline = false, title = nil, coverURL = nil, marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = nil, requestAs = 0, templateId = nil, customWaterMarkId = nil, quality = -1, country = nil)
-			pagesize = nil_check(pagesize).upcase
-			$orientation = nil_check(orientation).capitalize
-			
-			if delay == nil
-				@@startDelay = 0
-			else
-				@@startDelay = delay
-			end	
+		def url_to_pdf(url, options = nil)
+		
+			if options == nil
+				options = PDFOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLGet + TakePDF, false, options, url)
+			return nil			
+		end	
+		
+		# This method specifies the HTML that should be converted into a PDF
+		#
+		# @param html [String] the HTML to convert into a PDF
+		# @param options [PDFOptions, nil] a instance of the PDFOptions class that defines any special options to use when creating the PDF
+		# @return [void]		
+		def html_to_pdf(html, options = nil)		
 
-			@@request = WebServicesBaseURL + "takepdf.ashx?key=" + CGI.escape(nil_check(@applicationKey))+"&url="+CGI.escape(nil_check(url))+"&background="+b_to_str(includeBackground)+"&pagesize="+pagesize+"&orientation="+orientation+"&customid="+CGI.escape(nil_check(customId))+"&templateid="+CGI.escape(nil_check(templateId))+"&customwatermarkid="+CGI.escape(nil_check(customWaterMarkId))+"&includelinks="+b_to_str(includeLinks)+"&includeoutline="+b_to_str(includeOutline)+"&title="+CGI.escape(nil_check(title))+"&coverurl="+CGI.escape(nil_check(coverURL))+"&mleft="+nil_int_check(marginLeft)+"&mright="+nil_int_check(marginRight)+"&mtop="+nil_int_check(marginTop)+"&mbottom="+nil_int_check(marginBottom)+"&delay="+nil_int_check(delay)+"&requestmobileversion="+nil_int_check(requestAs)+"&country="+CGI.escape(nil_check(country))+"&quality="+nil_int_check(quality)+"&callback="
+			if options == nil
+				options = PDFOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLPost + TakePDF, true, options, html)
+			return nil
+		end		
 
-			@@signaturePartOne = nil_check(@applicationSecret)+"|"+nil_check(url)+"|"
-			@@signaturePartTwo = "|"+nil_check(customId)+"|"+b_to_str(includeBackground)+"|"+pagesize +"|"+orientation+"|"+nil_check(customWaterMarkId)+"|"+b_to_str(includeLinks)+"|"+b_to_str(includeOutline)+"|"+nil_check(title)+"|"+nil_check(coverURL)+"|"+nil_int_check(marginTop)+"|"+nil_int_check(marginLeft)+"|"+nil_int_check(marginBottom)+"|"+nil_int_check(marginRight)+"|"+nil_int_check(delay)+"|"+nil_int_check(requestAs)+"|"+nil_check(country)+"|"+nil_int_check(quality)+"|"+nil_check(templateId)
-
-			return nil		
-		end
+		# This method specifies a HTML file that should be converted into a PDF
+		#
+		# @param path [String] the file path of a HTML file to convert into a PDF
+		# @param options [PDFOptions, nil] a instance of the PDFOptions class that defines any special options to use when creating the PDF
+		# @return [void]		
+		def file_to_pdf(path, options = nil)		
+			html_to_pdf(read_html_file(path), options)
+		end		
 		
 		# Calls the GrabzIt web service to take the screenshot
 		#
 		# The handler will be passed a URL with the following query string parameters:
 		# - message (is any error message associated with the screenshot)
-		# - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
+		# - customId (is a custom id you may have specified in the [AnimationOptions], [ImageOptions], [PDFOptions] or [TableOptions] classes)
 		# - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
 		# - filename (is the filename of the screenshot)
 		# - format (is the format of the screenshot)
@@ -176,16 +198,21 @@ module GrabzIt
 		# @return [String] the unique identifier of the screenshot. This can be used to get the screenshot with the {#get_result} method
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def save(callBackURL = nil)
-			if @@signaturePartOne == nil && @@signaturePartTwo == nil && @@request == nil
+			if @request == nil
 				  raise GrabzItException.new("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS)
 			end
-
-			sig = encode(@@signaturePartOne+nil_check(callBackURL)+@@signaturePartTwo)
-			currentRequest = @@request
 			
-			currentRequest += CGI.escape(nil_check(callBackURL))+"&sig="+sig
+			sig = encode(@request.options()._getSignatureString(@applicationSecret, callBackURL, @request.getTargetUrl()))
+			
+			data = nil
 
-			return get_result_value(get(currentRequest), "ID")
+			if !@request.isPost()
+				data = get(@request.url() + "?" + URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "url", @request.data())))
+			else
+				data = post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", @request.data())))
+			end
+
+			return get_result_value(data, "ID")
 		end   
 
 		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
@@ -205,7 +232,7 @@ module GrabzIt
 			end			
 			
 			#Wait for it to be possibly ready
-			sleep((@@startDelay / 1000) + 3)
+			sleep((@request.options().startDelay() / 1000) + 3)
 
 			#Wait for it to be ready.
 			while true do
@@ -248,7 +275,7 @@ module GrabzIt
 				return nil
 			end			
 			
-			result = get(WebServicesBaseURL + "getstatus.ashx?id=" + nil_check(id))
+			result = get(WebServicesBaseURLGet + "getstatus.ashx?id=" + GrabzIt::Utility.nil_check(id))
 
 			doc = REXML::Document.new(result)
 
@@ -270,7 +297,7 @@ module GrabzIt
 				return nil
 			end
 			
-			return get(WebServicesBaseURL + "getfile.ashx?id=" + nil_check(id))
+			return get(WebServicesBaseURLGet + "getfile.ashx?id=" + GrabzIt::Utility.nil_check(id))
 		end
 
 		# Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well
@@ -279,11 +306,11 @@ module GrabzIt
 		# @return [Array<Cookie>] an array of cookies
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def get_cookies(domain)
-			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(domain))               
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(domain))               
 
-			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&sig="+sig
+			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+"&sig="+sig
 
-			result = get(WebServicesBaseURL + "getcookies.ashx?" + qs)
+			result = get(WebServicesBaseURLGet + "getcookies.ashx?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -317,11 +344,15 @@ module GrabzIt
 		# @return [Boolean] returns true if the cookie was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def set_cookie(name, domain, value = "", path = "/", httponly = false, expires = "")
-			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|"+nil_check(value)+"|"+nil_check(path)+"|"+b_to_str(httponly)+"|"+nil_check(expires)+"|0")
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(name)+"|"+GrabzIt::Utility.nil_check(domain)+
+			"|"+GrabzIt::Utility.nil_check(value)+"|"+GrabzIt::Utility.nil_check(path)+"|"+GrabzIt::Utility.b_to_str(httponly)+
+			"|"+GrabzIt::Utility.nil_check(expires)+"|0")
 
-			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&name="+CGI.escape(nil_check(name))+"&value="+CGI.escape(nil_check(value))+"&path="+CGI.escape(nil_check(path))+"&httponly="+b_to_str(httponly)+"&expires="+CGI.escape(nil_check(expires))+"&sig="+sig
+			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+"&name="+
+			CGI.escape(GrabzIt::Utility.nil_check(name))+"&value="+CGI.escape(GrabzIt::Utility.nil_check(value))+"&path="+CGI.escape(GrabzIt::Utility.nil_check(path))+
+			"&httponly="+GrabzIt::Utility.b_to_str(httponly)+"&expires="+CGI.escape(GrabzIt::Utility.nil_check(expires))+"&sig="+sig
 
-			return (get_result_value(get(WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# Delete a custom cookie or block a global cookie from being used
@@ -331,11 +362,13 @@ module GrabzIt
 		# @return [Boolean] returns true if the cookie was successfully set
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def delete_cookie(name, domain)
-			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(name)+"|"+nil_check(domain)+"|1")
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(name)+
+			"|"+GrabzIt::Utility.nil_check(domain)+"|1")
 
-			qs = "key=" + CGI.escape(nil_check(@applicationKey))+"&domain="+CGI.escape(nil_check(domain))+"&name="+CGI.escape(nil_check(name))+"&delete=1&sig="+sig
+			qs = "key=" + CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+
+			"&name="+CGI.escape(GrabzIt::Utility.nil_check(name))+"&delete=1&sig="+sig
 
-			return (get_result_value(get(WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# Get your uploaded custom watermark
@@ -345,7 +378,7 @@ module GrabzIt
 		def get_watermark(identifier)
 			watermarks = get_watermarks(identifier)
 			if watermarks.length == 1
-				return watermarks[0];
+				return watermarks[0]
 			end
 			
 			return nil
@@ -370,7 +403,8 @@ module GrabzIt
 			if !File.file?(path)
 				raise "File: " + path + " does not exist"
 			end
-			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(identifier)+"|"+nil_int_check(xpos)+"|"+nil_int_check(ypos));
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(identifier)+"|"+GrabzIt::Utility.nil_int_check(xpos)+
+			"|"+GrabzIt::Utility.nil_int_check(ypos))
 
 			boundary = '--------------------------'+Time.now.to_f.to_s
 
@@ -387,19 +421,19 @@ module GrabzIt
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"key\"\r\n\r\n"
-			post_body << CGI.escape(nil_check(@applicationKey))
+			post_body << CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"identifier\"\r\n\r\n"
-			post_body << CGI.escape(nil_check(identifier))
+			post_body << CGI.escape(GrabzIt::Utility.nil_check(identifier))
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"xpos\"\r\n\r\n"
-			post_body << nil_check(xpos)
+			post_body << GrabzIt::Utility.nil_check(xpos)
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"ypos\"\r\n\r\n"
-			post_body << nil_check(ypos)
+			post_body << GrabzIt::Utility.nil_check(ypos)
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"sig\"\r\n\r\n"
@@ -422,70 +456,20 @@ module GrabzIt
 		# @return [Boolean] returns true if the watermark was successfully deleted
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def delete_watermark(identifier)
-			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(identifier))               
 
-			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&identifier="+CGI.escape(nil_check(identifier))+"&sig="+sig
+			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&identifier="+CGI.escape(GrabzIt::Utility.nil_check(identifier))+"&sig="+sig
 
-			return (get_result_value(get(WebServicesBaseURL + "deletewatermark.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(WebServicesBaseURLGet + "deletewatermark.ashx?" + qs), "Result") == TrueString)
 		end	
-
-		# This method calls the GrabzIt web service to take the screenshot.
-		#
-		# @param url [String] the URL that the screenshot should be made of
-		# @param callback [String, nil] the handler the GrabzIt web service should call after it has completed its work
-		# @param customId [String, nil] custom identifier that you can pass through to the screenshot webservice. This will be returned with the callback URL you have specified.	
-		# @param browserWidth [Integer, nil] the width of the browser in pixels
-		# @param browserHeight [Integer, nil] the height of the browser in pixels
-		# @param width [Integer, nil] the width of the resulting thumbnail in pixels	
-		# @param height [Integer, nil] the height of the resulting thumbnail in pixels	
-		# @param format [String, nil] the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
-		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
-		# @param targetElement [String, nil] the id of the only HTML element in the web page to turn into a screenshot
-		# @return [String] returns the unique identifier of the screenshot. This can be used to get the screenshot with the get_result method
-		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
-		# @deprecated Use {#set_image_options} and {#save} instead.
-		def take_picture(url, callback = nil, customId = nil, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
-			set_image_options(url, customId, browserWidth, browserHeight, width, height, format, delay, targetElement)	
-			return save(callback)
-		end   
-
-		# This method takes the screenshot and then saves the result to a file. WARNING this method is synchronous
-		#
-		# @param url [String] the URL that the screenshot should be made of
-		# @param saveToFile [String] the file path that the screenshot should saved to
-		# @param browserWidth [Integer, nil] the width of the browser in pixels
-		# @param browserHeight [Integer, nil] the height of the browser in pixels
-		# @param width [Integer, nil] the width of the resulting thumbnail in pixels
-		# @param height [Integer, nil] the height of the resulting thumbnail in pixels	
-		# @param format [String, nil] the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
-		# @param delay [Integer, nil] the number of milliseconds to wait before taking the screenshot
-		# @param targetElement [String, nil] the id of the only HTML element in the web page to turn into a screenshot
-		# @example Synchronously save the screenshot to test.jpg
-		#   save_picture('images/test.jpg')	
-		# @return [Boolean] returns the true if it is successfull otherwise it throws an exception
-		# @raise [RuntimeError] if the screenshot cannot be saved a RuntimeError will be raised that will contain an explanation
-		# @deprecated Use {#set_image_options} and {#save_to} instead.
-		def save_picture(url, saveToFile, browserWidth = nil, browserHeight = nil, width = nil, height = nil, format = nil, delay = nil, targetElement = nil)
-			set_image_options(url, nil, browserWidth, browserHeight, width, height, format, delay, targetElement)	
-			return save_to(saveToFile)
-		end	
-
-		# This method returns the image itself. If nothing is returned then something has gone wrong or the image is not ready yet.
-		#
-		# @param id [String] the id of the screenshot
-		# @return [Object] returns the screenshot
-		# @deprecated Use {#get_result} instead.	
-		def get_picture(id)
-			return get_result(id)
-		end
 
 		private
 		def get_watermarks(identifier = nil)
-			sig = encode(nil_check(@applicationSecret)+"|"+nil_check(identifier))               
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(identifier))               
 
-			qs = "key=" +CGI.escape(nil_check(@applicationKey))+"&identifier="+CGI.escape(nil_check(identifier))+"&sig="+sig
+			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&identifier="+CGI.escape(GrabzIt::Utility.nil_check(identifier))+"&sig="+sig
 
-			result = get(WebServicesBaseURL + "getwatermarks.ashx?" + qs)
+			result = get(WebServicesBaseURLGet + "getwatermarks.ashx?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -509,6 +493,15 @@ module GrabzIt
 			response_check(response)
 			return response.body
 		end
+		
+		private
+		def post(url, params)
+			headers = {'Content-Type' => 'application/x-www-form-urlencoded'}	
+			uri = URI.parse(url)
+			response = Net::HTTP.start(uri.host, uri.port) { |http| http.post(uri.request_uri, params, headers) }
+			response_check(response)
+			return response.body
+		end		
 
 		private
 		def response_check(response)
@@ -518,37 +511,6 @@ module GrabzIt
 			elsif statusCode >= 400
 				raise GrabzItException.new("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR)
 			end
-		end
-
-		private
-		def b_to_str(bValue)
-			if bValue
-				return 1.to_s
-			end
-			return 0.to_s
-		end
-
-		private
-		def nil_check(param)
-			if param == nil
-				return ""
-			end
-			return param
-		end
-
-		private
-		def nil_int_check(param)
-			return param.to_i.to_s
-		end
-
-		private
-		def nil_float_check(param)
-			val = param.to_f
-			if ((val % 1) == 0)
-				return val.to_i.to_s
-			end
-			
-			return val.to_s
 		end
 		
 		private
@@ -570,6 +532,16 @@ module GrabzIt
 			return Digest::MD5.hexdigest(text.encode('ascii', {:invalid => :replace, :undef => :replace, :replace => '?'}))			
 		end
 
+		private
+		def read_html_file(path)
+			if !File.file?(path)
+				raise "File: " + path + " does not exist"
+			end
+
+			file = File.open(path, "rb")
+			return file.read			
+		end
+		
 		private 
 		def get_result_value(result, field)
 			doc = REXML::Document.new(result)

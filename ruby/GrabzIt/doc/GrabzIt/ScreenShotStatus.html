@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Class: GrabzIt::ScreenShotStatus
   
-    &mdash; Documentation by YARD 0.8.6.1
+    &mdash; Documentation by YARD 0.9.5
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "GrabzIt::ScreenShotStatus";
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
 
 
@@ -28,51 +27,50 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="../_index.html">Index (S)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../GrabzIt.html" title="GrabzIt (module)">GrabzIt</a></span></span>
      &raquo; 
     <span class="title">ScreenShotStatus</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="../class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="../method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="../file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
+      <iframe id="search_frame" src="../class_list.html"></iframe>
 
-    <div id="content"><h1>Class: GrabzIt::ScreenShotStatus
+      <div id="content"><h1>Class: GrabzIt::ScreenShotStatus
   
   
   
 </h1>
-
-<dl class="box">
+<div class="box_info">
   
-    <dt class="r1">Inherits:</dt>
-    <dd class="r1">
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
       <span class="inheritName">Object</span>
       
         <ul class="fullTree">
@@ -83,21 +81,25 @@
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
       
-      </dd>
-    
+    </dd>
+  </dl>
   
-  
-    
-  
-    
+
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/grabzit/screenshotstatus.rb</dd>
   
-</dl>
-<div class="clear"></div>
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/grabzit/screenshotstatus.rb</dd>
+  </dl>
+  
+</div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
@@ -135,7 +137,7 @@
       
         
         <div class='inline'>
-<p>2.1</p>
+<p>3.0</p>
 </div>
       
     </li>
@@ -152,7 +154,7 @@
   
     <h2>
       Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -160,7 +162,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#cached-instance_method" title="#cached (instance method)">- (Boolean) <strong>cached</strong> </a>
+      <a href="#cached-instance_method" title="#cached (instance method)">#<strong>cached</strong>  &#x21d2; Boolean </a>
     
 
     
@@ -184,7 +186,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#expired-instance_method" title="#expired (instance method)">- (Boolean) <strong>expired</strong> </a>
+      <a href="#expired-instance_method" title="#expired (instance method)">#<strong>expired</strong>  &#x21d2; Boolean </a>
     
 
     
@@ -208,33 +210,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (ScreenShotStatus) <strong>initialize</strong>(processing = false, cached = false, expired = false, message = &#39;&#39;) </a>
-    
-
-    
-  </span>
-  
-  
-    <span class="note title constructor">constructor</span>
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>A new instance of ScreenShotStatus.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#message-instance_method" title="#message (instance method)">- (String) <strong>message</strong> </a>
+      <a href="#message-instance_method" title="#message (instance method)">#<strong>message</strong>  &#x21d2; String </a>
     
 
     
@@ -258,7 +234,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#processing-instance_method" title="#processing (instance method)">- (Boolean) <strong>processing</strong> </a>
+      <a href="#processing-instance_method" title="#processing (instance method)">#<strong>processing</strong>  &#x21d2; Boolean </a>
     
 
     
@@ -282,61 +258,6 @@
     </ul>
   
 
-<div id="constructor_details" class="method_details_list">
-  <h2>Constructor Details</h2>
-  
-    <div class="method_details first">
-  <h3 class="signature first" id="initialize-instance_method">
-  
-    - (<tt><span class='object_link'><a href="" title="GrabzIt::ScreenShotStatus (class)">ScreenShotStatus</a></span></tt>) <strong>initialize</strong>(processing = false, cached = false, expired = false, message = &#39;&#39;) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-<p>A new instance of ScreenShotStatus</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-7
-8
-9
-10
-11
-12</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/screenshotstatus.rb', line 7</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_processing'>processing</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_cached'>cached</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_expired'>expired</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-	<span class='ivar'>@Processing</span> <span class='op'>=</span> <span class='id identifier rubyid_processing'>processing</span>
-	<span class='ivar'>@Cached</span> <span class='op'>=</span> <span class='id identifier rubyid_cached'>cached</span>
-	<span class='ivar'>@Expired</span> <span class='op'>=</span> <span class='id identifier rubyid_expired'>expired</span>
-	<span class='ivar'>@Message</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-  
-</div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -346,7 +267,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="cached-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>cached</strong> 
+    #<strong>cached</strong>  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -355,7 +276,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>If true the screenshot has been cached</p>
+<p>Returns if true the screenshot has been cached</p>
 
 
   </div>
@@ -405,7 +326,7 @@
       <div class="method_details ">
   <h3 class="signature " id="expired-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>expired</strong> 
+    #<strong>expired</strong>  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -414,7 +335,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>If true the screenshot has expired</p>
+<p>Returns if true the screenshot has expired</p>
 
 
   </div>
@@ -464,7 +385,7 @@
       <div class="method_details ">
   <h3 class="signature " id="message-instance_method">
   
-    - (<tt>String</tt>) <strong>message</strong> 
+    #<strong>message</strong>  &#x21d2; <tt>String</tt> 
   
 
   
@@ -523,7 +444,7 @@
       <div class="method_details ">
   <h3 class="signature " id="processing-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>processing</strong> 
+    #<strong>processing</strong>  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -532,7 +453,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>If true the screenshot is still being processed</p>
+<p>Returns if true the screenshot is still being processed</p>
 
 
   </div>
@@ -583,11 +504,12 @@
 
 </div>
 
-    <div id="footer">
-  Generated on Sat Jun 22 12:23:49 2013 by
+      <div id="footer">
+  Generated on Mon Oct 17 21:45:29 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-2.0.0).
+  0.9.5 (ruby-1.9.3).
 </div>
 
+    </div>
   </body>
 </html>

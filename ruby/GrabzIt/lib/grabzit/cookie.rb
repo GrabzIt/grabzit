@@ -1,9 +1,9 @@
 module GrabzIt
 	# This class represents the cookies stored in GrabzIt
-	# @version 2.1
+	# @version 3.0
 	# @author GrabzIt
 	class Cookie
-		# @api private
+		# @!visibility private
 		def initialize(name = '', domain = '', value = '', path = '', httpOnly = false, expires = nil, type = nil)
 			@Name = name
 			@Value = value

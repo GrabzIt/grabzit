@@ -1,9 +1,9 @@
 module GrabzIt
 	# This class represents the screenshot status
-	# @version 2.1
+	# @version 3.0
 	# @author GrabzIt
 	class ScreenShotStatus
-		# @api private
+		# @!visibility private
 		def initialize(processing = false, cached = false, expired = false, message = '')
 			@Processing = processing
 			@Cached = cached
