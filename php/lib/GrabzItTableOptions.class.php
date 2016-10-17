@@ -2,10 +2,10 @@
 include_once("GrabzItBaseOptions.class.php");
 
 class GrabzItTableOptions extends GrabzItBaseOptions
-{	
+{
 	private $requestAs = 0;
 	private $format = 'csv';
-	private $targetElement = null;	
+	private $targetElement = null;
 	private $tableNumberToInclude = 1;
 	private $includeHeaderNames = true;
 	private $includeAllTables = false;
@@ -19,13 +19,13 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get all table on the web page will be extracted with each table appearing in a separate spreadsheet sheet.
+	Get if every table on will be extracted with each table appearing in a separate spreadsheet sheet.
 	*/
 	public function getIncludeAllTables()
 	{
 		return $this->includeAllTables;
-	}	
-	
+	}
+
 	/*
 	Set to true to include header names into the table.
 	*/
@@ -40,8 +40,8 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	public function getIncludeHeaderNames()
 	{
 		return $this->includeHeaderNames;
-	}	
-	
+	}
+
 	/*
 	Set the index of the table to be converted, were all tables in a web page are ordered from the top of the web page to bottom.
 	*/
@@ -89,7 +89,7 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	{
 		return $this->targetElement;
 	}
-	
+
 	/*
 	Set which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3.
 	*/
@@ -112,30 +112,30 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 		if ($url != null)
 		{
 			$urlParam = $this->nullToEmpty($url)."|";
-		}		
-		
+		}
+
 		$callBackURLParam = '';
 		if ($callBackURL != null)
 		{
 			$callBackURLParam = $this->nullToEmpty($callBackURL);
-		}				
-		
+		}
+
 		return $this->nullToEmpty($applicationSecret)."|". $urlParam . $callBackURLParam .
 		"|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->tableNumberToInclude)."|".$this->nullToEmpty(intval($this->includeAllTables))."|".
 		$this->nullToEmpty(intval($this->includeHeaderNames))."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->format)."|".
-		$this->nullToEmpty(intval($requestAs))."|".$this->nullToEmpty($this->getCountry());	  
+		$this->nullToEmpty(intval($requestAs))."|".$this->nullToEmpty($this->getCountry());
 	}
-	
+
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
 	{
-		$params = $this->createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue);		
+		$params = $this->createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue);
 		$params['includeAllTables'] = $this->nullToEmpty(intval($this->includeAllTables));
 		$params['includeHeaderNames'] = $this->nullToEmpty(intval($this->includeHeaderNames));
 		$params['format'] = $this->nullToEmpty($this->format);
 		$params['tableToInclude'] = $this->nullToEmpty($this->tableNumberToInclude);
 		$params['target'] = $this->nullToEmpty($this->targetElement);
-		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));			
-		
+		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));
+
 		return $params;
 	}
 }
