@@ -6,17 +6,27 @@ class HomeController < ActionController::Base
   
   def processScreenshot
   	url = params[:url]
+	html = params[:html]
   	format = params[:format]
+	isHtml = params[:convert] == "html"
   	
   	app_config = YAML.load_file("#{Rails.root}/config/config.yml")[Rails.env]
   	grabzItClient = GrabzIt::Client.new(app_config['application_key'], app_config['application_secret'])
   	
   	if format == "jpg"
-  		grabzItClient.set_image_options(url)
+		if isHtml
+			grabzItClient.html_to_image(html)
+		else
+			grabzItClient.url_to_image(url)
+		end
   	elsif format == "gif"
-	  	grabzItClient.set_animation_options(url)
+	  	grabzItClient.url_to_animationurl)
   	else
-  		grabzItClient.set_pdf_options(url)
+		if isHtml
+			grabzItClient.html_to_pdf(html)
+		else
+			grabzItClient.url_to_pdf(url)
+		end
   	end
   	
   	@SuccessMessage = ''

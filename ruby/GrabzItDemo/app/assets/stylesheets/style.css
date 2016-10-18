@@ -41,3 +41,28 @@ h1
    display:inline;
    clear:none;
 }
+
+label
+{
+	float:left;
+	font-weight:bold;
+	width:10em;
+}
+
+.Row
+{
+	float:left;
+	clear:both;
+	margin-bottom:1em;
+	width:100%;
+}
+
+.Row input, .Row select, .Row textarea
+{
+	width:15em;
+}
+
+.Row textarea
+{
+	height:6em;
+}

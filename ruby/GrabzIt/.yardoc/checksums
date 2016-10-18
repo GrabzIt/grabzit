@@ -3,7 +3,7 @@ lib/grabzit/client.rb 92dbee38411cdc2774d45650ac11fdb2e681f108
 lib/grabzit/cookie.rb 466a304ab726aaa9a3dc10918732a361f3c40168
 lib/grabzit/request.rb b52f6ce5802b9e30d27eedc1579bc9bdecf8ff8a
 lib/grabzit/utility.rb 4981f3bd3b5b1d6bf8342876914d65b2293bc8f1
-lib/grabzit/exception.rb 28b2c5a1f405b6fa09b0d0ee93935324b7dc6c46
+lib/grabzit/exception.rb b7fdce90049fd7ee8ea53e1cb59b215874077333
 lib/grabzit/watermark.rb 2cf836fde60bde9807f2764b013fa31496fc9ef8
 lib/grabzit/pdfoptions.rb a6b01f5b7abbe80e7468d65d2a8159bc47891ae5
 lib/grabzit/baseoptions.rb 4d77a830beff1d3469e54284e416a1bd67fff541
