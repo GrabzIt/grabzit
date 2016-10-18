@@ -20,7 +20,7 @@ class HomeController < ActionController::Base
 			grabzItClient.url_to_image(url)
 		end
   	elsif format == "gif"
-	  	grabzItClient.url_to_animationurl)
+	  	grabzItClient.url_to_animation(url)
   	else
 		if isHtml
 			grabzItClient.html_to_pdf(html)
