@@ -9,10 +9,10 @@ class GrabzItTest < Test::Unit::TestCase
 	Screenshot_Path = "test/tmp.jpg"
 
 	def setup
-		@applicationKey = "c3VwcG9ydEBncmFiei5pdA=="
-		@applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi="
+		@applicationKey = "YOUR APPLICATION KEY"
+		@applicationSecret = "YOUR APPLICATION SECRET"
 		#Set to true if the account is subscribed
-		@isSubscribedAccount = true
+		@isSubscribedAccount = false
 	end
 	
 	def test_application_key
