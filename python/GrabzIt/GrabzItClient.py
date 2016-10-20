@@ -22,156 +22,162 @@ from GrabzIt import GrabzItCookie
 from GrabzIt import ScreenShotStatus
 from GrabzIt import GrabzItWaterMark
 from GrabzIt import GrabzItException
+from GrabzIt import Request
+from GrabzIt import GrabzItBaseOptions
+from GrabzIt import GrabzItAnimationOptions
+from GrabzIt import GrabzItImageOptions
+from GrabzIt import GrabzItPDFOptions
+from GrabzIt import GrabzItTableOptions
 
 class GrabzItClient:
 
-        WebServicesBaseURL = "http://api.grabz.it/services/"
+        WebServicesBaseURLGet = "http://api.grabz.it/services/"
+        WebServicesBaseURLPost = "/services/"
+        TakePicture = "takepicture.ashx"
+        TakePDF = "takepdf.ashx"
+        TakeTable = "taketable.ashx"
         TrueString = "True"
 
         def __init__(self, applicationKey, applicationSecret):
                 self.applicationKey = applicationKey
                 self.applicationSecret = applicationSecret
-                self.signaturePartOne = ""
-                self.signaturePartTwo = ""
-                self.request = ""
-                self.startDelay = 0
-                self.requestParams = {}
-                
+                self.request = None                
                 
         #
-        # This method sets the parameters required to turn a online video into a animated GIF
+        # This method specifies the URL of the online video that should be converted into a animated GIF
         #
-        # url - The URL of the online video
-        # customId - A custom identifier that you can pass through to the animated GIF web service. This will be returned with the callback URL you have specified
-        # width - The width of the resulting animated GIF in pixels
-        # height - The height of the resulting animated GIF in pixels
-        # start - The starting position of the video that should be converted into a animated GIF
-        # duration - The length in seconds of the video that should be converted into a animated GIF
-        # speed - The speed of the animated GIF from 0.2 to 10 times the original speed
-        # framesPerSecond - The number of frames per second that should be captured from the video. From a minimum of 0.2 to a maximum of 60
-        # repeat - The number of times to loop the animated GIF. If 0 it will loop forever
-        # reverse - If true the frames of the animated GIF are reversed
-        # customWaterMarkId - Add a custom watermark to the animated GIF
-        # quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-        # country - Request the screenshot from different countries: Default, UK or US
+        # url - The URL to convert into a animated GIF
+        # options - A instance of the GrabzItAnimationOptions class that defines any special options to use when creating the animated GIF
         #
-        def SetAnimationOptions(self, url, customId = '', width = 0, height = 0, start = 0, duration = 0, speed = 0, framesPerSecond = 0, repeat = 0, reverse = False, customWaterMarkId = '', quality = -1, country = ''):
-                self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"duration":int(duration),"speed":self._toString(speed),"start":int(start),"customid":str(customId),"fps":self._toString(framesPerSecond),"repeat":int(repeat),"customwatermarkid":str(customWaterMarkId), "reverse": int(reverse), "country": str(country), "quality" : int(quality)}                                   
-                self.startDelay = 0;
-                self.request = self.WebServicesBaseURL + "takeanimation.ashx?"
-                self.signaturePartOne = self.applicationSecret+"|"+str(url)+"|"
-                self.signaturePartTwo = "|"+str(int(height))+"|"+str(int(width))+"|"+str(customId)+"|"+self._toString(framesPerSecond)+"|"+self._toString(speed)+"|"+str(int(duration))+"|"+str(int(repeat))+"|"+str(int(reverse))+"|"+str(int(start))+"|"+str(customWaterMarkId)+"|"+str(country)+"|"+str(int(quality))
+        def URLToAnimation(self, url, options = None):
+                if (options == None):
+                        options = GrabzItAnimationOptions.GrabzItAnimationOptions()
                 
-        def _toString(self, value):
-                if ((value % 1) == 0):
-                        return str(int(value))
-                return str(float(value))
+                self.request = Request.Request(self.WebServicesBaseURLGet + "takeanimation.ashx", False, options, url)
+            
+        #
+        # This method specifies the URL that should be converted into a image screenshot.
+        #
+        # url - The URL to capture as a screenshot
+        # options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the screenshot
+        #
+        def URLToImage(self, url, options = None):
+                if (options == None):
+                        options = GrabzItImageOptions.GrabzItImageOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLGet + self.TakePicture, False, options, url)
+
+        #
+        # This method specifies the HTML that should be converted into a image.
+        #
+        # html - The HTML to convert into a image
+        # options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the image
+        #                
+        def HTMLToImage(self, html, options = None):
+                if (options == None):
+                        options = GrabzItImageOptions.GrabzItImageOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLPost + self.TakePicture, True, options, html)
+
+        #
+        # This method specifies a HTML file that should be converted into a image.
+        #
+        # path - The file path of a HTML file to convert into a image
+        # options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the image
+        #                
+        def FileToImage(self, path, options = None):
+                self.HTMLToImage(self.ReadHTMLFile(path), options)
+               
+        #
+        # This method specifies the URL that the HTML tables should be extracted from.
+        #
+        # url - The URL to extract HTML tables from.
+        # options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table
+        #
+        def URLToTable(self, url, options = None):
+                if (options == None):
+                        options = GrabzItTableOptions.GrabzItTableOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLGet + self.TakeTable, False, options, url)
+
+        #
+        # This method specifies the HTML that the HTML tables should be extracted from.
+        #
+        # html - The HTML to extract HTML tables from
+        # options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table  
+        #
+        def HTMLToTable(self, html, options = None):
+                if (options == None):
+                        options = GrabzItTableOptions.GrabzItTableOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLPost + self.TakeTable, True, options, html)               
+
+        #
+        # This method specifies a HTML file that the HTML tables should be extracted from.
+        #
+        # path - The file path of a HTML file to extract HTML tables from.
+        # options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table 
+        #
+        def FileToTable(self, path, options = None):
+                self.HTMLToTable(self.ReadHTMLFile(path), options)                
                 
         #
-        #This method sets the parameters required to take a screenshot of a web page.
+        # This method specifies the URL that should be converted into a PDF.
         #
-        #url - The URL that the screenshot should be made of
-        #browserWidth - The width of the browser in pixels
-        #browserHeight - The height of the browser in pixels
-        #outputHeight - The height of the resulting thumbnail in pixels
-        #outputWidth - The width of the resulting thumbnail in pixels
-        #customId - A custom identifier that you can pass through to the screenshot web service. This will be returned with the callback URL you have specified.
-        #format - The format the screenshot should be in: bmp8, bmp16, bmp24, bmp, gif, jpg, png
-        #delay - The number of milliseconds to wait before taking the screenshot
-        #targetElement - The id of the only HTML element in the web page to turn into a screenshot
-        #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-        #customWaterMarkId - add a custom watermark to the image
-        #quality - The quality of the image where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality for the specified image format
-        #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
+        # url - The URL to capture as a PDF
+        # options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF
         #
-        def SetImageOptions(self, url, customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = '', requestAs = 0, customWaterMarkId = '', quality = -1, country = ''):
-                self.requestParams = {"key":self.applicationKey, "url":str(url), "width":int(width),"height":int(height),"format":str(format),"bwidth":int(browserWidth),"bheight":int(browserHeight),"customid":str(customId),"delay":int(delay),"target":str(targetElement),"customwatermarkid":str(customWaterMarkId), "requestmobileversion": int(requestAs), "country": str(country), "quality" : int(quality)}                   
-                self.startDelay = delay
-                self.request = self.WebServicesBaseURL + "takepicture.ashx?"
-                self.signaturePartOne = self.applicationSecret+"|"+str(url)+"|"
-                self.signaturePartTwo = "|"+str(format)+"|"+str(int(height))+"|"+str(int(width))+"|"+str(int(browserHeight))+"|"+str(int(browserWidth))+"|"+str(customId)+"|"+str(int(delay))+"|"+str(targetElement)+"|"+str(customWaterMarkId)+"|"+str(int(requestAs))+"|"+str(country)+"|"+str(int(quality))
-
-        #
-        #This method sets the parameters required to extract all tables from a web page.
-        #
-        #url - The URL that the should be used to extract tables
-        #format - The format the tableshould be in: csv, xlsx
-        #customId - A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
-        #includeHeaderNames - If true header names will be included in the table
-        #includeAllTables - If true all table on the web page will be extracted with each table appearing in a seperate spreadsheet sheet. Only available with the XLSX format.
-        #targetElement - The id of the only HTML element in the web page that should be used to extract tables from
-        #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-        #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
-        #
-        def SetTableOptions(self, url, customId = '', tableNumberToInclude = 1, format = 'csv', includeHeaderNames = True, includeAllTables = False, targetElement = '', requestAs = 0, country = ''):
-                self.requestParams = {"key":self.applicationKey, "url":url, "includeAllTables":int(includeAllTables),"includeHeaderNames":int(includeHeaderNames),"format":str(format),"tableToInclude":int(tableNumberToInclude),"customid":str(customId),"target":str(targetElement),"requestmobileversion":int(requestAs),"country":str(country)}                
-                self.startDelay = 0        
-                self.request = self.WebServicesBaseURL + "taketable.ashx?"
+        def URLToPDF(self, url, options = None):
+                if (options == None):
+                        options = GrabzItPDFOptions.GrabzItPDFOptions()
                 
-                self.signaturePartOne = self.applicationSecret+"|"+url+"|"
-                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(tableNumberToInclude))+"|"+str(int(includeAllTables))+"|"+str(int(includeHeaderNames))+"|"+str(targetElement)+"|"+str(format)+"|"+str(int(requestAs))+"|"+str(country)
+                self.request = Request.Request(self.WebServicesBaseURLGet + self.TakePDF, False, options, url)
 
         #
-        #This method sets the parameters required to convert a web page into a PDF.
+        # This method specifies the HTML that should be converted into a PDF.
         #
-        #url - The URL that the should be converted into a pdf
-        #customId - A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
-        #includeBackground - If true the background of the web page should be included in the screenshot
-        #pagesize - The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'B3', 'B4', 'B5', 'Letter'.
-        #orientation - The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-        #includeLinks - True if links should be included in the PDF
-        #includeOutline - True if the PDF outline should be included
-        #title - Provide a title to the PDF document
-        #coverURL - The URL of a web page that should be used as a cover page for the PDF
-        #marginTop - The margin that should appear at the top of the PDF document page
-        #marginLeft - The margin that should appear at the left of the PDF document page
-        #marginBottom - The margin that should appear at the bottom of the PDF document page
-        #marginRight - The margin that should appear at the right of the PDF document
-        #delay - The number of milliseconds to wait before taking the screenshot
-        #requestAs - Request the screenshot in different forms: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-        #templateId - Add a PDF template ID that specifies the header and footer of the PDF document
-        #customWaterMarkId - add a custom watermark to each page of the PDF document
-        #quality - The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-        #country - request the screenshot from different countries: Default = "", UK = "UK", US = "US"
+        # html - The HTML to convert into a PDF
+        # options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
         #
-        def SetPDFOptions(self, url, customId = '', includeBackground = True, pagesize = 'A4', orientation = 'Portrait', includeLinks = True, includeOutline = False, title = '', coverURL = '', marginTop = 10, marginLeft = 10, marginBottom = 10, marginRight = 10, delay = 0, requestAs = 0, templateId = '', customWaterMarkId = '', quality = -1, country = ''):
-                pagesize = pagesize.upper()
-                orientation = orientation.title()
-                self.startDelay = delay
-                self.requestParams = {"key":self.applicationKey, "url":url, "background":int(includeBackground),"pagesize":str(pagesize),"orientation":str(orientation),"customid":str(customId),"templateid":str(templateId),"customwatermarkid":str(customWaterMarkId),"includelinks":int(includeLinks),"includeoutline":int(includeOutline),"title":str(title),"coverurl":str(coverURL),"mleft":int(marginLeft),"mright":int(marginRight),"mtop":int(marginTop),"mbottom":int(marginBottom),"delay":int(delay),"requestmobileversion":int(requestAs),"country":str(country), "quality":int(quality)}                                       
-
-                self.request = self.WebServicesBaseURL + "takepdf.ashx?"
-
-                self.signaturePartOne = self.applicationSecret+"|"+url+"|"
-                self.signaturePartTwo = "|"+str(customId)+"|"+str(int(includeBackground))+"|"+str(pagesize) +"|"+str(orientation)+"|"+str(customWaterMarkId)+"|"+str(int(includeLinks))+"|"+str(int(includeOutline))+"|"+str(title)+"|"+str(coverURL)+"|"+str(int(marginTop))+"|"+str(int(marginLeft))+"|"+str(int(marginBottom))+"|"+str(int(marginRight))+"|"+str(int(delay))+"|"+str(int(requestAs))+"|"+str(country)+"|"+str(int(quality))+"|"+str(templateId)
+        def HTMLToPDF(self, html, options = None):
+                if (options == None):
+                        options = GrabzItPDFOptions.GrabzItPDFOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLPost + self.TakePDF, True, options, html)               
 
         #
-        #This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the #GetResult method.
+        # This method specifies a HTML file that should be converted into a PDF.
         #
-        #This is the recommended method of saving a file.
+        # path - The file path of a HTML file to convert into a PDF
+        # options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF 
+        #
+        def FileToPDF(self, path, options = None):
+                self.HTMLToPDF(self.ReadHTMLFile(path), options)
+                
+        #
+        # This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the #GetResult method.
+        #
+        # This is the recommended method of saving a file.
         #
         def Save(self, callBackURL = ''):
-                if (self.signaturePartOne == None and self.signaturePartTwo == None and self.request == None ):
-                          raise GrabzItException.GrabzItException("No screenshot parameters have been set.", GrabzItException.GrabzItException.PARAMETER_MISSING_PARAMETERS)
+                if (self.request == None ):
+                        raise GrabzItException.GrabzItException("No screenshot parameters have been set.", GrabzItException.GrabzItException.PARAMETER_MISSING_PARAMETERS)
                 
-                self.requestParams["callback"] = str(callBackURL)
-                encoded_qs = urlencode(self.requestParams)
-                
-                sig = self.CreateSignature(self.signaturePartOne+str(callBackURL)+self.signaturePartTwo)                               
-                currentRequest = self.request
-                
-                currentRequest += encoded_qs+"&sig="+sig
-                
-                return self.GetResultObject(self.HTTPGet(currentRequest), "ID")
+                sig = self.CreateSignature(self.request.options._getSignatureString(self.applicationSecret, callBackURL, self.request._targetUrl()))                               
+
+                if (self.request.isPost == False):              
+                        return self.GetResultObject(self.HTTPGet(self.request.url + '?' + urlencode(self.request.options._getParameters(self.applicationKey, sig, callBackURL, 'url', self.request.data))), "ID")
+                else:
+                        return self.GetResultObject(self.HTTPPost(self.request.url, self.request.options._getParameters(self.applicationKey, sig, callBackURL, 'html', self.request.data)), "ID")
 
         #
-        #Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
-        #it returns the screenshot byte data.
+        # Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
+        # it returns the screenshot byte data.
         #
-        #WARNING this method is synchronous so will cause a application to pause while the result is processed.
+        # WARNING this method is synchronous so will cause a application to pause while the result is processed.
         #
-        #This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
-        #otherwise the method throws an exception.
+        # This function returns the true if it is successful saved to a file, or if it is not saving to a file byte data is returned,
+        # otherwise the method throws an exception.
         #
         def SaveTo(self, saveToFile = ''):
                 id = self.Save()
@@ -180,7 +186,7 @@ class GrabzItClient:
                         return False
 
                 #Wait for it to be possibly ready
-                sleep((3000 + self.startDelay) / 1000)
+                sleep((3000 + self.request.options.delay) / 1000)
 
                 #Wait for it to be ready.
                 while(1):
@@ -207,17 +213,17 @@ class GrabzItClient:
                 return True
         
         #
-        #This method returns the screenshot itself. If nothing is returned then something has gone wrong or the screenshot is not ready yet.
+        # This method returns the screenshot itself. If nothing is returned then something has gone wrong or the screenshot is not ready yet.
         #
-        #id - The unique identifier of the screenshot, returned by the callback handler or the Save method
+        # id - The unique identifier of the screenshot, returned by the callback handler or the Save method
         #
-        #This function returns the screenshot
+        # This function returns the screenshot
         #
         def GetResult(self, id):
                 if (id == "" or id == None):
                         return None
                 
-                result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURL + "getfile.ashx?id=" + id)).getvalue()
+                result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURLGet + "getfile.ashx?id=" + id)).getvalue()
                 
                 if result == "":
                         return None
@@ -225,18 +231,18 @@ class GrabzItClient:
                 return result                           
         
         #
-        #Get the current status of a GrabzIt screenshot
+        # Get the current status of a GrabzIt screenshot
         #
-        #id - The id of the screenshot
+        # id - The id of the screenshot
         #
-        #This function returns a Status object representing the screenshot
+        # This function returns a Status object representing the screenshot
         #
         def GetStatus(self, id):
                 
                 if (id == "" or id == None):
                         return None
                 
-                result = self.HTTPGet(self.WebServicesBaseURL + "getstatus.ashx?id=" + id)    
+                result = self.HTTPGet(self.WebServicesBaseURLGet + "getstatus.ashx?id=" + id)    
                 
                 dom = minidom.parseString(result)
                 
@@ -277,11 +283,11 @@ class GrabzItClient:
                 return ScreenShotStatus.ScreenShotStatus(processing, cached, expired, message);         
 
         #
-        #Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
+        # Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
         #
-        #domain - The domain to return cookies for.
+        # domain - The domain to return cookies for.
         #
-        #This function returns an array of cookies
+        # This function returns an array of cookies
         #
         def GetCookies(self, domain):
                 sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(domain))
@@ -290,7 +296,7 @@ class GrabzItClient:
                 
                 encoded_qs += "&sig="+sig
 
-                dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getcookies.ashx?" + encoded_qs))
+                dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURLGet + "getcookies.ashx?" + encoded_qs))
 
                 self.CheckForException(dom)
                         
@@ -312,19 +318,19 @@ class GrabzItClient:
                 return results
                 
         #
-        #Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
-        #cookie is overridden.
+        # Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        # cookie is overridden.
         #
-        #This can be useful if a websites functionality is controlled by cookies.
+        # This can be useful if a websites functionality is controlled by cookies.
         #
-        #name - The name of the cookie to set.
-        #domain - The domain of the website to set the cookie for.
-        #value - The value of the cookie.
-        #path - The website path the cookie relates to.
-        #httponly - Is the cookie only used on HTTP
-        #expires - When the cookie expires. Pass a null value if it does not expire.
+        # name - The name of the cookie to set.
+        # domain - The domain of the website to set the cookie for.
+        # value - The value of the cookie.
+        # path - The website path the cookie relates to.
+        # httponly - Is the cookie only used on HTTP
+        # expires - When the cookie expires. Pass a empty string value if it does not expire.
         #
-        #This function returns true if the cookie was successfully set.
+        # This function returns true if the cookie was successfully set.
         #
         def SetCookie(self, name, domain, value = "", path = "/", httponly = False, expires = ""):
                 sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(name)+"|"+str(domain)+"|"+str(value)+"|"+str(path)+"|"+str(int(httponly))+"|"+str(expires)+"|0")        
@@ -335,15 +341,15 @@ class GrabzItClient:
                 
                 encoded_qs += "&sig="+sig;
 
-                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setcookie.ashx?" + encoded_qs))               
+                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURLGet + "setcookie.ashx?" + encoded_qs))               
 
         #
-        #Delete a custom cookie or block a global cookie from being used.
+        # Delete a custom cookie or block a global cookie from being used.
         #
-        #name - The name of the cookie to delete
-        #domain - The website the cookie belongs to
+        # name - The name of the cookie to delete
+        # domain - The website the cookie belongs to
         #
-        #This function returns true if the cookie was successfully set.
+        # This function returns true if the cookie was successfully set.
         #               
         def DeleteCookie(self, name, domain):
                 sig =  self.CreateSignature((str(self.applicationSecret)+"|"+str(name)+"|"+str(domain)+"|1"))
@@ -354,17 +360,17 @@ class GrabzItClient:
                 
                 encoded_qs += "&sig="+sig;
 
-                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setcookie.ashx?" + encoded_qs))               
+                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURLGet + "setcookie.ashx?" + encoded_qs))               
 
         #
-        #Add a new custom watermark.
+        # Add a new custom watermark.
         #
-        #identifier - The identifier you want to give the custom watermark. It is important that this identifier is unique.
-        #path - The absolute path of the watermark on your server. For instance C:/watermark/1.png
-        #xpos - The horizontal position you want the screenshot to appear at: Left = 0, Center = 1, Right = 2
-        #ypos - The vertical position you want the screenshot to appear at: Top = 0, Middle = 1, Bottom = 2
+        # identifier - The identifier you want to give the custom watermark. It is important that this identifier is unique.
+        # path - The absolute path of the watermark on your server. For instance C:/watermark/1.png
+        # xpos - The horizontal position you want the screenshot to appear at: Left = 0, Center = 1, Right = 2
+        # ypos - The vertical position you want the screenshot to appear at: Top = 0, Middle = 1, Bottom = 2
         #
-        #This function returns true if the watermark was successfully set.
+        # This function returns true if the watermark was successfully set.
         #
         def AddWaterMark(self, identifier, path, xpos, ypos):
                 files = []
@@ -382,14 +388,14 @@ class GrabzItClient:
                 fields['ypos'] = str(ypos)
                 fields['sig'] = sig
         
-                return self.IsSuccessful(self.HTTPPost("grabz.it", "/services/addwatermark.ashx", fields, files))
+                return self.IsSuccessful(self.HTTPPost("/services/addwatermark.ashx", fields, files))
                 
         #
-        #Delete a custom watermark.
+        # Delete a custom watermark.
         #
-        #identifier - The identifier of the custom watermark you want to delete
+        # identifier - The identifier of the custom watermark you want to delete
         #
-        #This function returns true if the watermark was successfully deleted.
+        # This function returns true if the watermark was successfully deleted.
         #
         def DeleteWaterMark(self, identifier):
                 sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(identifier))
@@ -400,22 +406,22 @@ class GrabzItClient:
                 
                 encoded_qs += "&sig="+sig
 
-                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "deletewatermark.ashx?" + encoded_qs));        
+                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURLGet + "deletewatermark.ashx?" + encoded_qs));        
 
         #
-        #Get your uploaded custom watermarks
+        # Get your uploaded custom watermarks
         #
-        #A GrabzItWaterMark array
+        # A GrabzItWaterMark array
         #
         def GetWaterMarks(self):
                 return self.getWaterMarks()
 
         #
-        #Get your uploaded custom watermark
+        # Get your uploaded custom watermark
         #
-        #identifier - The identifier of a particular custom watermark you want to view
+        # identifier - The identifier of a particular custom watermark you want to view
         #
-        #the GrabzItWaterMark with the specified identifier
+        # the GrabzItWaterMark with the specified identifier
         #       
         def GetWaterMark(self, identifier):
                 watermarks = self.getWaterMarks(identifier)
@@ -432,7 +438,7 @@ class GrabzItClient:
                 
                 encoded_qs += "&sig="+sig;             
 
-                dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getwatermarks.ashx?" + encoded_qs))
+                dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURLGet + "getwatermarks.ashx?" + encoded_qs))
 
                 self.CheckForException(dom)
                         
@@ -450,26 +456,6 @@ class GrabzItClient:
 
                 return results
                 
-        #
-        #DEPRECATED - Use the GetResult method instead
-        #               
-        def GetPicture(self, id):
-                return self.GetResult(id)
-                
-        #
-        #DEPRECATED - Use SetImageOptions and Save method instead
-        #               
-        def TakePicture(self, url, callback = '', customId = '', browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = ''):       
-                self.SetImageOptions(url, callback, customId, browserWidth, browserHeight, width, height, format, delay, targetElement)
-                return self.Save(callback)
-        
-        #
-        #DEPRECATED - Use the SetImageOptions and SaveTo methods instead
-        #
-        def SavePicture(self, url, saveToFile, browserWidth = 0, browserHeight = 0, width = 0, height = 0, format = '', delay = 0, targetElement = ''):
-                self.SetImageOptions(url, '', customId, browserWidth, browserHeight, width, height, format, delay, targetElement)
-                return self.SaveTo(saveToFile)
-        
         def IsSuccessful(self, result):
                 return self.GetResultObject(result, "Result") == self.TrueString
         
@@ -521,17 +507,31 @@ class GrabzItClient:
                         return node[0].firstChild.nodeValue
                 return ""
                 
-        def HTTPPost(self, host, selector, fields, files):
-            content_type, body = self.EncodeMultipartFormdata(fields, files)
-            h = httpClient.HTTPConnection(host)
+        def HTTPPost(self, selector, fields, files = None):
+            content_type = ''
+            body = ''
+            
+            if (files != None):
+                    content_type, body = self.EncodeMultipartFormdata(fields, files)
+            else:
+                    content_type = "application/x-www-form-urlencoded"
+                    body = urlencode(fields)                    
+                    
+            h = httpClient.HTTPConnection("grabz.it")
             h.putrequest('POST', selector)
             h.putheader('content-type', content_type)
             h.putheader('content-length', str(len(body)))
             h.endheaders()
-            h.send(body)
-            errcode, errmsg, headers = h.getreply()
-            self.CheckResponseHeader(errorcode);
-            return h.file.read()
+            
+            try:
+                    h.send(body)
+            except TypeError:
+                    # python 3 needs it to be encoded
+                    h.send(body.encode())
+                    
+            response = h.getresponse()
+            self.CheckResponseHeader(response.status);
+            return response.read()
 
         def EncodeMultipartFormdata(self, fields, files):
             LIMIT = '----------lImIt_of_THE_fIle_eW_$'
@@ -573,3 +573,10 @@ class GrabzItClient:
                 md5 = hashlib.md5()
                 md5.update(value.encode('ascii', 'replace'))
                 return md5.hexdigest()
+                
+        def ReadHTMLFile(self, path):
+                try:                    
+                        return open(path, 'rb').read()
+                except:
+                        raise GrabzItException.GrabzItException("File: " + path + " does not exist", GrabzItException.GrabzItException.FILE_NON_EXISTANT_PATH)
+        

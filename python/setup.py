@@ -3,11 +3,11 @@
 from distutils.core import setup
 
 setup(name='GrabzIt',
-      version='2.3.0',
-      summary='Capture websites as screenshots, CSVs and animated GIFs',
+      version='3.0.0',
+      summary='Convert URL's or HTML to images and PDF's',
       author='GrabzIt',
       url='http://grabz.it/api/python/',
       license='MIT Licence',
-      description='Capture websites with GrabzIt by taking highly customizable PDF or image screenshots. You can also convert the content of the websites by converting on-line videos into animated GIFs or extract tables from web pages and convert them into a CSV or Excel spreadsheets',
+      description='This library allows you to programmatically convert web pages and HTML into images, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's',
       packages=['GrabzIt']      
 )

@@ -8,6 +8,13 @@ GrabzIt\GrabzItCookie.py
 GrabzIt\GrabzItException.py
 GrabzIt\GrabzItWaterMark.py
 GrabzIt\ScreenShotStatus.py
+GrabzIt\ScreenShotStatus.py
+GrabzIt\Request.py
+GrabzIt\GrabzItTableOptions.py
+GrabzIt\GrabzItPDFOptions.py
+GrabzIt\GrabzItImageOptions.py
+GrabzIt\GrabzItBaseOptions.py
+GrabzIt\GrabzItAnimationOptions.py
 GrabzIt\__init__.py
 ajax\results.py
 ajax\ui.js
