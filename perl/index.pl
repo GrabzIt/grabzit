@@ -26,7 +26,7 @@ if ($cgi->request_method() eq 'POST')
 		tie my %ini, 'Config::IniFiles', (-file => $ConfigFile);
 		my %Config = %{$ini{"GrabzIt"}};
 
-		$grabzIt = new GrabzItClient($Config{applicationKey}, $Config{applicationSecret});
+		$grabzIt = GrabzItClient->new($Config{applicationKey}, $Config{applicationSecret});
 		if ($format eq "pdf")
 		{
             if ($convert eq "html")
