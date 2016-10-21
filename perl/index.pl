@@ -18,7 +18,9 @@ if ($cgi->request_method() eq 'POST')
 	else
 	{
 		$url = $cgi->param("url");
-		$format = $cgi->param("format");		
+        $html = $cgi->param("html");
+		$format = $cgi->param("format");
+        $convert = $cgi->param("convert");
 
 		my $ConfigFile = 'config.ini';
 		tie my %ini, 'Config::IniFiles', (-file => $ConfigFile);
@@ -27,16 +29,30 @@ if ($cgi->request_method() eq 'POST')
 		$grabzIt = new GrabzItClient($Config{applicationKey}, $Config{applicationSecret});
 		if ($format eq "pdf")
 		{
-		    $grabzIt->SetPDFOptions($url);
+            if ($convert eq "html")
+            {
+                $grabzIt->HTMLToPDF($html);
+            }
+            else
+            {
+                $grabzIt->URLToPDF($url);
+            }
 		}
-		if ($format eq "gif")
+		elsif ($format eq "gif")
 		{
-		    $grabzIt->SetAnimationOptions($url);
-		}		
+		    $grabzIt->URLToAnimation($url);
+		}
 		else
 		{
-		    $grabzIt->SetImageOptions($url);
-		}		
+            if ($convert eq "html")
+            {
+                $grabzIt->HTMLToImage($html);
+            }
+            else
+            {
+                $grabzIt->URLToImage($url);
+            }
+		}
 		
 		eval {
 			$grabzIt->Save($Config{handlerUrl});
@@ -61,7 +77,7 @@ print <<'HEADER';
 <body>
 <h1>GrabzIt Demo</h1>
 <form method="post" action="index.pl" class="inputForms">
-<p><span id="spnScreenshot">Enter the URL of the website you want to take a screenshot of. The resulting screenshot</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+<p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="http://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 
 HEADER
 
@@ -80,12 +96,26 @@ if ($cgi->request_method() eq 'POST' && $cgi->param("delete") != "1")
 }
 
 print <<'FOOTER';
-<label style="font-weight:bold;margin-right:1em;">URL </label><input text="input" name="url"/> <select name="format" onchange="selectChanged(this)">
+<div class="Row" id="divConvert">
+<label>Convert </label><select name="convert" onchange="selectConvertChanged(this)">
+  <option value="url">URL</option>
+  <option value="html">HTML</option>
+</select>
+</div>
+<div id="divHTML" class="Row hidden">
+<label>HTML </label><textarea name="html"><html><body><h1>Hello world!</h1></body></html></textarea>
+</div>
+<div id="divURL" class="Row">
+<label>URL </label><input text="input" name="url" placeholder="http://www.example.com"/>
+</div>
+<div class="Row">
+<label>Format </label><select name="format" onchange="selectChanged(this)">
   <option value="jpg">JPG</option>
   <option value="pdf">PDF</option>
   <option value="gif">GIF</option>
 </select>
-<input type="submit" value="Grabz It"></input>
+</div>
+<input type="submit" value="Grabz It" style="margin-left:12em"></input>
 </form>
 <form method="post" action="index.pl" class="inputForms">
 <input type="hidden" name="delete" value="1"></input>
