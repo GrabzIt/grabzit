@@ -773,7 +773,7 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
                     }
                 });
             }, 3000);
-        }, (3000 + this.request.startDelay));
+        }, (3000 + self.request.startDelay));
     });
 };
 
