@@ -195,7 +195,7 @@ class GrabzItClient:
                                 raise GrabzItException.GrabzItException("The screenshot did not complete with the error: " + status.Message, GrabzItException.GrabzItException.RENDERING_ERROR)
                                 break
                         elif status.Cached:
-                                result = self.GetPicture(id)
+                                result = self.GetResult(id)
                                 if result == None:
                                         raise GrabzItException.GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException.GrabzItException.RENDERING_MISSING_SCREENSHOT)
                                         break
