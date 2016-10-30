@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='GrabzIt',
-      version='3.0.0',
+      version='3.0.1',
       summary='Convert URLs or HTML to images and PDFs',
       author='GrabzIt',
       url='http://grabz.it/api/python/',
