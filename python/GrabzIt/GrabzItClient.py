@@ -225,7 +225,7 @@ class GrabzItClient:
                 
                 result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURLGet + "getfile.ashx?id=" + id)).getvalue()
                 
-                if result == "":
+                if result == None or len(result) == 0:
                         return None
                 
                 return result                           
