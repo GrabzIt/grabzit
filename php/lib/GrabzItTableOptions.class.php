@@ -123,7 +123,7 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 		return $this->nullToEmpty($applicationSecret)."|". $urlParam . $callBackURLParam .
 		"|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->tableNumberToInclude)."|".$this->nullToEmpty(intval($this->includeAllTables))."|".
 		$this->nullToEmpty(intval($this->includeHeaderNames))."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->format)."|".
-		$this->nullToEmpty(intval($requestAs))."|".$this->nullToEmpty($this->getCountry());
+		$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry());
 	}
 
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
