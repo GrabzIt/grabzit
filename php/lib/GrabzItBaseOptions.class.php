@@ -52,7 +52,7 @@ class GrabzItBaseOptions
 	
 	protected function nullToEmpty($value)
 	{
-		if ($value == null)
+		if (is_null($value))
 		{
 			return '';
 		}
