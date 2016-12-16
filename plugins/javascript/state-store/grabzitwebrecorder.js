@@ -61,7 +61,7 @@ function GrabzIt(key)
 		this._getBaseWebServiceUrl = function()
 		{
 			var protocol = '//';
-			if (window.location.protocol != 'https' && window.location.protocol != 'http')
+			if (window.location.protocol != 'https:' && window.location.protocol != 'http:')
 			{
 				protocol = 'http://';
 			}
