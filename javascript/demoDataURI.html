@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="grabzit.js"></script>
+</head>
+<body>
+<div id="datauri" style="width:100%;word-break:break-all"></div>
+<script>
+function callback(dataUri)
+{
+	document.getElementById('datauri').innerHTML = dataUri;
+}
+
+GrabzIt("YOUR APPLICATION KEY").ConvertURL("http://www.google.com", {"width":200, "height":200}).DataURI(callback);
+</script>
+</body>
+</html>
