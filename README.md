@@ -2,7 +2,7 @@ Turn Websites into Screenshots!
 ===============================
 GrabzIt aspires to allow any programming language no matter how basic to turn a website or HTML into a fully rendered Image, PDF and table.
 
-To do this we provide client libraries that allow a language to send a request to create the capture, our server then sends a callback to your app.
+To do this we provide client libraries that enables a developer to create a capture, once complete, our server then sends a callback to your app to allow it to be processed.
 
 While we currently support [ASP.NET](http://grabz.it/api/aspnet/), [Java](http://grabz.it/api/java/), [Javascript](http://grabz.it/api/javascript/), [Node.js](http://grabz.it/api/nodejs/), [PHP](http://grabz.it/api/php/), [Perl](http://grabz.it/api/perl/), [Python](http://grabz.it/api/python/) and [Ruby](http://grabz.it/api/ruby/) we aim to create a library for as many programming languages as possible. If you would like to help us achieve this please do!
 
