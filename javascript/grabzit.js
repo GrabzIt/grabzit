@@ -13,7 +13,7 @@ function GrabzIt(key)
 		{
 			this.data = url;
 			this.dataKey = 'url';
-			this.options = options;
+			this.options = this._cleanOptions(options);
 			this.post = false;
 
 			return this;
@@ -23,11 +23,33 @@ function GrabzIt(key)
 		{
 			this.data = html;
 			this.dataKey = 'html';
-			this.options = options;
+			this.options = this._cleanOptions(options);
 			this.post = true;
 
 			return this;
 		};
+		
+		this._cleanOptions = function(opts)
+		{
+			if (opts == null)
+			{
+				return opts;
+			}
+			
+			var results = {};
+			
+			for(var k in opts)
+			{
+				if (k == null)
+				{
+					continue;
+				}
+				
+				results[k.toLowerCase()] = opts[k];
+			}
+			
+			return results;
+		}
 		
 		this._createXHTTP = function()
 		{
@@ -65,7 +87,7 @@ function GrabzIt(key)
 				protocol = 'http://';
 			}
 
-			return protocol + 'api.grabz.it/services/';			
+			return protocol + 'api.grabz.it/services/';
 		};
 
 		this._getBaseWebServiceUrl = function()
@@ -84,7 +106,7 @@ function GrabzIt(key)
 
 			for(var k in this.options)
 			{
-				if (k != 'format' && k != 'cache' && k != 'customWaterMarkId' && k != 'quality'
+				if (k != 'format' && k != 'cache' && k != 'customwatermarkid' && k != 'quality'
 				&& k != 'country' && k != 'filename' && k != 'errorid' && k != 'errorclass' &&
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
