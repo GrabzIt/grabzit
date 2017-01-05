@@ -53,6 +53,7 @@ namespace GrabzIt
         }
 
         private GrabzItRequest request;
+        private WebProxy proxy = null;
         private Object thisLock = new Object();
         private Object eventLock = new Object();
 
@@ -102,6 +103,20 @@ namespace GrabzIt
             {
                 screenShotComplete(this, result);
             }
+        }
+
+        /// <summary>
+        /// This method sets the proxy for all requests to GrabzIt's web services to use.
+        /// </summary>
+        /// <param name="proxyUrl">The URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy.</param>
+        public void SetProxy(string proxyUrl)
+        {
+            if (string.IsNullOrEmpty(proxyUrl))
+            {
+                this.proxy = null;
+                return;
+            }
+            this.proxy = new WebProxy(proxyUrl);
         }
 
         /// <summary>
@@ -529,7 +544,7 @@ namespace GrabzIt
 
         private T Get<T>(string url)
         {
-            using (QuickWebClient client = new QuickWebClient())
+            using (QuickWebClient client = new QuickWebClient(this.proxy))
             {
                 try
                 {
@@ -546,7 +561,7 @@ namespace GrabzIt
 
         private T Post<T>(string url, string parameters)
         {
-            using (QuickWebClient client = new QuickWebClient())
+            using (QuickWebClient client = new QuickWebClient(this.proxy))
             {
                 try
                 {
@@ -992,6 +1007,7 @@ namespace GrabzIt
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
             HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
+            wr.Proxy = this.proxy;
             wr.ContentType = "multipart/form-data; boundary=" + boundary;
             wr.Method = "POST";
             wr.KeepAlive = true;
