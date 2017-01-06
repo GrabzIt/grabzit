@@ -12,7 +12,7 @@ It is usually best to place these package files in their own directory.
 Running the Demo Application
 ----------------------------
 
-First create a scrape here: http://grabz.it/scraper/scrapes.aspx On the Export Options tab choose "Callback URL" option from the Send Results Via drop down.
+First create a scrape here: https://grabz.it/scraper/scrapes.aspx On the Export Options tab choose "Callback URL" option from the Send Results Via drop down.
 
 Next enter the URL of the handler.php so for instance http://www.example.com/scrape/handler.php
 
@@ -20,4 +20,4 @@ Ensure your PHP application has read and write access to the "results" directory
 
 To see how you can control your scrapes automatically call the index.php file in a browser.
 
-More documentation can be found at: http://grabz.it/scraper/api/php/
+More documentation can be found at: https://grabz.it/scraper/api/php/

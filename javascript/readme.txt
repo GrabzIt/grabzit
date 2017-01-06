@@ -3,7 +3,7 @@ GrabzIt 3.01
 
 This library allows you to dynamically convert HTML or a URL to a image or PDF, a online video to a animated gif or a HTML table into a CSV, JSON or excel spreadsheet. The resulting capture can then be added to anywhere within the webpage or returned as a data URI.
 
-An example of the GrabzIt in action can be found in the demo.html and demoDataURI.html files. Remember to replace the "Your Application Key" with your actual application key found here: http://grabz.it/api/
+An example of the GrabzIt in action can be found in the demo.html and demoDataURI.html files. Remember to replace the "Your Application Key" with your actual application key found here: https://grabz.it/api/
 
 GrabzIt JavaScript library provides four methods:
 
@@ -56,7 +56,7 @@ The DataURI method requires a callback function this function must have one para
 	</body>
 	</html>
 
-The options parameter takes all of the parameters found here (excluding the URL and application key parameters): http://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 250 x 200 you could do this like so:
+The options parameter takes all of the parameters found here (excluding the URL and application key parameters): https://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 250 x 200 you could do this like so:
 
 
 	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com', {"width": 250, "height": 200}).AddTo('div_id');

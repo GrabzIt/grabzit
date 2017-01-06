@@ -11,7 +11,7 @@ It is usually best to place these files in their own directory.
 
 To run the sample
 
-Open config.ini and change the three parameters to match your settings the first two parameters can be got from http://grabz.it/api/
+Open config.ini and change the three parameters to match your settings the first two parameters can be got from https://grabz.it/api/
 the third parameter is the location you have placed the handler.pl on your website.
 
 
@@ -24,4 +24,4 @@ Ensure your application has read and write access to the "results" directory.
 
 Finally run the index.pl to start taking screenshots.
 
-More documentation can be found at: http://grabz.it/api/perl/
+More documentation can be found at: https://grabz.it/api/perl/

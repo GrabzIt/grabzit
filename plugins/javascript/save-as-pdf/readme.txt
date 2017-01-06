@@ -1,7 +1,7 @@
 GrabzIt Save As PDF Readme Version 1.00
 =======================================
 
-An example of the GrabzIt Save As PDF Plugin in action can be found in the demo.html file. Remember to replace the "Your Application Key" with your actual application key found here: http://grabz.it/api/
+An example of the GrabzIt Save As PDF Plugin in action can be found in the demo.html file. Remember to replace the "Your Application Key" with your actual application key found here: https://grabz.it/api/
 
 Also ensure the call to:
 
@@ -14,7 +14,7 @@ Is at the bottom of the page just above the closing body tag.
 To add the save as PDF ability to a link, image, button or other HTML element simply add the "grabzit-pdf-save" class to the element. This will then be read automatically and when the element is clicked a PDF of the webpage will be downloaded. 
 
 You do not have to set any other configurations options than that, however you can specify all of the PDF parameters found here: 
-http://grabz.it/api/javascript/parameters.aspx#pdf in the options object. For instance if you wanted to set the fliename to be mypage.pdf you could do this like so:
+https://grabz.it/api/javascript/parameters.aspx#pdf in the options object. For instance if you wanted to set the fliename to be mypage.pdf you could do this like so:
 
 
 	new GrabzItSaveAsPDF("YOUR APPLICATION KEY", {"filename": "mypage.pdf"});

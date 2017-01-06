@@ -2,7 +2,7 @@
     "name": "grabzit/grabzit",
 	"type": "library",
 	"keywords": ["screenshots","PDF","HTML","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion","HTML to PDF","HTML to Image","URL to PDF","URL to Image"],
-    "homepage": "http://grabz.it/",	
+    "homepage": "https://grabz.it/",	
     "description": "Use our API to allow your app to create images and PDF's from URL's or raw HTML. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
 	"license": "MIT",
 	"version":"3.0.1.2",
@@ -22,7 +22,7 @@
 		]
 	},
 	"support": {
-        "issues": "http://grabz.it/support/"
+        "issues": "https://grabz.it/support/"
     },
     "require": {
         "php": ">=5.0.0"

@@ -20,7 +20,7 @@ The solution contains a project called Sample, which is a example web applicatio
 
 To configure this do the following:
 
-Then open web.config and change the application key and application secret to match your settings the first two parameters can be got from http://grabz.it/api
+Then open web.config and change the application key and application secret to match your settings the first two parameters can be got from https://grabz.it/api
 
   <appSettings>
     <add key="ApplicationKey" value="APPLICATION KEY"/>
@@ -42,7 +42,7 @@ Screenshots in Windows Applications
 
 The solution also contains a project called SampleConsole, which is a example windows console application. To configure this do the following:
 
-Then open App.config and change the application key and application secret to match your settings the first two parameters can be got from http://grabz.it/api
+Then open App.config and change the application key and application secret to match your settings the first two parameters can be got from https://grabz.it/api
 
   <appSettings>
     <add key="ApplicationKey" value="APPLICATION KEY"/>
@@ -55,4 +55,4 @@ Finally run the console application to create screenshots in windows.
 
 
 
-More documentation can be found at: http://grabz.it/api/aspnet
+More documentation can be found at: https://grabz.it/api/aspnet

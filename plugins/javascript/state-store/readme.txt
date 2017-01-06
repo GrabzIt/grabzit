@@ -4,7 +4,7 @@ GrabzIt Web Recorder Readme Version 1.02
 GrabzIt Web Recorder allows you to take screenshots of HTML elements after they have been altered by the user or other means.
 
 An example of the GrabzIt Web Recorder in action can be found in the demo.html file. Remember to replace the "YOUR APPLICATION KEY" with your actual
-application key found here: http://grabz.it/api/
+application key found here: https://grabz.it/api/
 
 WARNING!! This plugin can not capture all the changes made to a page you must choose a small part of the page were you wish to capture changes the user
 has made.
@@ -42,7 +42,7 @@ calls below will work.
 	</html>
 
 
-The options parameter takes all of the parameters found here (excluding the URL and application key parameters): http://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 256 x 200 you could do this like so:
+The options parameter takes all of the parameters found here (excluding the URL and application key parameters): https://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 256 x 200 you could do this like so:
 
 
 	GrabzItWebRecorder.AddTo('YOUR APPLICATION KEY', 'div_id', {"width": 250, "height": 200});

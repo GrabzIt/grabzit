@@ -11,7 +11,7 @@ It is usually best to place these package files in their own directory.
 
 To run the sample
 
-Open config.php and change the three parameters to match your settings the first two parameters can be got from http://grabz.it/api/
+Open config.php and change the three parameters to match your settings the first two parameters can be got from https://grabz.it/api/
 the third parameter is the location you have placed the GrabzItHandler.php on your website.
 
 
@@ -23,4 +23,4 @@ Ensure your application has read and write access to the "results" directory.
 
 Finally run the index.php to start converting web pages.
 
-More documentation can be found at: http://grabz.it/api/php/
+More documentation can be found at: https://grabz.it/api/php/

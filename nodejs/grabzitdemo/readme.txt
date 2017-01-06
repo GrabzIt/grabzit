@@ -7,7 +7,7 @@ GrabzIt 3.0
 
 To run the sample
 
-Open config.js and change the three parameters to match your settings the first two parameters can be got from http://grabz.it/api/
+Open config.js and change the three parameters to match your settings the first two parameters can be got from https://grabz.it/api/
 the third parameter is the location of the handler on your website.
 
 
@@ -19,4 +19,4 @@ Ensure your application has read and write access to the "/public/results" direc
 
 Finally run the sample web application to start converting web pages into screenshots.
 
-More documentation can be found at: http://grabz.it/api/nodejs/
+More documentation can be found at: https://grabz.it/api/nodejs/
