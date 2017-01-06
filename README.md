@@ -9,7 +9,7 @@ While we currently support [ASP.NET](https://grabz.it/api/aspnet/), [Java](https
 Example
 -------
 
-We have made the programming libraries as simple as possible to use. To create a capture you must first call a method that specifies what you want to capture such as the URLToImage method followed by the Save method. You will need a application key and application secret, but you can get these for free from [http://grabz.it](https://grabz.it).
+We have made the programming libraries as simple as possible to use. To create a capture you must first call a method that specifies what you want to capture such as the URLToImage method followed by the Save method. You will need a application key and application secret, but you can get these for free from [https://grabz.it](https://grabz.it).
 
 ```
 include("GrabzItClient.class.php");
