@@ -4,12 +4,12 @@ GrabzIt aspires to allow any programming language no matter how basic to turn a 
 
 To do this we provide client libraries that enables a developer to create a capture, once complete, our server then sends a callback to your app to allow it to be processed.
 
-While we currently support [ASP.NET](http://grabz.it/api/aspnet/), [Java](http://grabz.it/api/java/), [Javascript](http://grabz.it/api/javascript/), [Node.js](http://grabz.it/api/nodejs/), [PHP](http://grabz.it/api/php/), [Perl](http://grabz.it/api/perl/), [Python](http://grabz.it/api/python/) and [Ruby](http://grabz.it/api/ruby/) we aim to create a library for as many programming languages as possible. If you would like to help us achieve this please do!
+While we currently support [ASP.NET](https://grabz.it/api/aspnet/), [Java](https://grabz.it/api/java/), [Javascript](https://grabz.it/api/javascript/), [Node.js](https://grabz.it/api/nodejs/), [PHP](https://grabz.it/api/php/), [Perl](https://grabz.it/api/perl/), [Python](https://grabz.it/api/python/) and [Ruby](https://grabz.it/api/ruby/) we aim to create a library for as many programming languages as possible. If you would like to help us achieve this please do!
 
 Example
 -------
 
-We have made the programming libraries as simple as possible to use. To create a capture you must first call a method that specifies what you want to capture such as the URLToImage method followed by the Save method. You will need a application key and application secret, but you can get these for free from [http://grabz.it](http://grabz.it).
+We have made the programming libraries as simple as possible to use. To create a capture you must first call a method that specifies what you want to capture such as the URLToImage method followed by the Save method. You will need a application key and application secret, but you can get these for free from [http://grabz.it](https://grabz.it).
 
 ```
 include("GrabzItClient.class.php");
@@ -55,4 +55,4 @@ And that's it! Your website should now be taking screenshots!
 Documentation
 -------------
 
-For further more in depth documentation go to [http://grabz.it/api](http://grabz.it/api).
+For further more in depth documentation go to [https://grabz.it/api](https://grabz.it/api).
