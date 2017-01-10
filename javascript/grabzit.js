@@ -33,7 +33,7 @@ function GrabzIt(key)
 		{
 			if (opts == null)
 			{
-				return opts;
+				return {};
 			}
 			
 			var results = {};
@@ -98,11 +98,6 @@ function GrabzIt(key)
 		this._createQueryString = function(sKey, sValue)
 		{
 			var qs = 'key='+encodeURIComponent(this.key)+'&'+sKey+'=' + encodeURIComponent(sValue);
-
-			if (this.options == null)
-			{
-				return qs;
-			}
 
 			for(var k in this.options)
 			{
@@ -220,6 +215,11 @@ function GrabzIt(key)
 			if (this.elem == null)
 			{
 				throw "No valid element was provided to attach the screenshot to";
+			}
+			
+			if (this.options['download'] != '1')
+			{
+				delete this.options['download'];
 			}
 
 			if (this.post)
