@@ -325,6 +325,7 @@ function GrabzItSaveAsPDF(key, options)
 		if (options != null)
 		{
 			options.format = 'pdf';
+			options.download = 1;
 		}
 
 		var links = document.getElementsByClassName("grabzit-pdf-save");
