@@ -18,6 +18,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $templateId = null;
 	private $customWaterMarkId = null;
 	private $quality = -1;
+	private $hideElement = null;	
 
 	/*
 	Set the number of milliseconds to wait before creating the capture.
@@ -148,6 +149,22 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	{
 		return $this->coverURL;
 	}
+	
+	/*
+	Set the CSS selector(s) of the one or more HTML elements in the web page to hide.
+	*/
+	public function setHideElement($value)
+	{
+		$this->hideElement = $value;
+	}
+
+	/*
+	Get the CSS selector(s) of the one or more HTML elements in the web page to hide.
+	*/
+	public function getHideElement()
+	{
+		return $this->hideElement;
+	}		
 
 	/*
 	Set the margin that should appear at the top of the PDF document page.
@@ -297,7 +314,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty(intval($this->includeLinks))."|".$this->nullToEmpty(intval($this->includeOutline))."|".$this->nullToEmpty($this->title)."|".
 		$this->nullToEmpty($this->coverURL)."|".$this->nullToEmpty($this->marginTop)."|".$this->nullToEmpty($this->marginLeft)."|".$this->nullToEmpty($this->marginBottom)."|".
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
-		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId);	  
+		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId)."|".
+		$this->nullToEmpty($this->hideElement);	  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -317,8 +335,9 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['mtop'] = $this->nullToEmpty($this->marginTop);
 		$params['mbottom'] = $this->nullToEmpty($this->marginBottom);
 		$params['delay'] = $this->nullToEmpty($this->delay);
-		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));		
-		$params['quality'] = $this->nullToEmpty($this->quality);			
+		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));
+		$params['quality'] = $this->nullToEmpty($this->quality);
+		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		
 		return $params;
 	}

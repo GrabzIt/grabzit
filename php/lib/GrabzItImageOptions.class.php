@@ -5,13 +5,14 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 {	
 	private $requestAs = 0;
 	private $customWaterMarkId = null;
-	private $quality = -1;	
+	private $quality = -1;
 	private $browserWidth = null;
 	private $browserHeight = null;
 	private $width = null;
 	private $height = null;
 	private $format = null;
-	private $targetElement = null;	
+	private $targetElement = null;
+	private $hideElement = null;
 
 	/*
 	Set the width of the browser in pixels.
@@ -94,7 +95,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the id of the only HTML element in the web page to turn into a screenshot.
+	Set the CSS selector of the only HTML element in the web page to capture.
 	*/
 	public function setTargetElement($value)
 	{
@@ -102,12 +103,28 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the id of the only HTML element in the web page to turn into a screenshot.
+	Get the CSS selector of the only HTML element in the web page to capture.
 	*/
 	public function getTargetElement()
 	{
 		return $this->targetElement;
 	}
+	
+	/*
+	Set the CSS selector(s) of the one or more HTML elements in the web page to hide.
+	*/
+	public function setHideElement($value)
+	{
+		$this->hideElement = $value;
+	}
+
+	/*
+	Get the CSS selector(s) of the one or more HTML elements in the web page to hide.
+	*/
+	public function getHideElement()
+	{
+		return $this->hideElement;
+	}	
 	
 	/*
 	Set the number of milliseconds to wait before creating the capture.
@@ -191,7 +208,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		"|".$this->nullToEmpty($this->format)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserHeight)
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty($this->targetElement)
 		."|".$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
-		$this->nullToEmpty($this->quality);	  
+		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement);	  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -205,6 +222,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['bheight'] = $this->nullToEmpty($this->browserHeight);
 		$params['delay'] = $this->nullToEmpty($this->delay);
 		$params['target'] = $this->nullToEmpty($this->targetElement);
+		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));		
 		$params['quality'] = $this->nullToEmpty($this->quality);			
 		
