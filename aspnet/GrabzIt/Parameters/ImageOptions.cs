@@ -21,6 +21,7 @@ namespace GrabzIt.Parameters
             OutputHeight = 0;
             Format = ImageFormat.jpg;
             TargetElement = string.Empty;
+            HideElement = string.Empty;
         }
 
         /// <summary>
@@ -84,9 +85,18 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
-        /// The id of the only HTML element in the web page to turn into a screenshot
+        /// The CSS selector of the only HTML element in the web page to capture
         /// </summary>
         public string TargetElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector(s) of the one or more HTML elements in the web page to hide
+        /// </summary>
+        public string HideElement
         {
             get;
             set;
@@ -137,7 +147,7 @@ namespace GrabzIt.Parameters
             "|" + Format + "|" + OutputHeight + "|" + OutputWidth + "|" + BrowserHeight
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
-            Quality;
+            Quality + "|" + HideElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -151,6 +161,7 @@ namespace GrabzIt.Parameters
             parameters.Add("bheight", BrowserHeight.ToString());
             parameters.Add("delay", Delay.ToString());
             parameters.Add("target", TargetElement);
+            parameters.Add("hide", HideElement);
             parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
             parameters.Add("quality", Quality.ToString());
 

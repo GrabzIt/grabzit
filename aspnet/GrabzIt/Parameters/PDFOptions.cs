@@ -27,6 +27,7 @@ namespace GrabzIt.Parameters
 	        TemplateId = string.Empty;
 	        CustomWaterMarkId = string.Empty;
 	        Quality = -1;
+            HideElement = string.Empty;
         }
         /// <summary>
         /// If true the background of the web page should be included in the PDF
@@ -179,6 +180,15 @@ namespace GrabzIt.Parameters
             set;
         }
 
+        /// <summary>
+        /// The CSS selector(s) of the one or more HTML elements in the web page to hide
+        /// </summary>
+        public string HideElement
+        {
+            get;
+            set;
+        }
+
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)
         {
             string urlParam = string.Empty;
@@ -196,7 +206,8 @@ namespace GrabzIt.Parameters
             return applicationSecret + "|" + urlParam + callBackURLParam +
             "|" + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + CustomWaterMarkId + "|" 
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
-            + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId;
+            + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
+             + "|" + HideElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -217,7 +228,8 @@ namespace GrabzIt.Parameters
 		    parameters.Add("mbottom", MarginBottom.ToString());
 		    parameters.Add("delay", Delay.ToString());
 		    parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());		
-		    parameters.Add("quality", Quality.ToString());			
+		    parameters.Add("quality", Quality.ToString());
+            parameters.Add("hide", HideElement);
 
             return parameters;
         }

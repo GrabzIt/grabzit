@@ -61,6 +61,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string HideElement
+        {
+            get;
+            set;
+        }
+
         BrowserType RequestAs
         {
             get;

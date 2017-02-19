@@ -114,5 +114,11 @@ namespace GrabzIt.COM
             get;
             set;
         }
+
+        string HideElement
+        {
+            get;
+            set;
+        }
     }
 }
