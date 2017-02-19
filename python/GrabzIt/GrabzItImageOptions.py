@@ -13,7 +13,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             browserHeight       the height of the browser in pixels. Use -1 to screenshot the whole web page
             format              the format the screenshot should be in: bmp8, bmp16, bmp24, bmp, tiff, jpg, png
             delay               the number of milliseconds to wait before creating the capture
-            targetElement       the id of the only HTML element in the web page to turn into a screenshot
+            targetElement       the CSS selector of the only HTML element in the web page to capture
+            hideElement         the CSS selector(s) of the one or more HTML elements in the web page to hide
             requestAs           the user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             customWaterMarkId   set a custom watermark to add to the screenshot
             quality             set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
@@ -27,6 +28,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.height = 0
                 self.format = ''
                 self.targetElement = ''
+                self.hideElement = ''
                 self.requestAs = 0
                 self.customWaterMarkId = ''
                 self.quality = -1
@@ -39,7 +41,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["bheight"] = int(self.browserHeight)
                 params["delay"] = int(self.delay)
                 params["format"] = str(self.format)
-                params["target"] = str(self.targetElement) 
+                params["target"] = str(self.targetElement)
+                params["hide"] = str(self.hideElement)                
                 params["requestmobileversion"] = int(self.requestAs)
                 params["customwatermarkid"] = str(self.customWaterMarkId) 
                 params["quality"] = int(self.quality) 
@@ -57,5 +60,5 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.format)+"|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))
+                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)
                 

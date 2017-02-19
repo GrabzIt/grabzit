@@ -19,6 +19,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             marginBottom            the margin that should appear at the bottom of the PDF document page
             marginRight             the margin that should appear at the right of the PDF document
             delay                   the number of milliseconds to wait before creating the capture
+            hideElement             the CSS selector(s) of the one or more HTML elements in the web page to hide
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             templateId              a PDF template ID that specifies the header and footer of the PDF document
             customWaterMarkId       a custom watermark to add to the PDF
@@ -44,6 +45,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.templateId = ''
                 self.customWaterMarkId = ''
                 self.quality = -1
+                self.hideElement = ''
                 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -62,7 +64,8 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["templateid"] = str(self.templateId)
                 params["requestmobileversion"] = int(self.requestAs)
                 params["customwatermarkid"] = str(self.customWaterMarkId) 
-                params["quality"] = int(self.quality) 
+                params["quality"] = int(self.quality)
+                params["hide"] = str(self.hideElement)                
 
                 return params
                 
@@ -79,4 +82,4 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(self.customWaterMarkId)+ \
                 "|"+str(int(self.includeLinks))+"|"+str(int(self.includeOutline))+"|"+str(self.title)+"|"+str(self.coverURL)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
-                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)
+                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)

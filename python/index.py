@@ -12,6 +12,10 @@ except ImportError:
 cgitb.enable()
 
 from GrabzIt import GrabzItClient
+from GrabzIt import GrabzItPDFOptions
+from GrabzIt import GrabzItImageOptions
+from GrabzIt import GrabzItAnimationOptions
+from GrabzIt import GrabzItTableOptions
 try:
 	from configparser import SafeConfigParser
 except ImportError:
