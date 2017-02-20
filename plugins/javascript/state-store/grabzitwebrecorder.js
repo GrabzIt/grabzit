@@ -35,7 +35,7 @@ function GrabzIt(key)
 		{
 			if (opts == null)
 			{
-				return opts;
+				return {};
 			}
 			
 			var results = {};
@@ -101,18 +101,13 @@ function GrabzIt(key)
 		{
 			var qs = 'key='+encodeURIComponent(this.key)+'&'+sKey+'=' + encodeURIComponent(sValue);
 
-			if (this.options == null)
-			{
-				return qs;
-			}
-
 			for(var k in this.options)
 			{
 				if (k != 'format' && k != 'cache' && k != 'customwatermarkid' && k != 'quality'
 				&& k != 'country' && k != 'filename' && k != 'errorid' && k != 'errorclass' &&
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
-				k != 'templateid' && k != 'noresult')
+				k != 'templateid' && k != 'noresult' && k != 'hide')
 				{
 					throw "Option " + k + " not recognized!";
 				}
@@ -222,6 +217,11 @@ function GrabzIt(key)
 			if (this.elem == null)
 			{
 				throw "No valid element was provided to attach the screenshot to";
+			}
+			
+			if (this.options['download'] != '1')
+			{
+				delete this.options['download'];
 			}
 
 			if (this.post)
