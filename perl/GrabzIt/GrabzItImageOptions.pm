@@ -17,6 +17,7 @@ sub new
     $self->{"height"} = 0;
     $self->{"format"} = '';
     $self->{"targetElement"} = '';
+    $self->{"hideElement"} = '';
     $self->{"requestAs"} = 0;
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
@@ -105,7 +106,7 @@ sub delay
 }
 
 #
-# The id of the only HTML element in the web page to turn into a screenshot
+# The CSS selector of the only HTML element in the web page to capture
 #
 sub targetElement
 {
@@ -115,6 +116,19 @@ sub targetElement
         $self->{"targetElement"} = shift;
     }
     return $self->{"targetElement"};
+}
+
+#
+# The CSS selector(s) of the one or more HTML elements in the web page to hide
+#
+sub hideElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"hideElement"} = shift;
+    }
+    return $self->{"hideElement"};
 }
 
 #
@@ -176,7 +190,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality();
+    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement();
 }
 
 sub _getParameters($$$$$)
@@ -191,6 +205,7 @@ sub _getParameters($$$$$)
     $params->{'bheight'} = $self->browserHeight();
     $params->{'delay'} = $self->delay();
     $params->{'target'} = $self->targetElement();
+    $params->{'hide'} = $self->hideElement();
     $params->{'customwatermarkid'} = $self->customWaterMarkId();
     $params->{'requestmobileversion'} = $self->requestAs();
     $params->{'quality'} = $self->quality();

@@ -26,6 +26,7 @@ sub new
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
     $self->{"templateId"} = '';
+    $self->{"hideElement"} = '';
         
     bless $self, $class;
 
@@ -241,6 +242,19 @@ sub templateId
     return $self->{"templateId"};
 }
 
+#
+# The CSS selector(s) of the one or more HTML elements in the web page to hide
+#
+sub hideElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"hideElement"} = shift;
+    }
+    return $self->{"hideElement"};
+}
+
 sub _getSignatureString($$;$)
 {
     my ($self, $applicationSecret, $callBackURL, $url) = @_;
@@ -262,7 +276,7 @@ sub _getSignatureString($$;$)
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->customWaterMarkId()."|".$self->includeLinks().
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
-    "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId();
+    "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement();
 }
 
 sub _getParameters($$$$$)
@@ -286,6 +300,7 @@ sub _getParameters($$$$$)
     $params->{'delay'} = $self->delay();
     $params->{'requestmobileversion'} = $self->requestAs();
     $params->{'quality'} = $self->quality();
+    $params->{'hide'} = $self->hideElement();
     
     return $params;
 }
