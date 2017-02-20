@@ -23,6 +23,7 @@ public class ImageOptions extends BaseOptions {
     private int outputHeight;
     private ImageFormat format;
     private String targetElement;
+    private String hideElement;
     private BrowserType requestAs;
     private String customWaterMarkId;
     private int quality;
@@ -35,6 +36,7 @@ public class ImageOptions extends BaseOptions {
         this.outputWidth = 0;
         this.format = ImageFormat.JPG;
         this.targetElement = "";
+        this.hideElement = "";
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
         this.quality = -1;
@@ -125,19 +127,33 @@ public class ImageOptions extends BaseOptions {
     }
 
     /**
-     * @return get the id of the only HTML element in the web page to turn into a screenshot.
+     * @return get the CSS selector of the only HTML element in the web page to capture.
      */
     public String getTargetElement() {
         return targetElement;
     }
 
     /**
-     * @param targetElement set the id of the only HTML element in the web page to turn into a screenshot.
+     * @param targetElement set the CSS selector of the only HTML element in the web page to capture.
      */
     public void setTargetElement(String targetElement) {
         this.targetElement = targetElement;
     }
 
+    /**
+     * @return get the CSS selector(s) of the one or more HTML elements in the web page to hide.
+     */
+    public String getHideElement() {
+        return hideElement;
+    }
+
+    /**
+     * @param hideElement set the CSS selector(s) of the one or more HTML elements in the web page to hide.
+     */
+    public void setHideElement(String hideElement) {
+        this.hideElement = hideElement;
+    }    
+    
     /**
      * @return get which user agent type should be used.
      */
@@ -198,7 +214,7 @@ public class ImageOptions extends BaseOptions {
         return ParameterUtility.nullCheck(applicationSecret) + "|" + urlParam + callBackURLParam
         + "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight 
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
-        + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality;
+        + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement;
     }    
     
     @Override
@@ -206,6 +222,7 @@ public class ImageOptions extends BaseOptions {
     {
         HashMap<String, String> params = createParameters(applicationKey, sig, callBackURL, dataName, dataValue);		
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
+        params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));
 	params.put("width", String.valueOf(outputWidth));
 	params.put("height", String.valueOf(outputHeight));

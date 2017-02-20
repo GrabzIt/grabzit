@@ -7,6 +7,7 @@ package it.grabz.grabzit;
 import it.grabz.grabzit.enums.HorizontalPosition;
 import it.grabz.grabzit.enums.VerticalPosition;
 import it.grabz.grabzit.parameters.ImageOptions;
+import it.grabz.grabzit.parameters.PDFOptions;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -107,6 +108,23 @@ public class GrabzItClientTest {
     }    
 
     @Test
+    public void testTakePDFHidePopup() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            PDFOptions options = new PDFOptions();
+            options.setHideElement(".ArevicoModal-bg,.ArevicoModal");
+            options.setDelay(30000);            
+            client.URLToPDF("http://www.itnews24hrs.com/2016/05/turnkey-lender/", options);
+            Assert.assertNotNull("Failed to take hide popups using URLToPDF method", client.Save());
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to take a PDF screenshot: " + ex.getMessage());
+        }
+    }        
+    
+    @Test
     public void testTakeImage() throws IOException, JAXBException, Exception
     {
         try
@@ -119,6 +137,23 @@ public class GrabzItClientTest {
             Assert.fail("An error occured when trying to take a image screenshot: " + ex.getMessage());
         }
     }
+    
+    @Test
+    public void testTakeImageHidePopup() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            ImageOptions options = new ImageOptions();
+            options.setHideElement(".ArevicoModal-bg,.ArevicoModal");
+            options.setDelay(30000);            
+            client.URLToImage("http://www.itnews24hrs.com/2016/05/turnkey-lender/", options);
+            Assert.assertNotNull("Failed to take hide popups using URLToImage method", client.Save());
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to take a image screenshot: " + ex.getMessage());
+        }
+    }    
     
     @Test
     public void testHTMLToImage() throws IOException, JAXBException, Exception

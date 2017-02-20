@@ -33,6 +33,7 @@ public class PDFOptions extends BaseOptions {
     private String templateId;
     private String customWaterMarkId;
     private int quality;
+    private String hideElement;
 
     public PDFOptions()
     {
@@ -50,6 +51,7 @@ public class PDFOptions extends BaseOptions {
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
         this.templateId = "";
+        this.hideElement = "";
         this.quality = -1;
     }
     
@@ -277,6 +279,20 @@ public class PDFOptions extends BaseOptions {
         this.quality = quality;
     }
     
+    /**
+     * @return get the CSS selector(s) of the one or more HTML elements in the web page to hide.
+     */
+    public String getHideElement() {
+        return hideElement;
+    }
+
+    /**
+     * @param hideElement set the CSS selector(s) of the one or more HTML elements in the web page to hide.
+     */
+    public void setHideElement(String hideElement) {
+        this.hideElement = hideElement;
+    }    
+    
     @Override
     public String _getSignatureString(String applicationSecret, String callBackURL, String url)
     {
@@ -296,7 +312,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + getCustomId() + "|" + ParameterUtility.toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() 
         + "|" + customWaterMarkId + "|" + ParameterUtility.toInt(includeLinks) + "|" + ParameterUtility.toInt(includeOutline)
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
-        + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId;
+        + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement;
     }    
     
     @Override
@@ -318,7 +334,8 @@ public class PDFOptions extends BaseOptions {
         params.put("mbottom", String.valueOf(marginBottom));
         params.put("delay", String.valueOf(delay));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));		
-        params.put("quality", String.valueOf(quality));			
+        params.put("quality", String.valueOf(quality));
+        params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
 
         return params;
     }    
