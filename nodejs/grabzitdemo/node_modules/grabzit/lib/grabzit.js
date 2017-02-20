@@ -66,6 +66,8 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_START_TOO_SMALL: 156,
         PARAMETER_DURATION_TOO_LARGE: 157,
         PARAMETER_NO_HTML: 163,
+        PARAMETER_INVALID_TARGET_VALUE: 165,
+        PARAMETER_INVALID_HIDE_VALUE: 166,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -350,7 +352,6 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'includeLinks': true,
         'includeOutline': false,
         'title': '',
-        'targetElement': '',
         'coverUrl': '',
         'marginTop': 10,
         'marginLeft': 10,
@@ -361,7 +362,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'templateId': '',
         'customWaterMarkId': '',
         'quality': -1,
-        'country': ''
+        'country': '',
+        'hideElement': ''
     };
 
     context = _extend(defaults, options);
@@ -392,7 +394,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'templateid': context['templateId'],
         'customwatermarkid': context['customWaterMarkId'],
         'delay': context['delay'],
-        'target': context['targetElement'],
+        'hide': context['hideElement'],
         'includelinks': _toInt(context['includeLinks']),
         'includeoutline': _toInt(context['includeOutline']),
         'title': context['title'],
@@ -412,7 +414,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
     var signaturePartTwo = '|' + context['customId'] + '|' + _toInt(context['includeBackground']) + '|' + pagesize + '|' + orientation + '|' + context['customWaterMarkId']
      + '|' + _toInt(context['includeLinks']) + '|' + _toInt(context['includeOutline']) + '|' + context['title'] + '|' + context['coverUrl'] + '|' + parseInt(context['marginTop'])
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
-     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'];
+     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -508,6 +510,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'format': '',
         'delay': '',
         'targetElement': '',
+        'hideElement': '',
         'requestAs': 0,
         'customWaterMarkId': '',
         'quality': -1,
@@ -532,6 +535,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'customid': context['customid'],
         'delay': context['delay'],
         'target': context['targetElement'],
+        'hide': context['hideElement'],
         'customwatermarkid': context['customWaterMarkId'],
         'requestmobileversion': parseInt(context['requestAs']),
         'country': context['country'],
@@ -542,7 +546,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
 
     var signaturePartTwo = '|' + context['format'] + '|' + context['height'] + '|' + context['width'] + '|' + context['browserHeight'] + '|' + context['browserWidth']
      + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs'])
-     + '|' + context['country'] + '|' + context['quality'];
+     + '|' + context['country'] + '|' + context['quality'] + '|' + context['hideElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
