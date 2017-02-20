@@ -12,6 +12,7 @@ module GrabzIt
 			@height = nil
 			@format = nil
 			@targetElement = nil
+			@hideElement = nil
 			@requestAs = 0
 			@customWaterMarkId = nil
 			@quality = -1
@@ -95,18 +96,31 @@ module GrabzIt
 			@delay = value
 		end
 
-		# @return [String] get the id of the only HTML element in the web page to turn into a screenshot
+		# @return [String] get the CSS selector of the only HTML element in the web page to capture
 		def targetElement
 			@targetElement
 		end
 		
-		# Set the id of the only HTML element in the web page to turn into a screenshot
+		# Set the CSS selector of the only HTML element in the web page to capture
 		#
 		# @param value [String] the target element
 		# @return [void]		
 		def targetElement(value)
 			@targetElement = value
-		end		
+		end
+		
+		# @return [String] get the CSS selector(s) of the one or more HTML elements in the web page to hide
+		def hideElement
+			@hideElement
+		end
+		
+		# Set the CSS selector(s) of the one or more HTML elements in the web page to hide
+		#
+		# @param value [String] the element(s) to hide
+		# @return [void]		
+		def hideElement(value)
+			@hideElement = value
+		end
 		
 		# @return [Integer] get which user agent type should be used
 		def requestAs
@@ -142,7 +156,7 @@ module GrabzIt
 		# Set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 		#
 		# @param value [Integer] the custom identifier
-		# @return [void]		
+		# @return [void]
 		def quality(value)
 			@quality = value
 		end	
@@ -152,17 +166,17 @@ module GrabzIt
 			urlParam = ''
 			if (url != nil)
 				urlParam = GrabzIt::Utility.nil_check(url)+"|"
-			end		
+			end
 			
 			callBackURLParam = ''
 			if (callBackURL != nil)
 				callBackURLParam = GrabzIt::Utility.nil_check(callBackURL)
-			end					
+			end
 
 			return applicationSecret+"|"+ urlParam + callBackURLParam +
 			"|"+GrabzIt::Utility.nil_check(@format)+"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_int_check(@browserHeight)+
 			"|"+GrabzIt::Utility.nil_int_check(@browserWidth)+"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+GrabzIt::Utility.nil_check(@targetElement)+
-			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)	  
+			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)
 		end
 	
 		# @!visibility private
@@ -176,6 +190,7 @@ module GrabzIt
 			params['bheight'] = GrabzIt::Utility.nil_int_check(@browserHeight)
 			params['delay'] = GrabzIt::Utility.nil_int_check(@delay)
 			params['target'] = GrabzIt::Utility.nil_check(@targetElement)
+			params['hide'] = GrabzIt::Utility.nil_check(@hideElement)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
 			

@@ -213,15 +213,37 @@ class GrabzItTest < Test::Unit::TestCase
 		end	
 	end	
 	
-	def test_take_image_options
+	def test_take_pdf_hide_popup
+		assert_nothing_raised "An error occured when trying to take a pdf screenshot" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			options = GrabzIt::PDFOptions.new()
+			options.hideElement(".ArevicoModal-bg,.ArevicoModal")
+			options.delay(30000)
+			grabzItClient.url_to_pdf("http://www.itnews24hrs.com/2016/05/turnkey-lender/", options)
+			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using test_take_pdf_hide_popup method")
+		end	
+	end	
+	
+	def test_take_image
 		assert_nothing_raised "An error occured when trying to take a image screenshot" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
 			options = GrabzIt::ImageOptions.new()
 			options.customWaterMarkId("GrabzIt_Browser")
 			grabzItClient.url_to_image("http://www.google.com", options)
-			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using set_image_options method")
+			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using url_to_image method")
 		end	
 	end
+	
+	def test_take_image_hide_popup
+		assert_nothing_raised "An error occured when trying to take a image screenshot" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			options = GrabzIt::ImageOptions.new()
+			options.hideElement(".ArevicoModal-bg,.ArevicoModal")
+			options.delay(30000)
+			grabzItClient.url_to_image("http://www.itnews24hrs.com/2016/05/turnkey-lender/", options)
+			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using test_take_image_hide_popup method")
+		end	
+	end	
 	
 	def test_take_unicode_url_image
 		assert_nothing_raised "An error occured when trying to take a image screenshot with a unicode URL" do

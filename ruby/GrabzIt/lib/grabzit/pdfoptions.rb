@@ -21,6 +21,7 @@ module GrabzIt
 			@templateId = nil
 			@customWaterMarkId = nil
 			@quality = -1
+			@hideElement = nil
 		end
 		
 		# @return [Boolean] true if the background of the web page should be included in the PDF
@@ -218,6 +219,19 @@ module GrabzIt
 		# @return [void]		
 		def quality(value)
 			@quality = value
+		end
+		
+		# @return [String] get the CSS selector(s) of the one or more HTML elements in the web page to hide
+		def hideElement
+			@hideElement
+		end
+		
+		# Set the CSS selector(s) of the one or more HTML elements in the web page to hide
+		#
+		# @param value [String] the element(s) to hide
+		# @return [void]		
+		def hideElement(value)
+			@hideElement = value
 		end		
 		
 		# @!visibility private
@@ -237,7 +251,7 @@ module GrabzIt
 			GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+GrabzIt::Utility.b_to_str(@includeOutline)+"|"+
 			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_check(@coverURL)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)	  
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)  
 		end
 		
 		# @!visibility private
@@ -258,7 +272,8 @@ module GrabzIt
 			params['mbottom'] = GrabzIt::Utility.nil_int_check(@marginBottom)
 			params['delay'] = GrabzIt::Utility.nil_int_check(@delay)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
-			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)			
+			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
+			params['hide'] = GrabzIt::Utility.nil_check(@hideElement)
 			
 			return params;
 		end		
