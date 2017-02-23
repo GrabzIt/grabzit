@@ -485,6 +485,11 @@ class GrabzItClient
 		{
 			$this->checkResponseHeader($http_response_header);
 		}
+		
+		if ($response === FALSE)
+		{
+			throw new GrabzItException("An unknown network error occurred.", GrabzItException::NETWORK_GENERAL_ERROR);
+		}		
 
 		return $this->isSuccessful($response);
 	}
