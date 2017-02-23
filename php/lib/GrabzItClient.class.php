@@ -604,7 +604,7 @@ class GrabzItClient
 			
 			if ($response === FALSE)
 			{
-				throw new GrabzItException("An unknown network error occured.", GrabzItException::NETWORK_GENERAL_ERROR);
+				throw new GrabzItException("An unknown network error occurred.", GrabzItException::NETWORK_GENERAL_ERROR);
 			}
 
 			return $response;
@@ -651,7 +651,7 @@ class GrabzItClient
 			
 			if ($response === FALSE)
 			{
-				throw new GrabzItException("An unknown network error occured.", GrabzItException::NETWORK_GENERAL_ERROR);
+				throw new GrabzItException("An unknown network error occurred.", GrabzItException::NETWORK_GENERAL_ERROR);
 			}			
 
 			return $response;
