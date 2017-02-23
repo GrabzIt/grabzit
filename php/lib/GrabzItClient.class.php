@@ -638,11 +638,16 @@ class GrabzItClient
 			$timeout = array('http' => array('timeout' => $this->connectionTimeout));
 			$context = stream_context_create($timeout);
 			$response = @file_get_contents($url, false, $context);
-
+			
 			if (isset($http_response_header))
 			{
 				$this->checkResponseHeader($http_response_header);
 			}
+			
+			if ($response === FALSE)
+			{
+				throw new GrabzItException("An unknown network error occured.", GrabzItException::NETWORK_GENERAL_ERROR);
+			}			
 
 			return $response;
 		}
