@@ -411,7 +411,7 @@ public class GrabzItClient {
 
             if (!status.isCached() && !status.isProcessing())
             {
-                throw new GrabzItException("The screenshot did not complete with the error: " + status.getMessage(), ErrorCode.RENDERINGERROR);
+                throw new GrabzItException("The capture did not complete with the error: " + status.getMessage(), ErrorCode.RENDERINGERROR);
             }
 
             if (status.isCached())
@@ -420,7 +420,7 @@ public class GrabzItClient {
 
                 if (result == null)
                 {
-                    throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RENDERINGMISSINGSCREENSHOT);
+                    throw new GrabzItException("The capture could not be found on GrabzIt.", ErrorCode.RENDERINGMISSINGSCREENSHOT);
                 }
 
                 return result;
@@ -466,7 +466,7 @@ public class GrabzItClient {
                     attempt++;
                     continue;
                 }
-                throw new GrabzItException("An error occurred trying to save the screenshot to: " +
+                throw new GrabzItException("An error occurred trying to save the capture to: " +
                                     saveToFile, ErrorCode.FILESAVEERROR);
             }
         }

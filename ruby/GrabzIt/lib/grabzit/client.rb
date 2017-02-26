@@ -199,7 +199,7 @@ module GrabzIt
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def save(callBackURL = nil)
 			if @request == nil
-				  raise GrabzItException.new("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS)
+				  raise GrabzItException.new("No parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS)
 			end
 			
 			sig = encode(@request.options()._getSignatureString(@applicationSecret, callBackURL, @request.getTargetUrl()))
@@ -239,12 +239,12 @@ module GrabzIt
 				status = get_status(id)
 
 				if !status.cached && !status.processing
-					raise GrabzItException.new("The screenshot did not complete with the error: " + status.message, GrabzItException::RENDERING_ERROR)
+					raise GrabzItException.new("The capture did not complete with the error: " + status.message, GrabzItException::RENDERING_ERROR)
 					break
 				elsif status.cached
 					result = get_result(id)
 					if !result
-						raise GrabzItException.new("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT)
+						raise GrabzItException.new("The capture could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT)
 						break
 					end
 					

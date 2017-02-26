@@ -161,7 +161,7 @@ class GrabzItClient:
         #
         def Save(self, callBackURL = ''):
                 if (self.request == None ):
-                        raise GrabzItException.GrabzItException("No screenshot parameters have been set.", GrabzItException.GrabzItException.PARAMETER_MISSING_PARAMETERS)
+                        raise GrabzItException.GrabzItException("No parameters have been set.", GrabzItException.GrabzItException.PARAMETER_MISSING_PARAMETERS)
                 
                 sig = self.CreateSignature(self.request.options._getSignatureString(self.applicationSecret, callBackURL, self.request._targetUrl()))                               
 
@@ -192,12 +192,12 @@ class GrabzItClient:
                 while(1):
                         status = self.GetStatus(id)
                         if not(status.Cached) and not(status.Processing):
-                                raise GrabzItException.GrabzItException("The screenshot did not complete with the error: " + status.Message, GrabzItException.GrabzItException.RENDERING_ERROR)
+                                raise GrabzItException.GrabzItException("The capture did not complete with the error: " + status.Message, GrabzItException.GrabzItException.RENDERING_ERROR)
                                 break
                         elif status.Cached:
                                 result = self.GetResult(id)
                                 if result == None:
-                                        raise GrabzItException.GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException.GrabzItException.RENDERING_MISSING_SCREENSHOT)
+                                        raise GrabzItException.GrabzItException("The capture could not be found on GrabzIt.", GrabzItException.GrabzItException.RENDERING_MISSING_SCREENSHOT)
                                         break
 
                                 if (saveToFile == None or saveToFile == ""):

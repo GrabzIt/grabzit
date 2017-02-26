@@ -181,7 +181,7 @@ sub Save($)
 	
 	if (length $self->{request} == 0)
 	{
-		 die "No screenshot parameters have been set.";
+		 die "No parameters have been set.";
 	}
 	
 	$sig =  $self->_encode($self->{request}->{options}->_getSignatureString($self->{_applicationSecret}, $callBackURL, $self->{request}->_getTargetUrl()));
@@ -229,7 +229,7 @@ sub SaveTo($)
 
 		if (!$status->getCached() && !$status->getProcessing())
 		{
-			die "The screenshot did not complete with the error: " . $status->getMessage()."\n";
+			die "The capture did not complete with the error: " . $status->getMessage()."\n";
 			last;
 		}
 		elsif ($status->getCached())
@@ -237,7 +237,7 @@ sub SaveTo($)
 			$result = $self->GetResult($id);
 			if (!$result)
 			{
-				die "The screenshot image could not be found on GrabzIt.\n";
+				die "The capture could not be found on GrabzIt.\n";
 				last;
 			}
 			

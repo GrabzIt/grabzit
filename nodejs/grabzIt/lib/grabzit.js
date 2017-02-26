@@ -685,7 +685,7 @@ GrabzItClient.prototype.save = function (callBackUrl, oncomplete) {
     if (this.request == null) {
         if (oncomplete != null) {
             var error = new Error();
-            error.message = 'No screenshot parameters have been set.';
+            error.message = 'No parameters have been set.';
             error.code = this.ERROR_CODES.PARAMETER_MISSING_PARAMETERS;
             oncomplete(error, null);
         }
@@ -740,7 +740,7 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
 
                         if (oncompleteEvent != null) {
                             var error = new Error();
-                            error.message = 'The screenshot did not complete with the error: ' + status.message;
+                            error.message = 'The capture did not complete with the error: ' + status.message;
                             error.code = self.ERROR_CODES.RENDERING_ERROR;
 
                             oncompleteEvent(error, null);
@@ -753,7 +753,7 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
                             if (result == null || result == '') {
                                 if (oncompleteEvent != null) {
                                     var error = new Error();
-                                    error.message = 'The screenshot could not be found on GrabzIt.';
+                                    error.message = 'The capture could not be found on GrabzIt.';
                                     error.code = self.ERROR_CODES.RENDERING_MISSING_SCREENSHOT;
 
                                     oncompleteEvent(error, null);

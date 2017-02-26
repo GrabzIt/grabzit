@@ -223,7 +223,7 @@ class GrabzItClient
 	{
 		if ($this->request == null)
 		{
-			throw new GrabzItException("No screenshot parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
+			throw new GrabzItException("No parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
 
 		$sig =  $this->encode($this->request->getOptions()->_getSignatureString($this->applicationSecret, $callBackURL, $this->request->getTargetUrl()));
@@ -269,7 +269,7 @@ class GrabzItClient
 
 			if (!$status->Cached && !$status->Processing)
 			{
-				throw new GrabzItException("The screenshot did not complete with the error: " . $status->Message, GrabzItException::RENDERING_ERROR);
+				throw new GrabzItException("The capture did not complete with the error: " . $status->Message, GrabzItException::RENDERING_ERROR);
 				break;
 			}
 			else if ($status->Cached)
@@ -277,7 +277,7 @@ class GrabzItClient
 				$result = $this->GetResult($id);
 				if (!$result)
 				{
-					throw new GrabzItException("The screenshot could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT);
+					throw new GrabzItException("The capture could not be found on GrabzIt.", GrabzItException::RENDERING_MISSING_SCREENSHOT);
 					break;
 				}
 

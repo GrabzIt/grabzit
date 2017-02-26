@@ -430,7 +430,7 @@ namespace GrabzIt
             {
                 if (this.request == null || this.request.Options == null)
                 {
-                    throw new GrabzItException("No screenshot parameters have been set.", ErrorCode.ParameterMissingParameters);
+                    throw new GrabzItException("No parameters have been set.", ErrorCode.ParameterMissingParameters);
                 }
                 string sig = Encrypt(request.Options.GetSignatureString(this.ApplicationSecret, callBackURL, request.TargetUrl));
 
@@ -479,7 +479,7 @@ namespace GrabzIt
 
                     if (!status.Cached && !status.Processing)
                     {
-                        throw new GrabzItException("The screenshot did not complete with the error: " + status.Message, ErrorCode.RenderingError);
+                        throw new GrabzItException("The capture did not complete with the error: " + status.Message, ErrorCode.RenderingError);
                     }
 
                     if (status.Cached)
@@ -488,7 +488,7 @@ namespace GrabzIt
 
                         if (result == null)
                         {
-                            throw new GrabzItException("The screenshot could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
+                            throw new GrabzItException("The capture could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
                         }
 
                         return result;
@@ -535,7 +535,7 @@ namespace GrabzIt
                         attempt++;
                         continue;
                     }
-                    throw new GrabzItException("An error occurred trying to save the screenshot to: " +
+                    throw new GrabzItException("An error occurred trying to save the capture to: " +
                                         saveToFile, ErrorCode.FileSaveError);
                 }
             }

@@ -214,7 +214,7 @@ function GrabzIt(key)
 
 			if (this.elem == null)
 			{
-				throw "No valid element was provided to attach the screenshot to";
+				throw "No valid element was provided to attach the capture to";
 			}
 			
 			if (this.options['download'] != '1')
