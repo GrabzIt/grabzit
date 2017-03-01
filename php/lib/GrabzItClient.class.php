@@ -231,7 +231,7 @@ class GrabzItClient
 		$obj = null;
 		if (!$this->request->isPost())
 		{
-			$obj = $this->getResultObject($this->Get($this->request->getUrl().'?'.http_build_query($this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'url', $this->request->getData()))));
+			$obj = $this->getResultObject($this->Get($this->request->getUrl().'?'.http_build_query($this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'url', $this->request->getData()), '', '&')));
 		}
 		else
 		{
@@ -595,7 +595,7 @@ class GrabzItClient
 					'timeout' => $this->connectionTimeout,
 					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 					'method'  => 'POST',
-					'content' => http_build_query($parameters)
+					'content' => http_build_query($parameters, '', '&')
 				)
 			);
 
@@ -623,7 +623,7 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_URL, $url);
 			curl_setopt($ch,CURLOPT_POST, count($parameters));
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
-			curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($parameters));
+			curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($parameters, '', '&'));
 
 			//execute post
 			$data = curl_exec($ch);
