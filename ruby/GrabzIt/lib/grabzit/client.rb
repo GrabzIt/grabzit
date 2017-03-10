@@ -421,11 +421,11 @@ module GrabzIt
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"key\"\r\n\r\n"
-			post_body << CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))
+			post_body << GrabzIt::Utility.nil_check(@applicationKey)
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"identifier\"\r\n\r\n"
-			post_body << CGI.escape(GrabzIt::Utility.nil_check(identifier))
+			post_body << GrabzIt::Utility.nil_check(identifier)
 			post_body << "\r\n--"+boundary+"\r\n"
 
 			post_body << "Content-Disposition: form-data; name=\"xpos\"\r\n\r\n"
