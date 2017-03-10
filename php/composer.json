@@ -5,7 +5,7 @@
     "homepage": "https://grabz.it/",	
     "description": "Use our API to allow your app to create images and PDF's from URL's or raw HTML. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
 	"license": "MIT",
-	"version":"3.0.2.3",
+	"version":"3.0.3",
 	"autoload": {
 		"classmap": [
 		  "lib/GrabzItAnimationOptions.class.php",

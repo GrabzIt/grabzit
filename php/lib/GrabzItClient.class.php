@@ -449,11 +449,11 @@ class GrabzItClient
 
 		$content .= "--".$boundary."\r\n".
 				"Content-Disposition: form-data; name=\"key\"\r\n\r\n".
-				urlencode($this->applicationKey) . "\r\n";
+				$this->applicationKey . "\r\n";
 
 		$content .= "--".$boundary."\r\n".
 				"Content-Disposition: form-data; name=\"identifier\"\r\n\r\n".
-				urlencode($identifier) . "\r\n";
+				$identifier . "\r\n";
 
 		$content .= "--".$boundary."\r\n".
 				"Content-Disposition: form-data; name=\"xpos\"\r\n\r\n".
