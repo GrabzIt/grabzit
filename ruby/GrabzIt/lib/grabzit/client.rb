@@ -202,7 +202,7 @@ module GrabzIt
 				  raise GrabzItException.new("No parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS)
 			end
 			
-			sig = encode(@request.options()._getSignatureString(@applicationSecret, callBackURL, @request.getTargetUrl()))
+			sig = encode(@request.options()._getSignatureString(GrabzIt::Utility.nil_check(@applicationSecret), callBackURL, @request.getTargetUrl()))
 			
 			data = nil
 
