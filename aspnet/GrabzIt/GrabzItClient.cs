@@ -657,6 +657,11 @@ namespace GrabzIt
 
                 GetCookiesResult webResult = Get<GetCookiesResult>(url);
 
+                if (webResult == null)
+                {
+                    return new GrabzItCookie[0];
+                }
+
                 CheckForException(webResult);
 
                 return webResult.Cookies;
@@ -879,6 +884,11 @@ namespace GrabzIt
                                                           BaseURLGet, HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
             GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
+
+            if (webResult == null)
+            {
+                return new WaterMark[0];
+            }
 
             CheckForException(webResult);
 
