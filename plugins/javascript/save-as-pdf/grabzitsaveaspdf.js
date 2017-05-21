@@ -105,7 +105,7 @@ function GrabzIt(key)
 				&& k != 'country' && k != 'filename' && k != 'errorid' && k != 'errorclass' &&
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
-				k != 'templateid' && k != 'noresult' && k != 'hide')
+				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages')
 				{
 					throw "Option " + k + " not recognized!";
 				}
@@ -214,7 +214,7 @@ function GrabzIt(key)
 
 			if (this.elem == null)
 			{
-				throw "No valid element was provided to attach the screenshot to";
+				throw "No valid element was provided to attach the capture to";
 			}
 			
 			if (this.options['download'] != '1')
