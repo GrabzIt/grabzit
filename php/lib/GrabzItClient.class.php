@@ -3,6 +3,7 @@ include_once("GrabzItCookie.class.php");
 include_once("GrabzItStatus.class.php");
 include_once("GrabzItRequest.class.php");
 include_once("GrabzItPDFOptions.class.php");
+include_once("GrabzItDOCXOptions.class.php");
 include_once("GrabzItImageOptions.class.php");
 include_once("GrabzItAnimationOptions.class.php");
 include_once("GrabzItTableOptions.class.php");
@@ -16,6 +17,7 @@ class GrabzItClient
 	const TakePicture = "takepicture.ashx";
 	const TakeTable = "taketable.ashx";
 	const TakePDF = "takepdf.ashx";
+	const TakeDOCX = "takedocx.ashx";
 	const TrueString = "True";
 
 	private $applicationKey;
@@ -214,6 +216,54 @@ class GrabzItClient
 		$this->HTMLToPDF(file_get_contents($path), $options);
 	}	
 
+	/*
+	This method specifies the URL that should be converted into a DOCX.
+
+	url - The URL to capture as a DOCX.
+	options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
+	*/
+	public function URLToDOCX($url, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItDOCXOptions();
+		}		
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_GET . GrabzItClient::TakeDOCX, false, $options, $url);
+	}
+
+	/*
+	This method specifies the HTML that should be converted into a DOCX.
+
+	html - The HTML to convert into a DOCX.
+	options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
+	*/	
+	public function HTMLToDOCX($html, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItDOCXOptions();
+		}
+
+		$this->request = new GrabzItRequest(GrabzItClient::WebServicesBaseURL_POST . GrabzItClient::TakeDOCX, true, $options, $html);
+	}
+
+	/*
+	This method specifies a HTML file that should be converted into a DOCX.
+
+	path - The file path of a HTML file to convert into a DOCX.
+	options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
+	*/	
+	public function FileToDOCX($path, $options = null)
+	{
+		if (!file_exists($path))
+		{
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
+		}
+		
+		$this->HTMLToDOCX(file_get_contents($path), $options);
+	}	
+	
 	/*
 	This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the GetResult method.
 

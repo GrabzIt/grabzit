@@ -42,6 +42,17 @@ if (count($_POST) > 0)
 					$grabzIt->URLToPDF($url);
 				}
 			}
+			else if ($format == "docx")
+			{
+				if ($convert == 'html')
+				{
+					$grabzIt->HTMLToDOCX($html);
+				}
+				else
+				{
+					$grabzIt->URLToDOCX($url);
+				}
+			}	
 			else if ($format == "gif")
 			{
 				$grabzIt->URLToAnimation($url);
@@ -77,7 +88,7 @@ if (count($_POST) > 0)
 <body>
 <h1>GrabzIt Demo</h1>
 <form method="post" action="index.php" class="inputForms">
-<p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+<p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 <?php
 if ($grabzItHandlerUrl == "URL OF YOUR handler.php FILE (http://www.example.com/grabzit/handler.php)")
 {
@@ -114,8 +125,9 @@ if (count($_POST) > 0 && !isset($_POST["delete"]))
 </div>
 <div class="Row">
 <label>Format </label><select name="format" onchange="selectChanged(this)">
-  <option value="jpg">JPG</option>
+  <option value="jpg">JPG</option>  
   <option value="pdf">PDF</option>
+  <option value="docx">DOCX</option>
   <option value="gif">GIF</option>
 </select>
 </div>

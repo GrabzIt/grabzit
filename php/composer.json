@@ -1,11 +1,11 @@
 {
     "name": "grabzit/grabzit",
 	"type": "library",
-	"keywords": ["screenshots","PDF","HTML","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion","HTML to PDF","HTML to Image","URL to PDF","URL to Image"],
-    "homepage": "https://grabz.it/",	
-    "description": "Use our API to allow your app to create images and PDF's from URL's or raw HTML. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
+	"keywords": ["screenshots","PDF","DOCX","HTML","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion","HTML to PDF","HTML to DOCX","HTML to Image","URL to PDF","URL to DOCX","URL to Image"],
+    "homepage": "https://grabz.it/",
+    "description": "Use our API to allow your app to create images, DOCX documents and PDF's from URL's or raw HTML. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
 	"license": "MIT",
-	"version":"3.0.3",
+	"version":"3.1.0",
 	"autoload": {
 		"classmap": [
 		  "lib/GrabzItAnimationOptions.class.php",
@@ -14,11 +14,12 @@
 		  "lib/GrabzItCookie.class.php",
 		  "lib/GrabzItException.class.php",
 		  "lib/GrabzItImageOptions.class.php",
+		  "lib/GrabzItDOCXOptions.class.php",
 		  "lib/GrabzItPDFOptions.class.php",
 		  "lib/GrabzItRequest.class.php",
 		  "lib/GrabzItStatus.class.php",
 		  "lib/GrabzItTableOptions.class.php",
-		  "lib/GrabzItWaterMark.class.php"		  
+		  "lib/GrabzItWaterMark.class.php"  
 		]
 	},
 	"support": {
