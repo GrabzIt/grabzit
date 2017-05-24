@@ -9,13 +9,14 @@ namespace SampleConsole
     class Program
     {
         private static string PDF = "P";
+        private static string DOCX = "D";
         private static string GIF = "G";
 
         static void Main(string[] args)
         {
             while (true)
             {
-                Console.WriteLine("Return Capture as PDF (P), JPEG (J) or Animated GIF (G)? Enter P, J or G.");
+                Console.WriteLine("Return Capture as PDF (P), DOCX (D), JPEG (J) or Animated GIF (G)? Enter P, J or G.");
                 string formatType = Console.ReadLine();
 
                 bool convertUrl = true;
@@ -46,6 +47,10 @@ namespace SampleConsole
                     {
                         format = ".pdf";
                     }
+                    else if (formatType == DOCX)
+                    {
+                        format = ".docx";
+                    }
                     else if (formatType == GIF)
                     {
                         format = ".gif";
@@ -62,6 +67,17 @@ namespace SampleConsole
                         else
                         {
                             grabzIt.HTMLToPDF(inputData);
+                        }
+                    }
+                    else if (formatType == DOCX)
+                    {
+                        if (convertUrl)
+                        {
+                            grabzIt.URLToDOCX(inputData);
+                        }
+                        else
+                        {
+                            grabzIt.HTMLToDOCX(inputData);
                         }
                     }
                     else if (formatType == GIF)
@@ -88,6 +104,10 @@ namespace SampleConsole
                         else if (formatType == PDF)
                         {
                             Console.WriteLine("PDF has been saved to: " + filename);
+                        }
+                        else if (formatType == DOCX)
+                        {
+                            Console.WriteLine("DOCX has been saved to: " + filename);
                         }
                         else
                         {

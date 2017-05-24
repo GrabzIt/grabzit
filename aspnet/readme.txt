@@ -1,16 +1,16 @@
-GrabzIt 2.3
+GrabzIt 3.1
 ===========
 
-This library allows you to programmatically convert web pages into images, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's.
+This library allows you to programmatically convert web pages and HTML into images, DOCX documents, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's.
 
 It is usually best to place these files in their own directory.
 
-To run the samples
+To run the samples:
 
-Open the GrabzIt solution file.
+First open the GrabzIt solution file then follow the below instructions for the two sample projects contained within.
 
-Screenshots in Web Applications
-===============================
+Captures in a Web Application
+=============================
 
 The solution contains a project called Sample, which is a example web application.
 
@@ -37,8 +37,8 @@ Ensure your application has read and write access to the "screenshots" directory
 
 Finally run the Default.aspx to start taking screenshots.
 
-Screenshots in Windows Applications
-===================================
+Captures in a Windows Application
+=================================
 
 The solution also contains a project called SampleConsole, which is a example windows console application. To configure this do the following:
 

@@ -71,6 +71,7 @@ namespace GrabzIt
 
         private const string BaseURLGet = "http://api.grabz.it/services/";
         private const string BaseURLPost = "http://grabz.it/services/";
+        private const string TakeDOCX = "takedocx.ashx";
         private const string TakePDF = "takepdf.ashx";
         private const string TakeTable = "taketable.ashx";
         private const string TakeImage = "takepicture.ashx";
@@ -312,7 +313,7 @@ namespace GrabzIt
         /// <summary>
         /// This method specifies the URL that should be converted into a PDF.
         /// </summary>
-        /// <param name="url">The URL that the should be converted into a pdf</param>
+        /// <param name="url">The URL that the should be converted into a PDF</param>
         public void URLToPDF(string url)
         {
             URLToPDF(url, null);
@@ -321,7 +322,7 @@ namespace GrabzIt
         /// <summary>
         /// This method specifies the URL that should be converted into a PDF.
         /// </summary>
-        /// <param name="url">The URL that the should be converted into a pdf</param>
+        /// <param name="url">The URL that the should be converted into a PDF</param>
         /// <param name="options">A instance of the PDFOptions class that defines any special options to use when creating the PDF.</param>
         public void URLToPDF(string url, PDFOptions options)
         {
@@ -388,7 +389,88 @@ namespace GrabzIt
 
                 HTMLToPDF(File.ReadAllText(path), options);
             }
-        }        
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a DOCX.
+        /// </summary>
+        /// <param name="url">The URL that the should be converted into a DOCX</param>
+        public void URLToDOCX(string url)
+        {
+            URLToDOCX(url, null);
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a DOCX.
+        /// </summary>
+        /// <param name="url">The URL that the should be converted into a DOCX</param>
+        /// <param name="options">A instance of the DOCXOptions class that defines any special options to use when creating the DOCX.</param>
+        public void URLToDOCX(string url, DOCXOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new DOCXOptions();
+                }
+
+                request.Store(BaseURLGet + TakeDOCX, false, options, url);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into a DOCX.
+        /// </summary>
+        /// <param name="html">The HTML to convert into a DOCX.</param>
+        public void HTMLToDOCX(string html)
+        {
+            HTMLToDOCX(html, null);
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into a DOCX.
+        /// </summary>
+        /// <param name="html">The HTML to convert into a DOCX.</param>
+        /// <param name="options">A instance of the DOCXOptions class that defines any special options to use when creating the DOCX.</param>
+        public void HTMLToDOCX(string html, DOCXOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new DOCXOptions();
+                }
+
+                request.Store(BaseURLPost + TakeDOCX, true, options, html);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into a DOCX.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into a DOCX.</param>
+        public void FileToDOCX(string path)
+        {
+            FileToDOCX(path, null);
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into a DOCX.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into a DOCX.</param>
+        /// <param name="options">A instance of the DOCXOptions class that defines any special options to use when creating the DOCX.</param>
+        public void FileToDOCX(string path, DOCXOptions options)
+        {
+            lock (thisLock)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+                }
+
+                HTMLToDOCX(File.ReadAllText(path), options);
+            }
+        }
 
         /// <summary>
         /// Calls the GrabzIt web service to take the screenshot

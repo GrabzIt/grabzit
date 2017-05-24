@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="COM\IImageOptions.cs" />
+    <Compile Include="COM\IDOCXOptions.cs" />
     <Compile Include="COM\IPDFOptions.cs" />
     <Compile Include="COM\ITableOptions.cs" />
     <Compile Include="COM\IAnimationOptions.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Parameters\AnimationOptions.cs" />
     <Compile Include="Parameters\BaseOptions.cs" />
     <Compile Include="Parameters\ImageOptions.cs" />
+    <Compile Include="Parameters\DOCXOptions.cs" />
     <Compile Include="Parameters\PDFOptions.cs" />
     <Compile Include="Parameters\TableOptions.cs" />
     <Compile Include="Results\GetWatermarksResult.cs" />

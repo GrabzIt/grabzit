@@ -1,8 +1,11 @@
 ﻿using GrabzIt.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace GrabzIt.COM
 {
-    interface IPDFOptions
+    interface IDOCXOptions
     {
         Country Country
         {
@@ -40,19 +43,13 @@ namespace GrabzIt.COM
             set;
         }
 
-        bool IncludeOutline
+        bool IncludeImages
         {
             get;
             set;
         }
 
         string Title
-        {
-            get;
-            set;
-        }
-
-        string CoverURL
         {
             get;
             set;
@@ -89,18 +86,6 @@ namespace GrabzIt.COM
         }
 
         BrowserType RequestAs
-        {
-            get;
-            set;
-        }
-
-        string TemplateId
-        {
-            get;
-            set;
-        }
-
-        string CustomWaterMarkId
         {
             get;
             set;

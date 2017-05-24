@@ -31,6 +31,17 @@ namespace Sample
                         grabzItClient.URLToImage(txtURL.Text);
                     }
                 }
+                else if (ddlFormat.SelectedValue == "docx")
+                {
+                    if (ddlConvert.SelectedValue == "html")
+                    {
+                        grabzItClient.HTMLToDOCX(txtHTML.Text);
+                    }
+                    else
+                    {
+                        grabzItClient.URLToDOCX(txtURL.Text);
+                    }
+                }
                 else if (ddlFormat.SelectedValue == "gif")
                 {
                     grabzItClient.URLToAnimation(txtURL.Text);
@@ -46,7 +57,7 @@ namespace Sample
                         grabzItClient.URLToPDF(txtURL.Text);
                     }
                 }
-                grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
+                grabzItClient.Save("http://www.google.com/GrabzIt.ashx");
                 lblMessage.Text = "Processing...";
                 lblMessage.CssClass = string.Empty;
                 lblMessage.Style.Add("color", "green");
