@@ -50,14 +50,14 @@ public class DOCXOptions extends BaseOptions {
     }
     
     /**
-     * @return true if the background of the web page should be included in the DOCX.
+     * @return true if the background images of the web page should be included in the DOCX.
      */
     public boolean isIncludeBackground() {
         return includeBackground;
     }
 
     /**
-     * @param includeBackground set to true if the background of the web page should be included in the DOCX.
+     * @param includeBackground set to true if the background images of the web page should be included in the DOCX.
      */
     public void setIncludeBackground(boolean includeBackground) {
         this.includeBackground = includeBackground;
