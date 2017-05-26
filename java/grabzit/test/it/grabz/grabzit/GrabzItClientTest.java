@@ -94,6 +94,20 @@ public class GrabzItClientTest {
     }
 
     @Test
+    public void testTakeDOCX() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            client.URLToDOCX("http://www.google.com");
+            Assert.assertNotNull("Failed to take screenshot using URLToDOCX method", client.Save());
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to take a DOCX screenshot: " + ex.getMessage());
+        }
+    }        
+    
+    @Test
     public void testTakePDF() throws IOException, JAXBException, Exception
     {
         try

@@ -8,6 +8,7 @@ import it.grabz.grabzit.enums.ErrorCode;
 import it.grabz.grabzit.enums.HorizontalPosition;
 import it.grabz.grabzit.enums.VerticalPosition;
 import it.grabz.grabzit.parameters.AnimationOptions;
+import it.grabz.grabzit.parameters.DOCXOptions;
 import it.grabz.grabzit.parameters.ImageOptions;
 import it.grabz.grabzit.parameters.PDFOptions;
 import it.grabz.grabzit.parameters.ParameterUtility;
@@ -47,6 +48,7 @@ public class GrabzItClient {
     
     private final String BASE_URL_GET = "http://api.grabz.it/services/";
     private final String BASE_URL_POST = "http://grabz.it/services/";
+    private final String TAKE_DOCX = "takedocx.ashx";
     private final String TAKE_PDF = "takepdf.ashx";
     private final String TAKE_TABLE = "taketable.ashx";
     private final String TAKE_PICTURE = "takepicture.ashx";
@@ -318,6 +320,83 @@ public class GrabzItClient {
     {
         FileToPDF(path, null);
     }    
+    
+    /**
+     * This method specifies the URL that should be converted into a DOCX.
+     * @param url The URL that the should be converted into a DOCX
+     * @param options A instance of the DOCXOptions class that defines any special options to use when creating the DOCX.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToDOCX(String url, DOCXOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new DOCXOptions();
+        }
+        this.request = new Request(BASE_URL_GET + TAKE_DOCX, false, options, url);
+    }
+    
+    /**
+     * This method specifies the URL that should be converted into a DOCX.
+     * @param url The URL that the should be converted into a DOCX
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToDOCX(String url) throws UnsupportedEncodingException
+    {
+        URLToDOCX(url, null);
+    }    
+    
+    /**
+     * This method specifies the HTML that should be converted into a DOCX.
+     * @param html The HTML to convert into a DOCX.
+     * @param options A instance of the DOCXOptions class that defines any special options to use when creating the DOCX.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToDOCX(String html, DOCXOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new DOCXOptions();
+        }
+        this.request = new Request(BASE_URL_POST + TAKE_DOCX, true, options, html);
+    }    
+
+    /**
+     * This method specifies the HTML that should be converted into a DOCX.
+     * @param html The HTML to convert into a DOCX.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToDOCX(String html) throws UnsupportedEncodingException
+    {
+        HTMLToDOCX(html, null);
+    }    
+    
+    /**
+     * This method specifies a HTML file that should be converted into a DOCX.
+     * @param path The file path of a HTML file to convert into a DOCX.
+     * @param options A instance of the DOCXOptions class that defines any special options to use when creating the DOCX.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToDOCX(String path, DOCXOptions options) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        this.HTMLToDOCX(fileToHTML(path), options);
+    }       
+    
+    /**
+     * This method specifies a HTML file that should be converted into a DOCX.
+     * @param path The file path of a HTML file to convert into a DOCX.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToDOCX(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        FileToDOCX(path, null);
+    }            
 
     private String fileToHTML(String path) throws IOException, GrabzItException {
         File fileToConvert = new File(path);
@@ -361,7 +440,7 @@ public class GrabzItClient {
         
         String sig = encrypt(this.request.getOptions()._getSignatureString(applicationSecret, callBackURL, this.request.getTargetUrl()));
         
-        TakeScreenShotResult result = null;
+        TakeScreenShotResult result;
         if (this.request.isIsPost())
         {   
             result = post(this.request.getUrl(), this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "html", this.request.getData()), TakeScreenShotResult.class);            

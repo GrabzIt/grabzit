@@ -38,6 +38,17 @@ public class TakeScreenshot extends HttpServlet{
                     client.URLToPDF(url);
                 }
             }
+            else if (format.equals("docx"))
+            {
+                if (isHtml)
+                {
+                    client.HTMLToDOCX(html);
+                }
+                else
+                {                    
+                    client.URLToDOCX(url);
+                }   
+            }
             else if (format.equals("gif"))
             {
                 client.URLToAnimation(url);
