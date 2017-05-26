@@ -62,7 +62,7 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
-        /// True if the DOCX outline should be included
+        /// True if the images should be included in the DOCX
         /// </summary>
         public bool IncludeImages
         {
