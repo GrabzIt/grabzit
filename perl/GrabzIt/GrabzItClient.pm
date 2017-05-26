@@ -19,12 +19,14 @@ use GrabzIt::GrabzItAnimationOptions;
 use GrabzIt::GrabzItImageOptions;
 use GrabzIt::GrabzItTableOptions;
 use GrabzIt::GrabzItPDFOptions;
+use GrabzIt::GrabzItDOCXOptions;
 
 use constant WebServicesBaseURL_GET => "http://api.grabz.it/services/";
 use constant WebServicesBaseURL_POST => "http://grabz.it/services/";
 use constant TakePicture => "takepicture.ashx";
 use constant TakeTable => "taketable.ashx";
 use constant TakePDF => "takepdf.ashx";
+use constant TakeDOCX => "takedocx.ashx";
 use constant TrueString => "True";
 
 sub new
@@ -166,6 +168,44 @@ sub FileToPDF($;$)
 {
 	my ($self, $path, $options) = @_;
     $self->HTMLToPDF($self->_readHTMLFile($path), $options);
+}
+
+#
+# This method specifies the URL that should be converted into a DOCX
+#
+# url - The URL to capture as a DOCX
+# options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX
+#
+sub URLToDOCX($;$)
+{
+	my ($self, $url, $options) = @_;
+	$options ||= GrabzItDOCXOptions->new();    
+	$self->{request} = GrabzItRequest->new(GrabzItClient::WebServicesBaseURL_GET . TakeDOCX, 0, $options, $url);
+}
+
+#
+# This method specifies the HTML that should be converted into a DOCX.
+#
+# html - The HTML to convert into a DOCX.
+# options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX
+#
+sub HTMLToDOCX($;$)
+{
+	my ($self, $html, $options) = @_;
+	$options ||= GrabzItDOCXOptions->new();    
+	$self->{request} = GrabzItRequest->new(GrabzItClient::WebServicesBaseURL_POST . TakeDOCX, 1, $options, $html);
+}
+
+#
+# This method specifies the HTML that should be converted into a DOCX.
+#
+# html - The HTML to convert into a DOCX.
+# options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
+#
+sub FileToDOCX($;$)
+{
+	my ($self, $path, $options) = @_;
+    $self->HTMLToDOCX($self->_readHTMLFile($path), $options);
 }
 
 #
