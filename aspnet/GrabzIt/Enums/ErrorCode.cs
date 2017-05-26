@@ -63,6 +63,7 @@ namespace GrabzIt.Enums
         ParameterNoHTML = 163,
         ParameterInvalidTargetValue = 165,
         ParameterInvalidHideValue = 166,
+        ParameterInvalidIncludeImages = 167,
         NetworkServerOffline = 200,
         NetworkGeneralError = 201,
         NetworkDDOSAttack = 202,
