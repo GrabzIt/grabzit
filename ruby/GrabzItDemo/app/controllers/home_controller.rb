@@ -19,6 +19,12 @@ class HomeController < ActionController::Base
 		else
 			grabzItClient.url_to_image(url)
 		end
+	elsif format == "docx"
+		if isHtml
+			grabzItClient.html_to_docx(html)
+		else
+			grabzItClient.url_to_docx(url)
+		end		
   	elsif format == "gif"
 	  	grabzItClient.url_to_animation(url)
   	else

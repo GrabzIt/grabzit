@@ -213,6 +213,14 @@ class GrabzItTest < Test::Unit::TestCase
 		end	
 	end	
 	
+	def test_take_docx
+		assert_nothing_raised "An error occured when trying to take a docx screenshot" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			grabzItClient.url_to_docx("http://www.google.com")
+			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using url_to_docx method")
+		end	
+	end		
+	
 	def test_take_pdf_hide_popup
 		assert_nothing_raised "An error occured when trying to take a pdf screenshot" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)

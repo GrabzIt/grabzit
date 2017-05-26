@@ -1,48 +1,45 @@
 module GrabzIt
 	require File.join(File.dirname(__FILE__), 'baseoptions')
 	
-	# Represents all of the options available when creating a PDF
-	# @version 3.0
+	# Represents all of the options available when creating a DOCX
+	# @version 3.1
 	# @author GrabzIt
-	class PDFOptions < BaseOptions
+	class DOCXOptions < BaseOptions
 		def initialize()
 			@includeBackground = true
 			@pagesize = 'A4'
 			@orientation = 'Portrait'
 			@includeLinks = true
-			@includeOutline = false
+			@includeImages = true
 			@title = nil
-			@coverURL = nil
 			@marginTop = 10
 			@marginLeft = 10
 			@marginBottom = 10
 			@marginRight = 10
 			@requestAs = 0
-			@templateId = nil
-			@customWaterMarkId = nil
 			@quality = -1
 			@hideElement = nil
 		end
 		
-		# @return [Boolean] true if the background of the web page should be included in the PDF
+		# @return [Boolean] true if the background images of the web page should be included in the DOCX
 		def includeBackground
 			@includeBackground
 		end
 		
-		# Set to true if the background of the web page should be included in the PDF
+		# Set to true if the background images of the web page should be included in the DOCX
 		#
-		# @param value [Boolean] include background
+		# @param value [Boolean] include background images
 		# @return [void]		
 		def includeBackground(value)
 			@includeBackground = value
 		end
 
-		# @return [String] the page size of the PDF to be returned
+		# @return [String] the page size of the DOCX to be returned
 		def pagesize
 			@pagesize
 		end
 		
-		# Set the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'
+		# Set the page size of the DOCX to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'
 		#
 		# @param value [String] page size
 		# @return [void]		
@@ -51,12 +48,12 @@ module GrabzIt
 			@pagesize = value
 		end		
 		
-		# @return [String] the orientation of the PDF to be returned
+		# @return [String] the orientation of the DOCX to be returned
 		def orientation
 			@orientation
 		end
 		
-		# Set the orientation of the PDF to be returned: 'Landscape' or 'Portrait'
+		# Set the orientation of the DOCX to be returned: 'Landscape' or 'Portrait'
 		#
 		# @param value [String] page orientation
 		# @return [void]		
@@ -65,12 +62,12 @@ module GrabzIt
 			@orientation = value
 		end		
 		
-		# @return [Boolean] true if the links should be included in the PDF
+		# @return [Boolean] true if the links should be included in the DOCX
 		def includeLinks
 			@includeLinks
 		end
 		
-		# Set to true if links should be included in the PDF
+		# Set to true if links should be included in the DOCX
 		#
 		# @param value [Boolean] include links
 		# @return [void]		
@@ -78,51 +75,38 @@ module GrabzIt
 			@includeLinks = value
 		end		
 		
-		# @return [Boolean] true if the PDF outline should be included
-		def includeOutline
-			@includeOutline
+		# @return [Boolean] true if web page images should be included
+		def includeImages
+			@includeImages
 		end
 		
-		# Set to true if the PDF outline should be included
+		# Set to true if web page images should be included
 		#
-		# @param value [Boolean] include links
+		# @param value [Boolean] include images
 		# @return [void]		
-		def includeOutline(value)
-			@includeOutline = value
-		end			
+		def includeImages(value)
+			@includeImages = value
+		end	
 		
-		# @return [String] a title for the PDF document
+		# @return [String] a title for the DOCX document
 		def title
 			@title
 		end
 		
-		# Set a title for the PDF document
+		# Set a title for the DOCX document
 		#
-		# @param value [String] PDF title
+		# @param value [String] DOCX title
 		# @return [void]		
 		def title(value)
 			@title = value
 		end	
 
-		# @return [String] the URL of a web page that should be used as a cover page for the PDF
-		def coverURL
-			@coverURL
-		end
-		
-		# Set the URL of a web page that should be used as a cover page for the PDF
-		#
-		# @param value [String] cover URL
-		# @return [void]		
-		def coverURL(value)
-			@coverURL = value
-		end
-
-		# @return [Integer] the margin that should appear at the top of the PDF document page
+		# @return [Integer] the margin that should appear at the top of the DOCX document page
 		def marginTop
 			@marginTop
 		end
 		
-		# Set the margin that should appear at the top of the PDF document page
+		# Set the margin that should appear at the top of the DOCX document page
 		#
 		# @param value [Integer] margin top
 		# @return [void]		
@@ -130,12 +114,12 @@ module GrabzIt
 			@marginTop = value
 		end		
 		
-		# @return [Integer] the margin that should appear at the left of the PDF document page
+		# @return [Integer] the margin that should appear at the left of the DOCX document page
 		def marginLeft
 			@marginLeft
 		end
 		
-		# Set the margin that should appear at the left of the PDF document page
+		# Set the margin that should appear at the left of the DOCX document page
 		#
 		# @param value [Integer] margin left
 		# @return [void]		
@@ -143,12 +127,12 @@ module GrabzIt
 			@marginLeft = value
 		end	
 
-		# @return [Integer] the margin that should appear at the bottom of the PDF document page
+		# @return [Integer] the margin that should appear at the bottom of the DOCX document page
 		def marginBottom
 			@marginBottom
 		end
 		
-		# Set the margin that should appear at the bottom of the PDF document page
+		# Set the margin that should appear at the bottom of the DOCX document page
 		#
 		# @param value [Integer] margin bottom
 		# @return [void]		
@@ -156,12 +140,12 @@ module GrabzIt
 			@marginBottom = value
 		end			
 		
-		# @return [Integer] the margin that should appear at the right of the PDF document
+		# @return [Integer] the margin that should appear at the right of the DOCX document
 		def marginRight
 			@marginRight
 		end
 		
-		# Set the margin that should appear at the right of the PDF document
+		# Set the margin that should appear at the right of the DOCX document
 		#
 		# @param value [Integer] margin right
 		# @return [void]		
@@ -193,40 +177,14 @@ module GrabzIt
 		# @return [void]		
 		def requestAs(value)
 			@requestAs = value
-		end
-
-		# @return [String] the PDF template ID that specifies the header and footer of the PDF document
-		def templateId
-			@templateId
-		end
+		end			
 		
-		# Set a PDF template ID that specifies the header and footer of the PDF document
-		#
-		# @param value [String] template id
-		# @return [void]		
-		def templateId(value)
-			@templateId = value
-		end		
-		
-		# @return [String] the custom watermark id.
-		def customWaterMarkId
-			@customWaterMarkId
-		end
-		
-		# Set a custom watermark to add to the PDF.
-		#
-		# @param value [String] custom watermark id
-		# @return [void]		
-		def customWaterMarkId(value)
-			@customWaterMarkId = value
-		end					
-		
-		# @return [Integer] the quality of the PDF.
+		# @return [Integer] the quality of the DOCX.
 		def quality
 			@quality
 		end
 		
-		# Set the quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+		# Set the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 		#
 		# @param value [Integer] quality
 		# @return [void]		
@@ -261,10 +219,10 @@ module GrabzIt
 
 			return applicationSecret+"|"+ urlParam + callBackURLParam +
 			"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.b_to_str(@includeBackground)+"|"+@pagesize +"|"+@orientation+"|"+
-			GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+GrabzIt::Utility.b_to_str(@includeOutline)+"|"+
-			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_check(@coverURL)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
+			GrabzIt::Utility.b_to_str(@includeImages)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+
+			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)  
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)  
 		end
 		
 		# @!visibility private
@@ -273,12 +231,9 @@ module GrabzIt
 			params['background'] = GrabzIt::Utility.b_to_str(@includeBackground)
 			params['pagesize'] = @pagesize
 			params['orientation'] = @orientation
-			params['templateid'] = GrabzIt::Utility.nil_check(@templateId)
-			params['customwatermarkid'] = GrabzIt::Utility.nil_check(@customWaterMarkId)
 			params['includelinks'] = GrabzIt::Utility.b_to_str(@includeLinks)
-			params['includeoutline'] = GrabzIt::Utility.b_to_str(@includeOutline)
+			params['includeimages'] = GrabzIt::Utility.b_to_str(@includeImages)
 			params['title'] = GrabzIt::Utility.nil_check(@title)
-			params['coverurl'] = GrabzIt::Utility.nil_check(@coverURL)
 			params['mleft'] = GrabzIt::Utility.nil_int_check(@marginLeft)
 			params['mright'] = GrabzIt::Utility.nil_int_check(@marginRight)
 			params['mtop'] = GrabzIt::Utility.nil_int_check(@marginTop)

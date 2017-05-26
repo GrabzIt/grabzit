@@ -40,6 +40,8 @@ module GrabzIt
 		private_constant :TakeTable
 		TakePDF = "takepdf.ashx"
 		private_constant :TakePDF
+		TakeDOCX = "takedocx.ashx"
+		private_constant :TakeDOCX
 		TrueString = "True"
 		private_constant :TrueString
 		
@@ -184,6 +186,45 @@ module GrabzIt
 		def file_to_pdf(path, options = nil)		
 			html_to_pdf(read_html_file(path), options)
 		end		
+		
+		# This method specifies the URL that should be converted into a DOCX
+		#
+		# @param url [String] the URL to capture as a DOCX
+		# @param options [DOCXOptions, nil] a instance of the DOCXOptions class that defines any special options to use when creating the DOCX		
+		# @return [void]
+		def url_to_docx(url, options = nil)
+		
+			if options == nil
+				options = DOCXOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLGet + TakeDOCX, false, options, url)
+			return nil			
+		end	
+		
+		# This method specifies the HTML that should be converted into a DOCX
+		#
+		# @param html [String] the HTML to convert into a DOCX
+		# @param options [DOCXOptions, nil] a instance of the DOCXOptions class that defines any special options to use when creating the DOCX
+		# @return [void]		
+		def html_to_docx(html, options = nil)		
+
+			if options == nil
+				options = DOCXOptions.new()
+			end
+		
+			@request = Request.new(WebServicesBaseURLPost + TakeDOCX, true, options, html)
+			return nil
+		end		
+
+		# This method specifies a HTML file that should be converted into a DOCX
+		#
+		# @param path [String] the file path of a HTML file to convert into a DOCX
+		# @param options [DOCXOptions, nil] a instance of the DOCXOptions class that defines any special options to use when creating the DOCX
+		# @return [void]		
+		def file_to_docx(path, options = nil)		
+			html_to_docx(read_html_file(path), options)
+		end			
 		
 		# Calls the GrabzIt web service to take the screenshot
 		#
