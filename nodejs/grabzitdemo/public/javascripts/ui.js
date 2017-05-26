@@ -10,12 +10,17 @@ function checkForResults() {
 			{
 				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="css/pdf.png"></img></a>');
 			}
+			else if (val.indexOf(".docx") !== -1)
+			{
+				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="css/docx.png"></img></a>');
+			}	
 			else
 			{
 				$('#divResults').append('<img title="Click to zoom in" class="result" onclick="zoom(\''+val+'\')" src="'+val+'"></img>');
 			}
 		});
 	});
+	clearTimeout(timeout);
 	timeout = setTimeout("checkForResults()", 5000);
 }
 
@@ -35,7 +40,7 @@ function selectChanged(select) {
         $('#spnGif').show();
 		$('#divURL').show();
 		$('#divHTML').hide();
-		$('#divConvert').hide();
+		$('#divConvert').hide();		
         $('#spnScreenshot').hide();
     }
     else {

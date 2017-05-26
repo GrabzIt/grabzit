@@ -84,6 +84,14 @@ app.post('/', function (req, res) {
         	client.url_to_image(targetUrl);
 		}
     }
+    else if (req.body.type == "docx") {
+		if (isHtml){
+			client.html_to_docx(req.body.html);
+		}
+		else {
+        	client.url_to_docx(targetUrl);
+		}
+    }	
     else if (req.body.type == "gif") {
 	    client.url_to_animation(targetUrl);
     }

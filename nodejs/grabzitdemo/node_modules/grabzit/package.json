@@ -1,11 +1,13 @@
 {
   "name": "grabzit",
-  "description": "Automatically create website image or PDF screenshots. Or use GrabzIt to convert HTML to either images PDF's. Captures can be output in a variety of formats including: JPEG, PNG, TIFF, BMP, PDF, CSV, JSON and XLSX. Additionally convert online videos into animated GIF's or convert HTML tables to CSV.",
-  "version": "3.0.2",
+  "description": "Automatically convert HTML or URL's into images, DOCX or PDF documents. Additionally convert online videos into animated GIF's or convert HTML tables to CSV.",
+  "version": "3.1.0",
   "main": "./lib/grabzit",
   "keywords": [
     "screenshots",
-    "screenshot",
+    "html to pdf",
+    "html to image",
+    "html to docx",
     "screengrab",
     "api",
     "pdf",
@@ -17,7 +19,8 @@
     "grab",
     "table",
     "capture",
-    "html"
+    "html",
+    "docx"
   ],
   "licenses": [
     {
