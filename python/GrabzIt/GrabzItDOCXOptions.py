@@ -2,28 +2,25 @@
 
 from GrabzIt import GrabzItBaseOptions
 
-class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
-        """ Available options when creating a PDF capture
+class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
+        """ Available options when creating a DOCX capture
 
             Attributes:
 
-            includeBackground       set to true if the background of the web page should be included in the PDF
-            pagesize                the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'
-            orientation             the orientation of the PDF to be returned: 'Landscape' or 'Portrait'
-            includeLinks            set to true if links should be included in the PDF
-            includeOutline          set to true if the PDF outline should be included
-            title                   the title for the PDF document
-            coverURL                the URL of a web page that should be used as a cover page for the PDF
-            marginTop               the margin that should appear at the top of the PDF document page
-            marginLeft              the margin that should appear at the left of the PDF document page
-            marginBottom            the margin that should appear at the bottom of the PDF document page
-            marginRight             the margin that should appear at the right of the PDF document
+            includeBackground       set to true if the background images of the web page should be included in the DOCX
+            pagesize                the page size of the DOCX to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'
+            orientation             the orientation of the DOCX to be returned: 'Landscape' or 'Portrait'
+            includeLinks            set to true if links should be included in the DOCX
+            includeImages           set to true if the images of the webpage should be included in the DOCX
+            title                   the title for the DOCX document
+            marginTop               the margin that should appear at the top of the DOCX document page
+            marginLeft              the margin that should appear at the left of the DOCX document page
+            marginBottom            the margin that should appear at the bottom of the DOCX document page
+            marginRight             the margin that should appear at the right of the DOCX document
             delay                   the number of milliseconds to wait before creating the capture
             hideElement             the CSS selector(s) of the one or more HTML elements in the web page to hide
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-            templateId              a PDF template ID that specifies the header and footer of the PDF document
-            customWaterMarkId       a custom watermark to add to the PDF
-            quality                 the quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+            quality                 the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         """
         
         def __init__(self):
@@ -32,16 +29,13 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.pagesize = 'A4'
                 self.orientation = 'Portrait'
                 self.includeLinks = True
-                self.includeOutline = False
+                self.includeImages = True
                 self.title = ''
-                self.coverURL = ''
                 self.marginTop = 10
                 self.marginLeft = 10
                 self.marginBottom = 10
                 self.marginRight = 10
                 self.requestAs = 0
-                self.templateId = ''
-                self.customWaterMarkId = ''
                 self.quality = -1
                 self.hideElement = ''
                 
@@ -51,17 +45,14 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["pagesize"] = str(self.pagesize.upper())
                 params["orientation"] = str(self.orientation.title())
                 params["includelinks"] = int(self.includeLinks)
-                params["includeoutline"] = int(self.includeOutline)
+                params["includeimages"] = int(self.includeImages)
                 params["title"] = str(self.title)
-                params["coverurl"] = str(self.coverURL) 
                 params["mtop"] = int(self.marginTop)
                 params["mleft"] = int(self.marginLeft)
                 params["mbottom"] = int(self.marginBottom)
                 params["mright"] = int(self.marginRight)
                 params["delay"] = int(self.delay)
-                params["templateid"] = str(self.templateId)
-                params["requestmobileversion"] = int(self.requestAs)
-                params["customwatermarkid"] = str(self.customWaterMarkId) 
+                params["requestmobileversion"] = int(self.requestAs) 
                 params["quality"] = int(self.quality)
                 params["hide"] = str(self.hideElement)                
 
@@ -77,7 +68,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                         callBackURLParam = str(callBackURL)
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
-                "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(self.customWaterMarkId)+ \
-                "|"+str(int(self.includeLinks))+"|"+str(int(self.includeOutline))+"|"+str(self.title)+"|"+str(self.coverURL)+"|"+str(int(self.marginTop))+ \
+                "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(int(self.includeImages))+ \
+                "|"+str(int(self.includeLinks))+"|"+str(self.title)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
-                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)
+                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)

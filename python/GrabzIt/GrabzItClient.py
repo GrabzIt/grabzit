@@ -27,6 +27,7 @@ from GrabzIt import GrabzItBaseOptions
 from GrabzIt import GrabzItAnimationOptions
 from GrabzIt import GrabzItImageOptions
 from GrabzIt import GrabzItPDFOptions
+from GrabzIt import GrabzItDOCXOptions
 from GrabzIt import GrabzItTableOptions
 
 class GrabzItClient:
@@ -35,6 +36,7 @@ class GrabzItClient:
         WebServicesBaseURLPost = "/services/"
         TakePicture = "takepicture.ashx"
         TakePDF = "takepdf.ashx"
+        TakeDOCX = "takedocx.ashx"
         TakeTable = "taketable.ashx"
         TrueString = "True"
 
@@ -153,6 +155,39 @@ class GrabzItClient:
         #
         def FileToPDF(self, path, options = None):
                 self.HTMLToPDF(self.ReadHTMLFile(path), options)
+
+        #
+        # This method specifies the URL that should be converted into a DOCX.
+        #
+        # url - The URL to capture as a DOCX
+        # options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX
+        #
+        def URLToDOCX(self, url, options = None):
+                if (options == None):
+                        options = GrabzItDOCXOptions.GrabzItDOCXOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLGet + self.TakeDOCX, False, options, url)
+
+        #
+        # This method specifies the HTML that should be converted into a PDF.
+        #
+        # html - The HTML to convert into a DOCX
+        # options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
+        #
+        def HTMLToDOCX(self, html, options = None):
+                if (options == None):
+                        options = GrabzItDOCXOptions.GrabzItDOCXOptions()
+                
+                self.request = Request.Request(self.WebServicesBaseURLPost + self.TakeDOCX, True, options, html)               
+
+        #
+        # This method specifies a HTML file that should be converted into a DOCX.
+        #
+        # path - The file path of a HTML file to convert into a DOCX
+        # options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX 
+        #
+        def FileToDOCX(self, path, options = None):
+                self.HTMLToDOCX(self.ReadHTMLFile(path), options)
                 
         #
         # This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the #GetResult method.
