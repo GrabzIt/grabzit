@@ -13,10 +13,16 @@ import it.grabz.grabzit.enums.ErrorCode;
 public class GrabzItException extends Exception {
     private ErrorCode code;
 
-    public GrabzItException(String message, ErrorCode code)
+    public GrabzItException(String message, ErrorCode code, Exception innerException)
     {        
         super(message);
+        this.initCause(innerException);
         this.code = code;
+    }
+    
+    public GrabzItException(String message, ErrorCode code)
+    {
+        this(message, code, null);
     }
     
     public GrabzItException(String message, String code)

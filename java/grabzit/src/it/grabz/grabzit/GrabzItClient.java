@@ -546,7 +546,7 @@ public class GrabzItClient {
                     continue;
                 }
                 throw new GrabzItException("An error occurred trying to save the capture to: " +
-                                    saveToFile, ErrorCode.FILESAVEERROR);
+                                    saveToFile, ErrorCode.FILESAVEERROR, ex);
             }
         }
         return true;
