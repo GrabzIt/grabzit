@@ -285,7 +285,7 @@ class GrabzItClient
 		}
 		else
 		{
-			$obj = $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', $this->request->getData())));
+			$obj = $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', urlencode($this->request->getData()))));
 		}
 
 		return $obj->ID;
