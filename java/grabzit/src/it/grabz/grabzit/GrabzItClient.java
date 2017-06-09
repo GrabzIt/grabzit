@@ -13,15 +13,12 @@ import it.grabz.grabzit.parameters.ImageOptions;
 import it.grabz.grabzit.parameters.PDFOptions;
 import it.grabz.grabzit.parameters.ParameterUtility;
 import it.grabz.grabzit.parameters.TableOptions;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -447,7 +444,7 @@ public class GrabzItClient {
         TakeScreenShotResult result;
         if (this.request.isIsPost())
         {   
-            result = post(this.request.getUrl(), this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "html", this.request.getData()), TakeScreenShotResult.class);            
+            result = post(this.request.getUrl(), this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "html", ParameterUtility.encode(this.request.getData())), TakeScreenShotResult.class);            
         }
         else
         {
