@@ -59,7 +59,7 @@ namespace GrabzIt.Enums
         ParameterSpeedTooSlow = 154,
         ParameterInvalidAnimationCombination = 155,
         ParameterStartTooSmall = 156,
-        ParameterDurationTooLarge = 157,
+        ParameterDurationTooSmall = 157,
         ParameterNoHTML = 163,
         ParameterInvalidTargetValue = 165,
         ParameterInvalidHideValue = 166,
