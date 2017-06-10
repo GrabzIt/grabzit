@@ -21,7 +21,7 @@ function GrabzIt(key)
 
 		this.ConvertHTML = function(html, options)
 		{
-			this.data = html;
+			this.data = encodeURIComponent(html);
 			this.dataKey = 'html';
 			this.options = this._cleanOptions(options);
 			this.post = true;
@@ -112,7 +112,7 @@ function GrabzIt(key)
 
 				var v = this.options[k];
 				if (v != null)
-                		{
+                {
 					qs += '&' + k + '=' + encodeURIComponent(v);
 				}
 			}
