@@ -520,7 +520,7 @@ namespace GrabzIt
 
                 if (request.IsPost)
                 {
-                    webResult = Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", this.request.Data));
+                    webResult = Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
                 }
                 else
                 {
