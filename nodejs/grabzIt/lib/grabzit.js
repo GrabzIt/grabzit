@@ -629,7 +629,7 @@ function _addTargetToRequest(requestParams, isPost, target){
     }
     else
     {
-        requestParams.html = target;
+        requestParams.html = encodeURIComponent(target);
     }
 
     return requestParams;    
