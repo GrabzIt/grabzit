@@ -1,4 +1,5 @@
 README.txt
+license.txt
 config.ini
 handler.py
 index.py
@@ -13,6 +14,7 @@ GrabzIt\Request.py
 GrabzIt\GrabzItTableOptions.py
 GrabzIt\GrabzItPDFOptions.py
 GrabzIt\GrabzItImageOptions.py
+GrabzIt\GrabzItDOCXOptions.py
 GrabzIt\GrabzItBaseOptions.py
 GrabzIt\GrabzItAnimationOptions.py
 GrabzIt\__init__.py

@@ -1,7 +1,7 @@
 Metadata-Version: 1.0
 Name: GrabzIt
-Version: 3.0.0
-Summary: This library allows you to programmatically convert web pages and HTML into images, PDF's, CSV's and Excel spreadsheets. You can also convert on-line videos into animated GIFs
+Version: 3.1.1
+Summary: This library allows you to programmatically convert web pages and HTML into images, DOCX documents, PDF's, CSV's and Excel spreadsheets. You can also convert on-line videos into animated GIFs
 Home-page: http://grabz.it/api/python/
 Author: GrabzIt
 Author-email: UNKNOWN
