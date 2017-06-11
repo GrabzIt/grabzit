@@ -250,7 +250,7 @@ module GrabzIt
 			if !@request.isPost()
 				data = get(@request.url() + "?" + URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "url", @request.data())))
 			else
-				data = post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", @request.data())))
+				data = post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", CGI.escape(@request.data()))))
 			end
 
 			return get_result_value(data, "ID")
