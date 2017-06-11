@@ -228,7 +228,7 @@ sub Save($)
 	
     if ($self->{request}->{"isPost"} == 1)
     {
-        return $self->_getResultValue($self->_post($self->{request}->{url}, $self->{request}->{options}->_getParameters($self->{_applicationKey}, $sig, $callBackURL, 'html', $self->{request}->{data})), 'ID');
+        return $self->_getResultValue($self->_post($self->{request}->{url}, $self->{request}->{options}->_getParameters($self->{_applicationKey}, $sig, $callBackURL, 'html', uri_escape($self->{request}->{data}))), 'ID');
     }
     
     my $uri = URI->new($self->{request}->{url});
