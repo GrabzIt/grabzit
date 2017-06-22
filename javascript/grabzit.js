@@ -8,6 +8,7 @@ function GrabzIt(key)
 		this.options = null;
 		this.post = false;
 		this.elem = null;
+		this.protocol = null;
 
 		this.ConvertURL = function(url, options)
 		{
@@ -26,6 +27,13 @@ function GrabzIt(key)
 			this.options = this._cleanOptions(options);
 			this.post = true;
 
+			return this;
+		};
+		
+		this.UseSSL = function()
+		{
+			this.protocol = 'https://';
+			
 			return this;
 		};
 		
@@ -81,13 +89,16 @@ function GrabzIt(key)
 		
 		this._getRootURL = function()
 		{
-			var protocol = '//';
-			if (window.location.protocol != 'https:' && window.location.protocol != 'http:')
+			if (this.protocol == null)
 			{
-				protocol = 'http://';
+				this.protocol = '//';
+				if (window.location.protocol != 'https:' && window.location.protocol != 'http:')
+				{
+					this.protocol = 'http://';
+				}
 			}
 
-			return protocol + 'api.grabz.it/services/';
+			return this.protocol + 'api.grabz.it/services/';
 		};
 
 		this._getBaseWebServiceUrl = function()

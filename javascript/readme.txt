@@ -1,4 +1,4 @@
-GrabzIt 3.1
+GrabzIt 3.2
 ===========
 
 This library allows you to dynamically convert HTML or a URL to a image, DOCX document or PDF, a online video to a animated gif or a HTML table into a CSV, JSON or excel spreadsheet. The resulting capture can then be added to anywhere within the webpage or returned as a data URI.
@@ -9,6 +9,7 @@ GrabzIt JavaScript library provides four methods:
 
 - ConvertURL([url to capture], [options])
 - ConvertHTML([html to convert], [options])
+- UseSSL()
 - AddTo([element | element id])
 - Create()
 - DataURI()
