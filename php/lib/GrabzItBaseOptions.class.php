@@ -3,7 +3,8 @@ class GrabzItBaseOptions
 {
 	private $customId = null;
 	private $country = null;
-	protected $delay = null;	
+	private $exportUrl = null;
+	protected $delay = null;
 	
 	/*
 	A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
@@ -22,7 +23,7 @@ class GrabzItBaseOptions
 	}	
 	
 	/*
-	Set the country the capture should be created from: Default = "", UK = "UK", US = "US".
+	Set the country the capture should be created from: Default = "", Singapore = "SG", UK = "UK", US = "US".
 	*/
 	public function setCountry($value)
 	{
@@ -35,7 +36,23 @@ class GrabzItBaseOptions
 	public function getCountry()
 	{
 		return $this->country;
-	}	
+	}
+	
+	/*
+	Set the export URL that should be used to transfer the capture to a third party location.
+	*/
+	public function setExportURL($value)
+	{
+		$this->exportUrl = $value;
+	}
+
+	/*
+	Get the export URL that should be used to transfer the capture.
+	*/
+	public function getExportURL()
+	{
+		return $this->exportUrl;
+	}
 	
 	protected function createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
 	{
@@ -44,6 +61,7 @@ class GrabzItBaseOptions
 		$params['country'] = $this->nullToEmpty($this->country);
 		$params['customid'] = $this->nullToEmpty($this->customId);
 		$params['callback'] = $this->nullToEmpty($callBackURL);
+		$params['export'] = $this->nullToEmpty($this->exportUrl);
 		$params['sig'] = $sig;		
 		$params[$dataName] = $this->nullToEmpty($dataValue);
 		

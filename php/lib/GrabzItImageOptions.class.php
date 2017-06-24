@@ -13,6 +13,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	private $format = null;
 	private $targetElement = null;
 	private $hideElement = null;
+	private $waitForElement = null;	
 
 	/*
 	Set the width of the browser in pixels.
@@ -124,7 +125,23 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	public function getHideElement()
 	{
 		return $this->hideElement;
-	}	
+	}
+	
+	/*
+	Set the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+	*/
+	public function setWaitForElement($value)
+	{
+		$this->waitForElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+	*/
+	public function getWaitForElement()
+	{
+		return $this->waitForElement;
+	}
 	
 	/*
 	Set the number of milliseconds to wait before creating the capture.
@@ -208,7 +225,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		"|".$this->nullToEmpty($this->format)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserHeight)
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty($this->targetElement)
 		."|".$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
-		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement);	  
+		$this->nullToEmpty($this->waitForElement);	  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -224,7 +241,8 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));		
-		$params['quality'] = $this->nullToEmpty($this->quality);			
+		$params['quality'] = $this->nullToEmpty($this->quality);
+		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
 		
 		return $params;
 	}

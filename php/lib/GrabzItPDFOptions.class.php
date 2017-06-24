@@ -18,7 +18,9 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $templateId = null;
 	private $customWaterMarkId = null;
 	private $quality = -1;
-	private $hideElement = null;	
+	private $targetElement = null;	
+	private $hideElement = null;
+	private $waitForElement = null;
 
 	/*
 	Set the number of milliseconds to wait before creating the capture.
@@ -151,6 +153,22 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 	
 	/*
+	Set the CSS selector of the only HTML element in the web page to capture.
+	*/
+	public function setTargetElement($value)
+	{
+		$this->targetElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the only HTML element in the web page to capture.
+	*/
+	public function getTargetElement()
+	{
+		return $this->targetElement;
+	}
+	
+	/*
 	Set the CSS selector(s) of the one or more HTML elements in the web page to hide.
 	*/
 	public function setHideElement($value)
@@ -164,7 +182,23 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function getHideElement()
 	{
 		return $this->hideElement;
-	}		
+	}
+	
+	/*
+	Set the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+	*/
+	public function setWaitForElement($value)
+	{
+		$this->waitForElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+	*/
+	public function getWaitForElement()
+	{
+		return $this->waitForElement;
+	}	
 
 	/*
 	Set the margin that should appear at the top of the PDF document page.
@@ -315,7 +349,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->coverURL)."|".$this->nullToEmpty($this->marginTop)."|".$this->nullToEmpty($this->marginLeft)."|".$this->nullToEmpty($this->marginBottom)."|".
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
 		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId)."|".
-		$this->nullToEmpty($this->hideElement);	  
+		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
+		$this->nullToEmpty($this->waitForElement);	  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -337,7 +372,9 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['delay'] = $this->nullToEmpty($this->delay);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));
 		$params['quality'] = $this->nullToEmpty($this->quality);
+		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['hide'] = $this->nullToEmpty($this->hideElement);
+		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
 		
 		return $params;
 	}
