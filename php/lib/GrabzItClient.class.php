@@ -57,6 +57,11 @@ class GrabzItClient
 		return $this->applicationSecret;
 	}
 	
+	/*
+	This method sets if requests to GrabzIt's API should use SSL or not
+
+	value - true if should use SSL
+	*/
 	public function UseSSL($value)
 	{
 		if ($value)
