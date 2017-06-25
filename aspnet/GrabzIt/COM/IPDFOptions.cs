@@ -10,6 +10,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string ExportURL
+        {
+            get;
+            set;
+        }
+
         string CustomId
         {
             get;
@@ -112,7 +118,19 @@ namespace GrabzIt.COM
             set;
         }
 
+        string TargetElement
+        {
+            get;
+            set;
+        }
+
         string HideElement
+        {
+            get;
+            set;
+        }
+
+        string WaitForElement
         {
             get;
             set;

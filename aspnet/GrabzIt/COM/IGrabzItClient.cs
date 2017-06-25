@@ -11,6 +11,7 @@ namespace GrabzIt.COM
         string ApplicationKey { get; set; }
         string ApplicationSecret { get; set; }
         void SetProxy(string proxyUrl);
+        void SetSSL(bool value);
         void URLToAnimation(string url);
         void URLToAnimation(string url, AnimationOptions options);
         void URLToImage(string url);

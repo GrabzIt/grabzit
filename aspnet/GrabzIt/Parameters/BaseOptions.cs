@@ -14,6 +14,7 @@ namespace GrabzIt.Parameters
         {
             Country = Country.Default;
             CustomId = string.Empty;
+            ExportURL = string.Empty;
         }
 
         /// <summary>
@@ -34,13 +35,23 @@ namespace GrabzIt.Parameters
             set;
         }
 
+        /// <summary>
+        /// The export URL that should be used to transfer the capture to a third party location.
+        /// </summary>
+        public string ExportURL
+        {
+            get;
+            set;
+        }
+
         protected Dictionary<string, string> CreateParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
 	    {
 		    Dictionary<string, string> parameters = new Dictionary<string, string>();
 		    parameters.Add("key", applicationKey);
             parameters.Add("country", ConvertCountryToString(Country));
 		    parameters.Add("customid", CustomId);
-		    parameters.Add("callback", callBackURL);
+            parameters.Add("export", ExportURL);
+            parameters.Add("callback", callBackURL);
 		    parameters.Add("sig", signature);		
 		    parameters.Add(dataName, dataValue);
 
@@ -52,6 +63,10 @@ namespace GrabzIt.Parameters
             if (country == Country.Default)
             {
                 return string.Empty;
+            }
+            if (country == Country.Singapore)
+            {
+                return "SG";
             }
             return country.ToString();
         }

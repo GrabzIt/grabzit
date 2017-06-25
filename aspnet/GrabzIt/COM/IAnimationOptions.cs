@@ -13,6 +13,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string ExportURL
+        {
+            get;
+            set;
+        }
+
         string CustomId
         {
             get;

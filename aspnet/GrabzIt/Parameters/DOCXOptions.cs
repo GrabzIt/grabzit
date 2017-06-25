@@ -158,6 +158,15 @@ namespace GrabzIt.Parameters
             set;
         }
 
+        /// <summary>
+        /// The CSS selector of the HTML element in the web page that must be visible before the capture is performed
+        /// </summary>
+        public string WaitForElement
+        {
+            get;
+            set;
+        }
+
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)
         {
             string urlParam = string.Empty;
@@ -176,7 +185,7 @@ namespace GrabzIt.Parameters
             + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + Convert.ToInt32(IncludeImages) + "|" 
             + Convert.ToInt32(IncludeLinks) + "|" + Title + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|"
-            + HideElement;
+            + HideElement + "|" + ExportURL + "|" + WaitForElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -196,6 +205,7 @@ namespace GrabzIt.Parameters
 		    parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());		
 		    parameters.Add("quality", Quality.ToString());
             parameters.Add("hide", HideElement);
+            parameters.Add("waitfor", WaitForElement);
 
             return parameters;
         }

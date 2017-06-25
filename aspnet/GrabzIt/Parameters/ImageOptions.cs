@@ -103,6 +103,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The CSS selector of the HTML element in the web page that must be visible before the capture is performed
+        /// </summary>
+        public string WaitForElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
         /// </summary>
         public BrowserType RequestAs
@@ -147,7 +156,7 @@ namespace GrabzIt.Parameters
             "|" + Format + "|" + OutputHeight + "|" + OutputWidth + "|" + BrowserHeight
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
-            Quality + "|" + HideElement;
+            Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -162,6 +171,7 @@ namespace GrabzIt.Parameters
             parameters.Add("delay", Delay.ToString());
             parameters.Add("target", TargetElement);
             parameters.Add("hide", HideElement);
+            parameters.Add("waitfor", WaitForElement);
             parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
             parameters.Add("quality", Quality.ToString());
 

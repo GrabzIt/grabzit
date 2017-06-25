@@ -3,6 +3,7 @@
     public enum Country
     {
         Default,
+        Singapore,
         UK,
         US
     }

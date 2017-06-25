@@ -181,9 +181,27 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The CSS selector of the only HTML element in the web page to capture
+        /// </summary>
+        public string TargetElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The CSS selector(s) of the one or more HTML elements in the web page to hide
         /// </summary>
         public string HideElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector of the HTML element in the web page that must be visible before the capture is performed
+        /// </summary>
+        public string WaitForElement
         {
             get;
             set;
@@ -207,7 +225,7 @@ namespace GrabzIt.Parameters
             "|" + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + CustomWaterMarkId + "|" 
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
-             + "|" + HideElement;
+             + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -229,7 +247,9 @@ namespace GrabzIt.Parameters
 		    parameters.Add("delay", Delay.ToString());
 		    parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());		
 		    parameters.Add("quality", Quality.ToString());
+            parameters.Add("target", TargetElement);
             parameters.Add("hide", HideElement);
+            parameters.Add("waitfor", WaitForElement);
 
             return parameters;
         }
