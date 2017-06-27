@@ -125,7 +125,7 @@ namespace GrabzIt
         /// This method sets if requests to GrabzIt's API should use SSL or not
         /// </summary>
         /// <param name="value">true if should use SSL</param>
-        public void SetSSL(bool value)
+        public void UseSSL(bool value)
         {
             if (value)
             {
