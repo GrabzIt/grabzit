@@ -31,7 +31,7 @@ public class AnimationOptions extends BaseOptions{
         this.width = 0;
         this.height = 0;
         this.start = 0;
-        this.duration = 0;
+        this.duration = 1;
         this.speed = 0;
         this.framesPerSecond = 0;
         this.repeat = 0;
@@ -203,7 +203,7 @@ public class AnimationOptions extends BaseOptions{
         return ParameterUtility.nullCheck(applicationSecret) + "|" + urlParam + callBackURLParam
         + "|" + height + "|" + width + "|" + getCustomId() + "|" + ParameterUtility.toString(framesPerSecond) 
         + "|" + ParameterUtility.toString(speed) + "|" + duration + "|" + repeat + "|" + ParameterUtility.toInt(reverse)
-        + "|" + start + "|" + customWaterMarkId + "|" + getCountry().getValue() + "|" + quality;
+        + "|" + start + "|" + customWaterMarkId + "|" + getCountry().getValue() + "|" + quality + "|" + getExportURL();
     }    
 
     @Override

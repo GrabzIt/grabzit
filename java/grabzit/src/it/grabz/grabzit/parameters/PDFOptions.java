@@ -33,8 +33,10 @@ public class PDFOptions extends BaseOptions {
     private String templateId;
     private String customWaterMarkId;
     private int quality;
+    private String targetElement;
     private String hideElement;
-
+    private String waitForElement;
+    
     public PDFOptions()
     {
         this.includeBackground = true;
@@ -51,7 +53,9 @@ public class PDFOptions extends BaseOptions {
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
         this.templateId = "";
+        this.targetElement = "";
         this.hideElement = "";
+        this.waitForElement = "";
         this.quality = -1;
     }
     
@@ -280,6 +284,20 @@ public class PDFOptions extends BaseOptions {
     }
     
     /**
+     * @return get the CSS selector of the only HTML element in the web page to capture.
+     */
+    public String getTargetElement() {
+        return targetElement;
+    }
+
+    /**
+     * @param targetElement set the CSS selector of the only HTML element in the web page to capture.
+     */
+    public void setTargetElement(String targetElement) {
+        this.targetElement = targetElement;
+    }    
+    
+    /**
      * @return get the CSS selector(s) of the one or more HTML elements in the web page to hide.
      */
     public String getHideElement() {
@@ -291,6 +309,20 @@ public class PDFOptions extends BaseOptions {
      */
     public void setHideElement(String hideElement) {
         this.hideElement = hideElement;
+    }    
+    
+    /**
+     * @return the waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+     */
+    public String getWaitForElement() {
+        return waitForElement;
+    }
+
+    /**
+     * @param waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+     */
+    public void setWaitForElement(String waitForElement) {
+        this.waitForElement = waitForElement;
     }    
     
     @Override
@@ -312,7 +344,8 @@ public class PDFOptions extends BaseOptions {
         + "|" + getCustomId() + "|" + ParameterUtility.toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() 
         + "|" + customWaterMarkId + "|" + ParameterUtility.toInt(includeLinks) + "|" + ParameterUtility.toInt(includeOutline)
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
-        + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement;
+        + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
+        + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement;
     }    
     
     @Override
@@ -335,7 +368,9 @@ public class PDFOptions extends BaseOptions {
         params.put("delay", String.valueOf(delay));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));		
         params.put("quality", String.valueOf(quality));
+        params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
+        params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
 
         return params;
     }    

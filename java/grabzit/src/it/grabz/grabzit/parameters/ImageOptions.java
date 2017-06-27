@@ -24,6 +24,7 @@ public class ImageOptions extends BaseOptions {
     private ImageFormat format;
     private String targetElement;
     private String hideElement;
+    private String waitForElement;    
     private BrowserType requestAs;
     private String customWaterMarkId;
     private int quality;
@@ -37,6 +38,7 @@ public class ImageOptions extends BaseOptions {
         this.format = ImageFormat.JPG;
         this.targetElement = "";
         this.hideElement = "";
+        this.waitForElement = "";
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
         this.quality = -1;
@@ -155,6 +157,20 @@ public class ImageOptions extends BaseOptions {
     }    
     
     /**
+     * @return the waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+     */
+    public String getWaitForElement() {
+        return waitForElement;
+    }
+
+    /**
+     * @param waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+     */
+    public void setWaitForElement(String waitForElement) {
+        this.waitForElement = waitForElement;
+    }        
+        
+    /**
      * @return get which user agent type should be used.
      */
     public BrowserType getRequestAs() {
@@ -214,7 +230,8 @@ public class ImageOptions extends BaseOptions {
         return ParameterUtility.nullCheck(applicationSecret) + "|" + urlParam + callBackURLParam
         + "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight 
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
-        + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement;
+        + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
+        + "|" + getExportURL() + "|" + waitForElement;
     }    
     
     @Override
@@ -223,6 +240,7 @@ public class ImageOptions extends BaseOptions {
         HashMap<String, String> params = createParameters(applicationKey, sig, callBackURL, dataName, dataValue);		
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
+        params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));
 	params.put("width", String.valueOf(outputWidth));
 	params.put("height", String.valueOf(outputHeight));

@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public abstract class BaseOptions {
     private String customId;
+    private String exportURL;
     private Country country;
     protected int delay;
 
@@ -23,6 +24,7 @@ public abstract class BaseOptions {
     {
         this.delay = 0;
         this.customId = "";
+        this.exportURL = "";
         this.country = Country.DEFAULT;
     }
     
@@ -54,11 +56,26 @@ public abstract class BaseOptions {
         this.country = country;
     }
     
+    /**
+     * @return the exportURL that should be used to transfer the capture to a third party location.
+     */
+    public String getExportURL() {
+        return exportURL;
+    }
+
+    /**
+     * @param exportURL the export URL that should be used to transfer the capture to a third party location.
+     */
+    public void setExportURL(String exportURL) {
+        this.exportURL = exportURL;
+    } 
+    
     protected HashMap<String, String> createParameters(String applicationKey, String sig, String callBackURL, String dataName, String dataValue) throws UnsupportedEncodingException
     {
         HashMap<String, String> params = new HashMap<String, String>(); 
         params.put("key", ParameterUtility.encode(applicationKey));
         params.put("country", this.country.getValue());
+        params.put("export", this.exportURL);
         params.put("customid", ParameterUtility.encode(this.customId));
         params.put("callback", ParameterUtility.encode(ParameterUtility.nullCheck(callBackURL)));
         params.put("sig", ParameterUtility.encode(sig));

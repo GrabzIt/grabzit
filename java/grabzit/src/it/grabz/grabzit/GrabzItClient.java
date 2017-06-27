@@ -45,9 +45,10 @@ public class GrabzItClient {
     private final String applicationSecret;
 
     private Request request;
+    private String protocol = "http";
     
-    private final String BASE_URL_GET = "http://api.grabz.it/services/";
-    private final String BASE_URL_POST = "http://grabz.it/services/";
+    private final String BASE_URL_GET = "://api.grabz.it/services/";
+    private final String BASE_URL_POST = "://grabz.it/services/";
     private final String TAKE_DOCX = "takedocx.ashx";
     private final String TAKE_PDF = "takepdf.ashx";
     private final String TAKE_TABLE = "taketable.ashx";
@@ -66,6 +67,21 @@ public class GrabzItClient {
     }
     
     /**
+     * This method sets if requests to GrabzIt's API should use SSL or not
+     * 
+     * @param value true if should use SSL
+     */
+    public void UseSSL(boolean value)
+    {
+        if (value)
+        {
+            this.protocol = "https";
+            return;
+        }
+        this.protocol = "http";
+    }
+    
+    /**
      * This method specifies the URL of the online video that should be converted into a animated GIF.
      * @param url The URL to convert into a animated GIF.
      * @param options A instance of the AnimationOptions class that defines any special options to use when creating the animated GIF.
@@ -77,7 +93,7 @@ public class GrabzItClient {
         {
             options = new AnimationOptions();
         }
-        this.request = new Request(BASE_URL_GET + "takeanimation.ashx", false, options, url);        
+        this.request = new Request(getRootURL(false) + "takeanimation.ashx", false, options, url);        
     }   
     
     /**
@@ -102,7 +118,7 @@ public class GrabzItClient {
         {
             options = new ImageOptions();
         }
-        this.request = new Request(BASE_URL_GET + TAKE_PICTURE, false, options, url);        
+        this.request = new Request(getRootURL(false) + TAKE_PICTURE, false, options, url);        
     }
     
     /**
@@ -127,7 +143,7 @@ public class GrabzItClient {
         {
             options = new ImageOptions();
         }
-        this.request = new Request(BASE_URL_POST + TAKE_PICTURE, true, options, html);
+        this.request = new Request(getRootURL(true) + TAKE_PICTURE, true, options, html);
     }   
     
     /**
@@ -179,7 +195,7 @@ public class GrabzItClient {
         {
             options = new TableOptions();
         }
-        this.request = new Request(BASE_URL_GET + TAKE_TABLE, false, options, url);        
+        this.request = new Request(getRootURL(false) + TAKE_TABLE, false, options, url);        
     }    
     
     /**
@@ -204,7 +220,7 @@ public class GrabzItClient {
         {
             options = new TableOptions();
         }
-        this.request = new Request(BASE_URL_POST + TAKE_TABLE, true, options, html);
+        this.request = new Request(getRootURL(true) + TAKE_TABLE, true, options, html);
     }    
     
     /**
@@ -256,7 +272,7 @@ public class GrabzItClient {
         {
             options = new PDFOptions();
         }
-        this.request = new Request(BASE_URL_GET + TAKE_PDF, false, options, url);
+        this.request = new Request(getRootURL(false) + TAKE_PDF, false, options, url);
     }
     
     /**
@@ -281,7 +297,7 @@ public class GrabzItClient {
         {
             options = new PDFOptions();
         }
-        this.request = new Request(BASE_URL_POST + TAKE_PDF, true, options, html);
+        this.request = new Request(getRootURL(true) + TAKE_PDF, true, options, html);
     }    
 
     /**
@@ -333,7 +349,7 @@ public class GrabzItClient {
         {
             options = new DOCXOptions();
         }
-        this.request = new Request(BASE_URL_GET + TAKE_DOCX, false, options, url);
+        this.request = new Request(getRootURL(false) + TAKE_DOCX, false, options, url);
     }
     
     /**
@@ -358,7 +374,7 @@ public class GrabzItClient {
         {
             options = new DOCXOptions();
         }
-        this.request = new Request(BASE_URL_POST + TAKE_DOCX, true, options, html);
+        this.request = new Request(getRootURL(true) + TAKE_DOCX, true, options, html);
     }    
 
     /**
@@ -568,7 +584,7 @@ public class GrabzItClient {
             return null;
         }
         
-        return get(BASE_URL_GET + "getstatus.ashx?id=" + id, Status.class);
+        return get(getRootURL(false) + "getstatus.ashx?id=" + id, Status.class);
     }
 
     /**
@@ -584,7 +600,7 @@ public class GrabzItClient {
         String sig = encrypt(String.format("%s|%s", this.applicationSecret, domain));
 
         String url = String.format("%sgetcookies.ashx?domain=%s&key=%s&sig=%s",
-                                                  BASE_URL_GET, domain, applicationKey, sig);
+                                                  getRootURL(false), domain, applicationKey, sig);
         Cookies cookies = get(url, Cookies.class);
         
         checkForError(cookies);
@@ -710,7 +726,7 @@ public class GrabzItClient {
                                       value, path, (httponly ? 1 : 0), expiresStr, 0));
         
         String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
-                                                  BASE_URL_GET, ParameterUtility.encode(name), ParameterUtility.encode(domain), ParameterUtility.encode(value), ParameterUtility.encode(path), (httponly ? 1 : 0), ParameterUtility.encode(expiresStr), applicationKey, sig);
+                                                  getRootURL(false), ParameterUtility.encode(name), ParameterUtility.encode(domain), ParameterUtility.encode(value), ParameterUtility.encode(path), (httponly ? 1 : 0), ParameterUtility.encode(expiresStr), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -737,7 +753,7 @@ public class GrabzItClient {
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, name, domain, 1));
 
         String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&delete=1&key=%s&sig=%s",
-                                                  BASE_URL_GET, ParameterUtility.encode(name), ParameterUtility.encode(domain), applicationKey, sig);
+                                                  getRootURL(false), ParameterUtility.encode(name), ParameterUtility.encode(domain), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -803,7 +819,7 @@ public class GrabzItClient {
         String sig = encrypt(String.format("%s|%s", applicationSecret, identifier));
 
         String url = String.format("%sdeletewatermark.ashx?key=%s&identifier=%s&sig=%s",
-                                                              BASE_URL_GET, ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
+                                                              getRootURL(false), ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
 
         GenericResult webResult = get(url, GenericResult.class);
         checkForError(webResult);
@@ -854,7 +870,7 @@ public class GrabzItClient {
         String sig =  encrypt(String.format("%s|%s", applicationSecret, identifier));
 
         String url = String.format("%sgetwatermarks.ashx?key=%s&identifier=%s&sig=%s",
-                                                          BASE_URL_GET, ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
+                                                          getRootURL(false), ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
 
         WaterMarks watermarks = get(url, WaterMarks.class);
 
@@ -882,7 +898,7 @@ public class GrabzItClient {
             return null;
         }
         
-        String url = String.format("%sgetfile.ashx?id=%s", BASE_URL_GET, id);
+        String url = String.format("%sgetfile.ashx?id=%s", getRootURL(false), id);
 
         URL requestUrl = new URL(url);
         URLConnection connection = (URLConnection) requestUrl.openConnection();
@@ -976,6 +992,15 @@ public class GrabzItClient {
             }
         }
     }
+    
+    private String getRootURL(boolean isPost)
+    {
+        if (isPost)
+        {
+            return this.protocol + BASE_URL_POST;
+        }
+        return this.protocol + BASE_URL_GET;
+    }    
 
     private String encrypt(String value) throws UnsupportedEncodingException, NoSuchAlgorithmException
     {

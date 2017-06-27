@@ -31,6 +31,7 @@ public class DOCXOptions extends BaseOptions {
     private BrowserType requestAs;
     private int quality;
     private String hideElement;
+    private String waitForElement;
 
     public DOCXOptions()
     {
@@ -46,6 +47,7 @@ public class DOCXOptions extends BaseOptions {
         this.marginTop = 10;
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.hideElement = "";
+        this.waitForElement = "";
         this.quality = -1;
     }
     
@@ -245,6 +247,20 @@ public class DOCXOptions extends BaseOptions {
         this.hideElement = hideElement;
     }    
     
+    /**
+     * @return the waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+     */
+    public String getWaitForElement() {
+        return waitForElement;
+    }
+
+    /**
+     * @param waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
+     */
+    public void setWaitForElement(String waitForElement) {
+        this.waitForElement = waitForElement;
+    }        
+    
     @Override
     public String _getSignatureString(String applicationSecret, String callBackURL, String url)
     {
@@ -264,7 +280,8 @@ public class DOCXOptions extends BaseOptions {
         + "|" + getCustomId() + "|" + ParameterUtility.toInt(includeBackground) + "|" + pagesize.getValue() + "|" + orientation.getValue() 
         + "|" + ParameterUtility.toInt(includeImages) + "|" + ParameterUtility.toInt(includeLinks)
         + "|" + title + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
-        + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement;
+        + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
+        + "|" + getExportURL() + "|" + waitForElement;
     }    
     
     @Override
@@ -285,6 +302,7 @@ public class DOCXOptions extends BaseOptions {
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));		
         params.put("quality", String.valueOf(quality));
         params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
+        params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
 
         return params;
     }    

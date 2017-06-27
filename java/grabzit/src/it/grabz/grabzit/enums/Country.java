@@ -10,6 +10,7 @@ package it.grabz.grabzit.enums;
  * @author Administrator
  */
 public enum Country {
+    SINGAPORE("SG"),
     UNITEDSTATES("US"),
     UNITEDKINGDOM("UK"),
     DEFAULT("");
