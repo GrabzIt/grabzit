@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 var file = require('fs');
 var http = require('http');
+var https = require('https');
 var querystring = require('querystring');
 var path = require('path');
 
@@ -69,6 +70,8 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_INVALID_TARGET_VALUE: 165,
         PARAMETER_INVALID_HIDE_VALUE: 166,
         PARAMETER_INVALID_INCLUDE_IMAGES: 167,
+        PARAMETER_INVALID_EXPORT_URL: 168,
+        PARAMETER_INVALID_WAIT_FOR_VALUE: 169,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -81,6 +84,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         };
 
         this.request = null;
+        this.port = 80;
         this.applicationKey = applicationKey;
         this.applicationSecret = applicationSecret;
 }
@@ -231,7 +235,7 @@ function _getFormDataForPost(fields, files) {
 function _post(self, url, params, type, oncomplete){
     var options = {
         host: 'grabz.it',
-        port: 80,
+        port: this.port,
         path: '/services/'+url,
         method: 'POST',
         headers: { 
@@ -249,7 +253,7 @@ function _post(self, url, params, type, oncomplete){
 function _get(self, url, type, oncomplete){
     var options = {
         host: 'api.grabz.it',
-        port: 80,
+        port: this.port,
         path: '/services/'+url,
         headers: { 'Accept': 'application/json' }
     }
@@ -260,7 +264,7 @@ function _get(self, url, type, oncomplete){
 function _http(self, options, type, oncomplete){
     var data = '';
 
-    var request = http.request(options, function (res) {
+    var request = _getNet().request(options, function (res) {
         if (type == 'binary') {
             res.setEncoding('binary');
         }
@@ -286,6 +290,13 @@ function _http(self, options, type, oncomplete){
     });
 
     return request;    
+}
+
+function _getNet(self){
+    if (this.port == 433){
+        return https;
+    }
+    return http;
 }
 
 function _getError(self, res, data){
@@ -1023,12 +1034,12 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
         var post_options = {
             host: 'grabz.it',
             method: 'POST',
-            port: 80,
+            port: this.port,
             path: '/services/addwatermark.ashx',
             headers: headerparams.headers
         };
 
-        var request = http.request(post_options, function (response) {
+        var request = _getNet().request(post_options, function (response) {
             var data = '';
 
             response.setEncoding('utf-8');
@@ -1107,6 +1118,14 @@ GrabzItClient.prototype.get_watermark = function (identifier, oncomplete) {
             oncomplete(null, null);
         }
     });
+}
+
+GrabzItClient.prototype.use_ssl = function (value) {
+    if (value){
+        this.port = 433;
+		return;
+	}
+	this.port = 80;
 }
 
 module.exports = GrabzItClient;
