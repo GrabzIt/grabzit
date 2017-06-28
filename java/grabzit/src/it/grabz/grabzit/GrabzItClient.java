@@ -68,7 +68,6 @@ public class GrabzItClient {
     
     /**
      * This method sets if requests to GrabzIt's API should use SSL or not
-     * 
      * @param value true if should use SSL
      */
     public void UseSSL(boolean value)
@@ -787,7 +786,7 @@ public class GrabzItClient {
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, identifier, String.valueOf(xpos.getValue()), String.valueOf(ypos.getValue())));
 
-        String url = "http://grabz.it/services/addwatermark.ashx";
+        String url = this.protocol + "://grabz.it/services/addwatermark.ashx";
         
         Post post = new Post(url, "UTF-8");
  
