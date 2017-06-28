@@ -24,6 +24,7 @@ sub new
     $self->{"requestAs"} = 0;
     $self->{"quality"} = -1;
     $self->{"hideElement"} = '';
+    $self->{"waitForElement"} = '';    
         
     bless $self, $class;
 
@@ -213,6 +214,19 @@ sub hideElement
     return $self->{"hideElement"};
 }
 
+#
+# The CSS selector(s) of the one or more HTML elements in the web page to hide
+#
+sub waitForElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"waitForElement"} = shift;
+    }
+    return $self->{"waitForElement"};
+}
+
 sub _getSignatureString($$;$)
 {
     my ($self, $applicationSecret, $callBackURL, $url) = @_;
@@ -233,7 +247,8 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->includeImages()."|".$self->includeLinks()."|".$self->title()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
-    "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement();
+    "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportUrl()."|".
+    $self->waitForElement();
 }
 
 sub _getParameters($$$$$)
@@ -255,6 +270,7 @@ sub _getParameters($$$$$)
     $params->{'requestmobileversion'} = $self->requestAs();
     $params->{'quality'} = $self->quality();
     $params->{'hide'} = $self->hideElement();
+    $params->{'waitfor'} = $self->waitForElement();
     
     return $params;
 }

@@ -9,6 +9,7 @@ sub new
     my $self = { };
     $self->{"customId"} = '';
     $self->{"country"} = '';
+    $self->{"exportUrl"} = '';
     $self->{"delay"} = 0;
 
     bless $self, $class;
@@ -30,7 +31,7 @@ sub customId
 }
 
 #
-# The country the capture should be created from: Default = "", UK = "UK", US = "US"
+# The country the capture should be created from: Default = "", Singapore = "SG", UK = "UK", US = "US"
 #
 sub country
 {
@@ -42,6 +43,20 @@ sub country
     return $self->{"country"};
 }
 
+
+#
+# The country the capture should be created from: Default = "", UK = "UK", US = "US"
+#
+sub exportUrl
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"exportUrl"} = shift;
+    }
+    return $self->{"exportUrl"};
+}
+
 sub createParameters($$$$$)
 {
     my ($self, $applicationKey, $sig, $callBackURL, $dataName, $dataValue) = @_;
@@ -49,6 +64,7 @@ sub createParameters($$$$$)
     my %params = {}; 
     $params->{'key'} = $applicationKey;
     $params->{'country'} = $self->country();
+    $params->{'export'} = $self->exportUrl();
     $params->{'customid'} = $self->customId();
     $params->{'callback'} = $callBackURL;
     $params->{'sig'} = $sig;

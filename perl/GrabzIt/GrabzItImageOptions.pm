@@ -18,6 +18,7 @@ sub new
     $self->{"format"} = '';
     $self->{"targetElement"} = '';
     $self->{"hideElement"} = '';
+    $self->{"waitForElement"} = '';    
     $self->{"requestAs"} = 0;
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
@@ -132,6 +133,19 @@ sub hideElement
 }
 
 #
+# The CSS selector(s) of the one or more HTML elements in the web page to hide
+#
+sub waitForElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"waitForElement"} = shift;
+    }
+    return $self->{"waitForElement"};
+}
+
+#
 # The user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
 #
 sub requestAs
@@ -190,7 +204,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement();
+    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportUrl()."|".$self->waitForElement();
 }
 
 sub _getParameters($$$$$)
@@ -209,6 +223,7 @@ sub _getParameters($$$$$)
     $params->{'customwatermarkid'} = $self->customWaterMarkId();
     $params->{'requestmobileversion'} = $self->requestAs();
     $params->{'quality'} = $self->quality();
+    $params->{'waitfor'} = $self->waitForElement();    
     
     return $params;
 }

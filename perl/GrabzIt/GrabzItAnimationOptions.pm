@@ -13,7 +13,7 @@ sub new
     $self->{"width"} = 0;
     $self->{"height"} = 0;
     $self->{"start"} = 0;
-    $self->{"duration"} = 0;
+    $self->{"duration"} = 1;
     $self->{"speed"} = 0;
     $self->{"framesPerSecond"} = 0;	
     $self->{"repeat"} = 0;
@@ -176,7 +176,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->height()."|".$self->width()."|".$self->customId()."|".$self->framesPerSecond()."|".$self->speed()."|".$self->duration()."|".$self->repeat().
-    "|".$self->reverse()."|".$self->start()."|".$self->customWaterMarkId()."|".$self->country()."|".$self->quality();
+    "|".$self->reverse()."|".$self->start()."|".$self->customWaterMarkId()."|".$self->country()."|".$self->quality()."|".$self->exportUrl();
 }
 
 sub _getParameters($$$$$)

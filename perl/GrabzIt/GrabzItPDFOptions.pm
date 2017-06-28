@@ -26,7 +26,9 @@ sub new
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
     $self->{"templateId"} = '';
+    $self->{"targetElement"} = '';
     $self->{"hideElement"} = '';
+    $self->{"waitForElement"} = '';
         
     bless $self, $class;
 
@@ -243,6 +245,19 @@ sub templateId
 }
 
 #
+# The CSS selector of the only HTML element in the web page to capture
+#
+sub targetElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"targetElement"} = shift;
+    }
+    return $self->{"targetElement"};
+}
+
+#
 # The CSS selector(s) of the one or more HTML elements in the web page to hide
 #
 sub hideElement
@@ -253,6 +268,19 @@ sub hideElement
         $self->{"hideElement"} = shift;
     }
     return $self->{"hideElement"};
+}
+
+#
+# The CSS selector(s) of the one or more HTML elements in the web page to hide
+#
+sub waitForElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"waitForElement"} = shift;
+    }
+    return $self->{"waitForElement"};
 }
 
 sub _getSignatureString($$;$)
@@ -276,7 +304,8 @@ sub _getSignatureString($$;$)
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->customWaterMarkId()."|".$self->includeLinks().
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
-    "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement();
+    "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
+    "|".$self->targetElement()."|".$self->exportUrl()."|".$self->waitForElement();
 }
 
 sub _getParameters($$$$$)
@@ -300,7 +329,9 @@ sub _getParameters($$$$$)
     $params->{'delay'} = $self->delay();
     $params->{'requestmobileversion'} = $self->requestAs();
     $params->{'quality'} = $self->quality();
+    $params->{'target'} = $self->targetElement();
     $params->{'hide'} = $self->hideElement();
+    $params->{'waitfor'} = $self->waitForElement();
     
     return $params;
 }
