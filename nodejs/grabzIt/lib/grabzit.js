@@ -372,7 +372,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'requestAs': 0,
         'quality': -1,
         'country': '',
-        'hideElement': ''
+        'hideElement': '',
+        'waitForElement': '',
+        'exportUrl': ''
     };
 
     context = _extend(defaults, options);
@@ -412,7 +414,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'delay': context['delay'],
         'requestmobileversion': parseInt(context['requestAs']),
         'quality': parseInt(context['quality']),
-        'country': context['country']
+        'country': context['country'],
+        'waitfor': context['waitForElement'],
+        'export': context['exportUrl']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -420,7 +424,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
     var signaturePartTwo = '|' + context['customId'] + '|' + _toInt(context['includeBackground']) + '|' + pagesize + '|' + orientation + '|' + _toInt(context['includeImages'])
      + '|' + _toInt(context['includeLinks']) + '|' + context['title'] + '|' + parseInt(context['marginTop'])
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
-     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement'];
+     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement']
+     + '|' + context['exportUrl'] + '|' + context['waitForElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -445,7 +450,10 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'customWaterMarkId': '',
         'quality': -1,
         'country': '',
-        'hideElement': ''
+        'targetElement': '',
+        'hideElement': '',
+        'waitForElement': '',
+        'exportUrl': ''
     };
 
     context = _extend(defaults, options);
@@ -488,7 +496,10 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'delay': context['delay'],
         'requestmobileversion': parseInt(context['requestAs']),
         'quality': parseInt(context['quality']),
-        'country': context['country']
+        'country': context['country'],
+        'target': context['targetElement'],
+        'waitfor': context['waitForElement'],
+        'export': context['exportUrl']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -496,7 +507,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
     var signaturePartTwo = '|' + context['customId'] + '|' + _toInt(context['includeBackground']) + '|' + pagesize + '|' + orientation + '|' + context['customWaterMarkId']
      + '|' + _toInt(context['includeLinks']) + '|' + _toInt(context['includeOutline']) + '|' + context['title'] + '|' + context['coverUrl'] + '|' + parseInt(context['marginTop'])
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
-     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'];
+     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -510,7 +521,8 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'includeAllTables': false,
         'targetElement': '',
         'requestAs': 0,
-        'country': ''
+        'country': '',
+        'exportUrl': ''
     };
 
     context = _extend(defaults, options);
@@ -526,14 +538,15 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'customid': context['customId'],
         'target': context['targetElement'],
         'requestmobileversion': parseInt(context['requestAs']),
-        'country': context['country']
+        'country': context['country'],
+        'export': context['exportUrl']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     this.signaturePartOne = applicationSecret + '|' + url + '|';
     this.signaturePartTwo = '|' + context['customId'] + '|' + parseInt(context['tableNumberToInclude']) + '|' + _toInt(context['includeAllTables']) + '|' + _toInt(context['includeHeaderNames']) + '|' + context['targetElement']
-     + '|' + context['format'] + '|' + parseInt(context['requestAs']) + '|' + context['country'];
+     + '|' + context['format'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + context['exportUrl'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -544,14 +557,15 @@ function _getAnimationRequestObject(applicationKey, applicationSecret, url, opti
         'width': 0,
         'height': 0,
         'start': 0,
-        'duration': 0,
+        'duration': 1,
         'speed': 0,
         'framesPerSecond': 0,
         'repeat': 0,
         'reverse': false,
         'customWaterMarkId': '',
         'quality': -1,
-        'country': ''
+        'country': '',
+        'exportUrl': ''
     };
 
     context = _extend(defaults, options);
@@ -571,13 +585,14 @@ function _getAnimationRequestObject(applicationKey, applicationSecret, url, opti
         'customwatermarkid': context['customWaterMarkId'],
         'reverse': _toInt(context['reverse']),
         'country': context['country'],
-        'quality': parseInt(context['quality'])
+        'quality': parseInt(context['quality']),
+        'export': context['exportUrl']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     var signaturePartTwo = '|' + parseInt(context['height']) + '|' + parseInt(context['width']) + '|' + context['customId'] + '|' + parseFloat(context['framesPerSecond']) + '|' +parseFloat(context['speed'])
-     + '|' + parseInt(context['duration']) + '|' + parseInt(context['repeat']) + '|' + _toInt(context['reverse']) + '|' + parseInt(context['start']) + '|' + context['customWaterMarkId'] + '|' + context['country'] + '|' + parseInt(context['quality']);
+     + '|' + parseInt(context['duration']) + '|' + parseInt(context['repeat']) + '|' + _toInt(context['reverse']) + '|' + parseInt(context['start']) + '|' + context['customWaterMarkId'] + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['exportUrl'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -596,7 +611,9 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'requestAs': 0,
         'customWaterMarkId': '',
         'quality': -1,
-        'country': ''
+        'country': '',
+        'waitForElement': '',
+        'exportUrl': ''
     };
 
     context = _extend(defaults, options);
@@ -621,14 +638,16 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'customwatermarkid': context['customWaterMarkId'],
         'requestmobileversion': parseInt(context['requestAs']),
         'country': context['country'],
-        'quality': parseInt(context['quality'])
+        'quality': parseInt(context['quality']),
+        'waitfor': context['waitForElement'],
+        'export': context['exportUrl']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     var signaturePartTwo = '|' + context['format'] + '|' + context['height'] + '|' + context['width'] + '|' + context['browserHeight'] + '|' + context['browserWidth']
      + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs'])
-     + '|' + context['country'] + '|' + context['quality'] + '|' + context['hideElement'];
+     + '|' + context['country'] + '|' + context['quality'] + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -1120,6 +1139,11 @@ GrabzItClient.prototype.get_watermark = function (identifier, oncomplete) {
     });
 }
 
+/*
+* This method sets if requests to GrabzIt's API should use SSL or not
+* 
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#usessl
+*/
 GrabzItClient.prototype.use_ssl = function (value) {
     if (value){
         this.port = 433;
