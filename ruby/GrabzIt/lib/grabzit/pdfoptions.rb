@@ -21,7 +21,9 @@ module GrabzIt
 			@templateId = nil
 			@customWaterMarkId = nil
 			@quality = -1
+			@targetElement = nil
 			@hideElement = nil
+			@waitForElement = nil
 		end
 		
 		# @return [Boolean] true if the background of the web page should be included in the PDF
@@ -234,6 +236,19 @@ module GrabzIt
 			@quality = value
 		end
 		
+		# @return [String] get the CSS selector of the only HTML element in the web page to capture
+		def targetElement
+			@targetElement
+		end
+		
+		# Set the CSS selector of the only HTML element in the web page to capture
+		#
+		# @param value [String] the target element
+		# @return [void]		
+		def targetElement(value)
+			@targetElement = value
+		end
+		
 		# @return [String] get the CSS selector(s) of the one or more HTML elements in the web page to hide
 		def hideElement
 			@hideElement
@@ -245,6 +260,19 @@ module GrabzIt
 		# @return [void]		
 		def hideElement(value)
 			@hideElement = value
+		end
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must be visible before the capture is performed
+		def waitForElement
+			@waitForElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must be visible before the capture is performed
+		#
+		# @param value [String] the element to wait for
+		# @return [void]		
+		def waitForElement(value)
+			@waitForElement = value
 		end		
 		
 		# @!visibility private
@@ -264,7 +292,7 @@ module GrabzIt
 			GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+GrabzIt::Utility.b_to_str(@includeOutline)+"|"+
 			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_check(@coverURL)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)  
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)  
 		end
 		
 		# @!visibility private
@@ -286,7 +314,9 @@ module GrabzIt
 			params['delay'] = GrabzIt::Utility.nil_int_check(@delay)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
+			params['target'] = GrabzIt::Utility.nil_check(@targetElement)
 			params['hide'] = GrabzIt::Utility.nil_check(@hideElement)
+			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
 			
 			return params;
 		end		

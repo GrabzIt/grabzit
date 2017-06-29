@@ -13,6 +13,7 @@ module GrabzIt
 			@format = nil
 			@targetElement = nil
 			@hideElement = nil
+			@waitForElement = nil
 			@requestAs = 0
 			@customWaterMarkId = nil
 			@quality = -1
@@ -122,6 +123,19 @@ module GrabzIt
 			@hideElement = value
 		end
 		
+		# @return [String] get the CSS selector of the HTML element in the web page that must be visible before the capture is performed
+		def waitForElement
+			@waitForElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must be visible before the capture is performed
+		#
+		# @param value [String] the element to wait for
+		# @return [void]		
+		def waitForElement(value)
+			@waitForElement = value
+		end		
+		
 		# @return [Integer] get which user agent type should be used
 		def requestAs
 			@requestAs
@@ -176,7 +190,7 @@ module GrabzIt
 			return applicationSecret+"|"+ urlParam + callBackURLParam +
 			"|"+GrabzIt::Utility.nil_check(@format)+"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_int_check(@browserHeight)+
 			"|"+GrabzIt::Utility.nil_int_check(@browserWidth)+"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+GrabzIt::Utility.nil_check(@targetElement)+
-			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)
+			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)  
 		end
 	
 		# @!visibility private
@@ -191,6 +205,7 @@ module GrabzIt
 			params['delay'] = GrabzIt::Utility.nil_int_check(@delay)
 			params['target'] = GrabzIt::Utility.nil_check(@targetElement)
 			params['hide'] = GrabzIt::Utility.nil_check(@hideElement)
+			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
 			

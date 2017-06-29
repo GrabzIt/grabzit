@@ -9,7 +9,7 @@ module GrabzIt
 			@width = 0
 			@height = 0
 			@start = 0
-			@duration = 0
+			@duration = 1
 			@speed = 0
 			@framesPerSecond = 0
 			@repeat = 0
@@ -164,7 +164,8 @@ module GrabzIt
 			"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_check(@customId)+"|"+
 			GrabzIt::Utility.nil_float_check(@framesPerSecond)+"|"+GrabzIt::Utility.nil_float_check(@speed)+"|"+GrabzIt::Utility.nil_int_check(@duration)+
 			"|"+GrabzIt::Utility.nil_int_check(@repeat)+"|"+GrabzIt::Utility.b_to_str(@reverse)+"|"+GrabzIt::Utility.nil_int_check(@start)+
-			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)	  
+			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+
+			"|"+GrabzIt::Utility.nil_check(@exportURL)
 		end		
 
 		# @!visibility private

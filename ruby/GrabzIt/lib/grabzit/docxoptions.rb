@@ -19,6 +19,7 @@ module GrabzIt
 			@requestAs = 0
 			@quality = -1
 			@hideElement = nil
+			@waitForElement = nil
 		end
 		
 		# @return [Boolean] true if the background images of the web page should be included in the DOCX
@@ -203,7 +204,20 @@ module GrabzIt
 		# @return [void]		
 		def hideElement(value)
 			@hideElement = value
-		end		
+		end
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must be visible before the capture is performed
+		def waitForElement
+			@waitForElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must be visible before the capture is performed
+		#
+		# @param value [String] the element to wait for
+		# @return [void]		
+		def waitForElement(value)
+			@waitForElement = value
+		end
 		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
@@ -222,7 +236,7 @@ module GrabzIt
 			GrabzIt::Utility.b_to_str(@includeImages)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+
 			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)  
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)      
 		end
 		
 		# @!visibility private
@@ -242,6 +256,7 @@ module GrabzIt
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
 			params['hide'] = GrabzIt::Utility.nil_check(@hideElement)
+			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
 			
 			return params;
 		end		

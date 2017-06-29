@@ -30,9 +30,9 @@ module GrabzIt
 	# @see http://grabz.it/api/ruby/ GrabzIt Ruby API
 	class Client
 
-		WebServicesBaseURLGet = "http://api.grabz.it/services/"
+		WebServicesBaseURLGet = "://api.grabz.it/services/"
 		private_constant :WebServicesBaseURLGet	
-		WebServicesBaseURLPost = "http://grabz.it/services/"
+		WebServicesBaseURLPost = "://grabz.it/services/"
 		private_constant :WebServicesBaseURLPost
 		TakePicture = "takepicture.ashx"	
 		private_constant :TakePicture
@@ -53,6 +53,7 @@ module GrabzIt
 		def initialize(applicationKey, applicationSecret)
 			@applicationKey = applicationKey
 			@applicationSecret = applicationSecret
+			@protocol = 'http'
 		end
 
 		# This method specifies the URL of the online video that should be converted into a animated GIF
@@ -66,7 +67,7 @@ module GrabzIt
 				options = AnimationOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLGet + "takeanimation.ashx", false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURLGet + "takeanimation.ashx", false, options, url)
 			return nil
 		end
 
@@ -81,7 +82,7 @@ module GrabzIt
 				options = ImageOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLGet + TakePicture, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURLGet + TakePicture, false, options, url)
 			return nil
 		end
 
@@ -96,7 +97,7 @@ module GrabzIt
 				options = ImageOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLPost + TakePicture, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURLPost + TakePicture, true, options, html)
 			return nil
 		end		
 
@@ -120,7 +121,7 @@ module GrabzIt
 				options = TableOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLGet + TakeTable, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURLGet + TakeTable, false, options, url)
 			return nil			
 		end	
 		
@@ -135,7 +136,7 @@ module GrabzIt
 				options = TableOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLPost + TakeTable, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURLPost + TakeTable, true, options, html)
 			return nil
 		end		
 
@@ -159,7 +160,7 @@ module GrabzIt
 				options = PDFOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLGet + TakePDF, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURLGet + TakePDF, false, options, url)
 			return nil			
 		end	
 		
@@ -174,7 +175,7 @@ module GrabzIt
 				options = PDFOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLPost + TakePDF, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURLPost + TakePDF, true, options, html)
 			return nil
 		end		
 
@@ -198,7 +199,7 @@ module GrabzIt
 				options = DOCXOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLGet + TakeDOCX, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURLGet + TakeDOCX, false, options, url)
 			return nil			
 		end	
 		
@@ -213,7 +214,7 @@ module GrabzIt
 				options = DOCXOptions.new()
 			end
 		
-			@request = Request.new(WebServicesBaseURLPost + TakeDOCX, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURLPost + TakeDOCX, true, options, html)
 			return nil
 		end		
 
@@ -316,7 +317,7 @@ module GrabzIt
 				return nil
 			end			
 			
-			result = get(WebServicesBaseURLGet + "getstatus.ashx?id=" + GrabzIt::Utility.nil_check(id))
+			result = get(@protocol + WebServicesBaseURLGet + "getstatus.ashx?id=" + GrabzIt::Utility.nil_check(id))
 
 			doc = REXML::Document.new(result)
 
@@ -338,7 +339,7 @@ module GrabzIt
 				return nil
 			end
 			
-			return get(WebServicesBaseURLGet + "getfile.ashx?id=" + GrabzIt::Utility.nil_check(id))
+			return get(@protocol + WebServicesBaseURLGet + "getfile.ashx?id=" + GrabzIt::Utility.nil_check(id))
 		end
 
 		# Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well
@@ -351,7 +352,7 @@ module GrabzIt
 
 			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+"&sig="+sig
 
-			result = get(WebServicesBaseURLGet + "getcookies.ashx?" + qs)
+			result = get(@protocol + WebServicesBaseURLGet + "getcookies.ashx?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -393,7 +394,7 @@ module GrabzIt
 			CGI.escape(GrabzIt::Utility.nil_check(name))+"&value="+CGI.escape(GrabzIt::Utility.nil_check(value))+"&path="+CGI.escape(GrabzIt::Utility.nil_check(path))+
 			"&httponly="+GrabzIt::Utility.b_to_str(httponly)+"&expires="+CGI.escape(GrabzIt::Utility.nil_check(expires))+"&sig="+sig
 
-			return (get_result_value(get(WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# Delete a custom cookie or block a global cookie from being used
@@ -409,7 +410,7 @@ module GrabzIt
 			qs = "key=" + CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+
 			"&name="+CGI.escape(GrabzIt::Utility.nil_check(name))+"&delete=1&sig="+sig
 
-			return (get_result_value(get(WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# Get your uploaded custom watermark
@@ -449,7 +450,7 @@ module GrabzIt
 
 			boundary = '--------------------------'+Time.now.to_f.to_s
 
-			url = "http://grabz.it/services/addwatermark.ashx"
+			url = @protocol + "://grabz.it/services/addwatermark.ashx"
 			uri = URI.parse(url)
 
 			file = File.open(path, "rb")
@@ -485,7 +486,7 @@ module GrabzIt
 			request.content_type = "multipart/form-data, boundary="+boundary
 			request.body = post_body.join
 
-			response = Net::HTTP.new(uri.host, uri.port).start {|http| http.request(request) }	
+			response = Net::HTTP.new(uri.host, uri.port, :use_ssl => uri.scheme == 'https').start {|http| http.request(request) }	
 			response_check(response)
 
 			return (get_result_value(response.body(), "Result") == TrueString)		
@@ -501,8 +502,19 @@ module GrabzIt
 
 			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&identifier="+CGI.escape(GrabzIt::Utility.nil_check(identifier))+"&sig="+sig
 
-			return (get_result_value(get(WebServicesBaseURLGet + "deletewatermark.ashx?" + qs), "Result") == TrueString)
-		end	
+			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "deletewatermark.ashx?" + qs), "Result") == TrueString)
+		end
+
+		# This method sets if requests to GrabzIt's API should use SSL or not
+		#
+		# @param value [Boolean] true if should use SSL
+		def use_ssl(value)
+			if value
+				@protocol = 'https'
+			else
+				@protocol = 'http'
+			end
+		end
 
 		private
 		def get_watermarks(identifier = nil)
@@ -510,7 +522,7 @@ module GrabzIt
 
 			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&identifier="+CGI.escape(GrabzIt::Utility.nil_check(identifier))+"&sig="+sig
 
-			result = get(WebServicesBaseURLGet + "getwatermarks.ashx?" + qs)
+			result = get(@protocol + WebServicesBaseURLGet + "getwatermarks.ashx?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -530,16 +542,16 @@ module GrabzIt
 		private
 		def get(url)
 			uri = URI.parse(url)
-			response = Net::HTTP.start(uri.host, uri.port) { |http| http.get(uri.request_uri) }
+			response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') { |http| http.get(uri.request_uri) }
 			response_check(response)
 			return response.body
 		end
 		
 		private
 		def post(url, params)
-			headers = {'Content-Type' => 'application/x-www-form-urlencoded'}	
+			headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
 			uri = URI.parse(url)
-			response = Net::HTTP.start(uri.host, uri.port) { |http| http.post(uri.request_uri, params, headers) }
+			response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') { |http| http.post(uri.request_uri, params, headers) }
 			response_check(response)
 			return response.body
 		end		

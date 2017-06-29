@@ -6,6 +6,7 @@ module GrabzIt
 		def initialize()
 			@customId = nil
 			@country = nil
+			@exportURL = nil
 			@delay = nil
 		end	
 		
@@ -27,13 +28,26 @@ module GrabzIt
 			@country
 		end
 
-		# Set the country the capture should be created from: Default = "", UK = "UK", US = "US".
+		# Set the country the capture should be created from: Default = "", Singapore = "SG", UK = "UK", US = "US".
 		#
 		# @param value [String] the country to use
 		# @return [void]				
 		def country(value)
 			@country = value
-		end		
+		end
+		
+		# @return [String] the export URL that should be used to transfer the capture to a third party location.
+		def exportURL
+			@exportURL
+		end
+
+		# Set the export URL that should be used to transfer the capture to a third party location
+		#
+		# @param value [String] export URL to use
+		# @return [void]				
+		def exportURL(value)
+			@exportURL = value
+		end
 		
 		# @!visibility private
 		def startDelay
@@ -46,12 +60,13 @@ module GrabzIt
 		protected
 		def createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
 			params = Hash.new
-			params['key'] = GrabzIt::Utility.nil_check(applicationKey);
-			params['country'] = GrabzIt::Utility.nil_check(@country);
-			params['customid'] = GrabzIt::Utility.nil_check(@customId);
-			params['callback'] = GrabzIt::Utility.nil_check(callBackURL);
-			params['sig'] = sig;		
-			params[dataName] = GrabzIt::Utility.nil_check(dataValue);	
+			params['key'] = GrabzIt::Utility.nil_check(applicationKey)
+			params['country'] = GrabzIt::Utility.nil_check(@country)
+			params['customid'] = GrabzIt::Utility.nil_check(@customId)
+			params['callback'] = GrabzIt::Utility.nil_check(callBackURL)
+			params['export'] = GrabzIt::Utility.nil_check(@exportURL)
+			params['sig'] = sig
+			params[dataName] = GrabzIt::Utility.nil_check(dataValue)
 
 			return params
 		end
