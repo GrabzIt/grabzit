@@ -1,4 +1,4 @@
-GrabzIt Save As PDF Readme Version 1.00
+GrabzIt Save As PDF Readme Version 1.06
 =======================================
 
 An example of the GrabzIt Save As PDF Plugin in action can be found in the demo.html file. Remember to replace the "Your Application Key" with your actual application key found here: https://grabz.it/api/
