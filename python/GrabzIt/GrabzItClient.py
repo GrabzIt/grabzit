@@ -34,7 +34,7 @@ from GrabzIt import GrabzItTableOptions
 
 class GrabzItClient:
 
-		WebServicesBaseURLGet = "http://api.grabz.it/services/"
+		WebServicesBaseURLGet = "://api.grabz.it/services/"
 		WebServicesBaseURLPost = "/services/"
 		TakePicture = "takepicture.ashx"
 		TakePDF = "takepdf.ashx"
@@ -45,7 +45,8 @@ class GrabzItClient:
 		def __init__(self, applicationKey, applicationSecret):
 				self.applicationKey = applicationKey
 				self.applicationSecret = applicationSecret
-				self.request = None				   
+				self.request = None
+				self.protocol = "http"
 				
 		#
 		# This method specifies the URL of the online video that should be converted into a animated GIF
@@ -57,7 +58,7 @@ class GrabzItClient:
 				if (options == None):
 						options = GrabzItAnimationOptions.GrabzItAnimationOptions()
 				
-				self.request = Request.Request(self.WebServicesBaseURLGet + "takeanimation.ashx", False, options, url)
+				self.request = Request.Request(self.protocol + self.WebServicesBaseURLGet + "takeanimation.ashx", False, options, url)
 			
 		#
 		# This method specifies the URL that should be converted into a image screenshot.
@@ -69,7 +70,7 @@ class GrabzItClient:
 				if (options == None):
 						options = GrabzItImageOptions.GrabzItImageOptions()
 				
-				self.request = Request.Request(self.WebServicesBaseURLGet + self.TakePicture, False, options, url)
+				self.request = Request.Request(self.protocol + self.WebServicesBaseURLGet + self.TakePicture, False, options, url)
 
 		#
 		# This method specifies the HTML that should be converted into a image.
@@ -102,7 +103,7 @@ class GrabzItClient:
 				if (options == None):
 						options = GrabzItTableOptions.GrabzItTableOptions()
 				
-				self.request = Request.Request(self.WebServicesBaseURLGet + self.TakeTable, False, options, url)
+				self.request = Request.Request(self.protocol + self.WebServicesBaseURLGet + self.TakeTable, False, options, url)
 
 		#
 		# This method specifies the HTML that the HTML tables should be extracted from.
@@ -123,7 +124,7 @@ class GrabzItClient:
 		# options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table 
 		#
 		def FileToTable(self, path, options = None):
-				self.HTMLToTable(self.ReadHTMLFile(path), options)				  
+				self.HTMLToTable(self.ReadHTMLFile(path), options) 
 				
 		#
 		# This method specifies the URL that should be converted into a PDF.
@@ -135,7 +136,7 @@ class GrabzItClient:
 				if (options == None):
 						options = GrabzItPDFOptions.GrabzItPDFOptions()
 				
-				self.request = Request.Request(self.WebServicesBaseURLGet + self.TakePDF, False, options, url)
+				self.request = Request.Request(self.protocol + self.WebServicesBaseURLGet + self.TakePDF, False, options, url)
 
 		#
 		# This method specifies the HTML that should be converted into a PDF.
@@ -168,7 +169,7 @@ class GrabzItClient:
 				if (options == None):
 						options = GrabzItDOCXOptions.GrabzItDOCXOptions()
 				
-				self.request = Request.Request(self.WebServicesBaseURLGet + self.TakeDOCX, False, options, url)
+				self.request = Request.Request(self.protocol + self.WebServicesBaseURLGet + self.TakeDOCX, False, options, url)
 
 		#
 		# This method specifies the HTML that should be converted into a PDF.
@@ -260,7 +261,7 @@ class GrabzItClient:
 				if (id == "" or id == None):
 						return None
 				
-				result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURLGet + "getfile.ashx?id=" + id)).getvalue()
+				result = io.BytesIO(self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "getfile.ashx?id=" + id)).getvalue()
 				
 				if result == None or len(result) == 0:
 						return None
@@ -279,7 +280,7 @@ class GrabzItClient:
 				if (id == "" or id == None):
 						return None
 				
-				result = self.HTTPGet(self.WebServicesBaseURLGet + "getstatus.ashx?id=" + id)	 
+				result = self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "getstatus.ashx?id=" + id)	 
 				
 				dom = minidom.parseString(result)
 				
@@ -333,7 +334,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig
 
-				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURLGet + "getcookies.ashx?" + encoded_qs))
+				dom = minidom.parseString(self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "getcookies.ashx?" + encoded_qs))
 
 				self.CheckForException(dom)
 						
@@ -378,7 +379,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig;
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURLGet + "setcookie.ashx?" + encoded_qs))				  
+				return self.IsSuccessful(self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "setcookie.ashx?" + encoded_qs))				  
 
 		#
 		# Delete a custom cookie or block a global cookie from being used.
@@ -397,7 +398,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig;
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURLGet + "setcookie.ashx?" + encoded_qs))				  
+				return self.IsSuccessful(self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "setcookie.ashx?" + encoded_qs))				  
 
 		#
 		# Add a new custom watermark.
@@ -443,7 +444,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURLGet + "deletewatermark.ashx?" + encoded_qs));		  
+				return self.IsSuccessful(self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "deletewatermark.ashx?" + encoded_qs));		  
 
 		#
 		# Get your uploaded custom watermarks
@@ -466,6 +467,17 @@ class GrabzItClient:
 						return watermarks.get(0)
 				return None		 
 		
+		#
+		# This method sets if requests to GrabzIt's API should use SSL or not
+		#
+		# value - true if should use SSL
+		#		
+		def UseSSL(self, value):
+			if value:
+				self.protocol = "https"
+			else:
+				self.protocol = "http"
+		
 		def getWaterMarks(self, identifier = ""):
 				sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(identifier))
 
@@ -475,7 +487,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig;			   
 
-				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURLGet + "getwatermarks.ashx?" + encoded_qs))
+				dom = minidom.parseString(self.HTTPGet(self.protocol + self.WebServicesBaseURLGet + "getwatermarks.ashx?" + encoded_qs))
 
 				self.CheckForException(dom)
 						
@@ -548,13 +560,18 @@ class GrabzItClient:
 			content_type = ''
 			body = ''
 			
-			if (files != None):
+			if files != None:
 					content_type, body = self.EncodeMultipartFormdata(fields, files)
 			else:
 					content_type = "application/x-www-form-urlencoded"
 					body = urlencode(fields)					
 					
-			h = httpClient.HTTPConnection("grabz.it")
+			h = None
+			if self.protocol == "http":
+				h = httpClient.HTTPConnection("grabz.it")
+			else:
+				h = httpClient.HTTPSConnection("grabz.it")
+				
 			h.putrequest('POST', selector)
 			h.putheader('content-type', content_type)
 			h.putheader('content-length', str(len(body)))

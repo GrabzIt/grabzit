@@ -19,6 +19,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             marginRight             the margin that should appear at the right of the DOCX document
             delay                   the number of milliseconds to wait before creating the capture
             hideElement             the CSS selector(s) of the one or more HTML elements in the web page to hide
+            waitForElement          the CSS selector of the HTML element in the web page that must be visible before the capture is performed
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             quality                 the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         """
@@ -38,6 +39,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.requestAs = 0
                 self.quality = -1
                 self.hideElement = ''
+                self.waitForElement = ''
                 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -54,7 +56,8 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["delay"] = int(self.delay)
                 params["requestmobileversion"] = int(self.requestAs) 
                 params["quality"] = int(self.quality)
-                params["hide"] = str(self.hideElement)                
+                params["hide"] = str(self.hideElement)  
+                params["waitfor"] = str(self.waitForElement)                    
 
                 return params
                 
@@ -71,4 +74,4 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(int(self.includeImages))+ \
                 "|"+str(int(self.includeLinks))+"|"+str(self.title)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
-                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)
+                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)

@@ -30,7 +30,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.format = ''
                 self.targetElement = ''
                 self.hideElement = ''
-                self.waitForElement = '';
+                self.waitForElement = ''
                 self.requestAs = 0
                 self.customWaterMarkId = ''
                 self.quality = -1
