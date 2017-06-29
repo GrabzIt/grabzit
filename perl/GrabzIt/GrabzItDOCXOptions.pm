@@ -215,7 +215,7 @@ sub hideElement
 }
 
 #
-# The CSS selector(s) of the one or more HTML elements in the web page to hide
+# The CSS selector of the HTML element in the web page that must be visible before the capture is performed
 #
 sub waitForElement
 {

@@ -581,7 +581,7 @@ sub DeleteWaterMark($)
 }
 
 #
-#This method sets if requests to GrabzIt's API should use SSL or not.
+#This method sets if requests to GrabzIt's API should use SSL or not
 #
 #value - true if should use SSL
 #

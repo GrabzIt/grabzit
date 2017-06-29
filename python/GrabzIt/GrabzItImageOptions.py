@@ -15,6 +15,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             delay               the number of milliseconds to wait before creating the capture
             targetElement       the CSS selector of the only HTML element in the web page to capture
             hideElement         the CSS selector(s) of the one or more HTML elements in the web page to hide
+            waitForElement      the CSS selector of the HTML element in the web page that must be visible before the capture is performed
             requestAs           the user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             customWaterMarkId   set a custom watermark to add to the screenshot
             quality             set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
@@ -29,6 +30,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.format = ''
                 self.targetElement = ''
                 self.hideElement = ''
+                self.waitForElement = '';
                 self.requestAs = 0
                 self.customWaterMarkId = ''
                 self.quality = -1
@@ -42,7 +44,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["delay"] = int(self.delay)
                 params["format"] = str(self.format)
                 params["target"] = str(self.targetElement)
-                params["hide"] = str(self.hideElement)                
+                params["hide"] = str(self.hideElement)
+                params["waitfor"] = str(self.waitForElement)                
                 params["requestmobileversion"] = int(self.requestAs)
                 params["customwatermarkid"] = str(self.customWaterMarkId) 
                 params["quality"] = int(self.quality) 
@@ -60,5 +63,5 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.format)+"|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)
+                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)
                 
