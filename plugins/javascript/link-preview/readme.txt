@@ -1,4 +1,4 @@
-GrabzIt Preview Readme Version 1.03
+GrabzIt Preview Readme Version 1.08
 ===================================
 
 An example of the GrabzIt Preview in action can be found in the demo.html file. Remember to replace the "Your Application Key" with your actual
