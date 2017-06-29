@@ -10,6 +10,7 @@ function GrabzIt(key)
 		this.options = null;
 		this.post = false;
 		this.elem = null;
+		this.protocol = null;
 
 		this.ConvertURL = function(url, options)
 		{
@@ -23,11 +24,18 @@ function GrabzIt(key)
 
 		this.ConvertHTML = function(html, options)
 		{
-			this.data = html;
+			this.data = encodeURIComponent(html);
 			this.dataKey = 'html';
 			this.options = this._cleanOptions(options);
 			this.post = true;
 
+			return this;
+		};
+		
+		this.UseSSL = function()
+		{
+			this.protocol = 'https://';
+			
 			return this;
 		};
 		
@@ -83,13 +91,16 @@ function GrabzIt(key)
 		
 		this._getRootURL = function()
 		{
-			var protocol = '//';
-			if (window.location.protocol != 'https:' && window.location.protocol != 'http:')
+			if (this.protocol == null)
 			{
-				protocol = 'http://';
+				this.protocol = '//';
+				if (window.location.protocol != 'https:' && window.location.protocol != 'http:')
+				{
+					this.protocol = 'http://';
+				}
 			}
 
-			return protocol + 'api.grabz.it/services/';
+			return this.protocol + 'api.grabz.it/services/';
 		};
 
 		this._getBaseWebServiceUrl = function()
@@ -107,14 +118,14 @@ function GrabzIt(key)
 				&& k != 'country' && k != 'filename' && k != 'errorid' && k != 'errorclass' &&
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
-				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages')
+				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor')
 				{
 					throw "Option " + k + " not recognized!";
 				}
 
 				var v = this.options[k];
 				if (v != null)
-                		{
+                {
 					qs += '&' + k + '=' + encodeURIComponent(v);
 				}
 			}
