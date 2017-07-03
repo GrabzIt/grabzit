@@ -1,10 +1,11 @@
 <?php
 include_once("GrabzItScrapeException.class.php");
 include_once("GrabzItScrape.class.php");
+include_once("GrabzItScrapeHistory.class.php");
 
 class GrabzItScrapeClient
 {
-	const WebServicesBaseURL = "http://api.grabz.it/services/scraper/";
+    const WebServicesBaseURL = "http://api.grabz.it/services/scraper/";
 	const TrueString = "True";
 
 	private $applicationKey;
@@ -43,7 +44,7 @@ class GrabzItScrapeClient
 	}
 
 	/*
-	Get all of the users scrapes
+	Get all of the requested scrapes
 
 	id - If specified, just returns that scrape that matches the id.
 
@@ -66,7 +67,15 @@ class GrabzItScrapeClient
 			$grabzitScrape->Name = (string)$scrape->Name;
 			$grabzitScrape->Status = (string)$scrape->Status;
 			$grabzitScrape->NextRun = (string)$scrape->NextRun;
-
+			foreach ($scrape->Results->Result as $scrapeResult)
+			{
+				$grabzItScrapeHistory = new GrabzItScrapeHistory();
+				$grabzItScrapeHistory->ID = (string)$scrapeResult->Identifier;
+				$grabzItScrapeHistory->Finished = (string)$scrapeResult->Finished;
+				
+				$grabzitScrape->Results[] = $grabzItScrapeHistory;
+			}
+			
 			$result[] = $grabzitScrape;
 		}
 
@@ -94,6 +103,28 @@ class GrabzItScrapeClient
 
 		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "setscrapestatus.ashx?" . $qs));
 	}
+    
+    /*
+	Re-sends the scrape result with the matching scrape id and result id using the export parameters stored in the scrape.
+
+	id - The id of the scrape that contains the result to re-send.
+    resultId - The id of the result to re-send.
+
+	This function returns true if the result  was successfully requested to be re-sent.
+	*/    
+    public function SendResult($id, $resultId)
+	{
+		if (empty($id) || empty($resultId))
+		{
+			return false;
+		}
+
+		$sig =  $this->encode($this->applicationSecret."|".$id."|".$resultId);
+
+		$qs = "key=" .urlencode($this->applicationKey)."&id=".urlencode($id)."&spiderId=".urlencode($resultId)."&sig=".$sig;
+
+		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "sendscrape.ashx?" . $qs));
+	}    
 
 	private function isSuccessful($result)
 	{

@@ -7,11 +7,19 @@ $grabzIt = new GrabzItScrapeClient($grabzItApplicationKey, $grabzItApplicationSe
 
 if (count($_GET) > 0)
 {
-	$id = $_GET["id"];
-	$status = $_GET["status"];
+    $id = $_GET["id"];
+    $status = $_GET["status"];
+	$resultId = $_GET["resultId"];
 	try
 	{
-		$grabzIt->SetScrapeStatus($id, $status);
+		if (!empty($resultId))
+		{
+			$grabzIt->SendResult($id, $resultId);
+		}
+		else
+		{
+			$grabzIt->SetScrapeStatus($id, $status);
+		}
 	}
 	catch (Exception $e)
 	{
@@ -50,6 +58,17 @@ foreach($scrapes as $scrape)
 	echo $scrape->Status;
 	?></td><td><a href="index.php?id=<?php echo $scrape->ID;?>&status=Start">Start</a> <a href="index.php?id=<?php echo $scrape->ID;?>&status=Stop">Stop</a> <a href="index.php?id=<?php echo $scrape->ID;?>&status=Disable">Disable</a> <a href="index.php?id=<?php echo $scrape->ID;?>&status=Enable">Enable</a>
 	</td></tr><?php
+	if (isset($scrape->Results))
+	{
+		?><tr><td colspan="3"><ul><?php
+		foreach($scrape->Results as $result)
+		{
+            ?>
+			<li><?php echo $result->Finished;?> Scrape <a href="index.php?id=<?php echo $scrape->ID;?>&resultId=<?php echo $result->ID;?>">Resend</a></li>
+            <?php
+		}
+		?></ul></td></tr><?php
+	}
 }
 ?>
 </table>
