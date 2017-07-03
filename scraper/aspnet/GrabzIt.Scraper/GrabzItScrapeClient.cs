@@ -35,11 +35,20 @@ namespace GrabzIt.Scraper
             this.ApplicationSecret = applicationSecret;
         }
 
+        /// <summary>
+        /// Get all scrapes
+        /// </summary>
+        /// <returns>All scrapes</returns>
         public GrabzItScrape[] GetScrapes()
         {
             return GetScrapes(string.Empty);
         }
 
+        /// <summary>
+        /// Get the requested scrape
+        /// </summary>
+        /// <param name="identifier">The id of the scrape to get</param>
+        /// <returns>The scrape that matches the id</returns>
         public GrabzItScrape GetScrape(string identifier)
         {
             GrabzItScrape[] scrapes = GetScrapes(identifier);
@@ -64,6 +73,42 @@ namespace GrabzIt.Scraper
             return webResult.Scrapes;
         }
 
+        /// <summary>
+        /// Re-sends the scrape result with the matching scrape id and result id using the export parameters stored in the scrape.
+        /// </summary>
+        /// <param name="id">The id of the scrape that contains the result to re-send.</param>
+        /// <param name="resultId">The id of the result to re-send.</param>
+        /// <returns>Returns true if the scrape result was successfully requested to be re-sent</returns>
+        public bool SendResult(string id, string resultId)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(resultId))
+            {
+                return false;
+            }
+
+            string sig = Encrypt(string.Format("{0}|{1}|{2}", ApplicationSecret, id, resultId));
+
+            string url = string.Format("{0}sendscrape.ashx?key={1}&id={2}&spiderId={3}&sig={4}",
+                                                      BaseURL, ApplicationKey, id, resultId, sig);
+
+            GenericResult webResult = Get<GenericResult>(url);
+
+            if (webResult == null)
+            {
+                return false;
+            }
+
+            CheckForException(webResult);
+
+            return Convert.ToBoolean(webResult.Result);
+        }
+
+        /// <summary>
+        /// Sets the status of a scrape.
+        /// </summary>
+        /// <param name="id">The id of the scrape to set.</param>
+        /// <param name="status">The scrape status to set the scrape to. Options include Start, Stop, Enable and Disable.</param>
+        /// <returns>returns true if the scrape was successfully set</returns>
         public bool SetScrapeStatus(string id, ScrapeStatus status)
         {
             if (string.IsNullOrEmpty(id))

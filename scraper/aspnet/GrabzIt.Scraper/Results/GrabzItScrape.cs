@@ -31,8 +31,17 @@ namespace GrabzIt.Scraper.Results
             set;
         }
 
+        [XmlArray("Results")]
+        [XmlArrayItem("Result")]
+        public GrabzItScrapeHistory[] Results
+        {
+            get;
+            set;
+        }
+
         public GrabzItScrape()
         {
+            Results = new GrabzItScrapeHistory[0];
         }
     }
 }

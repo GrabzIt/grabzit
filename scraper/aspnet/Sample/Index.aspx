@@ -28,6 +28,7 @@
                     <asp:Button id="btnStop" runat="server" OnClick="btnStop_Click" Text="Stop" CommandArgument='<%# Eval("ID") %>'/>
                     <asp:Button id="btnEnable" runat="server" OnClick="btnEnable_Click" Text="Enable" CommandArgument='<%# Eval("ID") %>'/>
                     <asp:Button id="btnDisable" runat="server" OnClick="btnDisable_Click" Text="Disable" CommandArgument='<%# Eval("ID") %>'/>
+                    <asp:Button id="btnResend" runat="server" OnClick="btnResend_Click" Text="Resend" CommandArgument='<%# Eval("ID") %>' Visible="<%# ShowResentButton(((GrabzIt.Scraper.Results.GrabzItScrape)Container.DataItem)) %>"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
