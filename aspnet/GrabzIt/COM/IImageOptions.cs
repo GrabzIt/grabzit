@@ -96,5 +96,11 @@ namespace GrabzIt.COM
             get;
             set;
         }
+
+        bool Transparent
+        {
+            get;
+            set;
+        }
     }
 }
