@@ -19,6 +19,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             requestAs           the user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             customWaterMarkId   set a custom watermark to add to the screenshot
             quality             set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+            transparent         set to true if the image capture should be transparent. This is only compatible with png and tiff images.
         """
 
         def __init__(self):
@@ -34,6 +35,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.requestAs = 0
                 self.customWaterMarkId = ''
                 self.quality = -1
+                self.transparent = False
         
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -48,7 +50,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["waitfor"] = str(self.waitForElement)                
                 params["requestmobileversion"] = int(self.requestAs)
                 params["customwatermarkid"] = str(self.customWaterMarkId) 
-                params["quality"] = int(self.quality) 
+                params["quality"] = int(self.quality)
+                params["transparent"] = int(self.transparent)                
 
                 return params
 
@@ -63,5 +66,5 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.format)+"|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)
+                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))
                 
