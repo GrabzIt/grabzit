@@ -72,6 +72,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_INVALID_INCLUDE_IMAGES: 167,
         PARAMETER_INVALID_EXPORT_URL: 168,
         PARAMETER_INVALID_WAIT_FOR_VALUE: 169,
+        PARAMETER_INVALID_TRANSPARENT_VALUE: 170,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -613,7 +614,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'quality': -1,
         'country': '',
         'waitForElement': '',
-        'exportUrl': ''
+        'exportUrl': '',
+        'transparent': 0
     };
 
     context = _extend(defaults, options);
@@ -640,14 +642,16 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'country': context['country'],
         'quality': parseInt(context['quality']),
         'waitfor': context['waitForElement'],
-        'export': context['exportUrl']
+        'export': context['exportUrl'],
+        'transparent': context['transparent']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     var signaturePartTwo = '|' + context['format'] + '|' + context['height'] + '|' + context['width'] + '|' + context['browserHeight'] + '|' + context['browserWidth']
      + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs'])
-     + '|' + context['country'] + '|' + context['quality'] + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'];
+     + '|' + context['country'] + '|' + context['quality'] + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement']
+     + '|' + _toInt(context['transparent']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
