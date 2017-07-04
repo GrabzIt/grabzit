@@ -121,7 +121,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId()."|".$self->tableNumberToInclude() ."|".$self->includeAllTables()."|".$self->includeHeaderNames()."|".$self->targetElement()."|".
-    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportUrl();
+    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL();
 }
 
 sub _getParameters($$$$$)

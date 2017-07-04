@@ -176,7 +176,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->height()."|".$self->width()."|".$self->customId()."|".$self->framesPerSecond()."|".$self->speed()."|".$self->duration()."|".$self->repeat().
-    "|".$self->reverse()."|".$self->start()."|".$self->customWaterMarkId()."|".$self->country()."|".$self->quality()."|".$self->exportUrl();
+    "|".$self->reverse()."|".$self->start()."|".$self->customWaterMarkId()."|".$self->country()."|".$self->quality()."|".$self->exportURL();
 }
 
 sub _getParameters($$$$$)
