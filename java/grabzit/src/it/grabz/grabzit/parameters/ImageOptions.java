@@ -28,6 +28,7 @@ public class ImageOptions extends BaseOptions {
     private BrowserType requestAs;
     private String customWaterMarkId;
     private int quality;
+    private boolean transparent;
 
     public ImageOptions()
     {
@@ -212,6 +213,20 @@ public class ImageOptions extends BaseOptions {
         this.quality = quality;
     }
     
+     /**
+     * @return if the image capture should be transparent.
+     */
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    /**
+     * @param transparent set to true if the image capture should be transparent. This is only compatible with png and tiff images.
+     */
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }   
+    
     @Override
     public String _getSignatureString(String applicationSecret, String callBackURL, String url)
     {
@@ -231,7 +246,7 @@ public class ImageOptions extends BaseOptions {
         + "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight 
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
-        + "|" + getExportURL() + "|" + waitForElement;
+        + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent);
     }    
     
     @Override
@@ -249,7 +264,8 @@ public class ImageOptions extends BaseOptions {
 	params.put("customwatermarkid", ParameterUtility.encode(ParameterUtility.nullCheck(customWaterMarkId)));
 	params.put("bheight", String.valueOf(browserHeight));
 	params.put("delay", String.valueOf(delay));
-	params.put("quality", String.valueOf(quality));        
+	params.put("quality", String.valueOf(quality));
+        params.put("transparent", String.valueOf(ParameterUtility.toInt(transparent)));
         
         return params;
     }    
