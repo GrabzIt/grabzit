@@ -17,6 +17,7 @@ module GrabzIt
 			@requestAs = 0
 			@customWaterMarkId = nil
 			@quality = -1
+			@transparent = false
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -169,12 +170,25 @@ module GrabzIt
 		
 		# Set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
 		#
-		# @param value [Integer] the custom identifier
-		# @return [void]
+		# @param value [Integer] the quality
+		# @return [void]		
 		def quality(value)
 			@quality = value
 		end	
 
+		# @return [Boolean] true if the image capture should be transparent
+		def transparent
+			@transparent
+		end
+		
+		# Set to true if the image capture should be transparent. This is only compatible with png and tiff images
+		#
+		# @param value [Boolean] true if the image should be transparent
+		# @return [void]
+		def transparent(value)
+			@transparent = value
+		end			
+		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
 			urlParam = ''
@@ -190,7 +204,7 @@ module GrabzIt
 			return applicationSecret+"|"+ urlParam + callBackURLParam +
 			"|"+GrabzIt::Utility.nil_check(@format)+"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_int_check(@browserHeight)+
 			"|"+GrabzIt::Utility.nil_int_check(@browserWidth)+"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+GrabzIt::Utility.nil_check(@targetElement)+
-			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)  
+			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.b_to_str(@transparent)
 		end
 	
 		# @!visibility private
@@ -208,6 +222,7 @@ module GrabzIt
 			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
+			params['transparent'] = GrabzIt::Utility.b_to_str(@transparent)
 			
 			return params		
 		end
