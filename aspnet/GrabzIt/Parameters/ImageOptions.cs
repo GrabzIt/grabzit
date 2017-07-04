@@ -138,6 +138,15 @@ namespace GrabzIt.Parameters
             set;
         }
 
+        /// <summary>
+        ///  True if the image capture should be transparent. This is only compatible with png and tiff images.
+        /// </summary>
+        public bool Transparent
+        {
+            get;
+            set;
+        }
+
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)
         {
             string urlParam = string.Empty;
@@ -156,7 +165,7 @@ namespace GrabzIt.Parameters
             "|" + Format + "|" + OutputHeight + "|" + OutputWidth + "|" + BrowserHeight
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
-            Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement;
+            Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent);
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -174,6 +183,7 @@ namespace GrabzIt.Parameters
             parameters.Add("waitfor", WaitForElement);
             parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
             parameters.Add("quality", Quality.ToString());
+            parameters.Add("transparent", Convert.ToInt32(Transparent).ToString());
 
             return parameters;
         }
