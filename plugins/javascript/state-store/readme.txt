@@ -1,4 +1,4 @@
-GrabzIt Web Recorder Readme Version 1.08
+GrabzIt Web Recorder Readme Version 1.09
 ========================================
 
 GrabzIt Web Recorder allows you to take screenshots of HTML elements after they have been altered by the user or other means.
