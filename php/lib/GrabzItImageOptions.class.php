@@ -13,7 +13,8 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	private $format = null;
 	private $targetElement = null;
 	private $hideElement = null;
-	private $waitForElement = null;	
+	private $waitForElement = null;
+	private $transparent = false;
 
 	/*
 	Set the width of the browser in pixels.
@@ -206,6 +207,22 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	{
 		return $this->quality;
 	}
+	
+	/*
+	Set to true if the image capture should be transparent. This is only compatible with png and tiff images.
+	*/
+	public function setTransparent($value)
+	{
+		$this->transparent = $value;
+	}
+
+	/*
+	Get if the image capture should be transparent. This is only compatible with png and tiff images.
+	*/
+	public function getTransparent()
+	{
+		return $this->transparent;
+	}	
 
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
@@ -226,7 +243,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty($this->targetElement)
 		."|".$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
 		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement);	  
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent));  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -244,6 +261,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));		
 		$params['quality'] = $this->nullToEmpty($this->quality);
 		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
+		$params['transparent'] = $this->nullToEmpty(intval($this->transparent));
 		
 		return $params;
 	}
