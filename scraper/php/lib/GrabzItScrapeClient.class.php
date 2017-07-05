@@ -110,7 +110,7 @@ class GrabzItScrapeClient
 	id - The id of the scrape that contains the result to re-send.
     resultId - The id of the result to re-send.
 
-	This function returns true if the result  was successfully requested to be re-sent.
+	This function returns true if the result was successfully requested to be re-sent.
 	*/    
     public function SendResult($id, $resultId)
 	{
