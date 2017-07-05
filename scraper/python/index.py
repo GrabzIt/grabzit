@@ -37,15 +37,20 @@ if form.getvalue('status') != None and form.getvalue('id') != None:
 		grabzIt.SetScrapeStatus(form.getvalue('id'), form.getvalue('status'))
 	except Exception as e:
 		message = str(e)
-
+elif form.getvalue('resultId') != None and form.getvalue('id') != None:		   
+	try:
+		grabzIt.SendResult(form.getvalue('id'), form.getvalue('resultId'))
+	except Exception as e:
+		message = str(e)
+		
 if form.getvalue('id') != None:
-    if message != '':
-        print ('<p><span style="color:red;font-weight:bold;">')
-        print (message)
-        print ('</span></p>')
-    else:
-        print ('<p><span style="color:green;font-weight:bold;">Succesfully updated scrape</span></p>')
-        
+	if message != '':
+		print ('<p><span style="color:red;font-weight:bold;">')
+		print (message)
+		print ('</span></p>')
+	else:
+		print ('<p><span style="color:green;font-weight:bold;">Succesfully updated scrape</span></p>')
+		
 print ('<table><tr><th>Scrape Name</th><th>Scrape Status</th><th></th></tr>')
 scrapes = grabzIt.GetScrapes()
 for scrape in scrapes:
@@ -62,6 +67,12 @@ for scrape in scrapes:
 	print('&status=Disable">Disable</a> <a href="index.py?id=')
 	print(scrape.ID)
 	print('&status=Enable">Enable</a>')
+	if len(scrape.Results) > 0:
+		print(' <a href="index.py?id=')
+		print(scrape.ID)
+		print('&resultId=')
+		print(scrape.Results[0].ID)
+		print('">Resend</a>')
 	print('</td></tr>')
 	
 print('</table></body></html>')

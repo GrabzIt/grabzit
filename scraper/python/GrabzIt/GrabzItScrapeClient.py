@@ -19,6 +19,7 @@ import io
 from xml.dom import minidom
 from time import sleep
 from GrabzIt import GrabzItScrape
+from GrabzIt import GrabzItScrapeHistory
 from GrabzIt import GrabzItScrapeException
 
 class GrabzItScrapeClient:
@@ -58,17 +59,25 @@ class GrabzItScrapeClient:
                         status = node.getElementsByTagName('Status')
                         nextRun = node.getElementsByTagName('NextRun')
                         
-                        results.append(GrabzItScrape.GrabzItScrape(self.GetFirstValue(identifier), self.GetFirstValue(name), self.GetFirstValue(status), self.GetFirstValue(nextRun)))                                                                
+                        scrapeResults = []
+                        resultNodes = node.getElementsByTagName('Result')
+                        
+                        for resultNode in resultNodes:
+                            resultIdentifier = resultNode.getElementsByTagName('Identifier')
+                            resultFinished = resultNode.getElementsByTagName('Finished')
+                            scrapeResults.append(GrabzItScrapeHistory.GrabzItScrapeHistory(self.GetFirstValue(resultIdentifier), self.GetFirstValue(resultFinished)))
+                            
+                        results.append(GrabzItScrape.GrabzItScrape(self.GetFirstValue(identifier), self.GetFirstValue(name), self.GetFirstValue(status), self.GetFirstValue(nextRun), scrapeResults))                                                                
 
                 return results
                 
         #
-	#Sets the status of a scrape.
-	#
-	#id - The id of the scrape to set.
-	#status - The scrape status to set the scrape to. Options include Start, Stop, Enable and Disable
-	#
-	#This function returns true if the scrape was successfully set.
+        #Sets the status of a scrape. 
+        #
+        #id - The id of the scrape to set.
+        #status - The scrape status to set the scrape to. Options include Start, Stop, Enable and Disable
+        #
+        #This function returns true if the scrape was successfully set.
         #
         def SetScrapeStatus(self, id, status):
                 sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(id)+"|"+str(status))        
@@ -79,8 +88,27 @@ class GrabzItScrapeClient:
                 
                 encoded_qs += "&sig="+sig;
 
-                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setscrapestatus.ashx?" + encoded_qs))               
+                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setscrapestatus.ashx?" + encoded_qs))                               
+                
+        #
+        #Re-sends the scrape result with the matching scrape id and result id using the export parameters stored in the scrape. 
+        #
+        #id - The id of the scrape that contains the result to re-send.
+        #resultId - The id of the result to re-send.
+        #
+        #This function returns true if the result was successfully requested to be re-sent.
+        #
+        def SendResult(self, id, resultId):
+                sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(id)+"|"+str(resultId))        
 
+                qs = {"key":self.applicationKey, "id":id, "spiderId":resultId}
+
+                encoded_qs = urlencode(qs)
+                
+                encoded_qs += "&sig="+sig;
+
+                return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "sendscrape.ashx?" + encoded_qs))                
+                
         
         def IsSuccessful(self, result):
                 return self.GetResultObject(result, "Result") == self.TrueString
