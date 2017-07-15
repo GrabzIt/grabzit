@@ -16,6 +16,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string EncryptionKey
+        {
+            get;
+            set;
+        }
+
         string CustomId
         {
             get;

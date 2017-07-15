@@ -136,6 +136,92 @@ namespace GrabzIt
         }
 
         /// <summary>
+        /// This method creates an encryption key to pass to the <see cref="EncryptionKey"/> parameter.
+        /// </summary>
+        /// <returns>The encryption key</returns>
+        public string CreateEncrpytionKey()
+        {
+            byte[] bytes = new byte[32];
+            Random random = new Random();
+            random.NextBytes(bytes);
+            return Convert.ToBase64String(bytes);
+        }
+
+        /// <summary>
+        /// This method will decrypt a encrypted capture, using the key you passed to the <see cref="EncryptionKey"/> parameter.
+        /// </summary>
+        /// <param name="path">The path of the encrypted capture</param>
+        /// <param name="key">The encryption key</param>
+        public void Decrypt(string path, string key)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+            }
+            if (!File.Exists(path))
+            {
+                throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+            }
+            File.WriteAllBytes(path, Decrypt(File.ReadAllBytes(path), key));
+        }
+
+        /// <summary>
+        /// This method will decrypt a encrypted capture, using the key you passed to the <see cref="EncryptionKey"/> parameter.
+        /// </summary>
+        /// <param name="file">The encrypted GrabzItFile</param>
+        /// <param name="key">The encryption key</param>
+        /// <returns>The decrypted GrabzItFile</returns>
+        public GrabzItFile Decrypt(GrabzItFile file, string key)
+        {
+            if (file == null)
+            {
+                return null;
+            }
+            return new GrabzItFile(Decrypt(file.Bytes, key));
+        }
+
+        /// <summary>
+        /// This method will decrypt a encrypted capture, using the key you passed to the <see cref="EncryptionKey"/> parameter.
+        /// </summary>
+        /// <param name="data">The encrypted bytes</param>
+        /// <param name="key">The encryption key</param>
+        /// <returns>The decrypted bytes</returns>
+        public byte[] Decrypt(byte[] data, string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return new byte[0];
+            }
+
+            using (RijndaelManaged rijAlg = new RijndaelManaged())
+            {
+                rijAlg.Key = Convert.FromBase64String(key);
+                rijAlg.Mode = CipherMode.CBC;
+                rijAlg.BlockSize = 128;
+                rijAlg.Padding = PaddingMode.Zeros;
+
+                byte[] iv = new byte[16];
+                Array.Copy(data, 0, iv, 0, iv.Length);
+
+                byte[] fileData = new byte[data.Length - 16];
+                Buffer.BlockCopy(data, 16, fileData, 0, fileData.Length);
+
+                using (ICryptoTransform decryptor = rijAlg.CreateDecryptor(rijAlg.Key, iv))
+                {
+                    using (MemoryStream msDecrypt = new MemoryStream())
+                    {
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Write))
+                        {
+                            csDecrypt.Write(fileData, 0, fileData.Length);
+                            csDecrypt.FlushFinalBlock();
+                            return msDecrypt.ToArray();
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// This method specifies the URL of the online video that should be converted into a animated GIF.
         /// </summary>
         /// <param name="url">The URL to convert into a animated GIF.</param>

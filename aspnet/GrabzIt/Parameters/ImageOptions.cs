@@ -165,7 +165,7 @@ namespace GrabzIt.Parameters
             "|" + Format + "|" + OutputHeight + "|" + OutputWidth + "|" + BrowserHeight
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
-            Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent);
+            Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent) + "|" + EncryptionKey;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)

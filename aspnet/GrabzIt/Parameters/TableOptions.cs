@@ -89,7 +89,7 @@ namespace GrabzIt.Parameters
 
             return applicationSecret + "|" + urlParam + callBackURLParam +
             "|" + CustomId + "|" + TableNumberToInclude + "|" + Convert.ToInt32(IncludeAllTables) + "|" + Convert.ToInt32(IncludeHeaderNames) + "|" + 
-            TargetElement + "|" + Format + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + ExportURL;
+            TargetElement + "|" + Format + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + ExportURL + "|" + EncryptionKey;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
