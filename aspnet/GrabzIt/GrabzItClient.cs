@@ -141,10 +141,11 @@ namespace GrabzIt
         /// <returns>The encryption key</returns>
         public string CreateEncrpytionKey()
         {
-            byte[] bytes = new byte[32];
-            Random random = new Random();
-            random.NextBytes(bytes);
-            return Convert.ToBase64String(bytes);
+            RandomNumberGenerator rng = new RNGCryptoServiceProvider();
+            byte[] tokenData = new byte[32];
+            rng.GetBytes(tokenData);
+
+            return Convert.ToBase64String(tokenData);
         }
 
         /// <summary>
