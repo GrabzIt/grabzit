@@ -192,7 +192,7 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->speed)."|".$this->nullToEmpty($this->duration)."|".
 		$this->nullToEmpty($this->repeat)."|".$this->nullToEmpty(intval($this->reverse))."|".$this->nullToEmpty($this->start)."|".
 		$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".
-		$this->nullToEmpty($this->getExportURL());	  
+		$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->getEncryptionKey());  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)

@@ -4,6 +4,7 @@ class GrabzItBaseOptions
 	private $customId = null;
 	private $country = null;
 	private $exportUrl = null;
+	private $encryptionKey = null;
 	protected $delay = null;
 	
 	/*
@@ -54,6 +55,22 @@ class GrabzItBaseOptions
 		return $this->exportUrl;
 	}
 	
+	/*
+	Set the encryption key that will be used to encrypt your capture.
+	*/
+	public function setEncryptionKey($value)
+	{
+		$this->encryptionKey = $value;
+	}
+	
+	/*
+	Get the encryption key that will be used to encrypt your capture.
+	*/
+	public function getEncryptionKey()
+	{
+		return $this->encryptionKey;
+	}
+	
 	protected function createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
 	{
 		$params = array();
@@ -62,7 +79,8 @@ class GrabzItBaseOptions
 		$params['customid'] = $this->nullToEmpty($this->customId);
 		$params['callback'] = $this->nullToEmpty($callBackURL);
 		$params['export'] = $this->nullToEmpty($this->exportUrl);
-		$params['sig'] = $sig;		
+		$params['encryption'] = $this->nullToEmpty($this->encryptionKey);
+		$params['sig'] = $sig;
 		$params[$dataName] = $this->nullToEmpty($dataValue);
 		
 		return $params;

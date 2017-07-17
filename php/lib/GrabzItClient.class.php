@@ -71,6 +71,52 @@ class GrabzItClient
 		}
 		$this->protocol = "http";
 	}
+	
+	/*
+	This method creates an encryption key to pass to the encryption key parameter.
+	*/
+	public function CreateEncrpytionKey()
+	{
+		if (function_exists('random_bytes'))
+		{
+			return base64_encode(random_bytes(32));
+		}
+		if (function_exists('openssl_random_pseudo_bytes'))
+		{
+			return base64_encode(openssl_random_pseudo_bytes(32));
+		}
+		throw new GrabzItException("Your installation of PHP does not support a method for making a cryptographically secure encryption key. Please upgrade to at least PHP 5.3", GrabzItException::GENERIC_ERROR);		
+	}
+	
+	/*
+	This method will decrypt a encrypted capture file, using the key you passed to the encryption key parameter.
+	
+	path - the path of the encrypted capture
+	key - the encryption key
+	*/
+	public function DecryptFile($path, $key)
+	{
+		if (!file_exists($path))
+		{
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
+		}
+		$data = file_get_contents($path);
+		file_put_contents($path, $this->Decrypt($data, $key));
+		return true;
+	}
+
+	/*
+	This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
+	
+	data - the encrypted bytes
+	key - the encryption key
+	*/	
+	public function Decrypt($data, $key)
+	{
+		$iv = substr($data, 0, 16);
+		$payload = substr($data, 16);
+		return openssl_decrypt($payload, 'AES-256-CBC', base64_decode($key), OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $iv);
+	}
 
 	/*
 	This method specifies the URL of the online video that should be converted into a animated GIF.

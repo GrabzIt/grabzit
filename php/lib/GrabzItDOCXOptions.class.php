@@ -280,7 +280,8 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$this->nullToEmpty(intval($this->includeImages))."|".$this->nullToEmpty(intval($this->includeLinks))."|".$this->nullToEmpty($this->title)."|".$this->nullToEmpty($this->marginTop)."|".$this->nullToEmpty($this->marginLeft)."|".$this->nullToEmpty($this->marginBottom)."|".
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
 		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".
-		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->waitForElement);	  
+		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->waitForElement)."|".
+		$this->nullToEmpty($this->getEncryptionKey());
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
