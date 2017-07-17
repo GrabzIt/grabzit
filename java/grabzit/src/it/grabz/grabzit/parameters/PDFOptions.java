@@ -345,7 +345,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + customWaterMarkId + "|" + ParameterUtility.toInt(includeLinks) + "|" + ParameterUtility.toInt(includeOutline)
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
-        + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement;
+        + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey();
     }    
     
     @Override

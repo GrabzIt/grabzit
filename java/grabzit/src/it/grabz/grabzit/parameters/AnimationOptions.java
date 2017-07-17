@@ -203,7 +203,8 @@ public class AnimationOptions extends BaseOptions{
         return ParameterUtility.nullCheck(applicationSecret) + "|" + urlParam + callBackURLParam
         + "|" + height + "|" + width + "|" + getCustomId() + "|" + ParameterUtility.toString(framesPerSecond) 
         + "|" + ParameterUtility.toString(speed) + "|" + duration + "|" + repeat + "|" + ParameterUtility.toInt(reverse)
-        + "|" + start + "|" + customWaterMarkId + "|" + getCountry().getValue() + "|" + quality + "|" + getExportURL();
+        + "|" + start + "|" + customWaterMarkId + "|" + getCountry().getValue() + "|" + quality + "|" + getExportURL()
+        + "|" + getEncryptionKey();
     }    
 
     @Override

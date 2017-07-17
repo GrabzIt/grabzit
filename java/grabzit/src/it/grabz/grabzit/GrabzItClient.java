@@ -21,15 +21,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -78,6 +93,84 @@ public class GrabzItClient {
             return;
         }
         this.protocol = "http";
+    }
+    
+    /**
+     * This method creates an encryption key to pass to the setEncryptionKey method.
+     * @return The encryption key
+     */
+    public String CreateEncryptionKey()
+    {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[32];
+        random.nextBytes(bytes);
+        return DatatypeConverter.printBase64Binary(bytes);
+    }
+    
+    /**
+     * This method will decrypt a encrypted capture, using the key you passed to the setEncryptionKey method.
+     * @param file The encrypted GrabzItFile
+     * @param key The encryption key
+     * @return The decrypted GrabzItFile
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException 
+     */
+    public GrabzItFile Decrypt(GrabzItFile file, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
+    {
+        if (file == null)
+        {
+            return null;
+        }
+        return new GrabzItFile(Decrypt(file.getBytes(), key));
+    }
+
+    /**
+     * This method will decrypt a encrypted capture, using the key you passed to the setEncryptionKey method.
+     * @param path The path of the encrypted capture
+     * @param key The encryption key
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
+     * @throws GrabzItException
+     * @throws IOException 
+     */
+    public void Decrypt(String path, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, GrabzItException, IOException
+    {
+        byte[] data = fileToBytes(path);
+        FileUtility.Save(path, Decrypt(data, key));
+    }
+    
+    /**
+     * This method will decrypt a encrypted capture, using the key you passed to the setEncryptionKey method.
+     * @param data The encrypted bytes
+     * @param key The encryption key
+     * @return The decrypted bytes
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException 
+     */
+    public byte[] Decrypt(byte[] data, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
+    {
+        byte[] iv = Arrays.copyOfRange(data, 0, 16);
+        byte[] payload = Arrays.copyOfRange(data, 16, data.length);
+                
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        SecretKeySpec keySpec = new SecretKeySpec(DatatypeConverter.parseBase64Binary(key), "AES");
+        
+        Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+
+        return cipher.doFinal(payload);
     }
     
     /**
@@ -413,21 +506,22 @@ public class GrabzItClient {
         FileToDOCX(path, null);
     }            
 
-    private String fileToHTML(String path) throws IOException, GrabzItException {
+    private byte[] fileToBytes(String path) throws GrabzItException, FileNotFoundException, IOException
+    {
         File fileToConvert = new File(path);
         if(!fileToConvert.exists())
         {
             throw new GrabzItException("File: " + path + " does not exist", ErrorCode.FILENONEXISTANTPATH);
         }
         FileInputStream fis = null;
-        String html = "";
+
+        byte[] data;
+        
         try
         {
             fis = new FileInputStream(fileToConvert);
-            byte[] data = new byte[(int) fileToConvert.length()];
+            data = new byte[(int) fileToConvert.length()];
             fis.read(data);
-
-            html = new String(data, "UTF-8");        
         }
         finally
         {
@@ -435,8 +529,13 @@ public class GrabzItClient {
             {
                 fis.close();
             }
-        }
-        return html;
+        }   
+        
+        return data;
+    }
+    
+    private String fileToHTML(String path) throws IOException, GrabzItException {
+        return new String(fileToBytes(path), "UTF-8");
     }       
 
     /**

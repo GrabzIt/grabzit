@@ -31,19 +31,7 @@ public class GrabzItFile {
      */
     public void Save(String path) throws IOException, Exception
     {
-        FileOutputStream fileOuputStream = null;
-        try
-        {
-            fileOuputStream = new FileOutputStream(path);
-            fileOuputStream.write(getBytes());
-        }
-        finally
-        {
-            if (fileOuputStream != null)
-            {
-                fileOuputStream.close();
-            }
-        }
+        FileUtility.Save(path, getBytes());
     }
 
     /**

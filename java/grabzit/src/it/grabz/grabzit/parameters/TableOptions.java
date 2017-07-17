@@ -136,7 +136,7 @@ public class TableOptions extends BaseOptions {
         return ParameterUtility.nullCheck(applicationSecret) + "|" + urlParam + callBackURLParam
         +"|"+getCustomId()+"|"+tableNumberToInclude+"|"+ParameterUtility.toInt(includeAllTables)
         +"|"+ParameterUtility.toInt(includeHeaderNames)+"|"+targetElement+"|"+format.getValue()+"|"+requestAs.getValue()
-        +"|"+getCountry().getValue() + "|" + getExportURL();
+        +"|"+getCountry().getValue() + "|" + getExportURL() + "|" + getEncryptionKey();
     }    
 
     @Override

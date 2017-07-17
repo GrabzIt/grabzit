@@ -246,7 +246,7 @@ public class ImageOptions extends BaseOptions {
         + "|" + format.getValue() + "|" + outputHeight + "|" + outputWidth + "|" + browserHeight 
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
-        + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent);
+        + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent) + "|" + getEncryptionKey();
     }    
     
     @Override

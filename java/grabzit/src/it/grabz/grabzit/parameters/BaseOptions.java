@@ -17,6 +17,7 @@ import java.util.Map;
 public abstract class BaseOptions {
     private String customId;
     private String exportURL;
+    private String encryptionKey;
     private Country country;
     protected int delay;
 
@@ -25,6 +26,7 @@ public abstract class BaseOptions {
         this.delay = 0;
         this.customId = "";
         this.exportURL = "";
+        this.encryptionKey = "";
         this.country = Country.DEFAULT;
     }
     
@@ -57,7 +59,7 @@ public abstract class BaseOptions {
     }
     
     /**
-     * @return the exportURL that should be used to transfer the capture to a third party location.
+     * @return the export URL that should be used to transfer the capture to a third party location.
      */
     public String getExportURL() {
         return exportURL;
@@ -70,12 +72,27 @@ public abstract class BaseOptions {
         this.exportURL = exportURL;
     } 
     
+    /**
+     * @return the encryption key that will be used to encrypt your capture.
+     */
+    public String getEncryptionKey() {
+        return encryptionKey;
+    }
+
+    /**
+     * @param encryptionKey the encryption key that will be used to encrypt your capture.
+     */
+    public void setEncryptionKey(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
+    }     
+    
     protected HashMap<String, String> createParameters(String applicationKey, String sig, String callBackURL, String dataName, String dataValue) throws UnsupportedEncodingException
     {
         HashMap<String, String> params = new HashMap<String, String>(); 
         params.put("key", ParameterUtility.encode(applicationKey));
         params.put("country", this.country.getValue());
-        params.put("export", this.exportURL);
+        params.put("export", ParameterUtility.encode(this.exportURL));
+        params.put("encryption", ParameterUtility.encode(this.encryptionKey));
         params.put("customid", ParameterUtility.encode(this.customId));
         params.put("callback", ParameterUtility.encode(ParameterUtility.nullCheck(callBackURL)));
         params.put("sig", ParameterUtility.encode(sig));

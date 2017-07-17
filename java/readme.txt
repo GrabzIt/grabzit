@@ -24,3 +24,8 @@ Ensure your application has read and write access to the "results" directory.
 Finally run the sample web application to start converting web pages into screenshots.
 
 More documentation can be found at: https://grabz.it/api/java/
+
+Encryption
+----------
+
+In order to use encryption with Java 6, 7 and 8 please install the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files into all of the /jre/lib/security/ folders of the Java installation folders.

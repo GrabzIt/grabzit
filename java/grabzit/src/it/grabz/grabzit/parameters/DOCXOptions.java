@@ -281,7 +281,7 @@ public class DOCXOptions extends BaseOptions {
         + "|" + ParameterUtility.toInt(includeImages) + "|" + ParameterUtility.toInt(includeLinks)
         + "|" + title + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
-        + "|" + getExportURL() + "|" + waitForElement;
+        + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey();
     }    
     
     @Override
