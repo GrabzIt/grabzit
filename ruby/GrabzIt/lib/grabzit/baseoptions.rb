@@ -7,6 +7,7 @@ module GrabzIt
 			@customId = nil
 			@country = nil
 			@exportURL = nil
+			@encryptionKey = nil
 			@delay = nil
 		end	
 		
@@ -31,7 +32,7 @@ module GrabzIt
 		# Set the country the capture should be created from: Default = "", Singapore = "SG", UK = "UK", US = "US".
 		#
 		# @param value [String] the country to use
-		# @return [void]				
+		# @return [void]
 		def country(value)
 			@country = value
 		end
@@ -41,13 +42,26 @@ module GrabzIt
 			@exportURL
 		end
 
-		# Set the export URL that should be used to transfer the capture to a third party location
+		# Set the export URL that should be used to transfer the capture to a third party location.
 		#
 		# @param value [String] export URL to use
-		# @return [void]				
+		# @return [void]
 		def exportURL(value)
 			@exportURL = value
 		end
+		
+		# @return [String] the encryption key that will be used to encrypt your capture.
+		def encryptionKey
+			@encryptionKey
+		end
+
+		# Set the encryption key that will be used to encrypt your capture.
+		#
+		# @param value [String] encryption key to use
+		# @return [void]
+		def encryptionKey(value)
+			@encryptionKey = value
+		end		
 		
 		# @!visibility private
 		def startDelay
@@ -65,6 +79,7 @@ module GrabzIt
 			params['customid'] = GrabzIt::Utility.nil_check(@customId)
 			params['callback'] = GrabzIt::Utility.nil_check(callBackURL)
 			params['export'] = GrabzIt::Utility.nil_check(@exportURL)
+			params['encryption'] = GrabzIt::Utility.nil_check(@encryptionKey)
 			params['sig'] = sig
 			params[dataName] = GrabzIt::Utility.nil_check(dataValue)
 

@@ -107,7 +107,8 @@ module GrabzIt
 			return applicationSecret+"|"+ urlParam + callBackURLParam +
 			"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@tableNumberToInclude)+"|"+GrabzIt::Utility.b_to_str(@includeAllTables)+
 			"|"+GrabzIt::Utility.b_to_str(@includeHeaderNames)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@format)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_check(@exportURL)
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+
+			GrabzIt::Utility.nil_check(@encryptionKey)
 		end
 
 		# @!visibility private

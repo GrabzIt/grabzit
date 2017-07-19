@@ -165,7 +165,7 @@ module GrabzIt
 			GrabzIt::Utility.nil_float_check(@framesPerSecond)+"|"+GrabzIt::Utility.nil_float_check(@speed)+"|"+GrabzIt::Utility.nil_int_check(@duration)+
 			"|"+GrabzIt::Utility.nil_int_check(@repeat)+"|"+GrabzIt::Utility.b_to_str(@reverse)+"|"+GrabzIt::Utility.nil_int_check(@start)+
 			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+
-			"|"+GrabzIt::Utility.nil_check(@exportURL)
+			"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)
 		end		
 
 		# @!visibility private

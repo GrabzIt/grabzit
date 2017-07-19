@@ -5,7 +5,9 @@ module GrabzIt
 	require 'digest/md5'
 	require 'net/http'
 	require 'rexml/document'
+	require 'base64'
 	require 'cgi'
+	require 'openssl'
 	require 'uri'
 	require File.join(File.dirname(__FILE__), 'utility')
 	require File.join(File.dirname(__FILE__), 'screenshotstatus')
@@ -15,7 +17,8 @@ module GrabzIt
 	require File.join(File.dirname(__FILE__), 'animationoptions')
 	require File.join(File.dirname(__FILE__), 'imageoptions')
 	require File.join(File.dirname(__FILE__), 'tableoptions')
-	require File.join(File.dirname(__FILE__), 'pdfoptions')	
+	require File.join(File.dirname(__FILE__), 'pdfoptions')
+	require File.join(File.dirname(__FILE__), 'docxoptions')
 	
 	# This client provides access to the GrabzIt web services
 	# This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
@@ -107,7 +110,7 @@ module GrabzIt
 		# @param options [ImageOptions, nil] a instance of the ImageOptions class that defines any special options to use when creating the image
 		# @return [void]		
 		def file_to_image(path, options = nil)		
-			html_to_image(read_html_file(path), options)
+			html_to_image(read_file(path), options)
 		end
 		
 		# This method specifies the URL that the HTML tables should be extracted from
@@ -146,7 +149,7 @@ module GrabzIt
 		# @param options [TableOptions, nil] a instance of the TableOptions class that defines any special options to use when converting the HTML table
 		# @return [void]		
 		def file_to_table(path, options = nil)		
-			html_to_table(read_html_file(path), options)
+			html_to_table(read_file(path), options)
 		end		
 		
 		# This method specifies the URL that should be converted into a PDF
@@ -185,7 +188,7 @@ module GrabzIt
 		# @param options [PDFOptions, nil] a instance of the PDFOptions class that defines any special options to use when creating the PDF
 		# @return [void]		
 		def file_to_pdf(path, options = nil)		
-			html_to_pdf(read_html_file(path), options)
+			html_to_pdf(read_file(path), options)
 		end		
 		
 		# This method specifies the URL that should be converted into a DOCX
@@ -224,7 +227,7 @@ module GrabzIt
 		# @param options [DOCXOptions, nil] a instance of the DOCXOptions class that defines any special options to use when creating the DOCX
 		# @return [void]		
 		def file_to_docx(path, options = nil)		
-			html_to_docx(read_html_file(path), options)
+			html_to_docx(read_file(path), options)
 		end			
 		
 		# Calls the GrabzIt web service to take the screenshot
@@ -296,7 +299,7 @@ module GrabzIt
 
 					screenshot = File.new(saveToFile, "wb")
 					screenshot.write(result)
-					screenshot.close				
+					screenshot.close
 
 					break
 				end
@@ -515,6 +518,41 @@ module GrabzIt
 				@protocol = 'http'
 			end
 		end
+		
+		# This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
+		#
+		# @return [String] a encryption key
+		def create_encryption_key()
+			Base64.strict_encode64(OpenSSL::Random.random_bytes(32));
+		end
+		
+		# This method will decrypt a encrypted capture file, using the key you passed to the encryption key parameter.
+		#
+		# @param path [String] the path of the encrypted capture
+		# @param key [String] the encryption key
+		def decrypt_file(path, key)
+			data = read_file(path)
+			decryptedFile = File.new(path, "wb")
+			decryptedFile.write(decrypt(data, key))
+			decryptedFile.close
+		end
+
+		# This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
+		#
+		# @param path [String] the encrypted bytes
+		# @param key [String] the encryption key
+		# @return [Array<Byte>] an array of decrypted bytes
+		def decrypt(data, key)
+			iv = data[0..15]
+			payload = data[16..-1]
+			cipher = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
+			cipher.padding = 0
+			cipher.key = Base64.strict_decode64(key);
+			cipher.iv = iv
+			decrypted = cipher.update(payload);
+			decrypted << cipher.final();
+			return decrypted
+		end
 
 		private
 		def get_watermarks(identifier = nil)
@@ -586,13 +624,13 @@ module GrabzIt
 		end
 
 		private
-		def read_html_file(path)
+		def read_file(path)
 			if !File.file?(path)
 				raise "File: " + path + " does not exist"
 			end
 
 			file = File.open(path, "rb")
-			return file.read			
+			return file.read
 		end
 		
 		private 
