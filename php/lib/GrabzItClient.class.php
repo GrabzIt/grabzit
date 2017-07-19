@@ -73,7 +73,7 @@ class GrabzItClient
 	}
 	
 	/*
-	This method creates an encryption key to pass to the encryption key parameter.
+	This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
 	*/
 	public function CreateEncrpytionKey()
 	{
