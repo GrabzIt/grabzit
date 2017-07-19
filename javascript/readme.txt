@@ -10,9 +10,10 @@ GrabzIt JavaScript library provides four methods:
 - ConvertURL([url to capture], [options])
 - ConvertHTML([html to convert], [options])
 - UseSSL()
+- Encrypt()
 - AddTo([element | element id])
 - Create()
-- DataURI()
+- DataURI([callback],[decrypt])
 
 The ConvertURL or ConvertHTML method must be called and then either the AddTo, Create or DataURI method. The AddTo method must specify the id of a element or the element were the capture should be displayed, so the first two calls below will work. The Create method just creates the capture on the body tag or the root element of the HTML document if the body tag doesn't exist. An example of this is shown in calls three and four below. 
 
@@ -55,7 +56,9 @@ The DataURI method requires a callback function this function must have one para
 	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').DataURI(callback);
 	</script>
 	</body>
-	</html>
+	</html>	
+
+The Encrypt method automatically makes a cryptographically secure key and passes it to GrabzIt's API to encrypt your capture. To access encrypted captures use the DataURI method, if a true is passed to the decrypt parameter of the DataURI method any encrypted data will be automatically decrypted using the key created in the Encrypt method.
 
 The options parameter takes all of the parameters found here (excluding the URL and application key parameters): https://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 250 x 200 you could do this like so:
 
