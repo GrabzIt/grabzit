@@ -73,6 +73,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_INVALID_EXPORT_URL: 168,
         PARAMETER_INVALID_WAIT_FOR_VALUE: 169,
         PARAMETER_INVALID_TRANSPARENT_VALUE: 170,
+        PARAMETER_INVALID_ENCRYPTION_KEY: 171,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -375,7 +376,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'country': '',
         'hideElement': '',
         'waitForElement': '',
-        'exportUrl': ''
+        'exportUrl': '',
+        'encryptionKey': ''
     };
 
     context = _extend(defaults, options);
@@ -417,7 +419,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'quality': parseInt(context['quality']),
         'country': context['country'],
         'waitfor': context['waitForElement'],
-        'export': context['exportUrl']
+        'export': context['exportUrl'],
+        'encryption': context['encryptionKey']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -426,7 +429,7 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + _toInt(context['includeLinks']) + '|' + context['title'] + '|' + parseInt(context['marginTop'])
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement']
-     + '|' + context['exportUrl'] + '|' + context['waitForElement'];
+     + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -454,7 +457,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'targetElement': '',
         'hideElement': '',
         'waitForElement': '',
-        'exportUrl': ''
+        'exportUrl': '',
+        'encryptionKey': ''
     };
 
     context = _extend(defaults, options);
@@ -500,7 +504,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'country': context['country'],
         'target': context['targetElement'],
         'waitfor': context['waitForElement'],
-        'export': context['exportUrl']
+        'export': context['exportUrl'],
+        'encryption': context['encryptionKey']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -508,7 +513,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
     var signaturePartTwo = '|' + context['customId'] + '|' + _toInt(context['includeBackground']) + '|' + pagesize + '|' + orientation + '|' + context['customWaterMarkId']
      + '|' + _toInt(context['includeLinks']) + '|' + _toInt(context['includeOutline']) + '|' + context['title'] + '|' + context['coverUrl'] + '|' + parseInt(context['marginTop'])
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
-     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'];
+     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -523,7 +528,8 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'targetElement': '',
         'requestAs': 0,
         'country': '',
-        'exportUrl': ''
+        'exportUrl': '',
+        'encryptionKey': ''
     };
 
     context = _extend(defaults, options);
@@ -540,14 +546,15 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'target': context['targetElement'],
         'requestmobileversion': parseInt(context['requestAs']),
         'country': context['country'],
-        'export': context['exportUrl']
+        'export': context['exportUrl'],
+        'encryption': context['encryptionKey']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     this.signaturePartOne = applicationSecret + '|' + url + '|';
     this.signaturePartTwo = '|' + context['customId'] + '|' + parseInt(context['tableNumberToInclude']) + '|' + _toInt(context['includeAllTables']) + '|' + _toInt(context['includeHeaderNames']) + '|' + context['targetElement']
-     + '|' + context['format'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + context['exportUrl'];
+     + '|' + context['format'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + context['exportUrl'] + '|' + context['encryptionKey'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -566,7 +573,8 @@ function _getAnimationRequestObject(applicationKey, applicationSecret, url, opti
         'customWaterMarkId': '',
         'quality': -1,
         'country': '',
-        'exportUrl': ''
+        'exportUrl': '',
+        'encryptionKey': ''
     };
 
     context = _extend(defaults, options);
@@ -587,13 +595,14 @@ function _getAnimationRequestObject(applicationKey, applicationSecret, url, opti
         'reverse': _toInt(context['reverse']),
         'country': context['country'],
         'quality': parseInt(context['quality']),
-        'export': context['exportUrl']
+        'export': context['exportUrl'],
+        'encryption': context['encryptionKey']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     var signaturePartTwo = '|' + parseInt(context['height']) + '|' + parseInt(context['width']) + '|' + context['customId'] + '|' + parseFloat(context['framesPerSecond']) + '|' +parseFloat(context['speed'])
-     + '|' + parseInt(context['duration']) + '|' + parseInt(context['repeat']) + '|' + _toInt(context['reverse']) + '|' + parseInt(context['start']) + '|' + context['customWaterMarkId'] + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['exportUrl'];
+     + '|' + parseInt(context['duration']) + '|' + parseInt(context['repeat']) + '|' + _toInt(context['reverse']) + '|' + parseInt(context['start']) + '|' + context['customWaterMarkId'] + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['exportUrl'] + '|' + context['encryptionKey'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -615,7 +624,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'country': '',
         'waitForElement': '',
         'exportUrl': '',
-        'transparent': 0
+        'transparent': 0,
+        'encryptionKey': ''
     };
 
     context = _extend(defaults, options);
@@ -643,7 +653,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'quality': parseInt(context['quality']),
         'waitfor': context['waitForElement'],
         'export': context['exportUrl'],
-        'transparent': context['transparent']
+        'transparent': context['transparent'],
+        'encryption': context['encryptionKey']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -651,7 +662,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
     var signaturePartTwo = '|' + context['format'] + '|' + context['height'] + '|' + context['width'] + '|' + context['browserHeight'] + '|' + context['browserWidth']
      + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs'])
      + '|' + context['country'] + '|' + context['quality'] + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement']
-     + '|' + _toInt(context['transparent']);
+     + '|' + _toInt(context['transparent']) + '|' + context['encryptionKey'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -680,7 +691,7 @@ function _createFirstSignature(applicationSecret, target, isPost){
     return signaturePartOne;
 }
 
-function _readHTMLFile(filePath)
+function _readFile(filePath)
 {
     if (!file.existsSync(filePath)) {
         var error = new Error();
@@ -715,7 +726,7 @@ GrabzItClient.prototype.html_to_pdf = function (html, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.file_to_pdf = function (path, options) {
-    this.html_to_pdf(_readHTMLFile(path), options);
+    this.html_to_pdf(_readFile(path), options);
 };
 
 /*
@@ -742,7 +753,7 @@ GrabzItClient.prototype.html_to_docx = function (html, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.file_to_docx = function (path, options) {
-    this.html_to_docx(_readHTMLFile(path), options);
+    this.html_to_docx(_readFile(path), options);
 };
 
 /*
@@ -769,7 +780,7 @@ GrabzItClient.prototype.html_to_table = function (html, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.file_to_table = function (path, options) {
-    this.html_to_table(_readHTMLFile(path), options);
+    this.html_to_table(_readFile(path), options);
 };
 
 /*
@@ -805,7 +816,7 @@ GrabzItClient.prototype.html_to_image = function (html, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.file_to_image = function (path, options) {
-    this.html_to_image(_readHTMLFile(path), options);
+    this.html_to_image(_readFile(path), options);
 };
 
 /*
@@ -1154,6 +1165,42 @@ GrabzItClient.prototype.use_ssl = function (value) {
 		return;
 	}
 	this.port = 80;
+}
+
+/*
+* This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#createencryptionkey
+*/
+GrabzItClient.prototype.create_encryption_key = function () {
+	return new Buffer(crypto.randomBytes(32)).toString('base64');
+}
+
+/*
+* This method will decrypt a encrypted capture file, using the key you passed to the encryption key parameter.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decryptfile
+*/
+GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
+	var data = _readFile(path);
+	file.writeFile(path, this.decrypt(data, key), 'binary', function (err) {
+		if (oncompleteEvent != null) {
+			oncompleteEvent(err, null)
+		}
+	});
+}
+
+/*
+* This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decrypt
+*/
+GrabzItClient.prototype.decrypt = function (data, key) {
+	var iv = data.slice(0,16);
+	var payload = data.slice(16);
+	var decipher  = crypto.createDecipheriv('aes-256-cbc', new Buffer(key, 'base64'), iv);
+	decipher.setAutoPadding(false);
+	return decipher.update(payload);
 }
 
 module.exports = GrabzItClient;
