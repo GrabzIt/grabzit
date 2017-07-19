@@ -1183,6 +1183,8 @@ GrabzItClient.prototype.create_encryption_key = function () {
 */
 GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
 	var data = _readFile(path);
+	var oncompleteEvent = oncomplete;
+	
 	file.writeFile(path, this.decrypt(data, key), 'binary', function (err) {
 		if (oncompleteEvent != null) {
 			oncompleteEvent(err, null)
