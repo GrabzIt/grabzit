@@ -4,12 +4,15 @@ config.ini
 handler.py
 index.py
 setup.py
+GrabzIt\AES.py
+GrabzIt\BlockFeeder.py
 GrabzIt\GrabzItClient.py
 GrabzIt\GrabzItCookie.py
 GrabzIt\GrabzItException.py
 GrabzIt\GrabzItWaterMark.py
 GrabzIt\ScreenShotStatus.py
 GrabzIt\ScreenShotStatus.py
+GrabzIt\Util.py
 GrabzIt\Request.py
 GrabzIt\GrabzItTableOptions.py
 GrabzIt\GrabzItPDFOptions.py

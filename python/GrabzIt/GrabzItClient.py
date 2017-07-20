@@ -18,6 +18,7 @@ except ImportError:
 import hashlib	
 import mimetypes
 import io
+import base64
 from xml.dom import minidom
 from time import sleep
 from GrabzIt import GrabzItCookie
@@ -31,6 +32,8 @@ from GrabzIt import GrabzItImageOptions
 from GrabzIt import GrabzItPDFOptions
 from GrabzIt import GrabzItDOCXOptions
 from GrabzIt import GrabzItTableOptions
+from GrabzIt import AES
+from GrabzIt import BlockFeeder
 
 class GrabzItClient:
 
@@ -91,7 +94,7 @@ class GrabzItClient:
 		# options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the image
 		#				 
 		def FileToImage(self, path, options = None):
-				self.HTMLToImage(self.ReadHTMLFile(path), options)
+				self.HTMLToImage(self.ReadFile(path), options)
 			   
 		#
 		# This method specifies the URL that the HTML tables should be extracted from.
@@ -124,7 +127,7 @@ class GrabzItClient:
 		# options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table 
 		#
 		def FileToTable(self, path, options = None):
-				self.HTMLToTable(self.ReadHTMLFile(path), options) 
+				self.HTMLToTable(self.ReadFile(path), options) 
 				
 		#
 		# This method specifies the URL that should be converted into a PDF.
@@ -157,7 +160,7 @@ class GrabzItClient:
 		# options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF 
 		#
 		def FileToPDF(self, path, options = None):
-				self.HTMLToPDF(self.ReadHTMLFile(path), options)
+				self.HTMLToPDF(self.ReadFile(path), options)
 
 		#
 		# This method specifies the URL that should be converted into a DOCX.
@@ -190,7 +193,7 @@ class GrabzItClient:
 		# options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX 
 		#
 		def FileToDOCX(self, path, options = None):
-				self.HTMLToDOCX(self.ReadHTMLFile(path), options)
+				self.HTMLToDOCX(self.ReadFile(path), options)
 				
 		#
 		# This function attempts to Save the result asynchronously and returns a unique identifier, which can be used to get the screenshot with the #GetResult method.
@@ -471,13 +474,50 @@ class GrabzItClient:
 		# This method sets if requests to GrabzIt's API should use SSL or not
 		#
 		# value - true if should use SSL
-		#		
+		#
 		def UseSSL(self, value):
 			if value:
 				self.protocol = "https"
 			else:
 				self.protocol = "http"
+				
+		#
+		# This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
+		#				 
+		def CreateEncrpytionKey(self):
+			return base64.standard_b64encode(os.urandom(32)).decode('utf-8')
 		
+		#
+		# This method will decrypt a encrypted capture file, using the key you passed to the encryption key parameter.
+		#
+		# path - the path of the encrypted capture
+		# key - the encryption key		 
+		#
+		def Decrypt(self, data, key):
+			if (data == None or data == ""):
+				return None
+				
+			iv = data[0:16]
+			payload = data[16:]
+			cipher = AES.AESModeOfOperationCBC(base64.standard_b64decode(key), iv)
+			decrypter = BlockFeeder.Decrypter(cipher, BlockFeeder.PADDING_NONE)
+			decrypted = decrypter.feed(payload)
+			decrypted += decrypter.feed()
+			
+			return decrypted	  
+		
+		#
+		# This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
+		#
+		# data - the encrypted bytes
+		# key - the encryption key		  
+		#
+		def DecryptFile(self, path, key):
+			data = self.ReadFile(path)
+			fo = open(path, "wb")
+			fo.write(self.Decrypt(data, key))				
+			fo.close()			  
+			
 		def getWaterMarks(self, identifier = ""):
 				sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(identifier))
 
@@ -628,7 +668,7 @@ class GrabzItClient:
 				md5.update(value.encode('ascii', 'replace'))
 				return md5.hexdigest()
 				
-		def ReadHTMLFile(self, path):
+		def ReadFile(self, path):
 				try:					
 						return open(path, 'rb').read()
 				except:
