@@ -8,7 +8,7 @@ class GrabzItBaseOptions():
             customId        A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified
             country         The country the capture should be created from: Default = "", Singapore = "SG", UK = "UK", US = "US"
             exportURL       The export URL that should be used to transfer the capture to a third party location
-            encryptionKey   The encryption key that will be used to encrypt your capture.
+            encryptionKey   The encryption key that will be used to encrypt your capture
         """
         def __init__(self):
                 self.customId = ""
