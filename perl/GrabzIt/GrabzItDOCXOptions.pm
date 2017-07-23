@@ -248,7 +248,7 @@ sub _getSignatureString($$;$)
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->includeImages()."|".$self->includeLinks()."|".$self->title()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
-    $self->waitForElement();
+    $self->waitForElement()."|".$self->encryptionKey();
 }
 
 sub _getParameters($$$$$)

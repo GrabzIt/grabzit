@@ -305,7 +305,7 @@ sub _getSignatureString($$;$)
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->customWaterMarkId()."|".$self->includeLinks().
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
-    "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement();
+    "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey();
 }
 
 sub _getParameters($$$$$)

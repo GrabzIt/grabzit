@@ -10,6 +10,7 @@ sub new
     $self->{"customId"} = '';
     $self->{"country"} = '';
     $self->{"exportURL"} = '';
+    $self->{"encryptionKey"} = '';
     $self->{"delay"} = 0;
 
     bless $self, $class;
@@ -43,9 +44,21 @@ sub country
     return $self->{"country"};
 }
 
+#
+# The encryption key that will be used to encrypt your capture
+#
+sub encryptionKey
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"encryptionKey"} = shift;
+    }
+    return $self->{"encryptionKey"};
+}
 
 #
-# The country the capture should be created from: Default = "", Singapore = "SG", UK = "UK", US = "US"
+# The export URL that should be used to transfer the capture to a third party location
 #
 sub exportURL
 {
@@ -65,6 +78,7 @@ sub createParameters($$$$$)
     $params->{'key'} = $applicationKey;
     $params->{'country'} = $self->country();
     $params->{'export'} = $self->exportURL();
+    $params->{'encryption'} = $self->encryptionKey();
     $params->{'customid'} = $self->customId();
     $params->{'callback'} = $callBackURL;
     $params->{'sig'} = $sig;
