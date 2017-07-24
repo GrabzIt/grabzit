@@ -113,6 +113,10 @@ class GrabzItClient
 	*/	
 	public function Decrypt($data, $key)
 	{
+		if ($data == null)
+		{
+			return null;
+		}
 		$iv = substr($data, 0, 16);
 		$payload = substr($data, 16);
 		return openssl_decrypt($payload, 'AES-256-CBC', base64_decode($key), OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $iv);

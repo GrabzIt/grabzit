@@ -189,7 +189,7 @@ namespace GrabzIt
         /// <returns>The decrypted bytes</returns>
         public byte[] Decrypt(byte[] data, string key)
         {
-            if (string.IsNullOrEmpty(key))
+            if (data == null || string.IsNullOrEmpty(key))
             {
                 return new byte[0];
             }

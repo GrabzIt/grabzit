@@ -1198,6 +1198,10 @@ GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decrypt
 */
 GrabzItClient.prototype.decrypt = function (data, key) {
+	if (data == null)
+	{
+		return null;
+	}
 	var iv = data.slice(0,16);
 	var payload = data.slice(16);
 	var decipher  = crypto.createDecipheriv('aes-256-cbc', new Buffer(key, 'base64'), iv);

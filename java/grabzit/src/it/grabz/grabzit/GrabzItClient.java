@@ -161,6 +161,10 @@ public class GrabzItClient {
      */
     public byte[] Decrypt(byte[] data, String key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
     {
+        if (data == null)
+        {
+            return null;
+        }
         byte[] iv = Arrays.copyOfRange(data, 0, 16);
         byte[] payload = Arrays.copyOfRange(data, 16, data.length);
                 

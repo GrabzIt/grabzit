@@ -514,7 +514,7 @@ function GrabzIt(key)
 					    reader.onload = function(event)
 					    {
 							var result = event.target.result;
-							if (decrypt && that.options['encryption'])
+							if (decrypt && that.options['encryption'] && result != null)
 							{
 								//automatically decrypt the image
 								var mimeIndex = result.indexOf("base64,") + 7;

@@ -543,6 +543,9 @@ module GrabzIt
 		# @param key [String] the encryption key
 		# @return [Array<Byte>] an array of decrypted bytes
 		def decrypt(data, key)
+			if data == nil
+				return nil
+			end
 			iv = data[0..15]
 			payload = data[16..-1]
 			cipher = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
@@ -606,7 +609,7 @@ module GrabzIt
 		
 		private
 		def check_for_exception(doc)
-			if (doc == nil)
+			if doc == nil
 				return
 			end
 			
