@@ -490,7 +490,7 @@ class GrabzItClient:
 		#
 		# This method will decrypt a encrypted capture file, using the key you passed to the encryption key parameter.
 		#
-		# path - the path of the encrypted capture
+		# data - the encrypted bytes
 		# key - the encryption key		 
 		#
 		def Decrypt(self, data, key):
@@ -509,7 +509,7 @@ class GrabzItClient:
 		#
 		# This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
 		#
-		# data - the encrypted bytes
+		# path - the path of the encrypted capture
 		# key - the encryption key		  
 		#
 		def DecryptFile(self, path, key):
