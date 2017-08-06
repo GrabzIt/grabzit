@@ -13,7 +13,7 @@ GrabzIt JavaScript library provides four methods:
 - Encrypt()
 - AddTo([element | element id])
 - Create()
-- DataURI([callback],[decrypt])
+- DataURI([callback], [decrypt])
 
 The ConvertURL or ConvertHTML method must be called and then either the AddTo, Create or DataURI method. The AddTo method must specify the id of a element or the element were the capture should be displayed, so the first two calls below will work. The Create method just creates the capture on the body tag or the root element of the HTML document if the body tag doesn't exist. An example of this is shown in calls three and four below. 
 
