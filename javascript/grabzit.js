@@ -10,6 +10,7 @@ function GrabzIt(key)
 		this.elem = null;
 		this.protocol = null;
 		this.encrypt = false;
+		this.postVars = '';
 
 		this.aesjs = (function() {
 
@@ -338,6 +339,18 @@ function GrabzIt(key)
 
 			return this;
 		};
+		
+		this.AddPostVariable = function(name, value)
+		{
+			if (this.postVars != '')
+			{
+				this.postVars += '&';
+			}
+			
+			this.postVars += encodeURIComponent(name)+ '=' + encodeURIComponent(value);
+
+			return this;
+		};		
 
 		this.Encrypt = function()
 		{
@@ -425,6 +438,11 @@ function GrabzIt(key)
 				window.crypto.getRandomValues(randomArray);
 				this.options['encryption'] = btoa(String.fromCharCode.apply(null, randomArray));
 			}
+			
+			if (this.postVars != '' && !this.options['post'])
+			{
+				this.options['post'] = this.postVars;
+			}
 
 			for(var k in this.options)
 			{
@@ -433,7 +451,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption')
+				k != 'encryption' && k != 'post' && k != 'noads')
 				{
 					throw "Option " + k + " not recognized!";
 				}
