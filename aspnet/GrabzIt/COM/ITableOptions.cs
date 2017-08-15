@@ -66,5 +66,7 @@ namespace GrabzIt.COM
             get;
             set;
         }
+
+        void AddPostParameter(string name, string value);
     }
 }

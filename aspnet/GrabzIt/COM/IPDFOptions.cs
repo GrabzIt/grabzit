@@ -141,5 +141,13 @@ namespace GrabzIt.COM
             get;
             set;
         }
+
+        bool NoAds
+        {
+            get;
+            set;
+        }
+
+        void AddPostParameter(string name, string value);
     }
 }

@@ -68,6 +68,7 @@ namespace GrabzIt.Enums
         ParameterInvalidWaitForValue = 169,
         ParameterInvalidTransparentValue = 170,
         ParameterInvalidEncryptionKey = 171,
+        ParameterInvalidNoAds = 172,
         NetworkServerOffline = 200,
         NetworkGeneralError = 201,
         NetworkDDOSAttack = 202,

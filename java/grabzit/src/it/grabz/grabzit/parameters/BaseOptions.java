@@ -20,9 +20,11 @@ public abstract class BaseOptions {
     private String encryptionKey;
     private Country country;
     protected int delay;
+    protected String post;
 
     public BaseOptions()
     {
+        this.post = "";
         this.delay = 0;
         this.customId = "";
         this.exportURL = "";
@@ -85,6 +87,29 @@ public abstract class BaseOptions {
     public void setEncryptionKey(String encryptionKey) {
         this.encryptionKey = encryptionKey;
     }     
+    
+    protected void AppendPostParameter(String name, String value) throws UnsupportedEncodingException
+    {
+        String val = "";
+        if (name != null)
+        {
+            val = ParameterUtility.encode(name);
+            val += "=";
+            if (value != null)
+            {
+                val += ParameterUtility.encode(value);
+            }
+        }
+        if ("".equals(val))
+        {
+            return;
+        }
+        if (!"".equals(post))
+        {
+            post += "&"; 
+        }
+        post += val;
+    }    
     
     protected HashMap<String, String> createParameters(String applicationKey, String sig, String callBackURL, String dataName, String dataValue) throws UnsupportedEncodingException
     {

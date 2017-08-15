@@ -117,6 +117,19 @@ public class TableOptions extends BaseOptions {
     public void setRequestAs(BrowserType requestAs) {
         this.requestAs = requestAs;
     }
+    
+    /**
+     * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+     * GrabzIt to perform a HTTP post.        
+     * 
+     * @param name - The name of the HTTP Post parameter
+     * @param value - The value of the HTTP Post parameter
+     * @throws UnsupportedEncodingException 
+     */
+    public void AddPostParameter(String name, String value) throws UnsupportedEncodingException
+    {
+        AppendPostParameter(name, value);
+    }    
 
     @Override
     public String _getSignatureString(String applicationSecret, String callBackURL, String url)
@@ -136,7 +149,8 @@ public class TableOptions extends BaseOptions {
         return ParameterUtility.nullCheck(applicationSecret) + "|" + urlParam + callBackURLParam
         +"|"+getCustomId()+"|"+tableNumberToInclude+"|"+ParameterUtility.toInt(includeAllTables)
         +"|"+ParameterUtility.toInt(includeHeaderNames)+"|"+targetElement+"|"+format.getValue()+"|"+requestAs.getValue()
-        +"|"+getCountry().getValue() + "|" + getExportURL() + "|" + getEncryptionKey();
+        +"|"+getCountry().getValue() + "|" + getExportURL() + "|" + getEncryptionKey()
+        +"|"+post;
     }    
 
     @Override
@@ -149,6 +163,7 @@ public class TableOptions extends BaseOptions {
         params.put("tableToInclude", String.valueOf(tableNumberToInclude));
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));			
+        params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
         
         return params;
     }    

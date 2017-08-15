@@ -9,6 +9,7 @@ namespace GrabzIt.Parameters
     public abstract class BaseOptions
     {
         protected int delay = 0;
+        protected string post = string.Empty;
 
         public BaseOptions()
         {
@@ -80,6 +81,29 @@ namespace GrabzIt.Parameters
                 return "SG";
             }
             return country.ToString();
+        }
+
+        protected void AppendPostParameter(string name, string value)
+        {
+            string val = string.Empty;
+            if (!string.IsNullOrEmpty(name))
+            {
+                val = HttpUtility.UrlEncode(name);
+                val += "=";
+                if (!string.IsNullOrEmpty(value))
+                {
+                    val += HttpUtility.UrlEncode(value);
+                }
+            }
+            if (string.IsNullOrEmpty(val))
+            {
+                return;
+            }
+            if (!string.IsNullOrEmpty(post))
+            {
+                post += "&"; 
+            }
+            post += val;
         }
 
         internal int GetStartDelay()

@@ -73,6 +73,17 @@ namespace GrabzIt.Parameters
             set;
         }
 
+        /// <summary>
+        /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+        /// GrabzIt to perform a HTTP post.
+        /// </summary>
+        /// <param name="name">The name of the HTTP Post parameter</param>
+        /// <param name="value">The value of the HTTP Post parameter</param>
+        public void AddPostParameter(string name, string value)
+        {
+            AppendPostParameter(name, value);
+        }
+
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)
         {
             string urlParam = string.Empty;
@@ -89,7 +100,7 @@ namespace GrabzIt.Parameters
 
             return applicationSecret + "|" + urlParam + callBackURLParam +
             "|" + CustomId + "|" + TableNumberToInclude + "|" + Convert.ToInt32(IncludeAllTables) + "|" + Convert.ToInt32(IncludeHeaderNames) + "|" + 
-            TargetElement + "|" + Format + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + ExportURL + "|" + EncryptionKey;
+            TargetElement + "|" + Format + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + ExportURL + "|" + EncryptionKey + "|" + post;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -101,6 +112,7 @@ namespace GrabzIt.Parameters
 		    parameters.Add("tableToInclude", TableNumberToInclude.ToString());
 		    parameters.Add("target", TargetElement);
             parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
+            parameters.Add("post", post);
 
             return parameters;
         }

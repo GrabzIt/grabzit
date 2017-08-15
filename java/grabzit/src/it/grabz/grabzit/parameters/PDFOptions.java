@@ -36,6 +36,7 @@ public class PDFOptions extends BaseOptions {
     private String targetElement;
     private String hideElement;
     private String waitForElement;
+    private boolean noAds;    
     
     public PDFOptions()
     {
@@ -325,6 +326,33 @@ public class PDFOptions extends BaseOptions {
         this.waitForElement = waitForElement;
     }    
     
+    /**
+     * @return if true adverts should be automatically hidden.
+     */
+    public boolean isNoAds() {
+        return noAds;
+    }
+
+    /**
+     * @param noAds set to true if adverts should be automatically hidden.
+     */
+    public void setNoAds(boolean noAds) {
+        this.noAds = noAds;
+    }
+
+    /**
+     * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+     * GrabzIt to perform a HTTP post.        
+     * 
+     * @param name - The name of the HTTP Post parameter
+     * @param value - The value of the HTTP Post parameter
+     * @throws UnsupportedEncodingException 
+     */
+    public void AddPostParameter(String name, String value) throws UnsupportedEncodingException
+    {
+        AppendPostParameter(name, value);
+    }    
+    
     @Override
     public String _getSignatureString(String applicationSecret, String callBackURL, String url)
     {
@@ -345,7 +373,8 @@ public class PDFOptions extends BaseOptions {
         + "|" + customWaterMarkId + "|" + ParameterUtility.toInt(includeLinks) + "|" + ParameterUtility.toInt(includeOutline)
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
-        + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey();
+        + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post;
     }    
     
     @Override
@@ -370,7 +399,9 @@ public class PDFOptions extends BaseOptions {
         params.put("quality", String.valueOf(quality));
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
-        params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
+        params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));        
+        params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
+        params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
 
         return params;
     }    
