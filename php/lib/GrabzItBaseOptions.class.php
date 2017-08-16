@@ -6,6 +6,7 @@ class GrabzItBaseOptions
 	private $exportUrl = null;
 	private $encryptionKey = null;
 	protected $delay = null;
+	protected $post = null;
 	
 	/*
 	A custom identifier that you can pass through to the web service. This will be returned with the callback URL you have specified.
@@ -70,6 +71,29 @@ class GrabzItBaseOptions
 	{
 		return $this->encryptionKey;
 	}
+	
+	protected function appendPostParameter($name, $value)
+	{
+		$val = '';
+		if (!empty($name))
+		{
+			$val = urlencode($name);
+			$val .= "=";
+			if (!empty($value))
+			{
+				$val .= urlencode($value);
+			}
+		}
+		if (empty($val))
+		{
+			return;
+		}
+		if (!empty($this->post))
+		{
+			$this->post .= "&"; 
+		}
+		$this->post .= $val;
+	}	
 	
 	protected function createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
 	{

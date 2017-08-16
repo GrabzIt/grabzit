@@ -21,6 +21,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $targetElement = null;	
 	private $hideElement = null;
 	private $waitForElement = null;
+	private $noAds = false;
 
 	/*
 	Set the number of milliseconds to wait before creating the capture.
@@ -327,6 +328,34 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	{
 		return $this->quality;
 	}
+	
+	/*
+	Set to true if adverts should be automatically hidden.
+	*/
+	public function setNoAds($value)
+	{
+		$this->noAds = $value;
+	}
+
+	/*
+	Get if adverts should be automatically hidden.
+	*/
+	public function getNoAds()
+	{
+		return $this->noAds;
+	}		
+	
+	/*
+	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+	GrabzIt to perform a HTTP post.
+
+    name - The name of the HTTP Post parameter.
+	value - The value of the HTTP Post parameter.
+    */		
+	public function AddPostParameter($name, $value)
+	{
+		$this->appendPostParameter($name, $value);
+	}		
 
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
@@ -350,7 +379,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
 		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId)."|".
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey());
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))
+		."|".$this->nullToEmpty($this->post);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -375,6 +405,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
+		$params['noads'] = $this->nullToEmpty(intval($this->noAds));
+		$params['post'] = $this->nullToEmpty($this->post);		
 		
 		return $params;
 	}

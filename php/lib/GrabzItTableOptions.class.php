@@ -105,6 +105,18 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	{
 		return $this->requestAs;
 	}
+	
+	/*
+	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+	GrabzIt to perform a HTTP post.
+
+    name - The name of the HTTP Post parameter.
+	value - The value of the HTTP Post parameter.
+    */		
+	public function AddPostParameter($name, $value)
+	{
+		$this->appendPostParameter($name, $value);
+	}		
 
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
@@ -124,7 +136,7 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 		"|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->tableNumberToInclude)."|".$this->nullToEmpty(intval($this->includeAllTables))."|".
 		$this->nullToEmpty(intval($this->includeHeaderNames))."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->format)."|".
 		$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry()."|".$this->nullToEmpty($this->getExportURL()))."|".
-		$this->nullToEmpty($this->getEncryptionKey());
+		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty($this->post);
 	}
 
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -136,7 +148,8 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 		$params['tableToInclude'] = $this->nullToEmpty($this->tableNumberToInclude);
 		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));
-
+		$params['post'] = $this->nullToEmpty($this->post);	
+		
 		return $params;
 	}
 }
