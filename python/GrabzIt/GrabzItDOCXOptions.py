@@ -22,6 +22,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             waitForElement          the CSS selector of the HTML element in the web page that must be visible before the capture is performed
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             quality                 the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
+            noAds                   set to true if adverts should be automatically hidden
         """
         
         def __init__(self):
@@ -40,6 +41,17 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.quality = -1
                 self.hideElement = ''
                 self.waitForElement = ''
+                self.noAds = False
+                
+        #
+        # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+        # GrabzIt to perform a HTTP post.
+        #
+        # name - The name of the HTTP Post parameter
+        # value - The value of the HTTP Post parameter
+        #               
+        def AddPostParameter(self, name, value):
+                self._appendPostParameter(name, value)              
                 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -57,7 +69,9 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["requestmobileversion"] = int(self.requestAs) 
                 params["quality"] = int(self.quality)
                 params["hide"] = str(self.hideElement)  
-                params["waitfor"] = str(self.waitForElement)                    
+                params["waitfor"] = str(self.waitForElement) 
+                params['noads'] = int(self.noAds)           
+                params["post"] = str(self.post)
 
                 return params
                 
@@ -74,5 +88,5 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(int(self.includeImages))+ \
                 "|"+str(int(self.includeLinks))+"|"+str(self.title)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
-                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)
-                +"|"+str(self.encryptionKey)
+                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
+                "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)

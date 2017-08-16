@@ -9,6 +9,7 @@ module GrabzIt
 			@exportURL = nil
 			@encryptionKey = nil
 			@delay = nil
+			@post = nil
 		end	
 		
 		# @return [String] the custom identifier that you can pass through to the web service.
@@ -70,6 +71,29 @@ module GrabzIt
 			end
 			return @delay
 		end		
+		
+		protected
+		def appendPostParameter(name, value)
+			val = ""
+			if name != nil && name != ""
+				val = CGI.escape(name)
+				val += "="
+				if value != nil && value != ""
+					val += CGI.escape(value)
+				end
+			end
+		
+			if val == ""
+				return
+			end
+			if @post == nil
+				@post = val
+				return
+			end
+			
+			@post += "&"
+			@post += val
+		end
 		
 		protected
 		def createParameters(applicationKey, sig, callBackURL, dataName, dataValue)

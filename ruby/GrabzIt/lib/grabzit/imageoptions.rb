@@ -18,6 +18,7 @@ module GrabzIt
 			@customWaterMarkId = nil
 			@quality = -1
 			@transparent = false
+			@noAds = false
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -189,6 +190,28 @@ module GrabzIt
 			@transparent = value
 		end			
 		
+		# @return [Boolean] get if adverts should be automatically hidden
+		def noAds
+			@noAds
+		end
+		
+		# Set to true if adverts should be automatically hidden
+		#
+		# @param value [Boolean] hide adverts
+		# @return [void]		
+		def noAds(value)
+			@noAds = value
+		end		
+
+		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+		# GrabzIt to perform a HTTP post.
+		#
+		# @param name [String] the name of the HTTP Post parameter
+		# @param value [String] the value of the HTTP Post parameter
+		def add_post_parameter(name, value)
+			appendPostParameter(name, value)
+		end		
+		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
 			urlParam = ''
@@ -204,7 +227,7 @@ module GrabzIt
 			return applicationSecret+"|"+ urlParam + callBackURLParam +
 			"|"+GrabzIt::Utility.nil_check(@format)+"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_int_check(@browserHeight)+
 			"|"+GrabzIt::Utility.nil_int_check(@browserWidth)+"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+GrabzIt::Utility.nil_check(@targetElement)+
-			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.b_to_str(@transparent)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)
+			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.b_to_str(@transparent)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)
 		end
 	
 		# @!visibility private
@@ -223,6 +246,8 @@ module GrabzIt
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)		
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
 			params['transparent'] = GrabzIt::Utility.b_to_str(@transparent)
+			params['noads'] = GrabzIt::Utility.b_to_str(@noAds)
+			params['post'] = GrabzIt::Utility.nil_check(@post)
 			
 			return params		
 		end

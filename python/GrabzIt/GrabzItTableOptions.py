@@ -24,6 +24,16 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.targetElement = ''
                 self.requestAs = 0
                 
+        #
+        # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+        # GrabzIt to perform a HTTP post.
+        #
+        # name - The name of the HTTP Post parameter
+        # value - The value of the HTTP Post parameter
+        #               
+        def AddPostParameter(self, name, value):
+                self._appendPostParameter(name, value)
+                
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
                 params["includeAllTables"] = int(self.includeAllTables)
@@ -31,7 +41,8 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["format"] = str(self.format) 
                 params["tableToInclude"] = int(self.tableNumberToInclude) 
                 params["target"] = str(self.targetElement) 
-                params["requestmobileversion"] = str(self.requestAs)
+                params["requestmobileversion"] = str(self.requestAs)            
+                params["post"] = str(self.post)             
 
                 return params
 
@@ -46,5 +57,5 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.customId)+"|"+str(int(self.tableNumberToInclude))+"|"+str(int(self.includeAllTables))+"|"+str(int(self.includeHeaderNames))+"|"+str(self.targetElement)+ \
-                "|"+str(self.format)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)
+                "|"+str(self.format)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)+"|"+str(self.post)
                 

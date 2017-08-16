@@ -92,6 +92,15 @@ module GrabzIt
 			@requestAs = value
 		end	
 
+		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+		# GrabzIt to perform a HTTP post.
+		#
+		# @param name [String] the name of the HTTP Post parameter
+		# @param value [String] the value of the HTTP Post parameter
+		def add_post_parameter(name, value)
+			appendPostParameter(name, value)
+		end		
+		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
 			urlParam = ''
@@ -108,7 +117,7 @@ module GrabzIt
 			"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@tableNumberToInclude)+"|"+GrabzIt::Utility.b_to_str(@includeAllTables)+
 			"|"+GrabzIt::Utility.b_to_str(@includeHeaderNames)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@format)+"|"+
 			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+
-			GrabzIt::Utility.nil_check(@encryptionKey)
+			GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.nil_check(@post)
 		end
 
 		# @!visibility private
@@ -120,7 +129,8 @@ module GrabzIt
 			params['tableToInclude'] = GrabzIt::Utility.nil_int_check(@tableNumberToInclude)
 			params['target'] = GrabzIt::Utility.nil_check(@targetElement)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)
-
+			params['post'] = GrabzIt::Utility.nil_check(@post)
+			
 			return params
 		end
 	end

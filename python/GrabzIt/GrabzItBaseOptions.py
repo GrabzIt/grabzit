@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+try:
+	from urllib.parse import urlencode
+except ImportError:
+	from urllib import urlencode
+
 class GrabzItBaseOptions():
         """ Common options when creating a capture on GrabzIt
 
@@ -16,6 +21,22 @@ class GrabzItBaseOptions():
                 self.exportURL = ""
                 self.encryptionKey = ""
                 self.delay = 0
+                self.post = ""
 
+        def _appendPostParameter(self, name, value):
+            val = ""
+            if (name != None and name != ""):
+                if (value == None):
+                    value = ""
+                val = urlencode({name:value})
+        
+            if (val == ""):
+                return
+                
+            if (self.post != ""):
+                self.post += "&"
+                
+            self.post += val
+                
         def _createParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 return {"key":str(applicationKey), "country": str(self.country), "export": str(self.exportURL), "encryption": str(self.encryptionKey), "customid": str(self.customId), "callback": str(callBackURL), "sig": str(sig), str(dataName):str(dataValue)}

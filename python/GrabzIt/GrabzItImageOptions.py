@@ -19,7 +19,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             requestAs           the user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             customWaterMarkId   set a custom watermark to add to the screenshot
             quality             set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
-            transparent         set to true if the image capture should be transparent. This is only compatible with png and tiff images.
+            transparent         set to true if the image capture should be transparent. This is only compatible with png and tiff images
+            noAds               set to true if adverts should be automatically hidden
         """
 
         def __init__(self):
@@ -36,6 +37,17 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.customWaterMarkId = ''
                 self.quality = -1
                 self.transparent = False
+                self.noAds = False
+        
+        #
+        # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+        # GrabzIt to perform a HTTP post.
+        #
+        # name - The name of the HTTP Post parameter
+        # value - The value of the HTTP Post parameter
+        #               
+        def AddPostParameter(self, name, value):
+                self._appendPostParameter(name, value)      
         
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -52,7 +64,9 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["customwatermarkid"] = str(self.customWaterMarkId) 
                 params["quality"] = int(self.quality)
                 params["transparent"] = int(self.transparent)                
-
+                params['noads'] = int(self.noAds)           
+                params["post"] = str(self.post)
+                
                 return params
 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
@@ -66,5 +80,5 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.format)+"|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+"|"+str(self.encryptionKey)
+                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)
                 

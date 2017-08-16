@@ -68,6 +68,7 @@ module GrabzIt
 		PARAMETER_INVALID_WAIT_FOR_VALUE = 169
 		PARAMETER_INVALID_TRANSPARENT_VALUE = 170
 		PARAMETER_INVALID_ENCRYPTION_KEY = 171
+		PARAMETER_INVALID_NO_ADS = 172
 		NETWORK_SERVER_OFFLINE = 200
 		NETWORK_GENERAL_ERROR = 201
 		NETWORK_DDOS_ATTACK = 202
@@ -77,7 +78,7 @@ module GrabzIt
 		UPGRADE_REQUIRED = 500
 		FILE_SAVE_ERROR = 600
 		FILE_NON_EXISTANT_PATH = 601
-    
+	
 		# @api private
 		def initialize(message, code)
 		  @Code = code
@@ -87,6 +88,6 @@ module GrabzIt
 		# @return [Integer] the value of the error code
 		def code
 			@Code
-		end	
+		end 
 	end
 end

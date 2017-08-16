@@ -20,6 +20,7 @@ module GrabzIt
 			@quality = -1
 			@hideElement = nil
 			@waitForElement = nil
+			@noAds = false
 		end
 		
 		# @return [Boolean] true if the background images of the web page should be included in the DOCX
@@ -218,6 +219,28 @@ module GrabzIt
 		def waitForElement(value)
 			@waitForElement = value
 		end
+
+		# @return [Boolean] get if adverts should be automatically hidden
+		def noAds
+			@noAds
+		end
+		
+		# Set to true if adverts should be automatically hidden
+		#
+		# @param value [Boolean] hide adverts
+		# @return [void]		
+		def noAds(value)
+			@noAds = value
+		end		
+
+		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+		# GrabzIt to perform a HTTP post.
+		#
+		# @param name [String] the name of the HTTP Post parameter
+		# @param value [String] the value of the HTTP Post parameter
+		def add_post_parameter(name, value)
+			appendPostParameter(name, value)
+		end
 		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
@@ -236,7 +259,7 @@ module GrabzIt
 			GrabzIt::Utility.b_to_str(@includeImages)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+
 			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)      
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)      
 		end
 		
 		# @!visibility private
@@ -257,6 +280,8 @@ module GrabzIt
 			params['quality'] = GrabzIt::Utility.nil_int_check(@quality)
 			params['hide'] = GrabzIt::Utility.nil_check(@hideElement)
 			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
+			params['noads'] = GrabzIt::Utility.b_to_str(@noAds)
+			params['post'] = GrabzIt::Utility.nil_check(@post)
 			
 			return params;
 		end		
