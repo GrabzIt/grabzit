@@ -23,6 +23,7 @@ sub new
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
     $self->{"transparent"} = 0;
+	$self->{"noAds"} = 0;    	
 
     bless $self, $class;
 
@@ -198,6 +199,32 @@ sub transparent
     return $self->{"transparent"};
 }
 
+#
+# True if adverts should be automatically hidden.
+#
+sub noAds
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"noAds"} = shift;
+    }
+    return $self->{"noAds"};
+}
+
+#
+#Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+#GrabzIt to perform a HTTP post.
+#
+#name - The name of the HTTP Post parameter.
+#value - The value of the HTTP Post parameter
+#
+sub AddPostParameter($$)
+{
+	my ($self, $name, $value) = @_;
+	$self->_appendPostParameter($name, $value);
+}
+
 sub _getSignatureString($$;$)
 {
     my ($self, $applicationSecret, $callBackURL, $url) = @_;
@@ -218,7 +245,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey();
+    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"};
 }
 
 sub _getParameters($$$$$)
@@ -238,7 +265,9 @@ sub _getParameters($$$$$)
     $params->{'requestmobileversion'} = $self->requestAs();
     $params->{'quality'} = $self->quality();
     $params->{'waitfor'} = $self->waitForElement();   
-    $params->{'transparent'} = $self->transparent();        
+    $params->{'transparent'} = $self->transparent(); 
+	$params->{'noads'} = $self->noAds();
+	$params->{'post'} = $self->{"post"};	
     
     return $params;
 }

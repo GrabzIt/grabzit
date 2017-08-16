@@ -101,6 +101,19 @@ sub requestAs
     return $self->{"requestAs"};
 }
 
+#
+#Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+#GrabzIt to perform a HTTP post.
+#
+#name - The name of the HTTP Post parameter.
+#value - The value of the HTTP Post parameter
+#
+sub AddPostParameter($$)
+{
+	my ($self, $name, $value) = @_;
+	$self->_appendPostParameter($name, $value);
+}
+
 sub _getSignatureString($$;$)
 {
     my ($self, $applicationSecret, $callBackURL, $url) = @_;
@@ -121,7 +134,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId()."|".$self->tableNumberToInclude() ."|".$self->includeAllTables()."|".$self->includeHeaderNames()."|".$self->targetElement()."|".
-    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->encryptionKey();
+    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->encryptionKey()."|".$self->{"post"};
 }
 
 sub _getParameters($$$$$)
@@ -135,7 +148,8 @@ sub _getParameters($$$$$)
     $params->{'tableToInclude'} = $self->tableNumberToInclude();
     $params->{'target'} = $self->targetElement();
     $params->{'requestmobileversion'} = $self->requestAs();    
-
+	$params->{'post'} = $self->{"post"};
+	
     return $params;
 }
 1;

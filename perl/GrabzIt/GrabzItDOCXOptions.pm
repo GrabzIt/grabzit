@@ -24,7 +24,8 @@ sub new
     $self->{"requestAs"} = 0;
     $self->{"quality"} = -1;
     $self->{"hideElement"} = '';
-    $self->{"waitForElement"} = '';    
+    $self->{"waitForElement"} = '';
+	$self->{"noAds"} = 0;    
         
     bless $self, $class;
 
@@ -227,6 +228,32 @@ sub waitForElement
     return $self->{"waitForElement"};
 }
 
+#
+# True if adverts should be automatically hidden.
+#
+sub noAds
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"noAds"} = shift;
+    }
+    return $self->{"noAds"};
+}
+
+#
+#Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
+#GrabzIt to perform a HTTP post.
+#
+#name - The name of the HTTP Post parameter.
+#value - The value of the HTTP Post parameter
+#
+sub AddPostParameter($$)
+{
+	my ($self, $name, $value) = @_;
+	$self->_appendPostParameter($name, $value);
+}
+
 sub _getSignatureString($$;$)
 {
     my ($self, $applicationSecret, $callBackURL, $url) = @_;
@@ -248,7 +275,7 @@ sub _getSignatureString($$;$)
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->includeImages()."|".$self->includeLinks()."|".$self->title()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
-    $self->waitForElement()."|".$self->encryptionKey();
+    $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"};
 }
 
 sub _getParameters($$$$$)
@@ -271,6 +298,8 @@ sub _getParameters($$$$$)
     $params->{'quality'} = $self->quality();
     $params->{'hide'} = $self->hideElement();
     $params->{'waitfor'} = $self->waitForElement();
+	$params->{'noads'} = $self->noAds();
+	$params->{'post'} = $self->{"post"};
     
     return $params;
 }

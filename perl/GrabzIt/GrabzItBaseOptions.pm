@@ -2,6 +2,8 @@
 
 package GrabzItBaseOptions;
 
+use URI::Escape;
+
 sub new
 {
     my $class = shift;       
@@ -12,6 +14,7 @@ sub new
     $self->{"exportURL"} = '';
     $self->{"encryptionKey"} = '';
     $self->{"delay"} = 0;
+	$self->{"post"} = '';
 
     bless $self, $class;
 
@@ -68,6 +71,30 @@ sub exportURL
         $self->{"exportURL"} = shift;
     }
     return $self->{"exportURL"};
+}
+
+sub _appendPostParameter($$)
+{
+	my ($self, $name, $value) = @_;
+	my $val = '';
+	if ($name ne '')
+	{
+		$val = uri_escape($name);
+		$val .= "=";
+		if ($value ne '')
+		{
+			$val .= uri_escape($value);
+		}
+	}
+	if ($val eq '')
+	{
+		return;
+	}
+	if ($self->{"post"} ne '')
+	{
+		$self->{"post"} .= "&"; 
+	}
+	$self->{"post"} .= $val;
 }
 
 sub createParameters($$$$$)
