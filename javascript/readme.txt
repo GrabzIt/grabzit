@@ -11,6 +11,7 @@ GrabzIt JavaScript library provides four methods:
 - ConvertHTML([html to convert], [options])
 - UseSSL()
 - Encrypt()
+- AddPostVariable(name, value)
 - AddTo([element | element id])
 - Create()
 - DataURI([callback], [decrypt])
