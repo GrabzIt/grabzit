@@ -22,7 +22,24 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $hideElement = null;
 	private $waitForElement = null;
 	private $noAds = false;
+	private $browserWidth = null;
 
+	/*
+	Set the width of the browser in pixels.
+	*/
+	public function setBrowserWidth($value)
+	{
+		$this->browserWidth = $value;
+	}
+
+	/*
+	Get the width of the browser in pixels.
+	*/
+	public function getBrowserWidth()
+	{
+		return $this->browserWidth;
+	}	
+	
 	/*
 	Set the number of milliseconds to wait before creating the capture.
 	*/
@@ -380,7 +397,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId)."|".
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))
-		."|".$this->nullToEmpty($this->post);
+		."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -406,7 +423,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
 		$params['noads'] = $this->nullToEmpty(intval($this->noAds));
-		$params['post'] = $this->nullToEmpty($this->post);		
+		$params['post'] = $this->nullToEmpty($this->post);
+		$params['bwidth'] = $this->nullToEmpty($this->browserWidth);
 		
 		return $params;
 	}
