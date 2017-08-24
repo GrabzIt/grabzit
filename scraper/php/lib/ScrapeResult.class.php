@@ -30,6 +30,10 @@ class ScrapeResult
 		{
 			$this->data = file_get_contents($_FILES['file']['tmp_name']);
 		}
+		if ($this->data != null && substr($this->data, 0, 3) == "\xef\xbb\xbf") 
+        {
+            $this->data = substr($this->data, 3);            
+        }
 		return $this->data;
 	}
 
