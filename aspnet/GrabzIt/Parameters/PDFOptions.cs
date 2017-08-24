@@ -46,7 +46,16 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
+        /// <summary>
+        /// The width of the browser in pixels
+        /// </summary>
+        public int BrowserWidth
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
         /// </summary>
@@ -245,7 +254,8 @@ namespace GrabzIt.Parameters
             "|" + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + CustomWaterMarkId + "|" 
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
-             + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post;
+             + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
+             + "|" + BrowserWidth;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -272,6 +282,7 @@ namespace GrabzIt.Parameters
             parameters.Add("waitfor", WaitForElement);
             parameters.Add("noads", Convert.ToInt32(NoAds).ToString());
             parameters.Add("post", post);
+            parameters.Add("bwidth", BrowserWidth.ToString());
 
             return parameters;
         }

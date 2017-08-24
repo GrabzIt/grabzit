@@ -148,6 +148,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        int BrowserWidth
+        {
+            get;
+            set;
+        }
+
         void AddPostParameter(string name, string value);
     }
 }
