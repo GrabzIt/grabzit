@@ -1,8 +1,18 @@
 <?php
+error_reporting(E_ALL);
+
 include("lib/GrabzItClient.class.php");
 include("config.php");
 
 $message = '';
+
+//this helper function checks if it is possible to use the callback url
+function useCallbackHandler($grabzItHandlerUrl)
+{
+	$serverAddr = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '';
+	$localAddr = isset($_SERVER['LOCAL_ADDR']) ? $_SERVER['LOCAL_ADDR'] : '';
+	return $serverAddr != '::1' && $localAddr != '::1' && $serverAddr != '127.0.0.1' && $localAddr != '127.0.0.1' && filter_var($grabzItHandlerUrl, FILTER_VALIDATE_URL) !== FALSE;
+}
 
 if (count($_POST) > 0)
 {
@@ -68,7 +78,16 @@ if (count($_POST) > 0)
 					$grabzIt->URLToImage($url);
 				}
 			}
-			$grabzIt->Save($grabzItHandlerUrl);
+			if (useCallbackHandler($grabzItHandlerUrl))
+			{
+				//This demo has a callback handler and is on a publicly accessible machine so use the recommended method
+				$grabzIt->Save($grabzItHandlerUrl);
+			}
+			else
+			{
+				//It is not possible to use the recommended method so save the capture synchronously
+				$grabzIt->SaveTo("results" . DIRECTORY_SEPARATOR . rand() . "." . $format);
+			}
 		}
 		catch (Exception $e)
 		{
@@ -90,9 +109,9 @@ if (count($_POST) > 0)
 <form method="post" action="index.php" class="inputForms">
 <p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 <?php
-if ($grabzItHandlerUrl == "URL OF YOUR handler.php FILE (http://www.example.com/grabzit/handler.php)")
+if (!useCallbackHandler($grabzItHandlerUrl))
 {
-        ?><p><span class="error">Please update the $grabzItHandlerUrl variable found in config.php file to match the URL of the handler.php file found in this demo app.</span></p><?php
+        ?><p>Either you have not updated the $grabzItHandlerUrl variable found in config.php file to match the URL of the handler.php file found in this demo app or you are using this demo application on your local machine.</p><p>This demo will still work although it will create captures synchronously, which will cause the web page to freeze when captures are generated. <u>Please wait for the capture to complete</u>.</p><?php
 }
 if (!is_writable("results"))
 {
@@ -105,7 +124,7 @@ if (count($_POST) > 0 && !isset($_POST["delete"]))
 	{
 	    ?><p><span class="error"><?php echo $message; ?></span></p><?php
 	}
-	else
+	else if (useCallbackHandler($grabzItHandlerUrl))
 	{
 	    ?><p><span style="color:green;font-weight:bold;">Processing...</span></p><?php
 	}
