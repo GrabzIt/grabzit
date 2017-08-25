@@ -10,6 +10,16 @@
         </session-timeout>
     </session-config>
     <servlet>
+        <servlet-name>static-resource</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>static-resource</servlet-name>
+        <url-pattern>/results/*</url-pattern>
+        <url-pattern>/css/*</url-pattern>
+        <url-pattern>/ajax/*</url-pattern>        
+    </servlet-mapping>    
+    <servlet>
         <servlet-name>results</servlet-name>
         <servlet-class>it.grabz.grabzit.servlets.Results</servlet-class>
     </servlet>
@@ -31,7 +41,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>takescreenshot</servlet-name>
-        <url-pattern>/takescreenshot</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>handler</servlet-name>

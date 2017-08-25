@@ -6,14 +6,16 @@
         <group>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/parameters/ImageOptions.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/enums/BrowserType.java</file>
-            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/enums/ImageFormat.java</file>
-            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/GrabzItClient.java</file>
+            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/parameters/DOCXOptions.java</file>
+            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/GrabzItFile.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/enums/TableFormat.java</file>
-            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/parameters/TableOptions.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/test/it/grabz/grabzit/GrabzItClientTest.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/enums/Country.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/enums/PageSize.java</file>
+            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/HttpUtility.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/parameters/AnimationOptions.java</file>
+            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/parameters/BaseOptions.java</file>
+            <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/FileUtility.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/parameters/PDFOptions.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/enums/ErrorCode.java</file>
             <file>file:/C:/Apps/GrabzItAPIs/java/grabzit/src/it/grabz/grabzit/GrabzItException.java</file>

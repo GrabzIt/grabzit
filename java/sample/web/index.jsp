@@ -1,5 +1,6 @@
 <%@page import="java.net.URLDecoder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,8 +12,11 @@
     </head>
     <body>
         <h1>GrabzIt Demo</h1>
-        <form method="post" action="/grabzit/takescreenshot" class="inputForms">
+        <form method="post" action="/grabzit/" class="inputForms">
         <p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+        <c:if test="${!useCallbackHandler}">
+            <p>Either you have not updated the HandlerUrl setting found in the config.properties file to match the URL of the handler found in this demo app or you are using this demo application on your local machine.</p><p>This demo will still work although it will create captures synchronously, which will cause the web page to freeze when captures are generated. <u>Please wait for the capture to complete</u>.</p>
+        </c:if>
         <p>
         <span class="error">
 <%

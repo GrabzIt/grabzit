@@ -37,6 +37,7 @@ public class PDFOptions extends BaseOptions {
     private String hideElement;
     private String waitForElement;
     private boolean noAds;    
+    private int browserWidth;
     
     public PDFOptions()
     {
@@ -58,6 +59,7 @@ public class PDFOptions extends BaseOptions {
         this.hideElement = "";
         this.waitForElement = "";
         this.quality = -1;
+        this.browserWidth = 0;
     }
     
     /**
@@ -213,6 +215,20 @@ public class PDFOptions extends BaseOptions {
     public void setMarginRight(int marginRight) {
         this.marginRight = marginRight;
     }
+    
+    /**
+     * @return the width of the browser in pixels.
+     */
+    public int getBrowserWidth() {
+        return browserWidth;
+    }
+
+    /**
+     * @param browserWidth set the width of the browser in pixels.
+     */
+    public void setBrowserWidth(int browserWidth) {
+        this.browserWidth = browserWidth;
+    }    
 
     /**
      * @return the number of milliseconds to wait before creating the capture.
@@ -374,7 +390,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post;
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth;
     }    
     
     @Override
@@ -402,6 +418,7 @@ public class PDFOptions extends BaseOptions {
         params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));        
         params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
+        params.put("bwidth", String.valueOf(browserWidth));
 
         return params;
     }    
