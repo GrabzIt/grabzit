@@ -18,6 +18,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             marginLeft              the margin that should appear at the left of the PDF document page
             marginBottom            the margin that should appear at the bottom of the PDF document page
             marginRight             the margin that should appear at the right of the PDF document
+            browserWidth            the width of the browser in pixels
             delay                   the number of milliseconds to wait before creating the capture
             targetElement           the CSS selector of the only HTML element in the web page to capture
             hideElement             the CSS selector(s) of the one or more HTML elements in the web page to hide
@@ -42,6 +43,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.marginLeft = 10
                 self.marginBottom = 10
                 self.marginRight = 10
+                self.browserWidth = 0
                 self.requestAs = 0
                 self.templateId = ''
                 self.customWaterMarkId = ''
@@ -81,9 +83,10 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["quality"] = int(self.quality)
                 params["target"] = str(self.targetElement)
                 params["hide"] = str(self.hideElement)
-                params["waitfor"] = str(self.waitForElement)              
-                params["noads"] = int(self.noAds)           
+                params["waitfor"] = str(self.waitForElement)
+                params["noads"] = int(self.noAds)
                 params["post"] = str(self.post)
+                params["bwidth"] = int(self.browserWidth)
                 
                 return params
                 
@@ -100,4 +103,4 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(self.customWaterMarkId)+ \
                 "|"+str(int(self.includeLinks))+"|"+str(int(self.includeOutline))+"|"+str(self.title)+"|"+str(self.coverURL)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
-                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)
+                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))

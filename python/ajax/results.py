@@ -12,7 +12,7 @@ print ("Content-Type: application/json\n\n")
 
 results = []
 
-for infile in glob.glob(".."  + os.sep + "results" + os.sep + "*.*"):
+for infile in glob.glob("results" + os.sep + "*.*"):
     if ".txt" in infile:
         continue
     
