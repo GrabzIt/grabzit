@@ -11,6 +11,7 @@ sub new
     my $class = shift;           
     my $self = GrabzItBaseOptions->new(@_);
     
+    $self->{"browserWidth"} = 0;
     $self->{"includeBackground"} = 1;
     $self->{"pagesize"} = "A4";
     $self->{"orientation"} = "Portrait";
@@ -29,7 +30,7 @@ sub new
     $self->{"targetElement"} = '';
     $self->{"hideElement"} = '';
     $self->{"waitForElement"} = '';
-	$self->{"noAds"} = 0;    	
+    $self->{"noAds"} = 0;       
         
     bless $self, $class;
 
@@ -181,6 +182,19 @@ sub marginRight
 }
 
 #
+# The width of the browser in pixels
+#
+sub browserWidth
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"browserWidth"} = shift;
+    }
+    return $self->{"browserWidth"};
+}
+
+#
 # The number of milliseconds to wait before creating the capture
 #
 sub delay
@@ -306,8 +320,8 @@ sub noAds
 #
 sub AddPostParameter($$)
 {
-	my ($self, $name, $value) = @_;
-	$self->_appendPostParameter($name, $value);
+    my ($self, $name, $value) = @_;
+    $self->_appendPostParameter($name, $value);
 }
 
 sub _getSignatureString($$;$)
@@ -332,7 +346,8 @@ sub _getSignatureString($$;$)
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->customWaterMarkId()."|".$self->includeLinks().
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
-    "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"};
+    "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
+    "|".$self->browserWidth();
 }
 
 sub _getParameters($$$$$)
@@ -359,8 +374,9 @@ sub _getParameters($$$$$)
     $params->{'target'} = $self->targetElement();
     $params->{'hide'} = $self->hideElement();
     $params->{'waitfor'} = $self->waitForElement();
-	$params->{'noads'} = $self->noAds();
-	$params->{'post'} = $self->{"post"};	
+    $params->{'noads'} = $self->noAds();
+    $params->{'post'} = $self->{"post"};
+    $params->{'bwidth'} = $self->browserWidth();
     
     return $params;
 }
