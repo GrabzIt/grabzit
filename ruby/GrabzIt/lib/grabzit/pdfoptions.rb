@@ -25,6 +25,7 @@ module GrabzIt
 			@hideElement = nil
 			@waitForElement = nil
 			@noAds = false
+			@browserWidth = nil
 		end
 		
 		# @return [Boolean] true if the background of the web page should be included in the PDF
@@ -172,6 +173,20 @@ module GrabzIt
 			@marginRight = value
 		end		
 		
+		# @return [Integer] the width of the browser in pixels
+		def browserWidth
+			@browserWidth
+		end
+		
+		# Set the width of the browser in pixels
+		#
+		# @param value [Integer] the browser width
+		# @return [void]		
+		def browserWidth(value)
+			@browserWidth = value
+		end	
+		
+		
 		# @return [Integer] the number of milliseconds to wait before creating the capture
 		def delay
 			@delay
@@ -315,7 +330,7 @@ module GrabzIt
 			GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+GrabzIt::Utility.b_to_str(@includeOutline)+"|"+
 			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_check(@coverURL)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)  
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)+"|"+GrabzIt::Utility.nil_int_check(@browserWidth)
 		end
 		
 		# @!visibility private
@@ -342,6 +357,7 @@ module GrabzIt
 			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
 			params['noads'] = GrabzIt::Utility.b_to_str(@noAds)
 			params['post'] = GrabzIt::Utility.nil_check(@post)
+			params['bwidth'] = GrabzIt::Utility.nil_int_check(@browserWidth)
 			
 			return params;
 		end		

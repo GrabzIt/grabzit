@@ -1,7 +1,18 @@
+require 'URI'
 require 'grabzit'
 
 class HomeController < ActionController::Base
   def index
+	@UseCallbackHandler = useCallbackHandler(request)
+  end
+  
+  def useCallbackHandler(r)
+	app_config = YAML.load_file("#{Rails.root}/config/config.yml")[Rails.env]
+	if app_config['handler'] !~ URI::regexp
+		return false
+	end
+	localhost = Regexp.union [/^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/, /^::1$/, /^0:0:0:0:0:0:0:1(%.*)?$/]
+	return localhost !~ r.remote_addr && localhost !~ r.remote_ip	
   end
   
   def processScreenshot
@@ -39,8 +50,14 @@ class HomeController < ActionController::Base
   	@ErrorMessage = ''
   	
   	begin
-		grabzItClient.save(app_config['handler'])
-		@SuccessMessage = "Processing..."
+		if useCallbackHandler(request)
+			grabzItClient.save(app_config['handler'])
+			@SuccessMessage = "Processing..."
+			@UseCallbackHandler = true
+		else
+			grabzItClient.save_to("public/screenshots/"+rand(1...999999).to_s()+"."+format)
+			@UseCallbackHandler = false
+		end
 	rescue RuntimeError, GrabzIt::GrabzItException => e
 		@ErrorMessage = e
 	end

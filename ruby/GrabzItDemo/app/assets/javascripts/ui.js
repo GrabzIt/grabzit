@@ -8,11 +8,11 @@ function checkForResults() {
 		$.each(data, function(key, val) {
 			if (val.indexOf(".pdf") !== -1)
 			{
-				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="css/pdf.png"></img></a>');
+				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="assets/pdf.png"></img></a>');
 			}
 			else if (val.indexOf(".docx") !== -1)
 			{
-				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="css/docx.png"></img></a>');
+				$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="assets/docx.png"></img></a>');
 			}	
 			else
 			{
