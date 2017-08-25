@@ -35,7 +35,9 @@ def useCallbackHandler():
 	r'\[?[A-F0-9]*:[A-F0-9:]+\]?)' # ...or ipv6
 	r'(?::\d+)?' # optional port
 	r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-	return regex.match(parser.get("GrabzIt", "handlerUrl"))
+	if not(regex.match(parser.get("GrabzIt", "handlerUrl"))):
+		return False
+	return cgi.escape(os.environ["REMOTE_ADDR"]) != "::1" and cgi.escape(os.environ["REMOTE_ADDR"]) != "127.0.0.1"
 
 message = ""
 if os.environ['REQUEST_METHOD'] == 'POST':
