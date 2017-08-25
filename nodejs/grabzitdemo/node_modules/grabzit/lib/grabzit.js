@@ -466,7 +466,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'exportUrl': '',
         'encryptionKey': '',
 		'noAds':false,
-		'postData':''
+		'postData':'',
+		'browserWidth': ''
     };
 
     context = _extend(defaults, options);
@@ -506,6 +507,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'mright': parseInt(context['marginRight']),
         'mtop': parseInt(context['marginTop']),
         'mbottom': parseInt(context['marginBottom']),
+        'bwidth': context['browserWidth'],
         'delay': context['delay'],
         'requestmobileversion': parseInt(context['requestAs']),
         'quality': parseInt(context['quality']),
@@ -514,8 +516,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'waitfor': context['waitForElement'],
         'export': context['exportUrl'],
         'encryption': context['encryptionKey'],
-		'noads': _toInt(context['noAds']),
-		'post': context['postData']
+        'noads': _toInt(context['noAds']),
+        'post': context['postData']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -526,7 +528,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
 	 + '|' + parseInt(context['marginRight']) + '|' + context['delay'] + '|' + parseInt(context['requestAs']) + '|' + context['country']
 	 + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
 	 + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
-	 + '|' + context['postData'];
+	 + '|' + context['postData']+ '|' + context['browserWidth'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }

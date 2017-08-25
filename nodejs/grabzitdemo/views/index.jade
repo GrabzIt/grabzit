@@ -10,7 +10,11 @@ block content
     |  . It may take a few seconds for it to appear! If nothing is happening check the 
     a(href="https://grabz.it/account/diagnostics",target="_blank") diagnostics panel
     |  to see if there is an error.
-
+  if !useCallbackHandler
+    p Either you have not updated the config.callbackHandlerUrl variable found in config.js file to match the URL of the callback handler in this demo app or you are using this demo application on your local machine.
+    p This demo will still work although it will create captures synchronously, which will cause the web page to freeze when captures are generated. 
+      u Please wait for the capture to complete
+      .
   if success
     p
         span(style="color:green;font-weight:bold;") Processing...
