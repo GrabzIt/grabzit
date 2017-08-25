@@ -15,8 +15,8 @@
     <div>
     <h1>GrabzIt Demo</h1>
     <p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+    <asp:Panel ID="pnlCallbackWarning" Visible="false" runat="server"><p>As you are using this demo application on your local machine it will create captures synchronously, which will cause the web page to freeze while captures are generated. <u>Please wait for the capture to complete</u>.</p></asp:Panel>
     <p><asp:Label ID="lblMessage" runat="server" /></p>
-
 <div class="Row" id="divConvert">
 <label>Convert </label>
     <asp:DropDownList ID="ddlConvert" runat="server" onchange="selectConvertChanged(this)"><asp:ListItem Text="URL" Value="url"></asp:ListItem><asp:ListItem Text="DOCX" Value="docx"></asp:ListItem><asp:ListItem Text="HTML" Value="html"></asp:ListItem></asp:DropDownList>

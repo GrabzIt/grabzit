@@ -13,13 +13,13 @@ namespace Sample
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            pnlCallbackWarning.Visible = !UseCallbackHandler;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             try
-            {
-                grabzItClient.ScreenShotComplete += grabzIt_ScreenShotComplete;
+            {                
                 if (ddlFormat.SelectedValue == "jpg")
                 {
                     if (ddlConvert.SelectedValue == "html")
@@ -57,11 +57,19 @@ namespace Sample
                         grabzItClient.URLToPDF(txtURL.Text);
                     }
                 }
-                grabzItClient.Save("http://www.google.com/GrabzIt.ashx");
-                lblMessage.Text = "Processing...";
-                lblMessage.CssClass = string.Empty;
-                lblMessage.Style.Add("color", "green");
-                lblMessage.Style.Add("font-weight", "bold");
+                if (UseCallbackHandler)
+                {
+                    grabzItClient.ScreenShotComplete += grabzIt_ScreenShotComplete;
+                    grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
+                    lblMessage.Text = "Processing...";
+                    lblMessage.CssClass = string.Empty;
+                    lblMessage.Style.Add("color", "green");
+                    lblMessage.Style.Add("font-weight", "bold");
+                }
+                else
+                {
+                    grabzItClient.SaveTo(Server.MapPath("~/results/" + Guid.NewGuid().ToString() + "." + ddlFormat.SelectedValue));
+                }
             }
             catch (Exception ex)
             {
@@ -91,6 +99,14 @@ namespace Sample
             GrabzItFile file = grabzItClient.GetResult(result.ID);
             //Ensure that the application has the correct rights for this directory.
             file.Save(Server.MapPath("~/results/" + result.Filename));
+        }
+
+        public bool UseCallbackHandler
+        {
+            get
+            {
+                return !HttpContext.Current.Request.IsLocal;
+            }
         }
     }
 }
