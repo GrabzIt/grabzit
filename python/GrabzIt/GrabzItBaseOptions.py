@@ -23,7 +23,7 @@ class GrabzItBaseOptions():
                 self.delay = 0
                 self.post = ""
 
-        def _appendPostParameter(self, name, value):
+        def _appendParameter(self, qs, name, value):
             val = ""
             if (name != None and name != ""):
                 if (value == None):
@@ -31,12 +31,13 @@ class GrabzItBaseOptions():
                 val = urlencode({name:value})
         
             if (val == ""):
-                return
+                return qs
                 
-            if (self.post != ""):
-                self.post += "&"
+            if (qs != ""):
+                qs += "&"
                 
-            self.post += val
+            qs += val
+            return qs
                 
         def _createParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
-                return {"key":str(applicationKey), "country": str(self.country), "export": str(self.exportURL), "encryption": str(self.encryptionKey), "customid": str(self.customId), "callback": str(callBackURL), "sig": str(sig), str(dataName):str(dataValue)}
+            return {"key":str(applicationKey), "country": str(self.country), "export": str(self.exportURL), "encryption": str(self.encryptionKey), "customid": str(self.customId), "callback": str(callBackURL), "sig": str(sig), str(dataName):str(dataValue)}

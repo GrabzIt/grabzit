@@ -28,6 +28,8 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             customWaterMarkId       a custom watermark to add to the PDF
             quality                 the quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
             noAds                   set to true if adverts should be automatically hidden
+            pageHeight              set the height of the resulting PDF in mm
+            pageWidth               set the width of the resulting PDF in mm
         """
         
         def __init__(self):
@@ -52,6 +54,9 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.hideElement = ''
                 self.waitForElement = ''
                 self.noAds = False
+                self.templateVariables = ''
+                self.pageHeight = 0
+                self.pageWidth = 0
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -61,7 +66,16 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
         # value - The value of the HTTP Post parameter
         #               
         def AddPostParameter(self, name, value):
-                self._appendPostParameter(name, value)              
+                self.post = self._appendParameter(self.post, name, value)
+                
+        #
+        # Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+        #
+        # name - The name of the PDF template parameter
+        # value - The value of the PDF template parameter
+        #               
+        def AddTemplateParameter(self, name, value):
+                self.templateVariables = self._appendParameter(self.templateVariables, name, value)
                 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -87,6 +101,9 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["noads"] = int(self.noAds)
                 params["post"] = str(self.post)
                 params["bwidth"] = int(self.browserWidth)
+                params["tvars"] = str(self.templateVariables)
+                params["width"] = int(self.pageWidth)
+                params["height"] = int(self.pageHeight)
                 
                 return params
                 
@@ -103,4 +120,6 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.customId)+"|"+str(int(self.includeBackground))+"|"+str(self.pagesize.upper()) +"|"+str(self.orientation.title())+"|"+str(self.customWaterMarkId)+ \
                 "|"+str(int(self.includeLinks))+"|"+str(int(self.includeOutline))+"|"+str(self.title)+"|"+str(self.coverURL)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
-                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))
+                "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+\
+                "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))+"|"+str(int(self.pageHeight))+\
+                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)

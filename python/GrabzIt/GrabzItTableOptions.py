@@ -32,7 +32,7 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
         # value - The value of the HTTP Post parameter
         #               
         def AddPostParameter(self, name, value):
-                self._appendPostParameter(name, value)
+                self.post = self._appendParameter(self.post, name, value)
                 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
