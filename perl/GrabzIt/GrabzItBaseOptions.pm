@@ -73,9 +73,9 @@ sub exportURL
     return $self->{"exportURL"};
 }
 
-sub _appendPostParameter($$)
+sub _appendPostParameter($$$)
 {
-	my ($self, $name, $value) = @_;
+	my ($self, $qs, $name, $value) = @_;
 	my $val = '';
 	if ($name ne '')
 	{
@@ -88,13 +88,14 @@ sub _appendPostParameter($$)
 	}
 	if ($val eq '')
 	{
-		return;
+		return $qs;
 	}
-	if ($self->{"post"} ne '')
+	if ($qs ne '')
 	{
-		$self->{"post"} .= "&"; 
+		$qs .= "&"; 
 	}
-	$self->{"post"} .= $val;
+	$qs .= $val;
+	return $qs;
 }
 
 sub createParameters($$$$$)

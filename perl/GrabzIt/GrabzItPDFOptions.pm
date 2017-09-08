@@ -30,7 +30,10 @@ sub new
     $self->{"targetElement"} = '';
     $self->{"hideElement"} = '';
     $self->{"waitForElement"} = '';
-    $self->{"noAds"} = 0;       
+    $self->{"noAds"} = 0;
+    $self->{"templateVariables"} = '';
+    $self->{"width"} = 0;
+    $self->{"height"} = 0;
         
     bless $self, $class;
 
@@ -195,6 +198,32 @@ sub browserWidth
 }
 
 #
+# The width of the PDF in mm
+#
+sub pageWidth
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"width"} = shift;
+    }
+    return $self->{"width"};
+}
+
+#
+# The height of the PDF in mm
+#
+sub pageHeight
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"height"} = shift;
+    }
+    return $self->{"height"};
+}
+
+#
 # The number of milliseconds to wait before creating the capture
 #
 sub delay
@@ -321,7 +350,19 @@ sub noAds
 sub AddPostParameter($$)
 {
     my ($self, $name, $value) = @_;
-    $self->_appendPostParameter($name, $value);
+    $self->{"post"} = $self->_appendPostParameter($self->{"post"}, $name, $value);
+}
+
+#
+#Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+#
+#name - The name of the PDF template parameter
+#value - The value of the PDF template parameter
+#
+sub AddTemplateParameter($$)
+{
+    my ($self, $name, $value) = @_;
+    $self->{"templateVariables"} = $self->_appendPostParameter($self->{"templateVariables"}, $name, $value);
 }
 
 sub _getSignatureString($$;$)
@@ -347,7 +388,7 @@ sub _getSignatureString($$;$)
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
-    "|".$self->browserWidth();
+    "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"};
 }
 
 sub _getParameters($$$$$)
@@ -377,6 +418,9 @@ sub _getParameters($$$$$)
     $params->{'noads'} = $self->noAds();
     $params->{'post'} = $self->{"post"};
     $params->{'bwidth'} = $self->browserWidth();
+    $params->{'width'} = $self->pageWidth();
+    $params->{'height'} = $self->pageHeight();
+    $params->{'tvars'} = $self->{"templateVariables"};
     
     return $params;
 }

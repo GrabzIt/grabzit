@@ -111,7 +111,7 @@ sub requestAs
 sub AddPostParameter($$)
 {
 	my ($self, $name, $value) = @_;
-	$self->_appendPostParameter($name, $value);
+	$self->{"post"} = $self->_appendPostParameter($self->{"post"}, $name, $value);
 }
 
 sub _getSignatureString($$;$)
