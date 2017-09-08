@@ -109,7 +109,7 @@ app.post('/', function (req, res) {
             client.html_to_pdf(req.body.html);
         }
         else {
-            client.url_to_pdf(targetUrl, {'browserWidth':1500});
+            client.url_to_pdf(targetUrl);
         }
     }
 
