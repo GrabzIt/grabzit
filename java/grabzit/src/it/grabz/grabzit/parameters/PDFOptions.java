@@ -230,10 +230,10 @@ public class PDFOptions extends BaseOptions {
     }
 
     /**
-     * @param outputWidth set the width of the resulting PDF in mm.
+     * @param pageWidth set the width of the resulting PDF in mm.
      */
-    public void setPageWidth(int outputWidth) {
-        this.width = outputWidth;
+    public void setPageWidth(int pageWidth) {
+        this.width = pageWidth;
     }
 
     /**
