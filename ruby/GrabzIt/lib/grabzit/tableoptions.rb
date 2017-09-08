@@ -98,7 +98,7 @@ module GrabzIt
 		# @param name [String] the name of the HTTP Post parameter
 		# @param value [String] the value of the HTTP Post parameter
 		def add_post_parameter(name, value)
-			appendPostParameter(name, value)
+			@post = appendParameter(@post, name, value)
 		end		
 		
 		# @!visibility private

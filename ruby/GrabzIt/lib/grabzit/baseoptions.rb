@@ -20,7 +20,7 @@ module GrabzIt
 		# Set a custom identifier to pass to the web service. This will be returned with the callback URL you have specified.
 		#
 		# @param value [String] the custom identifier
-		# @return [void]		
+		# @return [void]
 		def customId(value)
 			@customId = value
 		end		
@@ -73,7 +73,7 @@ module GrabzIt
 		end		
 		
 		protected
-		def appendPostParameter(name, value)
+		def appendParameter(qs, name, value)
 			val = ""
 			if name != nil && name != ""
 				val = CGI.escape(name)
@@ -84,15 +84,16 @@ module GrabzIt
 			end
 		
 			if val == ""
-				return
+				return qs
 			end
-			if @post == nil
-				@post = val
-				return
+			if qs == nil
+				qs = val
+				return qs
 			end
 			
-			@post += "&"
-			@post += val
+			qs += "&"
+			qs += val
+			return qs
 		end
 		
 		protected
