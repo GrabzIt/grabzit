@@ -57,6 +57,24 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The height of the resulting PDF in mm
+        /// </summary>
+        public int PageHeight
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The width of the resulting PDF in mm
+        /// </summary>
+        public int PageWidth
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The orientation of the PDF to be returned: 'Landscape' or 'Portrait'
         /// </summary>
         public PageOrientation Orientation
@@ -233,7 +251,7 @@ namespace GrabzIt.Parameters
         /// <param name="value">The value of the HTTP Post parameter</param>
         public void AddPostParameter(string name, string value)
         {
-            AppendPostParameter(name, value);
+            post = AppendParameter(post, name, value);
         }
 
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)

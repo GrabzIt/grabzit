@@ -83,7 +83,7 @@ namespace GrabzIt.Parameters
             return country.ToString();
         }
 
-        protected void AppendPostParameter(string name, string value)
+        protected string AppendParameter(string qs, string name, string value)
         {
             string val = string.Empty;
             if (!string.IsNullOrEmpty(name))
@@ -97,13 +97,14 @@ namespace GrabzIt.Parameters
             }
             if (string.IsNullOrEmpty(val))
             {
-                return;
+                return qs;
             }
             if (!string.IsNullOrEmpty(post))
             {
-                post += "&"; 
+                qs += "&"; 
             }
-            post += val;
+            qs += val;
+            return qs;
         }
 
         internal int GetStartDelay()

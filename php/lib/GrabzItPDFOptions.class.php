@@ -30,7 +30,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	/*
 	Set the width of the resulting PDF in mm.
 	*/
-	public function setWidth($value)
+	public function setPageWidth($value)
 	{
 		$this->width = $value;
 	}
@@ -38,7 +38,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	/*
 	Get the width of the resulting PDF in mm.
 	*/
-	public function getWidth()
+	public function getPageWidth()
 	{
 		return $this->width;
 	}
@@ -46,7 +46,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	/*
 	Set the height of the resulting PDF in mm.
 	*/
-	public function setHeight($value)
+	public function setPageHeight($value)
 	{
 		$this->height = $value;
 	}
@@ -54,7 +54,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	/*
 	Get the height of the resulting PDF in mm.
 	*/
-	public function getHeight()
+	public function getPageHeight()
 	{
 		return $this->height;
 	}		
