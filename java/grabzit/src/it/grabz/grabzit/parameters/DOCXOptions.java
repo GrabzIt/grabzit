@@ -286,7 +286,7 @@ public class DOCXOptions extends BaseOptions {
      */
     public void AddPostParameter(String name, String value) throws UnsupportedEncodingException
     {
-        AppendPostParameter(name, value);
+        this.post = appendParameter(this.post, name, value);
     }    
     
     @Override

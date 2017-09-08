@@ -38,6 +38,9 @@ public class PDFOptions extends BaseOptions {
     private String waitForElement;
     private boolean noAds;    
     private int browserWidth;
+    private int width;
+    private int height; 
+    private String templateVariables;
     
     public PDFOptions()
     {
@@ -60,6 +63,9 @@ public class PDFOptions extends BaseOptions {
         this.waitForElement = "";
         this.quality = -1;
         this.browserWidth = 0;
+        this.width = 0;
+        this.height = 0;
+        this.templateVariables = "";
     }
     
     /**
@@ -217,6 +223,34 @@ public class PDFOptions extends BaseOptions {
     }
     
     /**
+     * @return the width of the resulting PDF in mm.
+     */
+    public int getPageWidth() {
+        return width;
+    }
+
+    /**
+     * @param outputWidth set the width of the resulting PDF in mm.
+     */
+    public void setPageWidth(int outputWidth) {
+        this.width = outputWidth;
+    }
+
+    /**
+     * @return get the height of the resulting PDF in mm.
+     */
+    public int getPageHeight() {
+        return height;
+    }
+
+    /**
+     * @param pageHeight set the height of the resulting PDF in mm.
+     */
+    public void setPageHeight(int pageHeight) {
+        this.height = pageHeight;
+    }    
+    
+    /**
      * @return the width of the browser in pixels.
      */
     public int getBrowserWidth() {
@@ -366,7 +400,19 @@ public class PDFOptions extends BaseOptions {
      */
     public void AddPostParameter(String name, String value) throws UnsupportedEncodingException
     {
-        AppendPostParameter(name, value);
+        this.post = appendParameter(this.post, name, value);
+    } 
+    
+    /**
+     * Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters. 
+     * 
+     * @param name - The name of the PDF template parameter
+     * @param value - The value of the PDF template parameter
+     * @throws UnsupportedEncodingException 
+     */
+    public void AddTemplateParameter(String name, String value) throws UnsupportedEncodingException
+    {
+        this.templateVariables = appendParameter(this.templateVariables, name, value);
     }    
     
     @Override
@@ -390,7 +436,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth;
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables;
     }    
     
     @Override
@@ -419,6 +465,9 @@ public class PDFOptions extends BaseOptions {
         params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
         params.put("bwidth", String.valueOf(browserWidth));
+        params.put("width", String.valueOf(width));
+        params.put("height", String.valueOf(height));
+        params.put("tvars", String.valueOf(templateVariables));
 
         return params;
     }    

@@ -88,7 +88,7 @@ public abstract class BaseOptions {
         this.encryptionKey = encryptionKey;
     }     
     
-    protected void AppendPostParameter(String name, String value) throws UnsupportedEncodingException
+    protected String appendParameter(String qs, String name, String value) throws UnsupportedEncodingException
     {
         String val = "";
         if (name != null)
@@ -102,13 +102,14 @@ public abstract class BaseOptions {
         }
         if ("".equals(val))
         {
-            return;
+            return qs;
         }
         if (!"".equals(post))
         {
-            post += "&"; 
+            qs += "&"; 
         }
-        post += val;
+        qs += val;
+        return qs;
     }    
     
     protected HashMap<String, String> createParameters(String applicationKey, String sig, String callBackURL, String dataName, String dataValue) throws UnsupportedEncodingException
