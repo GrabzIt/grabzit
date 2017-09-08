@@ -250,7 +250,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
     */		
 	public function AddPostParameter($name, $value)
 	{
-		$this->appendPostParameter($name, $value);
+		$this->post = $this->appendParameter($this->post, $name, $value);
 	}	
 
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)

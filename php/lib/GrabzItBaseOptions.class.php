@@ -72,7 +72,7 @@ class GrabzItBaseOptions
 		return $this->encryptionKey;
 	}
 	
-	protected function appendPostParameter($name, $value)
+	protected function appendParameter($qs, $name, $value)
 	{
 		$val = '';
 		if (!empty($name))
@@ -88,11 +88,12 @@ class GrabzItBaseOptions
 		{
 			return;
 		}
-		if (!empty($this->post))
+		if (!empty($qs))
 		{
-			$this->post .= "&"; 
+			$qs .= "&"; 
 		}
-		$this->post .= $val;
+		$qs .= $val;
+		return $qs;
 	}	
 	
 	protected function createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)

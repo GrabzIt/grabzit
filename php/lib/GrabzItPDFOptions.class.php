@@ -22,8 +22,43 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $hideElement = null;
 	private $waitForElement = null;
 	private $noAds = false;
+	private $width = null;
+	private $height = null;	
 	private $browserWidth = null;
+	private $templateVariables = null;
 
+	/*
+	Set the width of the resulting PDF in mm.
+	*/
+	public function setWidth($value)
+	{
+		$this->width = $value;
+	}
+
+	/*
+	Get the width of the resulting PDF in mm.
+	*/
+	public function getWidth()
+	{
+		return $this->width;
+	}
+
+	/*
+	Set the height of the resulting PDF in mm.
+	*/
+	public function setHeight($value)
+	{
+		$this->height = $value;
+	}
+
+	/*
+	Get the height of the resulting PDF in mm.
+	*/
+	public function getHeight()
+	{
+		return $this->height;
+	}		
+	
 	/*
 	Set the width of the browser in pixels.
 	*/
@@ -371,8 +406,19 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
     */		
 	public function AddPostParameter($name, $value)
 	{
-		$this->appendPostParameter($name, $value);
+		$this->post = $this->appendParameter($this->post, $name, $value);
 	}		
+	
+	/*
+	Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+
+    name - The name of the PDF template parameter.
+	value - The value of the PDF template parameter.
+    */		
+	public function AddTemplateParameter($name, $value)
+	{
+		$this->templateVariables = $this->appendParameter($this->templateVariables, $name, $value);
+	}	
 
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
@@ -396,8 +442,9 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
 		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId)."|".
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))
-		."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth);
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
+		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
+		$this->nullToEmpty($this->templateVariables);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -425,6 +472,9 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['noads'] = $this->nullToEmpty(intval($this->noAds));
 		$params['post'] = $this->nullToEmpty($this->post);
 		$params['bwidth'] = $this->nullToEmpty($this->browserWidth);
+		$params['width'] = $this->nullToEmpty($this->width);
+		$params['height'] = $this->nullToEmpty($this->height);
+		$params['tvars'] = $this->nullToEmpty($this->templateVariables);
 		
 		return $params;
 	}
