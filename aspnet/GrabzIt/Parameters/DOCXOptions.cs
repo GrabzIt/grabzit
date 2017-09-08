@@ -184,7 +184,7 @@ namespace GrabzIt.Parameters
         /// <param name="value">The value of the HTTP Post parameter</param>
         public void AddPostParameter(string name, string value)
         {
-            AppendPostParameter(name, value);
+            post = AppendParameter(post, name, value);
         }
 
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)

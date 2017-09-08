@@ -40,6 +40,18 @@ namespace GrabzIt.COM
             set;
         }
 
+        int PageHeight
+        {
+            get;
+            set;
+        }
+
+        int PageWidth
+        {
+            get;
+            set;
+        }
+
         PageOrientation Orientation
         {
             get;
@@ -155,5 +167,6 @@ namespace GrabzIt.COM
         }
 
         void AddPostParameter(string name, string value);
+        void AddTemplateParameter(string name, string value);
     }
 }

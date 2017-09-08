@@ -10,6 +10,8 @@ namespace GrabzIt.Parameters
     [ClassInterface(ClassInterfaceType.None)]
     public class PDFOptions : BaseOptions, IPDFOptions
     {
+        private string templateVariables = string.Empty;
+
         public PDFOptions()
         {
             IncludeBackground = true;
@@ -254,6 +256,16 @@ namespace GrabzIt.Parameters
             post = AppendParameter(post, name, value);
         }
 
+        /// <summary>
+        /// Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+        /// </summary>
+        /// <param name="name">The name of the PDF template parameter</param>
+        /// <param name="value">The value of the PDF template parameter</param>
+        public void AddTemplateParameter(string name, string value)
+        {
+            templateVariables = AppendParameter(templateVariables, name, value);
+        }
+
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)
         {
             string urlParam = string.Empty;
@@ -273,7 +285,7 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
-             + "|" + BrowserWidth;
+             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -301,6 +313,9 @@ namespace GrabzIt.Parameters
             parameters.Add("noads", Convert.ToInt32(NoAds).ToString());
             parameters.Add("post", post);
             parameters.Add("bwidth", BrowserWidth.ToString());
+            parameters.Add("width", PageWidth.ToString());
+            parameters.Add("height", PageHeight.ToString());
+            parameters.Add("tvars", templateVariables);
 
             return parameters;
         }
