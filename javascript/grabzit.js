@@ -11,6 +11,7 @@ function GrabzIt(key)
 		this.protocol = null;
 		this.encrypt = false;
 		this.postVars = '';
+		this.tVars = '';
 
 		this.aesjs = (function() {
 
@@ -352,6 +353,18 @@ function GrabzIt(key)
 			return this;
 		};		
 
+		this.AddTemplateVariable = function(name, value)
+		{
+			if (this.tVars != '')
+			{
+				this.tVars += '&';
+			}
+			
+			this.tVars += encodeURIComponent(name)+ '=' + encodeURIComponent(value);
+
+			return this;
+		};		
+		
 		this.Encrypt = function()
 		{
 			this.encrypt = true;
@@ -444,6 +457,11 @@ function GrabzIt(key)
 				this.options['post'] = this.postVars;
 			}
 
+			if (this.tVars != '' && !this.options['tvars'])
+			{
+				this.options['tvars'] = this.tVars;
+			}			
+			
 			for(var k in this.options)
 			{
 				if (k != 'format' && k != 'cache' && k != 'customwatermarkid' && k != 'quality'
@@ -451,7 +469,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars')
 				{
 					throw "Option " + k + " not recognized!";
 				}
