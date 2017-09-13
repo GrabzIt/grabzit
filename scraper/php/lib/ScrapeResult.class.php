@@ -9,7 +9,7 @@ class ScrapeResult
     {
         if ($path != null)
         {
-            $this->data = file_get_contents($path);
+            $this->data = $this->file_get_contents_utf8($path);
             $this->extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
             $this->filename = pathinfo($path, PATHINFO_BASENAME);
         }
@@ -17,6 +17,12 @@ class ScrapeResult
         {
             throw new Exception("A call originating from a non-GrabzIt server has been detected");
         }
+    }
+    
+    private function file_get_contents_utf8($fn)
+    { 
+        $content = file_get_contents($fn); 
+        return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true)); 
     }
 
     public function __toString()
@@ -28,7 +34,7 @@ class ScrapeResult
     {
         if ($this->data == null && $_FILES['file']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['file']['tmp_name']))
         {
-            $this->data = file_get_contents($_FILES['file']['tmp_name']);
+            $this->data = $this->file_get_contents_utf8($_FILES['file']['tmp_name']);
         }
         if ($this->data != null && substr($this->data, 0, 3) == "\xef\xbb\xbf") 
         {
