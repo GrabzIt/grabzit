@@ -48,6 +48,10 @@
     <Compile Include="Net\QuickWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Property\IProperty.cs" />
+    <Compile Include="Property\KeyValue.cs" />
+    <Compile Include="Property\Target.cs" />
+    <Compile Include="Property\Variable.cs" />
     <Compile Include="Results\GenericResult.cs" />
     <Compile Include="Results\GetScrapesResult.cs" />
     <Compile Include="Results\GrabzItScrape.cs" />

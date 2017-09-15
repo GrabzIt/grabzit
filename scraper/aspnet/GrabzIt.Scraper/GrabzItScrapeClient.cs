@@ -1,6 +1,7 @@
 ﻿using GrabzIt.Results;
 using GrabzIt.Scraper.Enums;
 using GrabzIt.Scraper.Net;
+using GrabzIt.Scraper.Property;
 using GrabzIt.Scraper.Results;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using System.Xml.Serialization;
 
 namespace GrabzIt.Scraper
@@ -26,7 +28,7 @@ namespace GrabzIt.Scraper
             get;
             private set;
         }
-
+        
         private const string BaseURL = "http://api.grabz.it/services/scraper/";
 
         public GrabzItScrapeClient(string applicationKey, string applicationSecret)
@@ -68,9 +70,49 @@ namespace GrabzIt.Scraper
 
             GetScrapesResult webResult = Get<GetScrapesResult>(url);
 
+            if (webResult == null)
+            {
+                return new GrabzItScrape[0];
+            }
+
             CheckForException(webResult);
 
             return webResult.Scrapes;
+        }
+
+        /// <summary>
+        /// Set a propert of a scrape
+        /// </summary>
+        /// <param name="id">The id of the scrape to set.</param>
+        /// <param name="property">The property object that contains the required changes</param>
+        /// <returns></returns>
+        public bool SetScrapeProperty(string id, IProperty property)
+        {
+            if (string.IsNullOrEmpty(id) || property == null)
+            {
+                return false;
+            }
+
+            string url = string.Format("{0}setscrapeproperty.ashx", BaseURL);
+            string sig = Encrypt(string.Format("{0}|{1}|{2}", ApplicationSecret, id, property.Type));
+
+            Dictionary<string, string> qs = new Dictionary<string, string>();
+            qs.Add("key", ApplicationKey);
+            qs.Add("id", id);
+            qs.Add("payload", property.ToXML());
+            qs.Add("type", property.Type);
+            qs.Add("sig", sig);
+
+            GenericResult webResult = Post<GenericResult>(url, GetQueryString(qs));
+
+            if (webResult == null)
+            {
+                return false;
+            }
+
+            CheckForException(webResult);
+
+            return Convert.ToBoolean(webResult.Result);
         }
 
         /// <summary>
@@ -161,6 +203,24 @@ namespace GrabzIt.Scraper
             }
         }
 
+        private T Post<T>(string url, string parameters)
+        {
+            using (QuickWebClient client = new QuickWebClient())
+            {
+                try
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                    string result = client.UploadString(url, parameters);
+                    return DeserializeResult<T>(result);
+                }
+                catch (WebException e)
+                {
+                    HandleWebException(e);
+                    return default(T);
+                }
+            }
+        }
+
         private void HandleWebException(WebException e)
         {
             if (e == null)
@@ -208,6 +268,23 @@ namespace GrabzIt.Scraper
                 {
                     sb.Append(Char.ConvertFromUtf32(codePoint));
                 }
+            }
+
+            return sb.ToString();
+        }
+
+        private string GetQueryString(Dictionary<string, string> parameters)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (KeyValuePair<string, string> kvp in parameters)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append("&");
+                }
+                sb.Append(kvp.Key);
+                sb.Append("=");
+                sb.Append(HttpUtility.UrlEncode(kvp.Value));
             }
 
             return sb.ToString();
