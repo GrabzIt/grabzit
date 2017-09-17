@@ -81,11 +81,11 @@ namespace GrabzIt.Scraper
         }
 
         /// <summary>
-        /// Set a propert of a scrape
+        /// Set a property of a scrape
         /// </summary>
         /// <param name="id">The id of the scrape to set.</param>
         /// <param name="property">The property object that contains the required changes</param>
-        /// <returns></returns>
+        /// <returns>Returns true if successful</returns>
         public bool SetScrapeProperty(string id, IProperty property)
         {
             if (string.IsNullOrEmpty(id) || property == null)
