@@ -2,10 +2,13 @@
 include_once("GrabzItScrapeException.class.php");
 include_once("GrabzItScrape.class.php");
 include_once("GrabzItScrapeHistory.class.php");
+include_once("GrabzItIProperty.class.php");
+include_once("GrabzItTarget.class.php");
+include_once("GrabzItVariable.class.php");
 
 class GrabzItScrapeClient
 {
-    const WebServicesBaseURL = "http://api.grabz.it/services/scraper/";
+	const WebServicesBaseURL = "http://api.grabz.it/services/scraper/";
 	const TrueString = "True";
 
 	private $applicationKey;
@@ -52,7 +55,7 @@ class GrabzItScrapeClient
 	*/
 	public function GetScrapes($id = "")
 	{
-		$sig =  $this->encode($this->applicationSecret."|".$id);
+		$sig =	$this->encode($this->applicationSecret."|".$id);
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".$id."&sig=".$sig;
 
@@ -97,34 +100,61 @@ class GrabzItScrapeClient
 			return false;
 		}
 
-		$sig =  $this->encode($this->applicationSecret."|".$id."|".$status);
+		$sig =	$this->encode($this->applicationSecret."|".$id."|".$status);
 
 		$qs = "key=" .urlencode($this->applicationKey)."&id=".urlencode($id)."&status=".urlencode($status)."&sig=".$sig;
 
 		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "setscrapestatus.ashx?" . $qs));
 	}
-    
-    /*
+	
+	/*
+	Set a property of a scrape
+
+	id - The id of the scrape to set.
+	property - The property object that contains the required changes
+
+	This function returns true if successful
+	*/
+	public function SetScrapeProperty($id, $property)
+	{
+		if (empty($id) || $property == null)
+		{
+			return false;
+		}
+		
+		$sig =	$this->encode($this->applicationSecret."|".$id."|".$property->GetTypeName());
+		
+		$qs = array();
+		$qs["key"] = $this->applicationKey;
+		$qs["id"] = $id;
+		$qs["payload"] = $property->ToXML();
+		$qs["type"] = $property->GetTypeName();
+		$qs["sig"] = $sig;
+
+		return $this->isSuccessful($this->Post(GrabzItScrapeClient::WebServicesBaseURL . "setscrapeproperty.ashx", $qs));
+	}
+	
+	/*
 	Re-sends the scrape result with the matching scrape id and result id using the export parameters stored in the scrape.
 
 	id - The id of the scrape that contains the result to re-send.
-    resultId - The id of the result to re-send.
+	resultId - The id of the result to re-send.
 
 	This function returns true if the result was successfully requested to be re-sent.
-	*/    
-    public function SendResult($id, $resultId)
+	*/	  
+	public function SendResult($id, $resultId)
 	{
 		if (empty($id) || empty($resultId))
 		{
 			return false;
 		}
 
-		$sig =  $this->encode($this->applicationSecret."|".$id."|".$resultId);
+		$sig =	$this->encode($this->applicationSecret."|".$id."|".$resultId);
 
 		$qs = "key=" .urlencode($this->applicationKey)."&id=".urlencode($id)."&spiderId=".urlencode($resultId)."&sig=".$sig;
 
 		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "sendscrape.ashx?" . $qs));
-	}    
+	}	 
 
 	private function isSuccessful($result)
 	{
@@ -180,25 +210,79 @@ class GrabzItScrapeClient
 
 			return $data;
 		}
-
 		throw new GrabzItScrapeException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItException::GENERIC_ERROR);
+	}
+
+	private function Post($url, $parameters)
+	{
+		if (ini_get('allow_url_fopen'))
+		{
+			$options = array(
+				'http' => array(
+					'timeout' => $this->connectionTimeout,
+					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => http_build_query($parameters, '', '&')
+				)
+			);
+
+			$context  = stream_context_create($options);
+			$response = @file_get_contents($url, false, $context);
+
+			if (isset($http_response_header))
+			{
+				$this->checkResponseHeader($http_response_header);
+			}
+			
+			if ($response === FALSE)
+			{
+				throw new GrabzItException("An unknown network error occurred.", GrabzItException::NETWORK_GENERAL_ERROR);
+			}
+
+			return $response;
+		}
+		
+		if (function_exists('curl_version'))
+		{
+			$ch = curl_init();
+
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch,CURLOPT_URL, $url);
+			curl_setopt($ch,CURLOPT_POST, count($parameters));
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
+			curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($parameters, '', '&'));
+
+			//execute post
+			$data = curl_exec($ch);
+
+			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+			$this->checkHttpCode($httpCode);
+
+			//close connection
+			curl_close($ch);
+
+			return $data;
+		}
+		
+		throw new GrabzItException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItException::GENERIC_ERROR);
 	}
 
 	private function checkHttpCode($httpCode)
 	{
-	    if ($httpCode == 403)
-	    {
+		if ($httpCode == 403)
+		{
 			throw new GrabzItScrapeException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
-	    }
-	    else if ($httpCode >= 400)
-	    {
+		}
+		else if ($httpCode >= 400)
+		{
 			throw new GrabzItScrapeException("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR);
-	    }
+		}
 	}
 
 	private function checkResponseHeader($header)
 	{
-	    list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
+		list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
 		$this->checkHttpCode($httpCode);
 	}
 }
