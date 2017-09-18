@@ -3,17 +3,17 @@
 import os
 
 try:
-	from urllib.parse import urlencode	
-	from urllib.request import urlopen
-	from urllib.parse import urlparse
-	import http.client as httpClient
+    from urllib.parse import urlencode  
+    from urllib.request import urlopen
+    from urllib.parse import urlparse
+    import http.client as httpClient
 except ImportError:
-	from urllib import urlopen
-	from urlparse import urlparse	
-	from urllib import urlencode	
-	import httplib as httpClient
+    from urllib import urlopen
+    from urlparse import urlparse   
+    from urllib import urlencode    
+    import httplib as httpClient
 
-import hashlib	
+import hashlib  
 import mimetypes
 import io
 from xml.dom import minidom
@@ -21,6 +21,8 @@ from time import sleep
 from GrabzIt import GrabzItScrape
 from GrabzIt import GrabzItScrapeHistory
 from GrabzIt import GrabzItScrapeException
+from GrabzIt import GrabzItTarget
+from GrabzIt import GrabzItVariable
 
 class GrabzItScrapeClient:
 
@@ -32,11 +34,11 @@ class GrabzItScrapeClient:
                 self.applicationSecret = applicationSecret                                                      
         
         #
-	#Get all of the users scrapes
-	#
-	#id - If specified, just returns that scrape that matches the id.
-	#
-	#This function returns a array of Scrape objects
+    #Get all of the users scrapes
+    #
+    #id - If specified, just returns that scrape that matches the id.
+    #
+    #This function returns a array of Scrape objects
         #
         def GetScrapes(self, id = ""):
                 sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(id))
@@ -80,7 +82,7 @@ class GrabzItScrapeClient:
         #This function returns true if the scrape was successfully set.
         #
         def SetScrapeStatus(self, id, status):
-                sig =  self.CreateSignature(str(self.applicationSecret)+"|"+str(id)+"|"+str(status))        
+                sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(id)+"|"+str(status))
 
                 qs = {"key":self.applicationKey, "id":id, "status":status}
 
@@ -90,6 +92,28 @@ class GrabzItScrapeClient:
 
                 return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setscrapestatus.ashx?" + encoded_qs))                               
                 
+        #
+        #Set a property of a scrape
+        #
+        #id - The id of the scrape to set.
+        #property - The property object that contains the required changes
+        #
+        #This function returns true if successful
+        #
+        def SetScrapeProperty(self, id, property):
+            if (id == None or property == None):
+                return False
+                
+            sig = self.CreateSignature(str(self.applicationSecret)+"|"+str(id)+"|"+str(property.GetTypeName()))
+            
+            fields = {}
+            fields['key'] = self.applicationKey
+            fields['id'] = str(id)
+            fields['payload'] = property.ToXML()
+            fields['type'] = property.GetTypeName()
+            fields['sig'] = sig
+            
+            return self.IsSuccessful(self.HTTPPost("/services/scraper/setscrapeproperty.ashx", fields))
         #
         #Re-sends the scrape result with the matching scrape id and result id using the export parameters stored in the scrape. 
         #
@@ -165,6 +189,25 @@ class GrabzItScrapeClient:
                 connection = urlopen(url)
                 self.CheckResponseHeader(connection.getcode())
                 return connection.read()
+                
+        def HTTPPost(self, selector, fields):
+            body = urlencode(fields)
+                    
+            h = httpClient.HTTPConnection("grabz.it")
+            h.putrequest('POST', selector)
+            h.putheader('content-type', "application/x-www-form-urlencoded")
+            h.putheader('content-length', str(len(body)))
+            h.endheaders()
+            
+            try:
+                    h.send(body)
+            except TypeError:
+                    # python 3 needs it to be encoded
+                    h.send(body.encode())
+                    
+            response = h.getresponse()
+            self.CheckResponseHeader(response.status);
+            return response.read()                
                 
         def CheckResponseHeader(self, httpCode):
                 if httpCode == 403:
