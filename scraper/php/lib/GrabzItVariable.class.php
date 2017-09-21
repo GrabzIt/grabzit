@@ -31,23 +31,23 @@ class GrabzItVariable implements GrabzItIProperty
 	public function ToXML()
 	{
 		$xml = '<?xml version="1.0" encoding="UTF-8"?><Variable xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
-		if ($this->value != null && is_array($this->value))
+		if ($this->value !== null && is_array($this->value))
 		{
 			$xml .= '<Array>';
 			foreach($this->value as $key => $value)
 			{
-				if ($key == null && $value == null)
+				if ($key === null && $value === null)
 				{
 					continue;
 				}
 				$xml .= '<KeyValue>';
-				if ($key != null)
+				if ($key !== null)
 				{
 					$xml .= '<Key>';
 					$xml .= $key;
 					$xml .= '</Key>';
 				}
-				if ($value != null)
+				if ($value !== null)
 				{
 					$xml .= '<Value>';
 					$xml .= $value;
@@ -57,13 +57,13 @@ class GrabzItVariable implements GrabzItIProperty
 			}
 			$xml .= '</Array>';
 		}
-		else if ($this->value != null)
+		else if ($this->value !== null)
 		{
 			$xml .= '<Value>';
 			$xml .= $this->value;
 			$xml .= '</Value>';
 		}
-		if ($this->name != null)
+		if ($this->name !== null)
 		{
 			$xml .= '<Name>';
 			$xml .= $this->name;
