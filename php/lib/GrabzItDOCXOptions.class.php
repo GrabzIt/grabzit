@@ -17,8 +17,62 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	private $quality = -1;
 	private $hideElement = null;
 	private $waitForElement = null;
-	private $noAds = false;	
+	private $noAds = false;
+	private $templateId = null;
+	private $targetElement = null;
+	private $width = null;
+	private $height = null;	
+	private $browserWidth = null;
+	private $templateVariables = null;	
 
+	/*
+	Set the width of the resulting DOCX in mm.
+	*/
+	public function setPageWidth($value)
+	{
+		$this->width = $value;
+	}
+
+	/*
+	Get the width of the resulting DOCX in mm.
+	*/
+	public function getPageWidth()
+	{
+		return $this->width;
+	}
+
+	/*
+	Set the height of the resulting DOCX in mm.
+	*/
+	public function setPageHeight($value)
+	{
+		$this->height = $value;
+	}
+
+	/*
+	Get the height of the resulting DOCX in mm.
+	*/
+	public function getPageHeight()
+	{
+		return $this->height;
+	}		
+	
+	/*
+	Set the width of the browser in pixels.
+	*/
+	public function setBrowserWidth($value)
+	{
+		$this->browserWidth = $value;
+	}
+
+	/*
+	Get the width of the browser in pixels.
+	*/
+	public function getBrowserWidth()
+	{
+		return $this->browserWidth;
+	}
+	
 	/*
 	Set the number of milliseconds to wait before creating the capture.
 	*/
@@ -52,7 +106,7 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'.
+	Set the page size of the DOCX to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'.
 	*/
 	public function setPageSize($value)
 	{
@@ -131,6 +185,22 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	public function getTitle()
 	{
 		return $this->title;
+	}
+	
+	/*
+	Set the CSS selector of the only HTML element in the web page to capture.
+	*/
+	public function setTargetElement($value)
+	{
+		$this->targetElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the only HTML element in the web page to capture.
+	*/
+	public function getTargetElement()
+	{
+		return $this->targetElement;
 	}
 	
 	/*
@@ -275,7 +345,24 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	public function getNoAds()
 	{
 		return $this->noAds;
-	}		
+	}
+	
+
+	/*
+	Set a template ID that specifies the header and footer of the DOCX document.
+	*/
+	public function setTemplateId($value)
+	{
+		$this->templateId = $value;
+	}
+
+	/*
+	Get the template ID that specifies the header and footer of the DOCX document.
+	*/
+	public function getTemplateId()
+	{
+		return $this->templateId;
+	}
 	
 	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -287,8 +374,19 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	public function AddPostParameter($name, $value)
 	{
 		$this->post = $this->appendParameter($this->post, $name, $value);
-	}		
+	}
+	
+	/*
+	Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
 
+    name - The name of the template parameter.
+	value - The value of the template parameter.
+    */		
+	public function AddTemplateParameter($name, $value)
+	{
+		$this->templateVariables = $this->appendParameter($this->templateVariables, $name, $value);
+	}
+	
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
 		$urlParam = '';
@@ -310,9 +408,11 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
 		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->waitForElement)."|".
-		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post);
+		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".
+		$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->templateId)."|".$this->nullToEmpty($this->templateVariables)."|".
+		$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserWidth);
 	}
-	
+
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
 	{
 		$params = $this->createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue);		
@@ -332,7 +432,13 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
 		$params['noads'] = $this->nullToEmpty(intval($this->noAds));
-		$params['post'] = $this->nullToEmpty($this->post);			
+		$params['post'] = $this->nullToEmpty($this->post);
+		$params['bwidth'] = $this->nullToEmpty($this->browserWidth);
+		$params['width'] = $this->nullToEmpty($this->width);
+		$params['height'] = $this->nullToEmpty($this->height);
+		$params['tvars'] = $this->nullToEmpty($this->templateVariables);
+		$params['target'] = $this->nullToEmpty($this->targetElement);
+		$params['templateid'] = $this->nullToEmpty($this->templateId);
 		
 		return $params;
 	}

@@ -334,7 +334,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set a PDF template ID that specifies the header and footer of the PDF document.
+	Set a template ID that specifies the header and footer of the PDF document.
 	*/
 	public function setTemplateId($value)
 	{
@@ -342,7 +342,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the PDF template ID that specifies the header and footer of the PDF document.
+	Get the template ID that specifies the header and footer of the PDF document.
 	*/
 	public function getTemplateId()
 	{
@@ -410,10 +410,10 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}		
 	
 	/*
-	Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+	Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
 
-    name - The name of the PDF template parameter.
-	value - The value of the PDF template parameter.
+    name - The name of the template parameter.
+	value - The value of the template parameter.
     */		
 	public function AddTemplateParameter($name, $value)
 	{
