@@ -375,12 +375,18 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'requestAs': 0,
         'quality': -1,
         'country': '',
+        'templateId': '',
+		'targetElement': '',
         'hideElement': '',
         'waitForElement': '',
         'exportUrl': '',
         'encryptionKey': '',
 		'noAds':false,
-		'postData':''
+		'postData':'',
+		'browserWidth': '',
+		'templateVariables': '',
+		'pageWidth': 0,
+		'pageHeight': 0
     };
 
     context = _extend(defaults, options);
@@ -425,7 +431,13 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'export': context['exportUrl'],
         'encryption': context['encryptionKey'],
 		'noads': _toInt(context['noAds']),
-		'post': context['postData']
+		'post': context['postData'],
+        'templateid': context['templateId'],
+		'bwidth': context['browserWidth'],
+		'target': context['targetElement'],
+		'tvars': context['templateVariables'],
+        'width': context['pageWidth'],
+        'height': context['pageHeight']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -435,7 +447,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement']
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
-	 + '|' + context['postData'];
+	 + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
+	 + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }

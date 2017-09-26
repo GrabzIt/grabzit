@@ -431,6 +431,7 @@ public class DOCXOptions extends BaseOptions {
         params.put("bwidth", String.valueOf(browserWidth));
         params.put("width", String.valueOf(width));
         params.put("height", String.valueOf(height));
+        params.put("tvars", String.valueOf(templateVariables));
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("templateid", ParameterUtility.encode(ParameterUtility.nullCheck(templateId)));
         
