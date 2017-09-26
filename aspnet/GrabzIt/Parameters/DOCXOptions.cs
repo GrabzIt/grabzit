@@ -9,6 +9,8 @@ namespace GrabzIt.Parameters
     [ClassInterface(ClassInterfaceType.None)]
     public class DOCXOptions : BaseOptions, IDOCXOptions
     {
+        private string templateVariables = string.Empty;
+
         public DOCXOptions()
         {
             IncludeBackground = true;
@@ -24,6 +26,8 @@ namespace GrabzIt.Parameters
 	        RequestAs = BrowserType.StandardBrowser;
 	        Quality = -1;
             HideElement = string.Empty;
+            TemplateId = string.Empty;
+            TargetElement = string.Empty;
         }
         /// <summary>
         /// If true background images should be included in the DOCX
@@ -38,6 +42,42 @@ namespace GrabzIt.Parameters
         /// The page size of the DOCX to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter', 'Legal'.
         /// </summary>
         public PageSize PageSize
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The width of the browser in pixels
+        /// </summary>
+        public int BrowserWidth
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The height of the resulting DOCX in mm
+        /// </summary>
+        public int PageHeight
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The width of the resulting DOCX in mm
+        /// </summary>
+        public int PageWidth
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Add a PDF template ID that specifies the header and footer of the PDF document
+        /// </summary>
+        public string TemplateId
         {
             get;
             set;
@@ -150,6 +190,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The CSS selector of the only HTML element in the web page to capture
+        /// </summary>
+        public string TargetElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The CSS selector(s) of the one or more HTML elements in the web page to hide
         /// </summary>
         public string HideElement
@@ -187,6 +236,16 @@ namespace GrabzIt.Parameters
             post = AppendParameter(post, name, value);
         }
 
+        /// <summary>
+        /// Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
+        /// </summary>
+        /// <param name="name">The name of the template parameter</param>
+        /// <param name="value">The value of the template parameter</param>
+        public void AddTemplateParameter(string name, string value)
+        {
+            templateVariables = AppendParameter(templateVariables, name, value);
+        }
+
         internal override string GetSignatureString(string applicationSecret, string callBackURL, string url)
         {
             string urlParam = string.Empty;
@@ -205,7 +264,8 @@ namespace GrabzIt.Parameters
             + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + Convert.ToInt32(IncludeImages) + "|" 
             + Convert.ToInt32(IncludeLinks) + "|" + Title + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|"
-            + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post;
+            + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" +
+            TargetElement + "|" + TemplateId + "|" + templateVariables + "|" + PageHeight + "|" + PageWidth + "|" + BrowserWidth;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -228,6 +288,12 @@ namespace GrabzIt.Parameters
             parameters.Add("waitfor", WaitForElement);
             parameters.Add("noads", Convert.ToInt32(NoAds).ToString());
             parameters.Add("post", post);
+            parameters.Add("templateid", TemplateId);
+            parameters.Add("target", TargetElement);
+            parameters.Add("bwidth", BrowserWidth.ToString());
+            parameters.Add("width", PageWidth.ToString());
+            parameters.Add("height", PageHeight.ToString());
+            parameters.Add("tvars", templateVariables);
 
             return parameters;
         }

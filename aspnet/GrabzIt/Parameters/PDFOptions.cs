@@ -183,7 +183,7 @@ namespace GrabzIt.Parameters
         }
         
         /// <summary>
-        /// Add a PDF template ID that specifies the header and footer of the PDF document
+        /// Add a template ID that specifies the header and footer of the PDF document
         /// </summary>
         public string TemplateId
         {
@@ -257,10 +257,10 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
-        /// Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+        /// Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
         /// </summary>
-        /// <param name="name">The name of the PDF template parameter</param>
-        /// <param name="value">The value of the PDF template parameter</param>
+        /// <param name="name">The name of the template parameter</param>
+        /// <param name="value">The value of the template parameter</param>
         public void AddTemplateParameter(string name, string value)
         {
             templateVariables = AppendParameter(templateVariables, name, value);
