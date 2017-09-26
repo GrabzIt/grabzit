@@ -23,6 +23,11 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             quality                 the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
             noAds                   set to true if adverts should be automatically hidden
+            templateId              a template ID that specifies the header and footer of the DOCX document
+            pageHeight              set the height of the resulting DOCX in mm
+            pageWidth               set the width of the resulting DOCX in mm
+            targetElement           the CSS selector of the only HTML element in the web page to capture
+            browserWidth            the width of the browser in pixels
         """
         
         def __init__(self):
@@ -42,6 +47,12 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.hideElement = ''
                 self.waitForElement = ''
                 self.noAds = False
+                self.templateVariables = ''
+                self.pageHeight = 0
+                self.pageWidth = 0
+                self.browserWidth = 0
+                self.templateId = ''
+                self.targetElement = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -52,6 +63,15 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
         #               
         def AddPostParameter(self, name, value):
                 self.post = self._appendParameter(self.post, name, value)
+                
+        #
+        # Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
+        #
+        # name - The name of the template parameter
+        # value - The value of the template parameter
+        #               
+        def AddTemplateParameter(self, name, value):
+                self.templateVariables = self._appendParameter(self.templateVariables, name, value)
                 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -72,7 +92,13 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["waitfor"] = str(self.waitForElement) 
                 params['noads'] = int(self.noAds)           
                 params["post"] = str(self.post)
-
+                params["bwidth"] = int(self.browserWidth)
+                params["tvars"] = str(self.templateVariables)
+                params["width"] = int(self.pageWidth)
+                params["height"] = int(self.pageHeight)
+                params["target"] = str(self.targetElement)
+                params["templateid"] = str(self.templateId)
+                
                 return params
                 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
@@ -89,4 +115,5 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.includeLinks))+"|"+str(self.title)+"|"+str(int(self.marginTop))+ \
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
-                "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)
+                "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.targetElement)+"|"+str(self.templateId)+"|"+\
+                str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))

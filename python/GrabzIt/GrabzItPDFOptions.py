@@ -24,7 +24,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             hideElement             the CSS selector(s) of the one or more HTML elements in the web page to hide
             waitForElement          the CSS selector of the HTML element in the web page that must be visible before the capture is performed
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
-            templateId              a PDF template ID that specifies the header and footer of the PDF document
+            templateId              a template ID that specifies the header and footer of the PDF document
             customWaterMarkId       a custom watermark to add to the PDF
             quality                 the quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
             noAds                   set to true if adverts should be automatically hidden
@@ -69,10 +69,10 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.post = self._appendParameter(self.post, name, value)
                 
         #
-        # Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+        # Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
         #
-        # name - The name of the PDF template parameter
-        # value - The value of the PDF template parameter
+        # name - The name of the template parameter
+        # value - The value of the template parameter
         #               
         def AddTemplateParameter(self, name, value):
                 self.templateVariables = self._appendParameter(self.templateVariables, name, value)
