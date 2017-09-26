@@ -293,14 +293,14 @@ public class PDFOptions extends BaseOptions {
     }
 
     /**
-     * @return a PDF template ID that specifies the header and footer of the PDF document.
+     * @return a template ID that specifies the header and footer of the PDF document.
      */
     public String getTemplateId() {
         return templateId;
     }
 
     /**
-     * @param templateId set a PDF template ID that specifies the header and footer of the PDF document.
+     * @param templateId set a template ID that specifies the header and footer of the PDF document.
      */
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
@@ -404,10 +404,10 @@ public class PDFOptions extends BaseOptions {
     } 
     
     /**
-     * Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters. 
+     * Define a custom Template parameter and value, this method can be called multiple times to add multiple parameters. 
      * 
-     * @param name - The name of the PDF template parameter
-     * @param value - The value of the PDF template parameter
+     * @param name - The name of the template parameter
+     * @param value - The value of the template parameter
      * @throws UnsupportedEncodingException 
      */
     public void AddTemplateParameter(String name, String value) throws UnsupportedEncodingException

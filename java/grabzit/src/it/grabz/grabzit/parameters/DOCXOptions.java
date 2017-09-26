@@ -33,6 +33,12 @@ public class DOCXOptions extends BaseOptions {
     private String hideElement;
     private String waitForElement;
     private boolean noAds;
+    private int browserWidth;
+    private int width;
+    private int height; 
+    private String templateVariables;    
+    private String templateId;
+    private String targetElement;
 
     public DOCXOptions()
     {
@@ -50,6 +56,12 @@ public class DOCXOptions extends BaseOptions {
         this.hideElement = "";
         this.waitForElement = "";
         this.quality = -1;
+        this.browserWidth = 0;
+        this.width = 0;
+        this.height = 0;
+        this.templateVariables = "";
+        this.templateId = "";
+        this.targetElement = "";        
     }
     
     /**
@@ -79,6 +91,48 @@ public class DOCXOptions extends BaseOptions {
     public void setPagesize(PageSize pagesize) {
         this.pagesize = pagesize;
     }
+    
+    /**
+     * @return the width of the resulting DOCX in mm.
+     */
+    public int getPageWidth() {
+        return width;
+    }
+
+    /**
+     * @param pageWidth set the width of the resulting DOCX in mm.
+     */
+    public void setPageWidth(int pageWidth) {
+        this.width = pageWidth;
+    }
+
+    /**
+     * @return get the height of the resulting DOCX in mm.
+     */
+    public int getPageHeight() {
+        return height;
+    }
+
+    /**
+     * @param pageHeight set the height of the resulting DOCX in mm.
+     */
+    public void setPageHeight(int pageHeight) {
+        this.height = pageHeight;
+    }    
+    
+    /**
+     * @return the width of the browser in pixels.
+     */
+    public int getBrowserWidth() {
+        return browserWidth;
+    }
+
+    /**
+     * @param browserWidth set the width of the browser in pixels.
+     */
+    public void setBrowserWidth(int browserWidth) {
+        this.browserWidth = browserWidth;
+    }        
 
     /**
      * @return the orientation of the DOCX either portrait or landscape.
@@ -219,6 +273,20 @@ public class DOCXOptions extends BaseOptions {
     public void setRequestAs(BrowserType requestAs) {
         this.requestAs = requestAs;
     }
+    
+    /**
+     * @return a template ID that specifies the header and footer of the DOCX document.
+     */
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    /**
+     * @param templateId set a template ID that specifies the header and footer of the DOCX document.
+     */
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
+    }    
 
     /**
      * @return the quality of the DOCX.
@@ -233,6 +301,20 @@ public class DOCXOptions extends BaseOptions {
     public void setQuality(int quality) {
         this.quality = quality;
     }
+    
+    /**
+     * @return get the CSS selector of the only HTML element in the web page to capture.
+     */
+    public String getTargetElement() {
+        return targetElement;
+    }
+
+    /**
+     * @param targetElement set the CSS selector of the only HTML element in the web page to capture.
+     */
+    public void setTargetElement(String targetElement) {
+        this.targetElement = targetElement;
+    }    
     
     /**
      * @return get the CSS selector(s) of the one or more HTML elements in the web page to hide.
@@ -289,6 +371,18 @@ public class DOCXOptions extends BaseOptions {
         this.post = appendParameter(this.post, name, value);
     }    
     
+    /**
+     * Define a custom Template parameter and value, this method can be called multiple times to add multiple parameters. 
+     * 
+     * @param name - The name of the template parameter
+     * @param value - The value of the template parameter
+     * @throws UnsupportedEncodingException 
+     */
+    public void AddTemplateParameter(String name, String value) throws UnsupportedEncodingException
+    {
+        this.templateVariables = appendParameter(this.templateVariables, name, value);
+    }        
+    
     @Override
     public String _getSignatureString(String applicationSecret, String callBackURL, String url)
     {
@@ -309,7 +403,8 @@ public class DOCXOptions extends BaseOptions {
         + "|" + ParameterUtility.toInt(includeImages) + "|" + ParameterUtility.toInt(includeLinks)
         + "|" + title + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
-        + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()+ "|" + ParameterUtility.toInt(noAds) + "|" + post;
+        + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey() + "|" + ParameterUtility.toInt(noAds) + "|" + post
+        + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth;
     }    
     
     @Override
@@ -333,6 +428,11 @@ public class DOCXOptions extends BaseOptions {
         params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
         params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
+        params.put("bwidth", String.valueOf(browserWidth));
+        params.put("width", String.valueOf(width));
+        params.put("height", String.valueOf(height));
+        params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
+        params.put("templateid", ParameterUtility.encode(ParameterUtility.nullCheck(templateId)));
         
         return params;
     }    
