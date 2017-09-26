@@ -25,7 +25,13 @@ sub new
     $self->{"quality"} = -1;
     $self->{"hideElement"} = '';
     $self->{"waitForElement"} = '';
-	$self->{"noAds"} = 0;    
+	$self->{"noAds"} = 0;
+    $self->{"templateVariables"} = '';
+    $self->{"width"} = 0;
+    $self->{"height"} = 0;
+    $self->{"templateId"} = '';
+    $self->{"targetElement"} = '';
+    $self->{"browserWidth"} = 0;
         
     bless $self, $class;
 
@@ -242,6 +248,72 @@ sub noAds
 }
 
 #
+# The width of the browser in pixels
+#
+sub browserWidth
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"browserWidth"} = shift;
+    }
+    return $self->{"browserWidth"};
+}
+
+#
+# The width of the DOCX in mm
+#
+sub pageWidth
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"width"} = shift;
+    }
+    return $self->{"width"};
+}
+
+#
+# The height of the DOCX in mm
+#
+sub pageHeight
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"height"} = shift;
+    }
+    return $self->{"height"};
+}
+
+#
+# The PDF template ID that specifies the header and footer of the PDF document
+#
+sub templateId
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"templateId"} = shift;
+    }
+    return $self->{"templateId"};
+}
+
+#
+# The CSS selector of the only HTML element in the web page to capture
+#
+sub targetElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"targetElement"} = shift;
+    }
+    return $self->{"targetElement"};
+}
+
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -252,6 +324,18 @@ sub AddPostParameter($$)
 {
 	my ($self, $name, $value) = @_;
 	$self->{"post"} = $self->_appendPostParameter($self->{"post"}, $name, $value);
+}
+
+#
+#Define a custom Template parameter and value, this method can be called multiple times to add multiple parameters.
+#
+#name - The name of the template parameter
+#value - The value of the template parameter
+#
+sub AddTemplateParameter($$)
+{
+    my ($self, $name, $value) = @_;
+    $self->{"templateVariables"} = $self->_appendPostParameter($self->{"templateVariables"}, $name, $value);
 }
 
 sub _getSignatureString($$;$)
@@ -275,7 +359,8 @@ sub _getSignatureString($$;$)
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->includeImages()."|".$self->includeLinks()."|".$self->title()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
-    $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"};
+    $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
+	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth();
 }
 
 sub _getParameters($$$$$)
@@ -300,6 +385,12 @@ sub _getParameters($$$$$)
     $params->{'waitfor'} = $self->waitForElement();
 	$params->{'noads'} = $self->noAds();
 	$params->{'post'} = $self->{"post"};
+    $params->{'bwidth'} = $self->browserWidth();
+    $params->{'width'} = $self->pageWidth();
+    $params->{'height'} = $self->pageHeight();
+    $params->{'tvars'} = $self->{"templateVariables"};
+    $params->{'target'} = $self->targetElement();
+    $params->{'templateid'} = $self->templateId();
     
     return $params;
 }

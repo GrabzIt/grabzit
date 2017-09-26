@@ -276,7 +276,7 @@ sub quality
 }
 
 #
-# The PDF template ID that specifies the header and footer of the PDF document
+# The template ID that specifies the header and footer of the PDF document
 #
 sub templateId
 {
@@ -354,10 +354,10 @@ sub AddPostParameter($$)
 }
 
 #
-#Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+#Define a custom Template parameter and value, this method can be called multiple times to add multiple parameters.
 #
-#name - The name of the PDF template parameter
-#value - The value of the PDF template parameter
+#name - The name of the template parameter
+#value - The value of the template parameter
 #
 sub AddTemplateParameter($$)
 {
