@@ -21,6 +21,12 @@ module GrabzIt
 			@hideElement = nil
 			@waitForElement = nil
 			@noAds = false
+			@browserWidth = nil
+			@templateVariables = nil
+			@width = nil
+			@height = nil
+			@templateId = nil
+			@targetElement = nil
 		end
 		
 		# @return [Boolean] true if the background images of the web page should be included in the DOCX
@@ -155,6 +161,45 @@ module GrabzIt
 			@marginRight = value
 		end		
 		
+		# @return [Integer] the width of the browser in pixels
+		def browserWidth
+			@browserWidth
+		end
+		
+		# Set the width of the browser in pixels
+		#
+		# @param value [Integer] the browser width
+		# @return [void]		
+		def browserWidth(value)
+			@browserWidth = value
+		end	
+		
+		# @return [Integer] get the page width of the resulting DOCX in mm.
+		def pageWidth
+			@width
+		end
+		
+		# Set the page width of the resulting DOCX in mm
+		#
+		# @param value [Integer] the width
+		# @return [void]		
+		def pageWidth(value)
+			@width = value
+		end			
+		
+		# @return [Integer] get the page height of the resulting DOCX in mm
+		def pageHeight
+			@height
+		end
+		
+		# Set the page height of the resulting DOCX in mm
+		#
+		# @param value [Integer] the height
+		# @return [void]		
+		def pageHeight(value)
+			@height = value
+		end		
+
 		# @return [Integer] the number of milliseconds to wait before creating the capture
 		def delay
 			@delay
@@ -179,7 +224,20 @@ module GrabzIt
 		# @return [void]		
 		def requestAs(value)
 			@requestAs = value
-		end			
+		end
+		
+		# @return [String] the template ID that specifies the header and footer of the DOCX document
+		def templateId
+			@templateId
+		end
+		
+		# Set a template ID that specifies the header and footer of the DOCX document
+		#
+		# @param value [String] template id
+		# @return [void]		
+		def templateId(value)
+			@templateId = value
+		end		
 		
 		# @return [Integer] the quality of the DOCX.
 		def quality
@@ -192,6 +250,19 @@ module GrabzIt
 		# @return [void]		
 		def quality(value)
 			@quality = value
+		end
+		
+		# @return [String] get the CSS selector of the only HTML element in the web page to capture
+		def targetElement
+			@targetElement
+		end
+		
+		# Set the CSS selector of the only HTML element in the web page to capture
+		#
+		# @param value [String] the target element
+		# @return [void]		
+		def targetElement(value)
+			@targetElement = value
 		end
 		
 		# @return [String] get the CSS selector(s) of the one or more HTML elements in the web page to hide
@@ -242,6 +313,14 @@ module GrabzIt
 			@post = appendParameter(@post, name, value)
 		end
 		
+		# Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
+		#
+		# @param name [String] the name of the template parameter
+		# @param value [String] the value of the template parameter
+		def add_template_parameter(name, value)
+			@templateVariables = appendParameter(@templateVariables, name, value)
+		end
+		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
 			urlParam = ''
@@ -259,7 +338,7 @@ module GrabzIt
 			GrabzIt::Utility.b_to_str(@includeImages)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+
 			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
 			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)      
+			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@templateVariables)+"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_int_check(@browserWidth)
 		end
 		
 		# @!visibility private
@@ -282,6 +361,12 @@ module GrabzIt
 			params['waitfor'] = GrabzIt::Utility.nil_check(@waitForElement)
 			params['noads'] = GrabzIt::Utility.b_to_str(@noAds)
 			params['post'] = GrabzIt::Utility.nil_check(@post)
+			params['templateid'] = GrabzIt::Utility.nil_check(@templateId)
+			params['target'] = GrabzIt::Utility.nil_check(@targetElement)
+			params['bwidth'] = GrabzIt::Utility.nil_int_check(@browserWidth)
+			params['width'] = GrabzIt::Utility.nil_int_check(@width)
+			params['height'] = GrabzIt::Utility.nil_int_check(@height)
+			params['tvars'] = GrabzIt::Utility.nil_check(@templateVariables)
 			
 			return params;
 		end		

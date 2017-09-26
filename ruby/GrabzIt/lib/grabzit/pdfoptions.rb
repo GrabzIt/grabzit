@@ -241,12 +241,12 @@ module GrabzIt
 			@requestAs = value
 		end
 
-		# @return [String] the PDF template ID that specifies the header and footer of the PDF document
+		# @return [String] the template ID that specifies the header and footer of the PDF document
 		def templateId
 			@templateId
 		end
 		
-		# Set a PDF template ID that specifies the header and footer of the PDF document
+		# Set a template ID that specifies the header and footer of the PDF document
 		#
 		# @param value [String] template id
 		# @return [void]		
@@ -341,10 +341,10 @@ module GrabzIt
 			@post = appendParameter(@post, name, value)
 		end	
 
-		# Define a custom PDF Template parameter and value, this method can be called multiple times to add multiple parameters.
+		# Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
 		#
-		# @param name [String] the name of the PDF template parameter
-		# @param value [String] the value of the PDF template parameter
+		# @param name [String] the name of the template parameter
+		# @param value [String] the value of the template parameter
 		def add_template_parameter(name, value)
 			@templateVariables = appendParameter(@templateVariables, name, value)
 		end
