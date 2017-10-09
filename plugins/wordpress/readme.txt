@@ -25,4 +25,6 @@ To further customize your captures just choose one of these [available options](
 
 [grabzit format="pdf" download="1"]https://www.google.com[/grabzit]
 
-If you have any questions please [ask our support team](https://grabz.it/contact.aspx?subject=WordPress+Plugin+Support).
+If you have any questions please [ask our support team](https://grabz.it/contact.aspx?subject=WordPress+Plugin+Support) or read about [what else](https://grabz.it/plugins/wordpress/) you can do with the GrabzIt plugin.
+== Changelog ==
+Localized Plugin

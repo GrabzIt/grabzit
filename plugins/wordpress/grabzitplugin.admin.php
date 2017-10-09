@@ -14,7 +14,7 @@ else
 }
 ?>
 <div class="wrap">
-<h2>GrabzIt Web Capture Settings</h2>
+<h2><?php _e('GrabzIt Web Capture Settings', 'grabzit-web-capture');?></h2>
 <form method="POST" action="">
 <table class="form-table">
 <tbody>
@@ -24,11 +24,11 @@ else
 wp_nonce_field('grabzit-admin');
 ?>
 <input type="hidden" name="grabzit_hidden" value="Y">
-    <label for="grabzit_key">Application Key</label>
+    <label for="grabzit_key"><?php _e('Application Key', 'grabzit-web-capture');?></label>
 </th>
 <td>
 <input type="text" name="grabzit_key" value="<?php echo $grabzItKey ?>" class="regular-text">
-<p class="description">Create a free GrabzIt account to get your <a target="_blank" href="https://grabz.it/login.aspx?action=create&returnurl=https%3a%2f%2fgrabz.it%2fapi%2f%23Key">application key</a><br/> and then copy it into the above textbox.</p>
+<p class="description"><?php _e('Create a free GrabzIt account to get your', 'grabzit-web-capture');?> <a target="_blank" href="https://grabz.it/login.aspx?action=create&returnurl=https%3a%2f%2fgrabz.it%2fapi%2f%23Key"><?php _e('application key', 'grabzit-web-capture');?></a><br/><?php _e('and then copy it into the above textbox.', 'grabzit-web-capture');?></p>
 </td>
 </tr>
 </tbody>
@@ -37,16 +37,16 @@ wp_nonce_field('grabzit-admin');
 <input type="submit" name="Submit" value="Save settings" class="button-primary"/>
 </p>
 </form>
-<h3>Getting Started</h3>
-<p>First you must <a href="https://grabz.it/account/domains.aspx" target="_blank">authorize your domain</a> to ensure no one else can use your application key.</p>
-<p>Then to create a capture you need to specify the grabzit tags around the content you wish to capure. For instance you could convert a URL into a screenshot or you could convert a HTML snippet into a image, as shown in the two examples below.</p>
+<h3><?php _e('Getting Started', 'grabzit-web-capture');?></h3>
+<p><?php _e('First you must', 'grabzit-web-capture');?> <a href="https://grabz.it/account/domains.aspx" target="_blank"><?php _e('authorize your domain', 'grabzit-web-capture');?></a> <?php _e('to ensure no one else can use your application key.', 'grabzit-web-capture');?></p>
+<p><?php _e('Then to create a capture you need to specify the grabzit tags around the content you wish to capture. For instance you could convert a URL into a screenshot or you could convert a HTML snippet into a image, as shown in the two examples below.', 'grabzit-web-capture');?></p>
 <pre>
 [grabzit]https://www.google.com[/grabzit]
-[grabzit]&lt;h1&gt;Hello there&lt;/h1&gt;[/grabzit]
+[grabzit]&lt;h1&gt;<?php _e('Hello there', 'grabzit-web-capture');?>&lt;/h1&gt;[/grabzit]
 </pre>
-<p>To further customize your captures just choose one of these <a href="https://grabz.it/api/javascript/parameters.aspx" target="_blank">available options</a> and then add the option as an attribute to the grabzit tag. In the below example the download attribute has been set to true and the format attribute has been set to PDF, which means a screenshot of google.com will be automatically downloaded as a PDF.</p>
+<p><?php _e('To further customize your captures just choose one of these', 'grabzit-web-capture');?> <a href="https://grabz.it/api/javascript/parameters.aspx" target="_blank"><?php _e('available options', 'grabzit-web-capture');?></a> <?php _e('and then add the option as an attribute to the grabzit tag. In the below example the download attribute has been set to true and the format attribute has been set to PDF, which means a screenshot of google.com will be automatically downloaded as a PDF.', 'grabzit-web-capture');?></p>
 <pre>
 [grabzit format="pdf" download="1"]https://www.google.com[/grabzit]
 </pre>
-<p>If you have any questions please <a href="https://grabz.it/contact.aspx?subject=WordPress+Plugin+Support" target="_blank">ask our support team</a>.</p>
+<p><?php _e('If you have any questions please', 'grabzit-web-capture');?> <a href="https://grabz.it/contact.aspx?subject=WordPress+Plugin+Support" target="_blank"><?php _e('ask our support team', 'grabzit-web-capture');?></a> <?php _e('or read about', 'grabzit-web-capture');?> <a href="https://grabz.it/plugins/wordpress/" target="_blank"><?php _e('what else', 'grabzit-web-capture');?></a> <?php _e('you can do with the GrabzIt plugin.', 'grabzit-web-capture');?></p>
 </div>

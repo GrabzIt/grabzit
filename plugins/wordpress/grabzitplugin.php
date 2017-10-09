@@ -3,17 +3,21 @@
    Plugin Name: GrabzIt Web Capture
    Plugin URI: https://grabz.it
    Description: Use a simple shortcode to screenshot a webpage or convert any text or HTML snippet into images, PDF's, DOCX, Animated GIF's, CSV, JSON and more! To get started: activate the GrabzIt Web Capture and go to the GrabzIt API page to get your Application Key. 
-   Version: 1.0.0
+   Version: 1.0.1
    Author: GrabzIt Limited
    Author URI:   https://grabz.it/index.aspx
    License: GPL2
    License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+   Text Domain: grabzit-web-capture
+   Domain Path: /languages
    */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 function grabzit_shortcodes_init()
 {
+    load_plugin_textdomain('grabzit-web-capture', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    
     function grabzit_shortcode($atts, $content)
     {
         wp_enqueue_script('grabzit', plugin_dir_url(__FILE__) . 'grabzit.min.js');
@@ -66,7 +70,7 @@ function grabzit_shortcodes_init()
     {
         if (current_user_can('manage_options'))
         {
-            add_options_page("GrabzIt Settings", "GrabzIt Settings", 1, "GrabzIt Settings", "grabzit_admin");
+            add_options_page(__('GrabzIt Settings', 'grabzit-web-capture'), __('GrabzIt Settings', 'grabzit-web-capture'), 1, __('GrabzIt Settings', 'grabzit-web-capture'), "grabzit_admin");
         }
     }
  
