@@ -55,8 +55,8 @@ GrabzItDemo::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'home#index'
-  match 'processScreenshot' => 'home#processScreenshot'
-  match 'clearScreenshots' => 'home#clearScreenshots'
+  match 'processScreenshot' => 'home#processScreenshot', :via => [:get, :post]
+  match 'clearScreenshots' => 'home#clearScreenshots', :via => [:get, :post]
 
   # See how all your routes lay out with "rake routes"
 
