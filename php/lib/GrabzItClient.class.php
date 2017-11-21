@@ -740,6 +740,7 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_POST, count($parameters));
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
 			curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($parameters, '', '&'));
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 
 			//execute post
 			$data = curl_exec($ch);
