@@ -436,7 +436,8 @@ public class PDFOptions extends BaseOptions {
         + "|" + title + "|" + coverURL + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables;
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables
+        + "|" + getProxy();
     }    
     
     @Override

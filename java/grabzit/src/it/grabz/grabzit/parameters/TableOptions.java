@@ -150,7 +150,7 @@ public class TableOptions extends BaseOptions {
         +"|"+getCustomId()+"|"+tableNumberToInclude+"|"+ParameterUtility.toInt(includeAllTables)
         +"|"+ParameterUtility.toInt(includeHeaderNames)+"|"+targetElement+"|"+format.getValue()+"|"+requestAs.getValue()
         +"|"+getCountry().getValue() + "|" + getExportURL() + "|" + getEncryptionKey()
-        +"|"+post;
+        +"|"+post + "|" + getProxy();
     }    
 
     @Override

@@ -275,7 +275,7 @@ public class ImageOptions extends BaseOptions {
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent) + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post;
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy();
     }    
     
     @Override

@@ -404,7 +404,8 @@ public class DOCXOptions extends BaseOptions {
         + "|" + title + "|" + marginTop + "|" + marginLeft + "|" + marginBottom + "|" + marginRight
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey() + "|" + ParameterUtility.toInt(noAds) + "|" + post
-        + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth;
+        + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth
+        + "|" + getProxy();
     }    
     
     @Override

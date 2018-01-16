@@ -18,6 +18,7 @@ public abstract class BaseOptions {
     private String customId;
     private String exportURL;
     private String encryptionKey;
+    private String proxy;
     private Country country;
     protected int delay;
     protected String post;
@@ -29,6 +30,7 @@ public abstract class BaseOptions {
         this.customId = "";
         this.exportURL = "";
         this.encryptionKey = "";
+        this.proxy = "";
         this.country = Country.DEFAULT;
     }
     
@@ -88,6 +90,20 @@ public abstract class BaseOptions {
         this.encryptionKey = encryptionKey;
     }     
     
+    /**
+     * @return the the HTTP proxy that should be used to create the capture.
+     */
+    public String getProxy() {
+        return proxy;
+    }
+
+    /**
+     * @param proxy the HTTP proxy that should be used to create the capture.
+     */
+    public void setProxy(String proxy) {
+        this.proxy = proxy;
+    }         
+    
     protected String appendParameter(String qs, String name, String value) throws UnsupportedEncodingException
     {
         String val = "";
@@ -119,6 +135,7 @@ public abstract class BaseOptions {
         params.put("country", this.country.getValue());
         params.put("export", ParameterUtility.encode(this.exportURL));
         params.put("encryption", ParameterUtility.encode(this.encryptionKey));
+        params.put("proxy", ParameterUtility.encode(this.proxy));
         params.put("customid", ParameterUtility.encode(this.customId));
         params.put("callback", ParameterUtility.encode(ParameterUtility.nullCheck(callBackURL)));
         params.put("sig", ParameterUtility.encode(sig));
