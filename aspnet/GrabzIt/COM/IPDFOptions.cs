@@ -160,6 +160,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string Proxy
+        {
+            get;
+            set;
+        }
+
         int BrowserWidth
         {
             get;

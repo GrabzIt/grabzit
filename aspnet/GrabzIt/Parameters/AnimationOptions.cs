@@ -127,7 +127,7 @@ namespace GrabzIt.Parameters
 
             return applicationSecret + "|" + urlParam + callBackURLParam +
             "|" + Height + "|" + Width + "|" + CustomId + "|" + FramesPerSecond + "|" + Speed + "|" + Duration + "|" + Repeat + "|" + Convert.ToInt32(Reverse) +
-            "|" + Start + "|" + CustomWaterMarkId + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + ExportURL + "|" + EncryptionKey;
+            "|" + Start + "|" + CustomWaterMarkId + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + ExportURL + "|" + EncryptionKey + "|" + Proxy;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)

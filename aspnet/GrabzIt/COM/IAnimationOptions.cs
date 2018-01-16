@@ -25,6 +25,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string Proxy
+        {
+            get;
+            set;
+        }
+
         string CustomId
         {
             get;

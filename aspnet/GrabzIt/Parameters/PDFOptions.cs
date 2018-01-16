@@ -285,7 +285,7 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
-             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables;
+             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)

@@ -67,6 +67,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string Proxy
+        {
+            get;
+            set;
+        }
+
         void AddPostParameter(string name, string value);
     }
 }

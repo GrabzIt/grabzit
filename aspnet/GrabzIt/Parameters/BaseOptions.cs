@@ -17,6 +17,7 @@ namespace GrabzIt.Parameters
             CustomId = string.Empty;
             ExportURL = string.Empty;
             EncryptionKey = string.Empty;
+            Proxy = string.Empty;
         }
 
         /// <summary>
@@ -55,6 +56,15 @@ namespace GrabzIt.Parameters
             set;
         }
 
+        /// <summary>
+        /// The HTTP proxy that should be used to create the capture.
+        /// </summary>
+        public string Proxy
+        {
+            get;
+            set;
+        }
+
         protected Dictionary<string, string> CreateParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
 	    {
 		    Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -63,6 +73,7 @@ namespace GrabzIt.Parameters
 		    parameters.Add("customid", CustomId);
             parameters.Add("export", ExportURL);
             parameters.Add("encryption", EncryptionKey);
+            parameters.Add("proxy", Proxy);
             parameters.Add("callback", callBackURL);
 		    parameters.Add("sig", signature);		
 		    parameters.Add(dataName, dataValue);
