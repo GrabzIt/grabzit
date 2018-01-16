@@ -5,6 +5,7 @@ class GrabzItBaseOptions
 	private $country = null;
 	private $exportUrl = null;
 	private $encryptionKey = null;
+	private $proxy = null;
 	protected $delay = null;
 	protected $post = null;
 	
@@ -72,6 +73,22 @@ class GrabzItBaseOptions
 		return $this->encryptionKey;
 	}
 	
+	/*
+	Set the HTTP proxy that should be used to create the capture.
+	*/
+	public function setProxy($value)
+	{
+		$this->proxy = $value;
+	}
+
+	/*
+	Get the HTTP proxy that should be used to create the capture.
+	*/
+	public function getProxy()
+	{
+		return $this->proxy;
+	}	
+	
 	protected function appendParameter($qs, $name, $value)
 	{
 		$val = '';
@@ -105,6 +122,7 @@ class GrabzItBaseOptions
 		$params['callback'] = $this->nullToEmpty($callBackURL);
 		$params['export'] = $this->nullToEmpty($this->exportUrl);
 		$params['encryption'] = $this->nullToEmpty($this->encryptionKey);
+		$params['proxy'] = $this->nullToEmpty($this->proxy);
 		$params['sig'] = $sig;
 		$params[$dataName] = $this->nullToEmpty($dataValue);
 		

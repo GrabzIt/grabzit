@@ -272,7 +272,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty($this->targetElement)
 		."|".$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
 		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post);  
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy());  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
