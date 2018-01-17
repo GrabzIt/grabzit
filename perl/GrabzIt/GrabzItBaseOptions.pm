@@ -15,6 +15,7 @@ sub new
     $self->{"encryptionKey"} = '';
     $self->{"delay"} = 0;
 	$self->{"post"} = '';
+	$self->{"proxy"} = '';
 
     bless $self, $class;
 
@@ -73,6 +74,19 @@ sub exportURL
     return $self->{"exportURL"};
 }
 
+#
+# The HTTP proxy that should be used to create the capture
+#
+sub proxy
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"proxy"} = shift;
+    }
+    return $self->{"proxy"};
+}
+
 sub _appendPostParameter($$$)
 {
 	my ($self, $qs, $name, $value) = @_;
@@ -107,6 +121,7 @@ sub createParameters($$$$$)
     $params->{'country'} = $self->country();
     $params->{'export'} = $self->exportURL();
     $params->{'encryption'} = $self->encryptionKey();
+	$params->{'proxy'} = $self->proxy();
     $params->{'customid'} = $self->customId();
     $params->{'callback'} = $callBackURL;
     $params->{'sig'} = $sig;

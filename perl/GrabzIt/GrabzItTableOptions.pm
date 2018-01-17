@@ -134,7 +134,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId()."|".$self->tableNumberToInclude() ."|".$self->includeAllTables()."|".$self->includeHeaderNames()."|".$self->targetElement()."|".
-    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->encryptionKey()."|".$self->{"post"};
+    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->encryptionKey()."|".$self->{"post"}."|".$self->proxy();
 }
 
 sub _getParameters($$$$$)
