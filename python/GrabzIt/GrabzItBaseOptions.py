@@ -22,6 +22,7 @@ class GrabzItBaseOptions():
                 self.encryptionKey = ""
                 self.delay = 0
                 self.post = ""
+                self.proxy = ""
 
         def _appendParameter(self, qs, name, value):
             val = ""
@@ -40,4 +41,4 @@ class GrabzItBaseOptions():
             return qs
                 
         def _createParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
-            return {"key":str(applicationKey), "country": str(self.country), "export": str(self.exportURL), "encryption": str(self.encryptionKey), "customid": str(self.customId), "callback": str(callBackURL), "sig": str(sig), str(dataName):str(dataValue)}
+            return {"key":str(applicationKey), "country": str(self.country), "export": str(self.exportURL), "encryption": str(self.encryptionKey), "proxy": str(self.proxy), "customid": str(self.customId), "callback": str(callBackURL), "sig": str(sig), str(dataName):str(dataValue)}

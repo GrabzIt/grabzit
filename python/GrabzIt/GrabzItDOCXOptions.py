@@ -116,4 +116,4 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
                 "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.targetElement)+"|"+str(self.templateId)+"|"+\
-                str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))
+                str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))+"|"+str(self.proxy)

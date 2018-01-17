@@ -57,5 +57,5 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.customId)+"|"+str(int(self.tableNumberToInclude))+"|"+str(int(self.includeAllTables))+"|"+str(int(self.includeHeaderNames))+"|"+str(self.targetElement)+ \
-                "|"+str(self.format)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)+"|"+str(self.post)
+                "|"+str(self.format)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)+"|"+str(self.post)+"|"+str(self.proxy)
                 

@@ -80,5 +80,5 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.format)+"|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)
+                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy)
                 
