@@ -2,7 +2,7 @@
 Contributors: grabzit
 Tags: screenshot,html to pdf,html to image,html to docx,video to animated gif,web capture
 Requires at least: 4.5.0
-Tested up to: 4.8.2
+Tested up to: 4.9
 Requires PHP: 5
 Stable tag: trunk
 License: GPL2
@@ -26,5 +26,7 @@ To further customize your captures just choose one of these [available options](
 [grabzit format="pdf" download="1"]https://www.google.com[/grabzit]
 
 If you have any questions please [ask our support team](https://grabz.it/contact.aspx?subject=WordPress+Plugin+Support) or read about [what else](https://grabz.it/plugins/wordpress/) you can do with the GrabzIt plugin.
+
 == Changelog ==
-Localized Plugin
+- Localized Plugin
+- Added customizable HTTP proxies
