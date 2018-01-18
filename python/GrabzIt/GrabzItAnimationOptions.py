@@ -58,7 +58,7 @@ class GrabzItAnimationOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(self.customId)+"|"+self._toString(self.framesPerSecond)+"|"+self._toString(self.speed)+"|"+str(int(self.duration))+ \
-                "|"+str(int(self.repeat))+"|"+str(int(self.reverse))+"|"+str(int(self.start))+"|"+str(self.customWaterMarkId)+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)
+                "|"+str(int(self.repeat))+"|"+str(int(self.reverse))+"|"+str(int(self.start))+"|"+str(self.customWaterMarkId)+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)+"|"+str(self.proxy)
 
         def _toString(self, value):
                 if ((value % 1) == 0):
