@@ -120,7 +120,7 @@ class GrabzItTest < Test::Unit::TestCase
 	end		
 
 	def test_delete_watermark
-		assert_nothing_raised "An error occured when trying to add a watermark" do	
+		assert_nothing_raised "An error occured when trying to delete a watermark" do	
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
 			begin
 				grabzItClient.delete_watermark(WaterMark_Identifier)
@@ -225,8 +225,8 @@ class GrabzItTest < Test::Unit::TestCase
 		assert_nothing_raised "An error occured when trying to take a pdf screenshot" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
 			options = GrabzIt::PDFOptions.new()
-			options.hideElement(".ArevicoModal-bg,.ArevicoModal")
-			options.delay(30000)
+			options.hideElement = ".ArevicoModal-bg,.ArevicoModal"
+			options.delay = 30000
 			grabzItClient.url_to_pdf("http://www.itnews24hrs.com/2016/05/turnkey-lender/", options)
 			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using test_take_pdf_hide_popup method")
 		end	
@@ -236,7 +236,7 @@ class GrabzItTest < Test::Unit::TestCase
 		assert_nothing_raised "An error occured when trying to take a image screenshot" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
 			options = GrabzIt::ImageOptions.new()
-			options.customWaterMarkId("GrabzIt_Browser")
+			options.customWaterMarkId = "GrabzIt_Browser"
 			grabzItClient.url_to_image("http://www.google.com", options)
 			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using url_to_image method")
 		end	
@@ -246,8 +246,8 @@ class GrabzItTest < Test::Unit::TestCase
 		assert_nothing_raised "An error occured when trying to take a image screenshot" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
 			options = GrabzIt::ImageOptions.new()
-			options.hideElement(".ArevicoModal-bg,.ArevicoModal")
-			options.delay(30000)
+			options.hideElement = ".ArevicoModal-bg,.ArevicoModal"
+			options.delay = 30000
 			grabzItClient.url_to_image("http://www.itnews24hrs.com/2016/05/turnkey-lender/", options)
 			assert_not_nil(grabzItClient.save(), "Failed to take screenshot using test_take_image_hide_popup method")
 		end	

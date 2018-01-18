@@ -6,6 +6,7 @@ module GrabzIt
 	# @author GrabzIt
 	class PDFOptions < BaseOptions
 		def initialize()
+			super()
 			@includeBackground = true
 			@pagesize = 'A4'
 			@orientation = 'Portrait'
@@ -40,7 +41,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] include background
 		# @return [void]		
-		def includeBackground(value)
+		def includeBackground=(value)
 			@includeBackground = value
 		end
 
@@ -53,7 +54,7 @@ module GrabzIt
 		#
 		# @param value [String] page size
 		# @return [void]		
-		def pagesize(value)
+		def pagesize=(value)
 			value = GrabzIt::Utility.nil_check(value).upcase
 			@pagesize = value
 		end		
@@ -67,7 +68,7 @@ module GrabzIt
 		#
 		# @param value [String] page orientation
 		# @return [void]		
-		def orientation(value)
+		def orientation=(value)
 			value = GrabzIt::Utility.nil_check(value).capitalize
 			@orientation = value
 		end		
@@ -81,7 +82,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] include links
 		# @return [void]		
-		def includeLinks(value)
+		def includeLinks=(value)
 			@includeLinks = value
 		end		
 		
@@ -94,7 +95,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] include links
 		# @return [void]		
-		def includeOutline(value)
+		def includeOutline=(value)
 			@includeOutline = value
 		end			
 		
@@ -107,7 +108,7 @@ module GrabzIt
 		#
 		# @param value [String] PDF title
 		# @return [void]		
-		def title(value)
+		def title=(value)
 			@title = value
 		end	
 
@@ -120,7 +121,7 @@ module GrabzIt
 		#
 		# @param value [String] cover URL
 		# @return [void]		
-		def coverURL(value)
+		def coverURL=(value)
 			@coverURL = value
 		end
 
@@ -133,7 +134,7 @@ module GrabzIt
 		#
 		# @param value [Integer] margin top
 		# @return [void]		
-		def marginTop(value)
+		def marginTop=(value)
 			@marginTop = value
 		end		
 		
@@ -146,7 +147,7 @@ module GrabzIt
 		#
 		# @param value [Integer] margin left
 		# @return [void]		
-		def marginLeft(value)
+		def marginLeft=(value)
 			@marginLeft = value
 		end	
 
@@ -159,7 +160,7 @@ module GrabzIt
 		#
 		# @param value [Integer] margin bottom
 		# @return [void]		
-		def marginBottom(value)
+		def marginBottom=(value)
 			@marginBottom = value
 		end			
 		
@@ -172,7 +173,7 @@ module GrabzIt
 		#
 		# @param value [Integer] margin right
 		# @return [void]		
-		def marginRight(value)
+		def marginRight=(value)
 			@marginRight = value
 		end		
 		
@@ -185,7 +186,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the browser width
 		# @return [void]		
-		def browserWidth(value)
+		def browserWidth=(value)
 			@browserWidth = value
 		end	
 		
@@ -198,7 +199,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the width
 		# @return [void]		
-		def pageWidth(value)
+		def pageWidth=(value)
 			@width = value
 		end			
 		
@@ -211,7 +212,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the height
 		# @return [void]		
-		def pageHeight(value)
+		def pageHeight=(value)
 			@height = value
 		end		
 		
@@ -224,7 +225,7 @@ module GrabzIt
 		#
 		# @param value [Integer] delay
 		# @return [void]		
-		def delay(value)
+		def delay=(value)
 			@delay = value
 		end	
 
@@ -237,7 +238,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the browser type
 		# @return [void]		
-		def requestAs(value)
+		def requestAs=(value)
 			@requestAs = value
 		end
 
@@ -250,7 +251,7 @@ module GrabzIt
 		#
 		# @param value [String] template id
 		# @return [void]		
-		def templateId(value)
+		def templateId=(value)
 			@templateId = value
 		end		
 		
@@ -263,7 +264,7 @@ module GrabzIt
 		#
 		# @param value [String] custom watermark id
 		# @return [void]		
-		def customWaterMarkId(value)
+		def customWaterMarkId=(value)
 			@customWaterMarkId = value
 		end					
 		
@@ -276,7 +277,7 @@ module GrabzIt
 		#
 		# @param value [Integer] quality
 		# @return [void]		
-		def quality(value)
+		def quality=(value)
 			@quality = value
 		end
 		
@@ -289,7 +290,7 @@ module GrabzIt
 		#
 		# @param value [String] the target element
 		# @return [void]		
-		def targetElement(value)
+		def targetElement=(value)
 			@targetElement = value
 		end
 		
@@ -302,7 +303,7 @@ module GrabzIt
 		#
 		# @param value [String] the element(s) to hide
 		# @return [void]		
-		def hideElement(value)
+		def hideElement=(value)
 			@hideElement = value
 		end
 		
@@ -315,7 +316,7 @@ module GrabzIt
 		#
 		# @param value [String] the element to wait for
 		# @return [void]		
-		def waitForElement(value)
+		def waitForElement=(value)
 			@waitForElement = value
 		end		
 		
@@ -328,7 +329,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] hide adverts
 		# @return [void]		
-		def noAds(value)
+		def noAds=(value)
 			@noAds = value
 		end		
 
@@ -351,26 +352,15 @@ module GrabzIt
 		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
-			urlParam = ''
-			if (url != nil)
-				urlParam = GrabzIt::Utility.nil_check(url)+"|"
-			end		
+			items = [applicationSecret]
 			
-			callBackURLParam = ''
-			if (callBackURL != nil)
-				callBackURLParam = GrabzIt::Utility.nil_check(callBackURL)
-			end					
-
-			return applicationSecret+"|"+ urlParam + callBackURLParam +
-			"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.b_to_str(@includeBackground)+"|"+@pagesize +"|"+@orientation+"|"+
-			GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.b_to_str(@includeLinks)+"|"+GrabzIt::Utility.b_to_str(@includeOutline)+"|"+
-			GrabzIt::Utility.nil_check(@title)+"|"+GrabzIt::Utility.nil_check(@coverURL)+"|"+GrabzIt::Utility.nil_int_check(@marginTop)+"|"+GrabzIt::Utility.nil_int_check(@marginLeft)+
-			"|"+GrabzIt::Utility.nil_int_check(@marginBottom)+"|"+GrabzIt::Utility.nil_int_check(@marginRight)+"|"+GrabzIt::Utility.nil_int_check(@delay)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+"|"+
-			GrabzIt::Utility.nil_check(@templateId)+"|"+GrabzIt::Utility.nil_check(@hideElement)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+
-			GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@waitForElement)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)+"|"+
-			GrabzIt::Utility.b_to_str(@noAds)+"|"+GrabzIt::Utility.nil_check(@post)+"|"+GrabzIt::Utility.nil_int_check(@browserWidth)+"|"+
-			GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_check(@templateVariables)
+			if(url != nil)
+				items.push(GrabzIt::Utility.nil_check(url))
+			end
+			
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.b_to_str(@includeOutline),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_check(@coverURL),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_check(@proxy))
+			
+			return items.join("|")
 		end
 		
 		# @!visibility private

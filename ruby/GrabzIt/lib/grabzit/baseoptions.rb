@@ -10,6 +10,7 @@ module GrabzIt
 			@encryptionKey = nil
 			@delay = nil
 			@post = nil
+			@proxy = nil
 		end	
 		
 		# @return [String] the custom identifier that you can pass through to the web service.
@@ -21,7 +22,7 @@ module GrabzIt
 		#
 		# @param value [String] the custom identifier
 		# @return [void]
-		def customId(value)
+		def customId=(value)
 			@customId = value
 		end		
 		
@@ -34,7 +35,7 @@ module GrabzIt
 		#
 		# @param value [String] the country to use
 		# @return [void]
-		def country(value)
+		def country=(value)
 			@country = value
 		end
 		
@@ -47,7 +48,7 @@ module GrabzIt
 		#
 		# @param value [String] export URL to use
 		# @return [void]
-		def exportURL(value)
+		def exportURL=(value)
 			@exportURL = value
 		end
 		
@@ -60,9 +61,22 @@ module GrabzIt
 		#
 		# @param value [String] encryption key to use
 		# @return [void]
-		def encryptionKey(value)
+		def encryptionKey=(value)
 			@encryptionKey = value
-		end		
+		end	
+		
+		# @return [String] the HTTP proxy that should be used to create the capture.
+		def proxy
+			@proxy
+		end
+
+		# Set the HTTP proxy that should be used to create the capture.
+		#
+		# @param value [String] HTTP proxy to use
+		# @return [void]
+		def proxy=(value)
+			@proxy = value
+		end			
 		
 		# @!visibility private
 		def startDelay
@@ -105,6 +119,7 @@ module GrabzIt
 			params['callback'] = GrabzIt::Utility.nil_check(callBackURL)
 			params['export'] = GrabzIt::Utility.nil_check(@exportURL)
 			params['encryption'] = GrabzIt::Utility.nil_check(@encryptionKey)
+			params['proxy'] = GrabzIt::Utility.nil_check(@proxy)
 			params['sig'] = sig
 			params[dataName] = GrabzIt::Utility.nil_check(dataValue)
 

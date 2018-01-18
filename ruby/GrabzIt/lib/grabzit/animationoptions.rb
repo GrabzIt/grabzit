@@ -6,6 +6,7 @@ module GrabzIt
 	# @author GrabzIt
 	class AnimationOptions < BaseOptions
 		def initialize()
+			super()
 			@width = 0
 			@height = 0
 			@start = 0
@@ -27,7 +28,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the width
 		# @return [void]		
-		def width(value)
+		def width=(value)
 			@width = value
 		end	
 
@@ -40,7 +41,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the height
 		# @return [void]		
-		def height(value)
+		def height=(value)
 			@height = value
 		end		
 
@@ -53,7 +54,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the second to start at
 		# @return [void]		
-		def start(value)
+		def start=(value)
 			@start = value
 		end		
 		
@@ -66,7 +67,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the number of seconds
 		# @return [void]		
-		def duration(value)
+		def duration=(value)
 			@duration = value
 		end				
 		
@@ -79,7 +80,7 @@ module GrabzIt
 		#
 		# @param value [Float] the speed
 		# @return [void]		
-		def speed(value)
+		def speed=(value)
 			@speed = value
 		end					
 		
@@ -92,7 +93,7 @@ module GrabzIt
 		#
 		# @param value [Float] the number of frames per second
 		# @return [void]		
-		def framesPerSecond(value)
+		def framesPerSecond=(value)
 			@framesPerSecond = value
 		end			
 		
@@ -105,7 +106,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the number of times to loop
 		# @return [void]		
-		def repeat(value)
+		def repeat=(value)
 			@repeat = value
 		end				
 		
@@ -118,7 +119,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] reverse value
 		# @return [void]		
-		def reverse(value)
+		def reverse=(value)
 			@reverse = value
 		end					
 		
@@ -131,7 +132,7 @@ module GrabzIt
 		#
 		# @param value [String] custom watermark id
 		# @return [void]		
-		def customWaterMarkId(value)
+		def customWaterMarkId=(value)
 			@customWaterMarkId = value
 		end					
 		
@@ -144,28 +145,21 @@ module GrabzIt
 		#
 		# @param value [Integer] the custom identifier
 		# @return [void]		
-		def quality(value)
+		def quality=(value)
 			@quality = value
 		end		
 		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
-			urlParam = ''
-			if (url != nil)
-				urlParam = GrabzIt::Utility.nil_check(url)+"|"
-			end		
+			items = [applicationSecret]
 			
-			callBackURLParam = ''
-			if (callBackURL != nil)
-				callBackURLParam = GrabzIt::Utility.nil_check(callBackURL)
-			end				
+			if(url != nil)
+				items.push(GrabzIt::Utility.nil_check(url))
+			end
 			
-			return applicationSecret+"|"+ urlParam + callBackURLParam +
-			"|"+GrabzIt::Utility.nil_int_check(@height)+"|"+GrabzIt::Utility.nil_int_check(@width)+"|"+GrabzIt::Utility.nil_check(@customId)+"|"+
-			GrabzIt::Utility.nil_float_check(@framesPerSecond)+"|"+GrabzIt::Utility.nil_float_check(@speed)+"|"+GrabzIt::Utility.nil_int_check(@duration)+
-			"|"+GrabzIt::Utility.nil_int_check(@repeat)+"|"+GrabzIt::Utility.b_to_str(@reverse)+"|"+GrabzIt::Utility.nil_int_check(@start)+
-			"|"+GrabzIt::Utility.nil_check(@customWaterMarkId)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_int_check(@quality)+
-			"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+GrabzIt::Utility.nil_check(@encryptionKey)
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_float_check(@framesPerSecond),GrabzIt::Utility.nil_float_check(@speed),GrabzIt::Utility.nil_int_check(@duration),GrabzIt::Utility.nil_int_check(@repeat),GrabzIt::Utility.b_to_str(@reverse),GrabzIt::Utility.nil_int_check(@start),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.nil_check(@proxy))
+
+			return items.join("|")
 		end		
 
 		# @!visibility private

@@ -6,6 +6,7 @@ module GrabzIt
 	# @author GrabzIt
 	class TableOptions < BaseOptions
 		def initialize()
+			super()
 			@tableNumberToInclude = 1
 			@format = 'csv'
 			@includeHeaderNames = true
@@ -23,7 +24,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the table number
 		# @return [void]		
-		def tableNumberToInclude(value)
+		def tableNumberToInclude=(value)
 			@tableNumberToInclude = value
 		end		
 		
@@ -36,7 +37,7 @@ module GrabzIt
 		#
 		# @param value [String] the format
 		# @return [void]		
-		def format(value)
+		def format=(value)
 			@format = value
 		end		
 		
@@ -49,7 +50,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] include header names
 		# @return [void]		
-		def includeHeaderNames(value)
+		def includeHeaderNames=(value)
 			@includeHeaderNames = value
 		end		
 		
@@ -62,7 +63,7 @@ module GrabzIt
 		#
 		# @param value [Boolean] include all tables
 		# @return [void]		
-		def includeAllTables(value)
+		def includeAllTables=(value)
 			@includeAllTables = value
 		end		
 		
@@ -75,7 +76,7 @@ module GrabzIt
 		#
 		# @param value [String] target
 		# @return [void]		
-		def targetElement(value)
+		def targetElement=(value)
 			@targetElement = value
 		end		
 		
@@ -88,7 +89,7 @@ module GrabzIt
 		#
 		# @param value [Integer] the browser type
 		# @return [void]		
-		def requestAs(value)
+		def requestAs=(value)
 			@requestAs = value
 		end	
 
@@ -103,21 +104,15 @@ module GrabzIt
 		
 		# @!visibility private
 		def _getSignatureString(applicationSecret, callBackURL, url = nil)
-			urlParam = ''
-			if (url != nil)
-				urlParam = GrabzIt::Utility.nil_check(url)+"|"
-			end		
+			items = [applicationSecret]
 			
-			callBackURLParam = ''
-			if (callBackURL != nil)
-				callBackURLParam = GrabzIt::Utility.nil_check(callBackURL)
-			end					
-
-			return applicationSecret+"|"+ urlParam + callBackURLParam +
-			"|"+GrabzIt::Utility.nil_check(@customId)+"|"+GrabzIt::Utility.nil_int_check(@tableNumberToInclude)+"|"+GrabzIt::Utility.b_to_str(@includeAllTables)+
-			"|"+GrabzIt::Utility.b_to_str(@includeHeaderNames)+"|"+GrabzIt::Utility.nil_check(@targetElement)+"|"+GrabzIt::Utility.nil_check(@format)+"|"+
-			GrabzIt::Utility.nil_int_check(@requestAs)+"|"+GrabzIt::Utility.nil_check(@country)+"|"+GrabzIt::Utility.nil_check(@exportURL)+"|"+
-			GrabzIt::Utility.nil_check(@encryptionKey)+"|"+GrabzIt::Utility.nil_check(@post)
+			if(url != nil)
+				items.push(GrabzIt::Utility.nil_check(url))
+			end
+			
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@tableNumberToInclude),GrabzIt::Utility.b_to_str(@includeAllTables),GrabzIt::Utility.b_to_str(@includeHeaderNames),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy))
+			
+			return items.join("|")
 		end
 
 		# @!visibility private

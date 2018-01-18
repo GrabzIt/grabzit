@@ -353,7 +353,12 @@ module GrabzIt
 		def get_cookies(domain)
 			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(domain))               
 
-			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+"&sig="+sig
+			qs = "key="
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(@applicationKey)))
+			qs.concat("&domain=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(domain)))
+			qs.concat("&sig=")
+			qs.concat(sig)
 
 			result = get(@protocol + WebServicesBaseURLGet + "getcookies.ashx?" + qs)
 
@@ -393,9 +398,22 @@ module GrabzIt
 			"|"+GrabzIt::Utility.nil_check(value)+"|"+GrabzIt::Utility.nil_check(path)+"|"+GrabzIt::Utility.b_to_str(httponly)+
 			"|"+GrabzIt::Utility.nil_check(expires)+"|0")
 
-			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+"&name="+
-			CGI.escape(GrabzIt::Utility.nil_check(name))+"&value="+CGI.escape(GrabzIt::Utility.nil_check(value))+"&path="+CGI.escape(GrabzIt::Utility.nil_check(path))+
-			"&httponly="+GrabzIt::Utility.b_to_str(httponly)+"&expires="+CGI.escape(GrabzIt::Utility.nil_check(expires))+"&sig="+sig
+			qs = "key="
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(@applicationKey)))
+			qs.concat("&domain=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(domain)))
+			qs.concat("&name=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(name)))
+			qs.concat("&value=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(value)))
+			qs.concat("&path=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(path)))
+			qs.concat("&httponly=")
+			qs.concat(GrabzIt::Utility.b_to_str(httponly))
+			qs.concat("&expires=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(expires)))
+			qs.concat("&sig=")
+			qs.concat(sig)
 
 			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
@@ -410,8 +428,14 @@ module GrabzIt
 			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(name)+
 			"|"+GrabzIt::Utility.nil_check(domain)+"|1")
 
-			qs = "key=" + CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&domain="+CGI.escape(GrabzIt::Utility.nil_check(domain))+
-			"&name="+CGI.escape(GrabzIt::Utility.nil_check(name))+"&delete=1&sig="+sig
+			qs = "key="
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(@applicationKey)))
+			qs.concat("&domain=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(domain)))
+			qs.concat("&name=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(name)))
+			qs.concat("&delete=1&sig=")
+			qs.concat(sig)
 
 			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
@@ -421,7 +445,7 @@ module GrabzIt
 		# @param identifier [String, nil] the identifier of a particular custom watermark you want to view
 		# @return [WaterMark] the watermark with the specified identifier
 		def get_watermark(identifier)
-			watermarks = get_watermarks(identifier)
+			watermarks = find_watermarks(identifier)
 			if watermarks.length == 1
 				return watermarks[0]
 			end
@@ -433,7 +457,7 @@ module GrabzIt
 		#
 		# @return [Array<WaterMark>] an array of uploaded watermarks
 		def get_watermarks()
-			return get_watermarks(nil)
+			return find_watermarks(nil)
 		end		
 
 		# Add a new custom watermark
@@ -488,10 +512,13 @@ module GrabzIt
 			request = Net::HTTP::Post.new(url)
 			request.content_type = "multipart/form-data, boundary="+boundary
 			request.body = post_body.join
-
-			response = Net::HTTP.new(uri.host, uri.port, :use_ssl => uri.scheme == 'https').start {|http| http.request(request) }	
+			
+			caller = Net::HTTP.new(uri.host, uri.port)
+			caller.use_ssl = uri.scheme == 'https'
+			response = caller.start {|http| http.request(request)}	
+			
 			response_check(response)
-
+			
 			return (get_result_value(response.body(), "Result") == TrueString)		
 		end
 
@@ -501,9 +528,14 @@ module GrabzIt
 		# @return [Boolean] returns true if the watermark was successfully deleted
 		# @raise [RuntimeError] if the GrabzIt service reports an error with the request it will be raised as a RuntimeError
 		def delete_watermark(identifier)
-			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(identifier))               
+			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(identifier))
 
-			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&identifier="+CGI.escape(GrabzIt::Utility.nil_check(identifier))+"&sig="+sig
+			qs = "key="
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(@applicationKey)))
+			qs.concat("&identifier=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(identifier)))
+			qs.concat("&sig=")
+			qs.concat(sig)
 
 			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "deletewatermark.ashx?" + qs), "Result") == TrueString)
 		end
@@ -558,10 +590,15 @@ module GrabzIt
 		end
 
 		private
-		def get_watermarks(identifier = nil)
+		def find_watermarks(identifier = nil)
 			sig = encode(GrabzIt::Utility.nil_check(@applicationSecret)+"|"+GrabzIt::Utility.nil_check(identifier))               
 
-			qs = "key=" +CGI.escape(GrabzIt::Utility.nil_check(@applicationKey))+"&identifier="+CGI.escape(GrabzIt::Utility.nil_check(identifier))+"&sig="+sig
+			qs = "key="
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(@applicationKey)))
+			qs.concat("&identifier=")
+			qs.concat(CGI.escape(GrabzIt::Utility.nil_check(identifier)))
+			qs.concat("&sig=")
+			qs.concat(sig)
 
 			result = get(@protocol + WebServicesBaseURLGet + "getwatermarks.ashx?" + qs)
 
@@ -623,7 +660,7 @@ module GrabzIt
 
 		private
 		def encode(text)
-			return Digest::MD5.hexdigest(text.encode('ascii', {:invalid => :replace, :undef => :replace, :replace => '?'}))			
+			return Digest::MD5.hexdigest(text.encode('ascii', {:invalid => :replace, :undef => :replace, :replace => '?'}))
 		end
 
 		private
