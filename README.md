@@ -11,7 +11,7 @@ Example
 
 We have made the programming libraries as simple as possible to use. To create a capture you must first call a method that specifies what you want to capture such as the URLToImage method followed by the Save method. You will need a application key and application secret, but you can get these for free from [https://grabz.it](https://grabz.it).
 
-```
+```php
 include("GrabzItClient.class.php");
 
 //Create the GrabzItClient class
@@ -26,7 +26,7 @@ Notice that in the above example the location of the handler.php is defined this
 
 The handler that accepts the callback and saves the image is below.
 
-```
+```php
 include("GrabzItClient.class.php");
 
 $message = $_GET["message"];
