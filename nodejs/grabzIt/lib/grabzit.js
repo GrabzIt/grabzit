@@ -388,7 +388,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
 		'templateVariables': '',
 		'pageWidth': 0,
 		'pageHeight': 0,
-		'proxy': ''
+		'proxy': '',
+		'mergeId': ''
     };
 
     context = _extend(defaults, options);
@@ -440,7 +441,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
 		'tvars': context['templateVariables'],
         'width': context['pageWidth'],
         'height': context['pageHeight'],
-		'proxy': context['proxy']
+		'proxy': context['proxy'],
+		'mergeid': context['mergeId']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -451,7 +453,7 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement']
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
 	 + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
-	 + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'];
+	 + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -487,7 +489,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
 		'templateVariables': '',
 		'pageWidth': 0,
 		'pageHeight': 0,
-		'proxy': ''
+		'proxy': '',
+		'mergeId': ''
     };
 
     context = _extend(defaults, options);
@@ -541,7 +544,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'tvars': context['templateVariables'],
         'width': context['pageWidth'],
         'height': context['pageHeight'],
-		'proxy': context['proxy']
+		'proxy': context['proxy'],
+		'mergeid': context['mergeId']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -552,7 +556,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
 	 + '|' + parseInt(context['marginRight']) + '|' + context['delay'] + '|' + parseInt(context['requestAs']) + '|' + context['country']
 	 + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
 	 + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
-	 + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'];
+	 + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
