@@ -390,6 +390,18 @@ function GrabzIt(key)
 
 				results[k.toLowerCase()] = opts[k];
 			}
+			
+			if (typeof(results['onfinish']) === 'function'){
+				var functionName = 'grabzItOnFinish' + Math.floor(Math.random() * (1000000000+1));
+				window[functionName] = results['onfinish'];
+				results['onfinish'] = functionName;
+			}
+			
+			if (typeof(results['onerror']) === 'function'){
+				var functionName = 'grabzItOnError' + Math.floor(Math.random() * (1000000000+1));
+				window[functionName] = results['onerror'];
+				results['onerror'] = functionName;
+			}
 
 			return results;
 		}
@@ -460,7 +472,7 @@ function GrabzIt(key)
 			if (this.tVars != '' && !this.options['tvars'])
 			{
 				this.options['tvars'] = this.tVars;
-			}			
+			}
 			
 			for(var k in this.options)
 			{
@@ -469,7 +481,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid')
 				{
 					throw "Option " + k + " not recognized!";
 				}
@@ -592,6 +604,11 @@ function GrabzIt(key)
 				defaultNode = document.body;
 			}
 			this.AddTo(defaultNode);
+		};
+		
+		this.CreateInvisible = function(){
+			this.options['noresult'] = 1;
+			this.Create();
 		};
 
 		this.AddTo = function(container)
