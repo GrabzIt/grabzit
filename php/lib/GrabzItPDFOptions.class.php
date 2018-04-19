@@ -26,6 +26,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $height = null;	
 	private $browserWidth = null;
 	private $templateVariables = null;
+	private $mergeId = null;
 
 	/*
 	Set the width of the resulting PDF in mm.
@@ -395,7 +396,23 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function getNoAds()
 	{
 		return $this->noAds;
-	}		
+	}
+	
+	/*
+	Set the ID of a capture that should be merged at the beginning of the new PDF document.
+	*/
+	public function setMergeId($value)
+	{
+		$this->mergeId = $value;
+	}
+
+	/*
+	Get the ID of a capture that should be merged at the beginning of the new PDF document.
+	*/
+	public function getMergeId()
+	{
+		return $this->mergeId;
+	}
 	
 	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -444,7 +461,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
-		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy());
+		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -475,6 +492,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['width'] = $this->nullToEmpty($this->width);
 		$params['height'] = $this->nullToEmpty($this->height);
 		$params['tvars'] = $this->nullToEmpty($this->templateVariables);
+		$params['mergeid'] = $this->nullToEmpty($this->mergeId);
 		
 		return $params;
 	}

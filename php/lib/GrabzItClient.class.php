@@ -354,6 +354,11 @@ class GrabzItClient
 			$obj = $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', urlencode($this->request->getData()))));
 		}
 
+		if ($obj->ID != null)
+		{
+			return $obj->ID->__toString();
+		}
+		
 		return $obj->ID;
 	}
 
