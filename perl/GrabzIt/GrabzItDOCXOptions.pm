@@ -32,6 +32,7 @@ sub new
     $self->{"templateId"} = '';
     $self->{"targetElement"} = '';
     $self->{"browserWidth"} = 0;
+	$self->{"mergeId"} = '';
         
     bless $self, $class;
 
@@ -300,6 +301,19 @@ sub templateId
 }
 
 #
+# The ID of a capture that should be merged at the beginning of the new DOCX document
+#
+sub mergeId
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"mergeId"} = shift;
+    }
+    return $self->{"mergeId"};
+}
+
+#
 # The CSS selector of the only HTML element in the web page to capture
 #
 sub targetElement
@@ -360,7 +374,7 @@ sub _getSignatureString($$;$)
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->includeImages()."|".$self->includeLinks()."|".$self->title()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
     $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
-	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy();
+	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId();
 }
 
 sub _getParameters($$$$$)
@@ -391,6 +405,7 @@ sub _getParameters($$$$$)
     $params->{'tvars'} = $self->{"templateVariables"};
     $params->{'target'} = $self->targetElement();
     $params->{'templateid'} = $self->templateId();
+	$params->{'mergeid'} = $self->mergeId();
     
     return $params;
 }

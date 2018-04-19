@@ -34,6 +34,7 @@ sub new
     $self->{"templateVariables"} = '';
     $self->{"width"} = 0;
     $self->{"height"} = 0;
+	$self->{"mergeId"} = '';
         
     bless $self, $class;
 
@@ -289,6 +290,19 @@ sub templateId
 }
 
 #
+# The ID of a capture that should be merged at the beginning of the new PDF document
+#
+sub mergeId
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"mergeId"} = shift;
+    }
+    return $self->{"mergeId"};
+}
+
+#
 # The CSS selector of the only HTML element in the web page to capture
 #
 sub targetElement
@@ -388,7 +402,7 @@ sub _getSignatureString($$;$)
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
-    "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy();
+    "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId();
 }
 
 sub _getParameters($$$$$)
@@ -421,7 +435,8 @@ sub _getParameters($$$$$)
     $params->{'width'} = $self->pageWidth();
     $params->{'height'} = $self->pageHeight();
     $params->{'tvars'} = $self->{"templateVariables"};
-    
+    $params->{'mergeid'} = $self->mergeId();
+	
     return $params;
 }
 1;
