@@ -154,6 +154,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string MergeId
+        {
+            get;
+            set;
+        }
+
         bool NoAds
         {
             get;

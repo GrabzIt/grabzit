@@ -237,6 +237,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The ID of a capture that should be merged at the beginning of the new PDF document.
+        /// </summary>
+        public string MergeId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// True if adverts should be automatically hidden.
         /// </summary>
         public bool NoAds
@@ -285,7 +294,7 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
-             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy;
+             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -316,6 +325,7 @@ namespace GrabzIt.Parameters
             parameters.Add("width", PageWidth.ToString());
             parameters.Add("height", PageHeight.ToString());
             parameters.Add("tvars", templateVariables);
+            parameters.Add("mergeid", MergeId);
 
             return parameters;
         }
