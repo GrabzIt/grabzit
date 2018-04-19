@@ -39,6 +39,7 @@ public class DOCXOptions extends BaseOptions {
     private String templateVariables;    
     private String templateId;
     private String targetElement;
+    private String mergeId;
 
     public DOCXOptions()
     {
@@ -61,7 +62,8 @@ public class DOCXOptions extends BaseOptions {
         this.height = 0;
         this.templateVariables = "";
         this.templateId = "";
-        this.targetElement = "";        
+        this.targetElement = ""; 
+        this.mergeId = "";
     }
     
     /**
@@ -342,6 +344,20 @@ public class DOCXOptions extends BaseOptions {
      */
     public void setWaitForElement(String waitForElement) {
         this.waitForElement = waitForElement;
+    }
+
+    /**
+     * @return the ID of a capture that should be merged at the beginning of the new DOCX document.
+     */
+    public String getMergeId() {
+        return mergeId;
+    }
+
+    /**
+     * @param mergeId set a ID of a capture that should be merged at the beginning of the new DOCX document.
+     */
+    public void setMergeId(String mergeId) {
+        this.mergeId = mergeId;
     }    
 
     /**
@@ -405,7 +421,7 @@ public class DOCXOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey() + "|" + ParameterUtility.toInt(noAds) + "|" + post
         + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth
-        + "|" + getProxy();
+        + "|" + getProxy() + "|" + getMergeId();
     }    
     
     @Override
@@ -435,6 +451,7 @@ public class DOCXOptions extends BaseOptions {
         params.put("tvars", String.valueOf(templateVariables));
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("templateid", ParameterUtility.encode(ParameterUtility.nullCheck(templateId)));
+        params.put("mergeid", ParameterUtility.encode(ParameterUtility.nullCheck(mergeId)));
         
         return params;
     }    

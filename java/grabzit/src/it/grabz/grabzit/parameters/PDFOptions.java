@@ -41,6 +41,7 @@ public class PDFOptions extends BaseOptions {
     private int width;
     private int height; 
     private String templateVariables;
+    private String mergeId;
     
     public PDFOptions()
     {
@@ -66,6 +67,7 @@ public class PDFOptions extends BaseOptions {
         this.width = 0;
         this.height = 0;
         this.templateVariables = "";
+        this.mergeId = "";
     }
     
     /**
@@ -375,6 +377,20 @@ public class PDFOptions extends BaseOptions {
     public void setWaitForElement(String waitForElement) {
         this.waitForElement = waitForElement;
     }    
+
+    /**
+     * @return the ID of a capture that should be merged at the beginning of the new PDF document.
+     */
+    public String getMergeId() {
+        return mergeId;
+    }
+
+    /**
+     * @param mergeId set a ID of a capture that should be merged at the beginning of the new PDF document.
+     */
+    public void setMergeId(String mergeId) {
+        this.mergeId = mergeId;
+    }
     
     /**
      * @return if true adverts should be automatically hidden.
@@ -437,7 +453,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables
-        + "|" + getProxy();
+        + "|" + getProxy() + "|" + getMergeId();
     }    
     
     @Override
@@ -469,6 +485,7 @@ public class PDFOptions extends BaseOptions {
         params.put("width", String.valueOf(width));
         params.put("height", String.valueOf(height));
         params.put("tvars", String.valueOf(templateVariables));
+        params.put("mergeid", ParameterUtility.encode(ParameterUtility.nullCheck(mergeId)));
 
         return params;
     }    
