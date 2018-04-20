@@ -237,7 +237,7 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
-        /// The ID of a capture that should be merged at the beginning of the new PDF document.
+        /// The ID of a capture that should be merged at the beginning of the new PDF document
         /// </summary>
         public string MergeId
         {

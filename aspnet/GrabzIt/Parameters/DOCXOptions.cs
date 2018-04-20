@@ -217,7 +217,7 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
-        /// The ID of a capture that should be merged at the beginning of the new DOCX document.
+        /// The ID of a capture that should be merged at the beginning of the new DOCX document
         /// </summary>
         public string MergeId
         {
