@@ -28,6 +28,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             pageWidth               set the width of the resulting DOCX in mm
             targetElement           the CSS selector of the only HTML element in the web page to capture
             browserWidth            the width of the browser in pixels
+            mergeId.................the ID of a capture that should be merged at the beginning of the new DOCX document
         """
         
         def __init__(self):
@@ -53,6 +54,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.browserWidth = 0
                 self.templateId = ''
                 self.targetElement = ''
+                self.mergeId = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -98,6 +100,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["height"] = int(self.pageHeight)
                 params["target"] = str(self.targetElement)
                 params["templateid"] = str(self.templateId)
+                params["mergeid"] = str(self.mergeId)
                 
                 return params
                 
@@ -116,4 +119,5 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
                 "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.targetElement)+"|"+str(self.templateId)+"|"+\
-                str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))+"|"+str(self.proxy)
+                str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))+"|"+\
+                str(self.proxy)+"|"+str(self.mergeId)

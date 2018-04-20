@@ -30,6 +30,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noAds                   set to true if adverts should be automatically hidden
             pageHeight              set the height of the resulting PDF in mm
             pageWidth               set the width of the resulting PDF in mm
+            mergeId.................the ID of a capture that should be merged at the beginning of the new PDF document
         """
         
         def __init__(self):
@@ -57,6 +58,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.templateVariables = ''
                 self.pageHeight = 0
                 self.pageWidth = 0
+                self.mergeId = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -104,6 +106,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["tvars"] = str(self.templateVariables)
                 params["width"] = int(self.pageWidth)
                 params["height"] = int(self.pageHeight)
+                params["mergeid"] = str(self.mergeId)
                 
                 return params
                 
@@ -122,4 +125,4 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+\
                 "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))+"|"+str(int(self.pageHeight))+\
-                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)
+                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)
