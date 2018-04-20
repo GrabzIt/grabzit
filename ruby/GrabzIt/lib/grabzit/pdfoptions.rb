@@ -30,6 +30,7 @@ module GrabzIt
 			@templateVariables = nil
 			@width = nil
 			@height = nil
+			@mergeId = nil
 		end
 		
 		# @return [Boolean] true if the background of the web page should be included in the PDF
@@ -318,7 +319,20 @@ module GrabzIt
 		# @return [void]		
 		def waitForElement=(value)
 			@waitForElement = value
-		end		
+		end
+		
+		# @return [String] get the ID of a capture that should be merged at the beginning of the new PDF document
+		def mergeId
+			@mergeId
+		end
+		
+		# Set the ID of a capture that should be merged at the beginning of the new PDF document
+		#
+		# @param value [String] the merge ID
+		# @return [void]		
+		def mergeId=(value)
+			@mergeId = value
+		end
 		
 		# @return [Boolean] get if adverts should be automatically hidden
 		def noAds
@@ -358,7 +372,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.b_to_str(@includeOutline),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_check(@coverURL),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_check(@proxy))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.b_to_str(@includeOutline),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_check(@coverURL),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@mergeId))
 			
 			return items.join("|")
 		end
@@ -391,6 +405,7 @@ module GrabzIt
 			params['width'] = GrabzIt::Utility.nil_int_check(@width)
 			params['height'] = GrabzIt::Utility.nil_int_check(@height)
 			params['tvars'] = GrabzIt::Utility.nil_check(@templateVariables)
+			params['mergeid'] = GrabzIt::Utility.nil_check(@mergeId)
 			
 			return params;
 		end		
