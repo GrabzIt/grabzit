@@ -1,11 +1,11 @@
 GrabzIt 3.2
 ===========
 
-This library allows you to dynamically convert HTML or a URL to a image, DOCX document or PDF, a online video to a animated gif or a HTML table into a CSV, JSON or excel spreadsheet. The resulting capture can then be added to anywhere within the webpage or returned as a data URI.
+This library allows you to dynamically convert HTML or a URL to a image, DOCX document or PDF, a online video to a animated gif or a HTML table into a CSV, JSON or excel spreadsheet. The resulting capture can then be added to anywhere within the webpage or returned as a data URI. Full documentation of this library can be found here: https://grabz.it/api/javascript/
 
 An example of the GrabzIt in action can be found in the demo.html and demoDataURI.html files. Remember to replace the "Your Application Key" with your actual application key found here: https://grabz.it/api/
 
-GrabzIt JavaScript library provides four methods:
+GrabzIt JavaScript library provides ten methods:
 
 - ConvertURL([url to capture], [options])
 - ConvertHTML([html to convert], [options])
@@ -15,9 +15,10 @@ GrabzIt JavaScript library provides four methods:
 - AddTemplateVariable(name, value)
 - AddTo([element | element id])
 - Create()
+- CreateInvisible()
 - DataURI([callback], [decrypt])
 
-The ConvertURL or ConvertHTML method must be called and then either the AddTo, Create or DataURI method. The AddTo method must specify the id of a element or the element were the capture should be displayed, so the first two calls below will work. The Create method just creates the capture on the body tag or the root element of the HTML document if the body tag doesn't exist. An example of this is shown in calls three and four below. 
+The ConvertURL or ConvertHTML method must be called and then either the AddTo, Create, CreateInvisible or DataURI method. The AddTo method must specify the id of a element or the element were the capture should be displayed, so the first two calls below will work. The Create method just creates the capture on the body tag or the root element of the HTML document if the body tag doesn't exist. An example of this is shown in calls three and four below.
 
 
 	<html>
@@ -58,7 +59,21 @@ The DataURI method requires a callback function this function must have one para
 	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').DataURI(callback);
 	</script>
 	</body>
-	</html>	
+	</html>
+
+The CreateInvisible then the capture is created but not shown in the webpage.
+
+	<html>
+	<body>
+	<script>
+	//Call One
+	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com').CreateInvisible();
+	
+	//Call Two
+	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').CreateInvisible();	
+	</script>
+	</body>
+	</html>		
 
 The Encrypt method automatically makes a cryptographically secure key and passes it to GrabzIt's API to encrypt your capture. To access encrypted captures use the DataURI method, if a true is passed to the decrypt parameter of the DataURI method any encrypted data will be automatically decrypted using the key created in the Encrypt method.
 
