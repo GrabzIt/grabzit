@@ -30,7 +30,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noAds                   set to true if adverts should be automatically hidden
             pageHeight              set the height of the resulting PDF in mm
             pageWidth               set the width of the resulting PDF in mm
-            mergeId.................the ID of a capture that should be merged at the beginning of the new PDF document
+            mergeId                 the ID of a capture that should be merged at the beginning of the new PDF document
         """
         
         def __init__(self):

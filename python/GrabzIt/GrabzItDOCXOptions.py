@@ -28,7 +28,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             pageWidth               set the width of the resulting DOCX in mm
             targetElement           the CSS selector of the only HTML element in the web page to capture
             browserWidth            the width of the browser in pixels
-            mergeId.................the ID of a capture that should be merged at the beginning of the new DOCX document
+            mergeId                 the ID of a capture that should be merged at the beginning of the new DOCX document
         """
         
         def __init__(self):
