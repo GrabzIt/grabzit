@@ -61,7 +61,7 @@ The DataURI method requires a callback function this function must have one para
 	</body>
 	</html>
 
-The CreateInvisible then the capture is created but not shown in the webpage.
+With the CreateInvisible method the capture is created but not shown on the webpage.
 
 	<html>
 	<body>
