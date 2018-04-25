@@ -712,7 +712,7 @@ namespace GrabzIt
                 {
                     throw e;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     if (attempt < 3)
                     {
@@ -720,7 +720,7 @@ namespace GrabzIt
                         continue;
                     }
                     throw new GrabzItException("An error occurred trying to save the capture to: " +
-                                        saveToFile, ErrorCode.FileSaveError);
+                                        saveToFile, ErrorCode.FileSaveError, ex);
                 }
             }
             return true;

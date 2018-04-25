@@ -21,6 +21,12 @@ namespace GrabzIt
             this.code = code;
         }
 
+        internal GrabzItException(string message, ErrorCode code, Exception e)
+            : base(message, e)
+        {
+            this.code = code;
+        }
+
         public ErrorCode Code
         {
             get
