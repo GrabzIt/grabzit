@@ -180,7 +180,7 @@ class GrabzItTest < Test::Unit::TestCase
 	#end
 	
 	def find_cookie(grabzItClient)
-		cookies = grabzItClient.get_cookies(Cookie_Domain)
+		cookies = grabzItClient.get_cookies("example.com")
 		
 		if cookies == nil
 			return false

@@ -609,7 +609,7 @@ module GrabzIt
 			watermarks = Array.new
 
 			xml_watemarks = doc.elements.to_a("//WebResult/WaterMarks/WaterMark")		
-			xml_watemarks.each do |watemark|                	
+			xml_watemarks.each do |watemark|
 				grabzItWaterMark = GrabzIt::WaterMark.new(watemark.elements["Identifier"].text, watemark.elements["XPosition"].text.to_i, watemark.elements["YPosition"].text.to_i, watemark.elements["Format"].text)
 				watermarks << grabzItWaterMark
 			end
@@ -650,8 +650,8 @@ module GrabzIt
 				return
 			end
 			
-			message = doc.root.elements["Message"].text()
-			code  = doc.root.elements["Code"].text()
+			message = doc.root.elements["Message"].text() rescue nil
+			code  = doc.root.elements["Code"].text() rescue nil
 			
 			if message != nil
 				raise GrabzItException.new(message, code)
@@ -677,7 +677,7 @@ module GrabzIt
 		def get_result_value(result, field)
 			doc = REXML::Document.new(result)
 			
-			value = doc.root.elements[field].text()
+			value = doc.root.elements[field].text() rescue nil
 
 			check_for_exception(doc)
 
