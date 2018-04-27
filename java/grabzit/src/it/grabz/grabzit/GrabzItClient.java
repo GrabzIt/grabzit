@@ -571,6 +571,11 @@ public class GrabzItClient {
         
         checkForError(result);
 
+        if (result == null)
+        {
+            throw new GrabzItException("An unknown network error occurred, please try calling this method again.", ErrorCode.NETWORKGENERALERROR);
+        }        
+        
         return result.getId();
     }
 
@@ -1041,7 +1046,7 @@ public class GrabzItClient {
 
     private void checkForError(IMessageResult result) throws Exception
     {
-        if (!isNullOrEmpty(result.getMessage()))
+        if (result != null && !isNullOrEmpty(result.getMessage()))
         {
             throw new GrabzItException(result.getMessage(), result.getCode());
         }
