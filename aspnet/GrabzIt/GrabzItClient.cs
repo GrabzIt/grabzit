@@ -631,6 +631,11 @@ namespace GrabzIt
 
                 CheckForException(webResult);
 
+                if (webResult == null)
+                {
+                    throw new GrabzItException("An unknown network error occurred, please try calling this method again.", ErrorCode.NetworkGeneralError);
+                }
+
                 return webResult.ID;
             }
         }
