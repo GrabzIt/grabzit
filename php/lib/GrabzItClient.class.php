@@ -12,7 +12,7 @@ include_once("GrabzItException.class.php");
 
 class GrabzItClient
 {
-    const WebServicesBaseURL_GET = "://api.grabz.it/services/";
+	const WebServicesBaseURL_GET = "://api.grabz.it/services/";
 	const WebServicesBaseURL_POST = "://grabz.it/services/";
 	const TakePicture = "takepicture.ashx";
 	const TakeTable = "taketable.ashx";
@@ -342,7 +342,7 @@ class GrabzItClient
 			throw new GrabzItException("No parameters have been set.", GrabzItException::PARAMETER_MISSING_PARAMETERS);
 		}
 
-		$sig =  $this->encode($this->request->getOptions()->_getSignatureString($this->applicationSecret, $callBackURL, $this->request->getTargetUrl()));
+		$sig = $this->encode($this->request->getOptions()->_getSignatureString($this->applicationSecret, $callBackURL, $this->request->getTargetUrl()));
 
 		$obj = null;
 		if (!$this->request->isPost())
@@ -352,6 +352,11 @@ class GrabzItClient
 		else
 		{
 			$obj = $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', urlencode($this->request->getData()))));
+		}
+		
+		if ($obj == null)
+		{
+			throw new GrabzItException("An unknown network error occurred, please try calling this method again.", GrabzItException::NETWORK_GENERAL_ERROR);
 		}
 
 		if ($obj->ID != null)
@@ -477,7 +482,7 @@ class GrabzItClient
 	*/
 	public function GetCookies($domain)
 	{
-		$sig =  $this->encode($this->applicationSecret."|".$domain);
+		$sig = $this->encode($this->applicationSecret."|".$domain);
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&sig=".$sig;
 
@@ -519,7 +524,7 @@ class GrabzItClient
 	*/
 	public function SetCookie($name, $domain, $value = "", $path = "/", $httponly = false, $expires = "")
 	{
-		$sig =  $this->encode($this->applicationSecret."|".$name."|".$domain."|".$value."|".$path."|".((int)$httponly)."|".$expires."|0");
+		$sig = $this->encode($this->applicationSecret."|".$name."|".$domain."|".$value."|".$path."|".((int)$httponly)."|".$expires."|0");
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".urlencode($expires)."&sig=".$sig;
 
@@ -536,7 +541,7 @@ class GrabzItClient
 	*/
 	public function DeleteCookie($name, $domain)
 	{
-		$sig =  $this->encode($this->applicationSecret."|".$name."|".$domain."|1");
+		$sig =	$this->encode($this->applicationSecret."|".$name."|".$domain."|1");
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
 
@@ -559,11 +564,11 @@ class GrabzItClient
 		{
 			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
 		}
-		$sig =  $this->encode($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
+		$sig = $this->encode($this->applicationSecret."|".$identifier."|".((int)$xpos)."|".((int)$ypos));
 
 		$boundary = '--------------------------'.microtime(true);
 
-		$content =  "--".$boundary."\r\n".
+		$content = "--".$boundary."\r\n".
 				"Content-Disposition: form-data; name=\"watermark\"; filename=\"".basename($path)."\"\r\n".
 				"Content-Type: image/jpeg\r\n\r\n".
 				file_get_contents($path)."\r\n";
@@ -634,10 +639,10 @@ class GrabzItClient
 	/*
 	Get a particular custom watermark.
 
-    identifier - The identifier of a particular custom watermark you want to view
+	identifier - The identifier of a particular custom watermark you want to view
 
-    This function returns a GrabzItWaterMark
-    */
+	This function returns a GrabzItWaterMark
+	*/
 	public function GetWaterMark($identifier)
 	{
 		$watermarks = $this->_getWaterMarks($identifier);
@@ -662,7 +667,7 @@ class GrabzItClient
 
 	private function _getWaterMarks($identifier = null)
 	{
-		$sig =  $this->encode($this->applicationSecret."|".$identifier );
+		$sig = $this->encode($this->applicationSecret."|".$identifier );
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
@@ -805,14 +810,14 @@ class GrabzItClient
 
 	private function checkHttpCode($httpCode)
 	{
-	    if ($httpCode == 403)
-	    {
+		if ($httpCode == 403)
+		{
 			throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
-	    }
-	    else if ($httpCode >= 400)
-	    {
+		}
+		else if ($httpCode >= 400)
+		{
 			throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR);
-	    }
+		}
 	}
 	
 	private function getRootUrl($isPost)
@@ -826,7 +831,7 @@ class GrabzItClient
 
 	private function checkResponseHeader($header)
 	{
-	    list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
+		list($version,$httpCode,$msg) = explode(' ',$header[0], 3);
 		$this->checkHttpCode($httpCode);
 	}
 }
