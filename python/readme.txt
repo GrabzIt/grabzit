@@ -2,15 +2,11 @@ GrabzIt 3.2
 ===========
 This library allows you to programmatically convert web pages and HTML into images, DOCX documents, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ As this example uses a callback handler it must be deployed to a publicly accessible web server.+
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+To run the demo
 
-To run the sample
+Open config.ini and change the application key and application secret parameters to match what is found here: https://grabz.it/api/
 
-Open config.ini and change the three parameters to match your settings the first two parameters can be got from https://grabz.it/api/
-
-The third parameter is the location you have placed the handler.py on your website.
+If you are not on your local machine you can optionally change the handlerUrl to match the publicly accessible location of the handler.py file. Otherwise leave it as it is and the capture will be downloaded synchronously.
 applicationKey=APPLICATION KEY
 applicationSecret=APPLICATION SECRET
 handlerUrl=http://www.example.com/grabzit/handler.py

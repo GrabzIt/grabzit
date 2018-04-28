@@ -5,15 +5,11 @@ This library allows you to programmatically convert web pages and HTML into imag
 
 It is usually best to place these files in their own directory.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ As this example uses a callback handler it must be deployed to a publicly accessible web server.+
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+To run the demo
 
-To run the sample
+Open config.ini and change the application key and application secret parameters to match what is found here: https://grabz.it/api/
 
-Open config.ini and change the three parameters to match your settings the first two parameters can be got from https://grabz.it/api/
-the third parameter is the location you have placed the handler.pl on your website.
-
+If you are not on your local machine you can optionally change the handlerUrl to match the publicly accessible location of the handler.pl file. Otherwise leave it as it is and the capture will be downloaded synchronously.
 
 applicationKey=APPLICATION KEY
 applicationSecret=APPLICATION SECRET

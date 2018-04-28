@@ -5,7 +5,7 @@ This library allows you to programmatically convert web pages and HTML into imag
 
 It is usually best to place these files in their own directory.
 
-To run the samples:
+To run the demos:
 
 First open the GrabzIt solution file then follow the below instructions for the two sample projects contained within.
 
@@ -40,7 +40,7 @@ Finally run the Default.aspx to start taking screenshots.
 Captures in a Windows Application
 =================================
 
-The solution also contains a project called SampleConsole, which is a example windows console application. To configure this do the following:
+The solution also contains a project called SampleConsole, which is a example windows console application that can be run on your local machine. To configure this do the following:
 
 Then open App.config and change the application key and application secret to match your settings the first two parameters can be got from https://grabz.it/api
 
@@ -50,9 +50,5 @@ Then open App.config and change the application key and application secret to ma
   </appSettings>
   
 Finally run the console application to create screenshots in windows.
-
-
-
-
 
 More documentation can be found at: https://grabz.it/api/aspnet

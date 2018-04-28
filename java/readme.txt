@@ -5,15 +5,11 @@ This library allows you to programmatically convert HTML and URL's into images, 
 
 It is usually best to place these package files in their own directory.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ As this example uses a callback handler it must be deployed to a publicly accessible web server.+
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+To run the demo
 
-To run the sample
+Open config.properties and change the application key and application secret parameters to match what is found here: https://grabz.it/api/
 
-Open config.properties and change the three parameters to match your settings the first two parameters can be got from https://grabz.it/api/
-the third parameter is the location of the handler (Handler.java in the sample application) on your website.
-
+If you are not on your local machine you can optionally change the HandlerUrl to match it's publicly accessible location. Otherwise leave it as it is and the capture will be downloaded synchronously.
 
 ApplicationKey=APPLICATION KEY
 ApplicationSecret=APPLICATION SECRET
@@ -21,7 +17,7 @@ HandlerUrl=http://www.example.com/grabzit/handler
 
 Ensure your application has read and write access to the "results" directory.
 
-Finally run the sample web application to start converting web pages into screenshots.
+Finally run the demo web application to start converting web pages into screenshots.
 
 More documentation can be found at: https://grabz.it/api/java/
 
