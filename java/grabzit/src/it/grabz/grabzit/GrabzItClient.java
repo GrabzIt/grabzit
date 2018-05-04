@@ -559,24 +559,33 @@ public class GrabzItClient {
         
         String sig = encrypt(this.request.getOptions()._getSignatureString(applicationSecret, callBackURL, this.request.getTargetUrl()));
         
-        TakeScreenShotResult result;
-        if (this.request.isIsPost())
-        {   
-            result = post(this.request.getUrl(), this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "html", ParameterUtility.encode(this.request.getData())), TakeScreenShotResult.class);            
-        }
-        else
+        TakeScreenShotResult result = take(sig, callBackURL);    
+        
+        if (result == null)
         {
-            result = get(this.request.getUrl() + "?" + this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "url", this.request.getData()), TakeScreenShotResult.class);
+            result = take(sig, callBackURL);
         }
         
-        checkForError(result);
-
         if (result == null)
         {
             throw new GrabzItException("An unknown network error occurred, please try calling this method again.", ErrorCode.NETWORKGENERALERROR);
         }        
         
         return result.getId();
+    }
+
+    private TakeScreenShotResult take(String sig, String callBackURL) throws Exception {
+        TakeScreenShotResult result;
+        if (this.request.isIsPost())
+        {
+            result = post(this.request.getUrl(), this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "html", ParameterUtility.encode(this.request.getData())), TakeScreenShotResult.class);
+        }
+        else
+        {
+            result = get(this.request.getUrl() + "?" + this.request.getOptions()._getQueryString(applicationKey, sig, callBackURL, "url", this.request.getData()), TakeScreenShotResult.class);
+        }
+        checkForError(result);
+        return result;
     }
 
     /**
