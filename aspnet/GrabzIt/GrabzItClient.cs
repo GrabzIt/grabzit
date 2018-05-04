@@ -618,11 +618,7 @@ namespace GrabzIt
                 }
                 string sig = Encrypt(request.Options.GetSignatureString(this.ApplicationSecret, callBackURL, request.TargetUrl));
 
-                TakePictureResult webResult = null;
-
-                webResult = Take(callBackURL, sig);
-
-                CheckForException(webResult);
+                TakePictureResult webResult = Take(callBackURL, sig);                
 
                 if (webResult == null)
                 {
@@ -640,11 +636,17 @@ namespace GrabzIt
 
         private TakePictureResult Take(string callBackURL, string sig)
         {
+            TakePictureResult webResult;
             if (request.IsPost)
             {
-                return Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
+                webResult = Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
             }
-            return Get<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
+            else
+            {
+                webResult = Get<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
+            }
+            CheckForException(webResult);
+            return webResult;
         }
 
         /// <summary>
