@@ -206,10 +206,21 @@ class GrabzItClient:
 				
 				sig = self.CreateSignature(self.request.options._getSignatureString(self.applicationSecret, callBackURL, self.request._targetUrl()))							   
 
+				obj = self._take(sig, callBackURL)
+				
+				if (obj == None or obj == ""):
+					obj = self._take(sig, callBackURL)
+
+				if (obj == None or obj == ""):
+					raise GrabzItException.GrabzItException('An unknown network error occurred, please try calling this method again.', GrabzItException.GrabzItException.NETWORK_GENERAL_ERROR)
+				
+				return self.GetResultObject(obj, "ID");
+
+		def _take(self, sig, callBackURL):
 				if (self.request.isPost == False):				
-						return self.GetResultObject(self.HTTPGet(self.request.url + '?' + urlencode(self.request.options._getParameters(self.applicationKey, sig, callBackURL, 'url', self.request.data))), "ID")
+						return self.HTTPGet(self.request.url + '?' + urlencode(self.request.options._getParameters(self.applicationKey, sig, callBackURL, 'url', self.request.data)))
 				else:
-						return self.GetResultObject(self.HTTPPost(self.request.url, self.request.options._getParameters(self.applicationKey, sig, callBackURL, 'html', quote(self.request.data))), "ID")
+						return self.HTTPPost(self.request.url, self.request.options._getParameters(self.applicationKey, sig, callBackURL, 'html', quote(self.request.data)))
 
 		#
 		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
