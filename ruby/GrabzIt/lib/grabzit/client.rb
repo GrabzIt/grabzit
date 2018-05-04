@@ -249,16 +249,27 @@ module GrabzIt
 			
 			sig = encode(@request.options()._getSignatureString(GrabzIt::Utility.nil_check(@applicationSecret), callBackURL, @request.getTargetUrl()))
 			
-			data = nil
+			data = take(sig, callBackURL)
+			
+			if data == nil || data == ""
+				data = take(sig, callBackURL)
+			end
 
-			if !@request.isPost()
-				data = get(@request.url() + "?" + URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "url", @request.data())))
-			else
-				data = post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", CGI.escape(@request.data()))))
+			if data == nil || data == ""
+				raise GrabzItException.new("An unknown network error occurred, please try calling this method again.", GrabzItException::NETWORK_GENERAL_ERROR)
 			end
 
 			return get_result_value(data, "ID")
-		end   
+		end
+		
+		private
+		def take(sig, callBackURL)
+			if !@request.isPost()
+				return get(@request.url() + "?" + URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "url", @request.data())))
+			end
+			
+			return post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", CGI.escape(@request.data()))))
+		end
 
 		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
 		# it returns the screenshot byte data.
