@@ -2,7 +2,7 @@
 
 package GrabzItClient;
 
-use Digest::MD5  qw(md5_hex);
+use Digest::MD5	 qw(md5_hex);
 use Encode;
 use LWP::Simple;
 use LWP::UserAgent;
@@ -31,18 +31,18 @@ use constant TrueString => "True";
 
 sub new
 {	
-    my $class = shift;       
-    
-    my $self = {
-        _applicationKey => shift,
-        _applicationSecret  => shift,
-    };
+	my $class = shift;		 
+	
+	my $self = {
+		_applicationKey => shift,
+		_applicationSecret	=> shift,
+	};
 
-    $self->{protocol} = "http";
-    
-    bless $self, $class;
+	$self->{protocol} = "http";
+	
+	bless $self, $class;
 
-    return $self;
+	return $self;
 }
 
 #
@@ -54,7 +54,7 @@ sub new
 sub URLToAnimation($;$)
 {
 	my ($self, $url, $options) = @_;
-	$options ||= GrabzItAnimationOptions->new();    
+	$options ||= GrabzItAnimationOptions->new();	
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . "takeanimation.ashx", 0, $options, $url);
 }
 
@@ -67,7 +67,7 @@ sub URLToAnimation($;$)
 sub URLToImage($;$)
 {
 	my ($self, $url, $options) = @_;
-	$options ||= GrabzItImageOptions->new();    
+	$options ||= GrabzItImageOptions->new();	
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakePicture, 0, $options, $url);
 }
 
@@ -80,7 +80,7 @@ sub URLToImage($;$)
 sub HTMLToImage($;$)
 {
 	my ($self, $html, $options) = @_;
-	$options ||= GrabzItImageOptions->new();    
+	$options ||= GrabzItImageOptions->new();	
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakePicture, 1, $options, $html);
 }
 
@@ -93,7 +93,7 @@ sub HTMLToImage($;$)
 sub FileToImage($;$)
 {
 	my ($self, $path, $options) = @_;
-    $self->HTMLToImage($self->_readHTMLFile($path), $options);
+	$self->HTMLToImage($self->_readHTMLFile($path), $options);
 }
 
 #
@@ -105,7 +105,7 @@ sub FileToImage($;$)
 sub URLToTable($;$)
 {
 	my ($self, $url, $options) = @_;
-	$options ||= GrabzItTableOptions->new();    
+	$options ||= GrabzItTableOptions->new();	
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakeTable, 0, $options, $url);
 }
 
@@ -118,7 +118,7 @@ sub URLToTable($;$)
 sub HTMLToTable($;$)
 {
 	my ($self, $html, $options) = @_;
-	$options ||= GrabzItTableOptions->new();    
+	$options ||= GrabzItTableOptions->new();	
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakeTable, 1, $options, $html);
 }
 
@@ -131,7 +131,7 @@ sub HTMLToTable($;$)
 sub FileToTable($;$)
 {
 	my ($self, $path, $options) = @_;
-    $self->HTMLToTable($self->_readHTMLFile($path), $options);
+	$self->HTMLToTable($self->_readHTMLFile($path), $options);
 }
 
 #
@@ -143,7 +143,7 @@ sub FileToTable($;$)
 sub URLToPDF($;$)
 {
 	my ($self, $url, $options) = @_;
-	$options ||= GrabzItPDFOptions->new();    
+	$options ||= GrabzItPDFOptions->new();	  
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakePDF, 0, $options, $url);
 }
 
@@ -156,7 +156,7 @@ sub URLToPDF($;$)
 sub HTMLToPDF($;$)
 {
 	my ($self, $html, $options) = @_;
-	$options ||= GrabzItPDFOptions->new();    
+	$options ||= GrabzItPDFOptions->new();	  
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakePDF, 1, $options, $html);
 }
 
@@ -169,7 +169,7 @@ sub HTMLToPDF($;$)
 sub FileToPDF($;$)
 {
 	my ($self, $path, $options) = @_;
-    $self->HTMLToPDF($self->_readHTMLFile($path), $options);
+	$self->HTMLToPDF($self->_readHTMLFile($path), $options);
 }
 
 #
@@ -181,7 +181,7 @@ sub FileToPDF($;$)
 sub URLToDOCX($;$)
 {
 	my ($self, $url, $options) = @_;
-	$options ||= GrabzItDOCXOptions->new();    
+	$options ||= GrabzItDOCXOptions->new();	   
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakeDOCX, 0, $options, $url);
 }
 
@@ -194,7 +194,7 @@ sub URLToDOCX($;$)
 sub HTMLToDOCX($;$)
 {
 	my ($self, $html, $options) = @_;
-	$options ||= GrabzItDOCXOptions->new();    
+	$options ||= GrabzItDOCXOptions->new();	   
 	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakeDOCX, 1, $options, $html);
 }
 
@@ -207,7 +207,7 @@ sub HTMLToDOCX($;$)
 sub FileToDOCX($;$)
 {
 	my ($self, $path, $options) = @_;
-    $self->HTMLToDOCX($self->_readHTMLFile($path), $options);
+	$self->HTMLToDOCX($self->_readHTMLFile($path), $options);
 }
 
 #
@@ -226,17 +226,31 @@ sub Save($)
 		 die "No parameters have been set.";
 	}
 	
-	$sig =  $self->_encode($self->{request}->{options}->_getSignatureString($self->{_applicationSecret}, $callBackURL, $self->{request}->_getTargetUrl()));
+	$sig =	$self->_encode($self->{request}->{options}->_getSignatureString($self->{_applicationSecret}, $callBackURL, $self->{request}->_getTargetUrl()));
 	
-    if ($self->{request}->{"isPost"} == 1)
-    {
-        return $self->_getResultValue($self->_post($self->{request}->{url}, $self->{request}->{options}->_getParameters($self->{_applicationKey}, $sig, $callBackURL, 'html', uri_escape($self->{request}->{data}))), 'ID');
-    }
-    
-    my $uri = URI->new($self->{request}->{url});
-    $uri->query_form($self->{request}->{options}->_getParameters($self->{_applicationKey}, $sig, $callBackURL, 'url', $self->{request}->{data})); 
-    
-	return $self->_getResultValue($self->_get($uri), 'ID');   
+	$obj = $self->_take($sig, $callBackURL);
+	
+	if ($obj eq "")
+	{
+		$obj = $self->_take($sig, $callBackURL);
+	}
+	
+	return $self->_getResultValue($obj, 'ID');	 
+}
+
+sub _take($$)
+{
+	my ($self, $sig, $callBackURL) = @_;
+	
+	if ($self->{request}->{"isPost"} == 1)
+	{
+		return $self->_post($self->{request}->{url}, $self->{request}->{options}->_getParameters($self->{_applicationKey}, $sig, $callBackURL, 'html', uri_escape($self->{request}->{data})));
+	}
+	
+	my $uri = URI->new($self->{request}->{url});
+	$uri->query_form($self->{request}->{options}->_getParameters($self->{_applicationKey}, $sig, $callBackURL, 'url', $self->{request}->{data}));
+	
+	return $self->_get($uri);
 }
 
 #
@@ -258,7 +272,7 @@ sub SaveTo($)
 
 	if ($id eq '')
 	{
-	    return 0;
+		return 0;
 	}
 	
 	#Wait for it to be possibly ready
@@ -310,18 +324,18 @@ sub SaveTo($)
 #
 sub GetResult($)
 {
-    my ($self, $id) = @_;   
-        
+	my ($self, $id) = @_;	
+		
 	$id ||= '';
 	
 	if ($id eq '')
 	{
-	    return;
+		return;
 	}	
 	
-    my $url = $self->_getRootUrl(false) . "getfile.ashx?id=" . $id;
+	my $url = $self->_getRootUrl(false) . "getfile.ashx?id=" . $id;
 	
-    return $self->_get($url);
+	return $self->_get($url);
 }
 
 #
@@ -339,7 +353,7 @@ sub GetStatus($)
 	
 	if ($id eq '')
 	{
-	    return;
+		return;
 	}
 	
 	my $url = $self->_getRootUrl(false) . "getstatus.ashx?id=" . $id;
@@ -365,7 +379,7 @@ sub GetCookies($)
 {
 	my ($self, $domain) = @_;
 	
-	$sig =  $self->_encode($self->{_applicationSecret}."|".$domain);
+	$sig =	$self->_encode($self->{_applicationSecret}."|".$domain);
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&sig=".$sig;
 
 	my $url = $self->_getRootUrl(false) . "getcookies.ashx?" . $qs;
@@ -421,7 +435,7 @@ sub SetCookie($$;$$$$)
 	$httponly ||= 0;
 	$expires ||= '';
 	
-	$sig =  $self->_encode($self->{_applicationSecret}."|".$name."|".$domain."|".$value."|".$path."|".$httponly."|".$expires."|0");
+	$sig =	$self->_encode($self->{_applicationSecret}."|".$name."|".$domain."|".$value."|".$path."|".$httponly."|".$expires."|0");
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&value=".uri_escape($value)."&path=".uri_escape($path)."&httponly=".$httponly."&expires=".uri_escape($expires)."&sig=".$sig;
 
@@ -442,7 +456,7 @@ sub DeleteCookie($$)
 {
 	my ($self, $name, $domain) = @_;
 	
-	$sig =  $self->_encode($self->{_applicationSecret}."|".$name."|".$domain."|1");
+	$sig =	$self->_encode($self->{_applicationSecret}."|".$name."|".$domain."|1");
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&delete=1&sig=".$sig;
 
@@ -473,7 +487,7 @@ sub AddWaterMark($$$$)
 		die "File: " . $path . " does not exist\n";
 	}
 
-        $sig = $self->_encode($self->{_applicationSecret}."|".$identifier."|".$xpos."|".$ypos);	
+		$sig = $self->_encode($self->{_applicationSecret}."|".$identifier."|".$xpos."|".$ypos);	
 	
 	open FILE, $path or die "Couldn't open file: $!";
 	binmode FILE;
@@ -484,8 +498,8 @@ sub AddWaterMark($$$$)
 	$ua = LWP::UserAgent->new();  
 		
 	$req = POST $self->{protocol} . '://grabz.it/services/addwatermark.ashx', 
-	       content_type => 'multipart/form-data', 
-	       content      => [ 
+		   content_type => 'multipart/form-data', 
+		   content		=> [ 
 				 key => $self->{_applicationKey}, 
 				 identifier => $identifier,
 				 xpos => $xpos,
@@ -495,7 +509,7 @@ sub AddWaterMark($$$$)
 					  content_type => 'image/jpeg', 
 					  content => $data, 
 					 ] 
-			       ]; 
+				   ]; 
 
 	return $self->_getResultValue($self->_handleResponse($ua->request($req)), 'Result');
 }
@@ -509,8 +523,8 @@ sub AddWaterMark($$$$)
 #
 sub GetWaterMark($)
 {
-    my ($self, $identifier) = @_;
-    return $self->_getWaterMarks($identifier);
+	my ($self, $identifier) = @_;
+	return $self->_getWaterMarks($identifier);
 }
 
 #
@@ -520,8 +534,8 @@ sub GetWaterMark($)
 #
 sub GetWaterMarks()
 {
-    my ($self) = @_;
-    return $self->_getWaterMarks("");
+	my ($self) = @_;
+	return $self->_getWaterMarks("");
 }
 
 sub _getWaterMarks($)
@@ -530,7 +544,7 @@ sub _getWaterMarks($)
 	
 	$identifier ||= '';
 	
-	$sig =  $self->_encode($self->{_applicationSecret}."|".$identifier);
+	$sig =	$self->_encode($self->{_applicationSecret}."|".$identifier);
 	
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
@@ -572,7 +586,7 @@ sub DeleteWaterMark($)
 {
 	my ($self, $identifier) = @_;
 
-	$sig =  $self->_encode($self->{_applicationSecret}."|".$identifier);
+	$sig =	$self->_encode($self->{_applicationSecret}."|".$identifier);
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
 	my $url = $self->_getRootUrl(false) . "deletewatermark.ashx?" . $qs;
@@ -588,62 +602,62 @@ sub DeleteWaterMark($)
 sub UseSSL($)
 {
 	my ($self, $value) = @_;
-    if ($value)
-    {
-        $self->{protocol} = "https";
-        return;
-    }
-    $self->{protocol} = "http";
+	if ($value)
+	{
+		$self->{protocol} = "https";
+		return;
+	}
+	$self->{protocol} = "http";
 }
 
 sub _getRootUrl($)
 {
 	my ($self, $post) = @_;
-    if ($value)
-    {
-        return $self->{protocol} . WebServicesBaseURL_POST;
-    }
-    return $self->{protocol} . WebServicesBaseURL_GET;
+	if ($value)
+	{
+		return $self->{protocol} . WebServicesBaseURL_POST;
+	}
+	return $self->{protocol} . WebServicesBaseURL_GET;
 }
 
 sub _encode($)
 {
-    my ($self, $text) = @_;
-    $text = decode_utf8($text);
-    $text =~ s/[^\x00-\x7F]/?/g;
-    return md5_hex($text);
+	my ($self, $text) = @_;
+	$text = decode_utf8($text);
+	$text =~ s/[^\x00-\x7F]/?/g;
+	return md5_hex($text);
 }
 
 sub _get($)
 {
-    my ($self, $url) = @_;
-    $ua = LWP::UserAgent->new();
-    
-    return $self->_handleResponse($ua->get($url));
+	my ($self, $url) = @_;
+	$ua = LWP::UserAgent->new();
+	
+	return $self->_handleResponse($ua->get($url));
 }
 
 sub _post($$)
 {
-    my ($self, $url, $params) = @_;    
-    $ua = LWP::UserAgent->new();
-    
-    return $self->_handleResponse($ua->post($url, $params));
+	my ($self, $url, $params) = @_;	   
+	$ua = LWP::UserAgent->new();
+	
+	return $self->_handleResponse($ua->post($url, $params));
 }
 
 sub _handleResponse($)
 {
-    my ($self, $response) = @_;
-    
-    if ($response->code == 403)
-    {
-        die 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
-    }
-    elsif ($response->code >= 400)
-    {
-        die 'A network error occured when connecting to the GrabzIt servers.';
-    }
-    
-    return $response->decoded_content;
+	my ($self, $response) = @_;
+	
+	if ($response->code == 403)
+	{
+		die 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
+	}
+	elsif ($response->code >= 400)
+	{
+		die 'A network error occured when connecting to the GrabzIt servers.';
+	}
+	
+	return $response->decoded_content;
 }
 
 sub _getResultValue($$)
@@ -668,19 +682,19 @@ sub _getResultValue($$)
 
 sub _readHTMLFile($)
 {
-    my ($self, $path) = @_;
-    
-    unless (-e $path)
+	my ($self, $path) = @_;
+	
+	unless (-e $path)
 	{
 		die "File: " . $path . " does not exist\n";
 	}
-    
-    open FILE, $path or die "Couldn't open file: $!";
+	
+	open FILE, $path or die "Couldn't open file: $!";
 	binmode FILE;
 	local $/;
 	$data = <FILE>;
 	close FILE;
 
-    return $data;
+	return $data;
 }
 1;
