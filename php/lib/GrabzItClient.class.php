@@ -343,15 +343,12 @@ class GrabzItClient
 		}
 
 		$sig = $this->encode($this->request->getOptions()->_getSignatureString($this->applicationSecret, $callBackURL, $this->request->getTargetUrl()));
-
-		$obj = null;
-		if (!$this->request->isPost())
+		
+		$obj = $this->_take($sig, $callBackURL);
+		
+		if ($obj == null)
 		{
-			$obj = $this->getResultObject($this->Get($this->request->getUrl().'?'.http_build_query($this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'url', $this->request->getData()), '', '&')));
-		}
-		else
-		{
-			$obj = $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', urlencode($this->request->getData()))));
+			$obj = $this->_take($sig, $callBackURL);
 		}
 		
 		if ($obj == null)
@@ -365,6 +362,15 @@ class GrabzItClient
 		}
 		
 		return $obj->ID;
+	}
+	
+	private function _take($sig, $callBackURL)
+	{
+		if (!$this->request->isPost())
+		{
+			return $this->getResultObject($this->Get($this->request->getUrl().'?'.http_build_query($this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'url', $this->request->getData()), '', '&')));
+		}
+		return $this->getResultObject($this->Post($this->request->getUrl(), $this->request->getOptions()->_getParameters($this->applicationKey, $sig, $callBackURL, 'html', urlencode($this->request->getData()))));
 	}
 
 	/*
