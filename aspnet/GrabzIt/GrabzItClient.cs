@@ -620,16 +620,14 @@ namespace GrabzIt
 
                 TakePictureResult webResult = null;
 
-                if (request.IsPost)
-                {
-                    webResult = Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
-                }
-                else
-                {
-                    webResult = Get<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
-                }
+                webResult = Take(callBackURL, sig);
 
                 CheckForException(webResult);
+
+                if (webResult == null)
+                {
+                    webResult = Take(callBackURL, sig);
+                }
 
                 if (webResult == null)
                 {
@@ -638,6 +636,15 @@ namespace GrabzIt
 
                 return webResult.ID;
             }
+        }
+
+        private TakePictureResult Take(string callBackURL, string sig)
+        {
+            if (request.IsPost)
+            {
+                return Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
+            }
+            return Get<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
         }
 
         /// <summary>
