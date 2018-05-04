@@ -12,6 +12,7 @@ function GrabzIt(key)
 		this.encrypt = false;
 		this.postVars = '';
 		this.tVars = '';
+		this.retried = false;
 
 		this.aesjs = (function() {
 
@@ -425,6 +426,12 @@ function GrabzIt(key)
 			{
 				if (this.readyState == 4 && this.status == 200)
 				{
+					if (!that.retried && !this.responseText)
+					{
+						that.retried = true;
+						that._post(qs);
+						return;
+					}
 					that.elem.appendChild(that._handlePost(JSON.parse(this.responseText)));
 				}
 			};
