@@ -753,7 +753,7 @@ function _readFile(filePath)
     if (!file.existsSync(filePath)) {
         var error = new Error();
         error.message = 'File: ' + filePath + ' does not exist';
-        error.code = self.FILE_NON_EXISTANT_PATH;
+        error.code = this.FILE_NON_EXISTANT_PATH;
         throw error;        
     };
     return file.readFileSync(filePath);
