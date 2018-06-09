@@ -392,6 +392,11 @@ function GrabzIt(key)
 				results[k.toLowerCase()] = opts[k];
 			}
 			
+			if (results['target'] != null)
+			{
+				results['target'] = results['target'].replace('#','');
+			}
+			
 			if (typeof(results['onfinish']) === 'function'){
 				var functionName = 'grabzItOnFinish' + Math.floor(Math.random() * (1000000000+1));
 				window[functionName] = results['onfinish'];
