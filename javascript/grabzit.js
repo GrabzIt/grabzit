@@ -522,7 +522,23 @@ function GrabzIt(key)
 			{
 				if (obj.ID == null || obj.ID == '')
 				{
-					throw obj.Message;
+					var message = document.createElement('span');
+					message.innerHTML = '<strong>GrabzIt Error:</strong> ' + obj.Message;
+					if (this.options['errorid'] != null)
+					{
+						message.setAttribute('id', this.options['errorid']);
+					}
+					if (this.options['errorclass'] != null)
+					{
+						message.setAttribute('class', this.options['errorclass']);
+					}					
+					
+					if (this.options['onerror'] != null)
+					{
+						window[this.options['onerror']](obj.Message, obj.Code);
+					}
+					
+					return message;
 				}
 				return this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString('id', obj.ID));
 			}
