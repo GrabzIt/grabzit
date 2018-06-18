@@ -1,11 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Web Developer Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrabzIt", "GrabzIt\GrabzIt.csproj", "{FBE0E172-5653-4FA1-9013-90F1496904F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{A54E8044-37CC-4FEC-8641-14871E777CA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleConsole", "SampleConsole\SampleConsole.csproj", "{0A3766E8-DAFB-44A6-916B-AE6B12203116}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMVC", "SampleMVC\SampleMVC.csproj", "{73FDEE3A-84F5-4CF4-8FC4-59B28596240B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,8 +29,15 @@ Global
 		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3766E8-DAFB-44A6-916B-AE6B12203116}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73FDEE3A-84F5-4CF4-8FC4-59B28596240B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73FDEE3A-84F5-4CF4-8FC4-59B28596240B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73FDEE3A-84F5-4CF4-8FC4-59B28596240B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73FDEE3A-84F5-4CF4-8FC4-59B28596240B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66260D01-EBF5-40F1-8CA5-09BB12F5FF5F}
 	EndGlobalSection
 EndGlobal
