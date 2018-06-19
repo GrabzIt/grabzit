@@ -531,7 +531,11 @@ function GrabzIt(key)
 					if (this.options['errorclass'] != null)
 					{
 						message.setAttribute('class', this.options['errorclass']);
-					}					
+					}	
+					if (this.options['errorid'] == null && this.options['errorclass'] == null)
+					{
+						message.setAttribute('style', 'position:fixed !important;top:2% !important;left:50% !important;border:1px solid #FF0000 !important;background-color:#FFF !important;color:#FF0000 !important;padding:0.5em !important;transform: translateX(-50%) !important;z-index:1000000 !important');
+					}						
 					
 					if (this.options['onerror'] != null)
 					{
