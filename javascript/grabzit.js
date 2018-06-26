@@ -391,7 +391,7 @@ function GrabzIt(key)
 				}
 			}
 			
-			return this.ConvertHTML(div.outerHTML, options);
+			return this.ConvertHTML(div.innerHTML, options);
 		};		
 
 		this.UseSSL = function()

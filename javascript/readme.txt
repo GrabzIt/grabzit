@@ -5,10 +5,11 @@ This library allows you to dynamically convert HTML or a URL to a image, DOCX do
 
 An example of the GrabzIt in action can be found in the demo.html and demoDataURI.html files. Remember to replace the "Your Application Key" with your actual application key found here: https://grabz.it/api/
 
-GrabzIt JavaScript library provides ten methods:
+GrabzIt JavaScript library provides eleven methods:
 
 - ConvertURL([url to capture], [options])
 - ConvertHTML([html to convert], [options])
+- ConvertPage([options])
 - UseSSL()
 - Encrypt()
 - AddPostVariable(name, value)
