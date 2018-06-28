@@ -22,6 +22,7 @@ namespace GrabzIt.Parameters
             Format = ImageFormat.jpg;
             TargetElement = string.Empty;
             HideElement = string.Empty;
+            Address = string.Empty;
         }
 
         /// <summary>
@@ -157,6 +158,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The URL to execute the HTML code in.
+        /// </summary>
+        public string Address
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -186,7 +196,7 @@ namespace GrabzIt.Parameters
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
             Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent) + "|" + EncryptionKey
-             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy;
+             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -207,6 +217,7 @@ namespace GrabzIt.Parameters
             parameters.Add("transparent", Convert.ToInt32(Transparent).ToString());
             parameters.Add("noads", Convert.ToInt32(NoAds).ToString());
             parameters.Add("post", post);
+            parameters.Add("address", Address);
 
             return parameters;
         }

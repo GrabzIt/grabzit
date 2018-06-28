@@ -160,6 +160,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string Address
+        {
+            get;
+            set;
+        }
+
         bool NoAds
         {
             get;

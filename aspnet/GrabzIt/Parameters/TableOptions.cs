@@ -18,6 +18,7 @@ namespace GrabzIt.Parameters
             TableNumberToInclude = 1;
             IncludeHeaderNames = true;
             IncludeAllTables = false;
+            Address = string.Empty;
         }
         /// <summary>
         /// Which table to include, in order from the begining of the page to the end
@@ -73,6 +74,16 @@ namespace GrabzIt.Parameters
             set;
         }
 
+
+        /// <summary>
+        /// The URL to execute the HTML code in.
+        /// </summary>
+        public string Address
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
@@ -101,7 +112,7 @@ namespace GrabzIt.Parameters
             return applicationSecret + "|" + urlParam + callBackURLParam +
             "|" + CustomId + "|" + TableNumberToInclude + "|" + Convert.ToInt32(IncludeAllTables) + "|" + Convert.ToInt32(IncludeHeaderNames) + "|" + 
             TargetElement + "|" + Format + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + ExportURL + "|" + EncryptionKey + "|" +
-            post + "|" + Proxy;
+            post + "|" + Proxy + "|" + Address;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -114,6 +125,7 @@ namespace GrabzIt.Parameters
 		    parameters.Add("target", TargetElement);
             parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
             parameters.Add("post", post);
+            parameters.Add("address", Address);
 
             return parameters;
         }

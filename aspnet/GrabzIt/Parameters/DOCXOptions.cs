@@ -28,6 +28,7 @@ namespace GrabzIt.Parameters
             HideElement = string.Empty;
             TemplateId = string.Empty;
             TargetElement = string.Empty;
+            Address = string.Empty;
         }
         /// <summary>
         /// If true background images should be included in the DOCX
@@ -235,6 +236,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The URL to execute the HTML code in.
+        /// </summary>
+        public string Address
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -274,7 +284,7 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Title + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|"
             + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" +
-            TargetElement + "|" + TemplateId + "|" + templateVariables + "|" + PageHeight + "|" + PageWidth + "|" + BrowserWidth + "|" + Proxy + "|" + MergeId;
+            TargetElement + "|" + TemplateId + "|" + templateVariables + "|" + PageHeight + "|" + PageWidth + "|" + BrowserWidth + "|" + Proxy + "|" + MergeId + "|" + Address;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -304,6 +314,7 @@ namespace GrabzIt.Parameters
             parameters.Add("height", PageHeight.ToString());
             parameters.Add("tvars", templateVariables);
             parameters.Add("mergeid", MergeId);
+            parameters.Add("address", Address);
 
             return parameters;
         }

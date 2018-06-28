@@ -30,6 +30,7 @@ namespace GrabzIt.Parameters
 	        CustomWaterMarkId = string.Empty;
 	        Quality = -1;
             HideElement = string.Empty;
+            Address = string.Empty;
         }
         /// <summary>
         /// If true the background of the web page should be included in the PDF
@@ -255,6 +256,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The URL to execute the HTML code in.
+        /// </summary>
+        public string Address
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -294,7 +304,7 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
-             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId;
+             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -326,6 +336,7 @@ namespace GrabzIt.Parameters
             parameters.Add("height", PageHeight.ToString());
             parameters.Add("tvars", templateVariables);
             parameters.Add("mergeid", MergeId);
+            parameters.Add("address", Address);
 
             return parameters;
         }

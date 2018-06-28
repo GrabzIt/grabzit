@@ -73,6 +73,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string Address
+        {
+            get;
+            set;
+        }
+
         void AddPostParameter(string name, string value);
     }
 }
