@@ -700,7 +700,7 @@ function GrabzIt(key)
 			{
 				defaultNode = document.body;
 			}
-			this.AddTo(defaultNode);
+			this.AddTo(defaultNode, true);
 		};
 		
 		this.CreateInvisible = function(){
@@ -708,7 +708,7 @@ function GrabzIt(key)
 			this.Create();
 		};
 
-		this.AddTo = function(container)
+		this.AddTo = function(container, insert)
 		{
 			if (typeof container == 'string' || container instanceof String)
 			{
@@ -739,7 +739,19 @@ function GrabzIt(key)
 				return;
 			}
 
-			this.elem.appendChild(this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data)));
+			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data));
+			
+			if (insert)
+			{
+				try
+				{
+					this.elem.insertBefore(scriptNode, this.elem.firstChild);
+					return;
+				}
+				catch(e){}
+			}
+			
+			this.elem.appendChild(scriptNode);
 		};
 	})(key);
 }
