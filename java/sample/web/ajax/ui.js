@@ -18,7 +18,7 @@ function checkForResults() {
         });
     });
     clearTimeout(timeout);
-    timeout = setTimeout("checkForResults()", 5000);
+    timeout = setTimeout("checkForResults()", 1000);
 }
 
 function zoom(url) {
