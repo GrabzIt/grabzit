@@ -42,6 +42,8 @@ public class PDFOptions extends BaseOptions {
     private int height; 
     private String templateVariables;
     private String mergeId;
+    private boolean noCookieNotifications;
+    private String address;
     
     public PDFOptions()
     {
@@ -68,6 +70,7 @@ public class PDFOptions extends BaseOptions {
         this.height = 0;
         this.templateVariables = "";
         this.mergeId = "";
+        this.address = "";
     }
     
     /**
@@ -407,6 +410,34 @@ public class PDFOptions extends BaseOptions {
     }
 
     /**
+     * @return if true cookie notifications should be automatically hidden.
+     */
+    public boolean isNoCookieNotifications() {
+        return noCookieNotifications;
+    }
+
+    /**
+     * @param noCookieNotifications set to true if cookie notification should be automatically hidden.
+     */
+    public void setNoCookieNotifications(boolean noCookieNotifications) {
+        this.noCookieNotifications = noCookieNotifications;
+    }    
+    
+    /**
+     * @return the URL to execute the HTML code in.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the URL to execute the HTML code in.
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }    
+    
+    /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
      * GrabzIt to perform a HTTP post.        
      * 
@@ -453,7 +484,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables
-        + "|" + getProxy() + "|" + getMergeId();
+        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
     }    
     
     @Override
@@ -486,7 +517,9 @@ public class PDFOptions extends BaseOptions {
         params.put("height", String.valueOf(height));
         params.put("tvars", String.valueOf(templateVariables));
         params.put("mergeid", ParameterUtility.encode(ParameterUtility.nullCheck(mergeId)));
-
+        params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
+        params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
+        
         return params;
     }    
 }

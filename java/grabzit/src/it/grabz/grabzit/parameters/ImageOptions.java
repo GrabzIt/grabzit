@@ -29,7 +29,9 @@ public class ImageOptions extends BaseOptions {
     private String customWaterMarkId;
     private int quality;
     private boolean transparent;
-    private boolean noAds;    
+    private boolean noAds;
+    private boolean noCookieNotifications;
+    private String address;
 
     public ImageOptions()
     {
@@ -44,6 +46,7 @@ public class ImageOptions extends BaseOptions {
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
         this.quality = -1;
+        this.address = "";
     }
     
     /**
@@ -243,6 +246,34 @@ public class ImageOptions extends BaseOptions {
     }    
     
     /**
+     * @return if true cookie notifications should be automatically hidden.
+     */
+    public boolean isNoCookieNotifications() {
+        return noCookieNotifications;
+    }
+
+    /**
+     * @param noCookieNotifications set to true if cookie notification should be automatically hidden.
+     */
+    public void setNoCookieNotifications(boolean noCookieNotifications) {
+        this.noCookieNotifications = noCookieNotifications;
+    }    
+    
+    /**
+     * @return the URL to execute the HTML code in.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the URL to execute the HTML code in.
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }    
+    
+    /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
      * GrabzIt to perform a HTTP post.        
      * 
@@ -275,7 +306,7 @@ public class ImageOptions extends BaseOptions {
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent) + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy();
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
     }    
     
     @Override
@@ -297,6 +328,8 @@ public class ImageOptions extends BaseOptions {
         params.put("transparent", String.valueOf(ParameterUtility.toInt(transparent)));
         params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));        
+        params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
+        params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         
         return params;
     }    

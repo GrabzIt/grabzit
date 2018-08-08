@@ -40,7 +40,9 @@ public class DOCXOptions extends BaseOptions {
     private String templateId;
     private String targetElement;
     private String mergeId;
-
+    private boolean noCookieNotifications;
+    private String address;
+    
     public DOCXOptions()
     {
         this.includeBackground = true;
@@ -64,6 +66,7 @@ public class DOCXOptions extends BaseOptions {
         this.templateId = "";
         this.targetElement = ""; 
         this.mergeId = "";
+        this.address = "";
     }
     
     /**
@@ -375,6 +378,34 @@ public class DOCXOptions extends BaseOptions {
     }
     
     /**
+     * @return if true cookie notifications should be automatically hidden.
+     */
+    public boolean isNoCookieNotifications() {
+        return noCookieNotifications;
+    }
+
+    /**
+     * @param noCookieNotifications set to true if cookie notification should be automatically hidden.
+     */
+    public void setNoCookieNotifications(boolean noCookieNotifications) {
+        this.noCookieNotifications = noCookieNotifications;
+    }    
+    
+    /**
+     * @return the URL to execute the HTML code in.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the URL to execute the HTML code in.
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }    
+    
+    /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
      * GrabzIt to perform a HTTP post.        
      * 
@@ -421,7 +452,7 @@ public class DOCXOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey() + "|" + ParameterUtility.toInt(noAds) + "|" + post
         + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth
-        + "|" + getProxy() + "|" + getMergeId();
+        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
     }    
     
     @Override
@@ -452,6 +483,8 @@ public class DOCXOptions extends BaseOptions {
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("templateid", ParameterUtility.encode(ParameterUtility.nullCheck(templateId)));
         params.put("mergeid", ParameterUtility.encode(ParameterUtility.nullCheck(mergeId)));
+        params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
+        params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         
         return params;
     }    

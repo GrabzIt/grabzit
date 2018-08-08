@@ -23,6 +23,7 @@ public class TableOptions extends BaseOptions {
     private boolean includeAllTables;
     private String targetElement;
     private BrowserType requestAs;
+    private String address;
     
     public TableOptions()
     {
@@ -32,6 +33,7 @@ public class TableOptions extends BaseOptions {
         this.includeAllTables = false;
         this.targetElement = "";
         this.requestAs = BrowserType.STANDARDBROWSER;
+        this.address = "";
     }
 
     /**
@@ -119,6 +121,20 @@ public class TableOptions extends BaseOptions {
     }
     
     /**
+     * @return the URL to execute the HTML code in.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the URL to execute the HTML code in.
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }    
+    
+    /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
      * GrabzIt to perform a HTTP post.        
      * 
@@ -150,7 +166,7 @@ public class TableOptions extends BaseOptions {
         +"|"+getCustomId()+"|"+tableNumberToInclude+"|"+ParameterUtility.toInt(includeAllTables)
         +"|"+ParameterUtility.toInt(includeHeaderNames)+"|"+targetElement+"|"+format.getValue()+"|"+requestAs.getValue()
         +"|"+getCountry().getValue() + "|" + getExportURL() + "|" + getEncryptionKey()
-        +"|"+post + "|" + getProxy();
+        +"|"+post + "|" + getProxy() + "|" + address;
     }    
 
     @Override
@@ -164,6 +180,7 @@ public class TableOptions extends BaseOptions {
         params.put("target", ParameterUtility.encode(ParameterUtility.nullCheck(targetElement)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));			
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
+        params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         
         return params;
     }    
