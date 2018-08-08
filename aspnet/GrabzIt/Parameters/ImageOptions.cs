@@ -158,6 +158,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// True if cookie notification should be automatically hidden.
+        /// </summary>
+        public bool NoCookieNotifications
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The URL to execute the HTML code in.
         /// </summary>
         public string Address
@@ -196,7 +205,7 @@ namespace GrabzIt.Parameters
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
             Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent) + "|" + EncryptionKey
-             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address;
+             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications);
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -218,6 +227,7 @@ namespace GrabzIt.Parameters
             parameters.Add("noads", Convert.ToInt32(NoAds).ToString());
             parameters.Add("post", post);
             parameters.Add("address", Address);
+            parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
 
             return parameters;
         }

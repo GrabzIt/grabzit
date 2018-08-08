@@ -70,6 +70,7 @@ namespace GrabzIt.Enums
         ParameterInvalidEncryptionKey = 171,
         ParameterInvalidNoAds = 172,
         ParameterInvalidProxy = 173,
+        ParameterInvalidNoNotify = 174,
         NetworkServerOffline = 200,
         NetworkGeneralError = 201,
         NetworkDDOSAttack = 202,

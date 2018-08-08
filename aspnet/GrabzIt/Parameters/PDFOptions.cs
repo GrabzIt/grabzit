@@ -256,6 +256,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// True if cookie notification should be automatically hidden.
+        /// </summary>
+        public bool NoCookieNotifications
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The URL to execute the HTML code in.
         /// </summary>
         public string Address
@@ -304,7 +313,7 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
-             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address;
+             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications);
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -337,6 +346,7 @@ namespace GrabzIt.Parameters
             parameters.Add("tvars", templateVariables);
             parameters.Add("mergeid", MergeId);
             parameters.Add("address", Address);
+            parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
 
             return parameters;
         }

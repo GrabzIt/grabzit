@@ -163,6 +163,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        bool NoCookieNotifications
+        {
+            get;
+            set;
+        }
+
         string Proxy
         {
             get;
