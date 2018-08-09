@@ -13,6 +13,7 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             includeAllTables        set to true to extract every table on the web page into a separate spreadsheet sheet. Only available with the XLSX and JSON formats
             targetElement           the id of the only HTML element in the web page that should be used to extract tables from
             requestAs               which user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
+            address                 the URL to execute the HTML code in            
         """
         
         def __init__(self):
@@ -23,6 +24,7 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.includeAllTables = False
                 self.targetElement = ''
                 self.requestAs = 0
+                self.address = ''                
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -43,7 +45,8 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["target"] = str(self.targetElement) 
                 params["requestmobileversion"] = str(self.requestAs)            
                 params["post"] = str(self.post)             
-
+                params["address"] = str(self.address)
+                
                 return params
 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
@@ -57,5 +60,5 @@ class GrabzItTableOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.customId)+"|"+str(int(self.tableNumberToInclude))+"|"+str(int(self.includeAllTables))+"|"+str(int(self.includeHeaderNames))+"|"+str(self.targetElement)+ \
-                "|"+str(self.format)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)+"|"+str(self.post)+"|"+str(self.proxy)
+                "|"+str(self.format)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.encryptionKey)+"|"+str(self.post)+"|"+str(self.proxy)+"|"+str(self.address)
                 
