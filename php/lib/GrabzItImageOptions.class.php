@@ -16,7 +16,9 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	private $waitForElement = null;
 	private $transparent = false;
 	private $noAds = false;
-
+	private $noCookieNotifications = false;
+	private $address = null;
+	
 	/*
 	Set the width of the browser in pixels.
 	*/
@@ -242,6 +244,38 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	}		
 	
 	/*
+	Set to true if cookie notification should be automatically hidden.
+	*/
+	public function setNoCookieNotifications($value)
+	{
+		$this->noCookieNotifications = $value;
+	}
+
+	/*
+	Get if cookie notification should be automatically hidden.
+	*/
+	public function getNoCookieNotifications()
+	{
+		return $this->noCookieNotifications;
+	}	
+
+	/*
+	Set the URL to execute the HTML code in.
+	*/
+	public function setAddress($value)
+	{
+		$this->address = $value;
+	}
+
+	/*
+	Get the URL to execute the HTML code in.
+	*/
+	public function getAddress()
+	{
+		return $this->address;
+	}	
+	
+	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 	GrabzIt to perform a HTTP post.
 
@@ -272,7 +306,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty($this->targetElement)
 		."|".$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
 		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy());  
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications));  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -293,6 +327,8 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['transparent'] = $this->nullToEmpty(intval($this->transparent));
 		$params['noads'] = $this->nullToEmpty(intval($this->noAds));
 		$params['post'] = $this->nullToEmpty($this->post);	
+		$params['address'] = $this->nullToEmpty($this->address);
+		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		
 		return $params;
 	}

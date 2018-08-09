@@ -9,7 +9,8 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	private $tableNumberToInclude = 1;
 	private $includeHeaderNames = true;
 	private $includeAllTables = false;
-
+	private $address = null;
+	
 	/*
 	Set to true to extract every table on the web page into a separate spreadsheet sheet. Only available with the XLSX and JSON formats.
 	*/
@@ -105,6 +106,22 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 	{
 		return $this->requestAs;
 	}
+
+	/*
+	Set the URL to execute the HTML code in.
+	*/
+	public function setAddress($value)
+	{
+		$this->address = $value;
+	}
+
+	/*
+	Get the URL to execute the HTML code in.
+	*/
+	public function getAddress()
+	{
+		return $this->address;
+	}	
 	
 	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -136,7 +153,7 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 		"|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->tableNumberToInclude)."|".$this->nullToEmpty(intval($this->includeAllTables))."|".
 		$this->nullToEmpty(intval($this->includeHeaderNames))."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->format)."|".
 		$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry()."|".$this->nullToEmpty($this->getExportURL()))."|".
-		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy());
+		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address);
 	}
 
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -149,6 +166,7 @@ class GrabzItTableOptions extends GrabzItBaseOptions
 		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));
 		$params['post'] = $this->nullToEmpty($this->post);	
+		$params['address'] = $this->nullToEmpty($this->address);
 		
 		return $params;
 	}

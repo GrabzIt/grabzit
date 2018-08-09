@@ -25,7 +25,9 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	private $browserWidth = null;
 	private $templateVariables = null;
 	private $mergeId = null;
-
+	private $noCookieNotifications = false;
+	private $address = null;
+	
 	/*
 	Set the width of the resulting DOCX in mm.
 	*/
@@ -346,9 +348,40 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	public function getNoAds()
 	{
 		return $this->noAds;
+	}	
+
+	/*
+	Set to true if cookie notification should be automatically hidden.
+	*/
+	public function setNoCookieNotifications($value)
+	{
+		$this->noCookieNotifications = $value;
+	}
+
+	/*
+	Get if cookie notification should be automatically hidden.
+	*/
+	public function getNoCookieNotifications()
+	{
+		return $this->noCookieNotifications;
+	}	
+
+	/*
+	Set the URL to execute the HTML code in.
+	*/
+	public function setAddress($value)
+	{
+		$this->address = $value;
+	}
+
+	/*
+	Get the URL to execute the HTML code in.
+	*/
+	public function getAddress()
+	{
+		return $this->address;
 	}
 	
-
 	/*
 	Set a template ID that specifies the header and footer of the DOCX document.
 	*/
@@ -427,7 +460,7 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->waitForElement)."|".
 		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".
 		$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->templateId)."|".$this->nullToEmpty($this->templateVariables)."|".
-		$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId);
+		$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications));
 	}
 
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -457,6 +490,8 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['templateid'] = $this->nullToEmpty($this->templateId);
 		$params['mergeid'] = $this->nullToEmpty($this->mergeId);
+		$params['address'] = $this->nullToEmpty($this->address);
+		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		
 		return $params;
 	}

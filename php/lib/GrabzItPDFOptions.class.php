@@ -27,7 +27,9 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $browserWidth = null;
 	private $templateVariables = null;
 	private $mergeId = null;
-
+	private $noCookieNotifications = false;
+	private $address = null;
+	
 	/*
 	Set the width of the resulting PDF in mm.
 	*/
@@ -399,6 +401,38 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 	
 	/*
+	Set to true if cookie notification should be automatically hidden.
+	*/
+	public function setNoCookieNotifications($value)
+	{
+		$this->noCookieNotifications = $value;
+	}
+
+	/*
+	Get if cookie notification should be automatically hidden.
+	*/
+	public function getNoCookieNotifications()
+	{
+		return $this->noCookieNotifications;
+	}	
+
+	/*
+	Set the URL to execute the HTML code in.
+	*/
+	public function setAddress($value)
+	{
+		$this->address = $value;
+	}
+
+	/*
+	Get the URL to execute the HTML code in.
+	*/
+	public function getAddress()
+	{
+		return $this->address;
+	}	
+	
+	/*
 	Set the ID of a capture that should be merged at the beginning of the new PDF document.
 	*/
 	public function setMergeId($value)
@@ -461,7 +495,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
-		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId);
+		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications));
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -493,6 +527,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['height'] = $this->nullToEmpty($this->height);
 		$params['tvars'] = $this->nullToEmpty($this->templateVariables);
 		$params['mergeid'] = $this->nullToEmpty($this->mergeId);
+		$params['address'] = $this->nullToEmpty($this->address);
+		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		
 		return $params;
 	}
