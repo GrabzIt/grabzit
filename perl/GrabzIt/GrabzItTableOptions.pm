@@ -17,6 +17,7 @@ sub new
     $self->{"includeAllTables"} = 1;
     $self->{"targetElement"} = '';
     $self->{"requestAs"} = 0;
+	$self->{"address"} = '';	
     
     bless $self, $class;
 
@@ -102,6 +103,19 @@ sub requestAs
 }
 
 #
+# The URL to execute the HTML code in.
+#
+sub address
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"address"} = shift;
+    }
+    return $self->{"address"};
+}
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -134,7 +148,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->customId()."|".$self->tableNumberToInclude() ."|".$self->includeAllTables()."|".$self->includeHeaderNames()."|".$self->targetElement()."|".
-    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->encryptionKey()."|".$self->{"post"}."|".$self->proxy();
+    $self->format()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->encryptionKey()."|".$self->{"post"}."|".$self->proxy()."|".$self->address();
 }
 
 sub _getParameters($$$$$)
@@ -149,6 +163,7 @@ sub _getParameters($$$$$)
     $params->{'target'} = $self->targetElement();
     $params->{'requestmobileversion'} = $self->requestAs();    
 	$params->{'post'} = $self->{"post"};
+	$params->{'address'} = $self->address();
 	
     return $params;
 }

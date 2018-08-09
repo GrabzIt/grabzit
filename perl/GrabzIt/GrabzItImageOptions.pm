@@ -23,7 +23,9 @@ sub new
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
     $self->{"transparent"} = 0;
-	$self->{"noAds"} = 0;    	
+	$self->{"noAds"} = 0;
+	$self->{"address"} = '';
+	$self->{"noCookieNotifications"} = 0;	
 
     bless $self, $class;
 
@@ -213,6 +215,32 @@ sub noAds
 }
 
 #
+# True if cookie notification should be automatically hidden.
+#
+sub noCookieNotifications
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"noCookieNotifications"} = shift;
+    }
+    return $self->{"noCookieNotifications"};
+}
+
+#
+# The URL to execute the HTML code in.
+#
+sub address
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"address"} = shift;
+    }
+    return $self->{"address"};
+}
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -245,7 +273,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy();
+    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications();
 }
 
 sub _getParameters($$$$$)
@@ -267,7 +295,9 @@ sub _getParameters($$$$$)
     $params->{'waitfor'} = $self->waitForElement();   
     $params->{'transparent'} = $self->transparent(); 
 	$params->{'noads'} = $self->noAds();
-	$params->{'post'} = $self->{"post"};	
+	$params->{'post'} = $self->{"post"};
+	$params->{'nonotify'} = $self->noCookieNotifications();
+	$params->{'address'} = $self->address();	
     
     return $params;
 }

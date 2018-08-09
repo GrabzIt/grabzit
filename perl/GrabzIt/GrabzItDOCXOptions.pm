@@ -33,6 +33,8 @@ sub new
     $self->{"targetElement"} = '';
     $self->{"browserWidth"} = 0;
 	$self->{"mergeId"} = '';
+	$self->{"address"} = '';
+	$self->{"noCookieNotifications"} = 0;		
         
     bless $self, $class;
 
@@ -249,6 +251,32 @@ sub noAds
 }
 
 #
+# True if cookie notification should be automatically hidden.
+#
+sub noCookieNotifications
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"noCookieNotifications"} = shift;
+    }
+    return $self->{"noCookieNotifications"};
+}
+
+#
+# The URL to execute the HTML code in.
+#
+sub address
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"address"} = shift;
+    }
+    return $self->{"address"};
+}
+
+#
 # The width of the browser in pixels
 #
 sub browserWidth
@@ -374,7 +402,8 @@ sub _getSignatureString($$;$)
     "|".$self->customId() ."|".$self->includeBackground() ."|".$self->pagesize() ."|".$self->orientation()."|".$self->includeImages()."|".$self->includeLinks()."|".$self->title()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
     $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
-	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId();
+	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId().
+	"|".$self->address()."|".$self->noCookieNotifications();
 }
 
 sub _getParameters($$$$$)
@@ -406,6 +435,8 @@ sub _getParameters($$$$$)
     $params->{'target'} = $self->targetElement();
     $params->{'templateid'} = $self->templateId();
 	$params->{'mergeid'} = $self->mergeId();
+	$params->{'nonotify'} = $self->noCookieNotifications();
+	$params->{'address'} = $self->address();
     
     return $params;
 }

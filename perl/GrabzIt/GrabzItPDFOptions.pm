@@ -35,6 +35,8 @@ sub new
     $self->{"width"} = 0;
     $self->{"height"} = 0;
 	$self->{"mergeId"} = '';
+	$self->{"address"} = '';
+	$self->{"noCookieNotifications"} = 0;		
         
     bless $self, $class;
 
@@ -355,6 +357,32 @@ sub noAds
 }
 
 #
+# True if cookie notification should be automatically hidden.
+#
+sub noCookieNotifications
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"noCookieNotifications"} = shift;
+    }
+    return $self->{"noCookieNotifications"};
+}
+
+#
+# The URL to execute the HTML code in.
+#
+sub address
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"address"} = shift;
+    }
+    return $self->{"address"};
+}
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -402,7 +430,8 @@ sub _getSignatureString($$;$)
     "|".$self->includeOutline()."|".$self->title()."|".$self->coverURL()."|".$self->marginTop()."|".$self->marginLeft()."|".$self->marginBottom()."|".$self->marginRight().
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
-    "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId();
+    "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId().
+	"|".$self->address()."|".$self->noCookieNotifications();
 }
 
 sub _getParameters($$$$$)
@@ -436,6 +465,8 @@ sub _getParameters($$$$$)
     $params->{'height'} = $self->pageHeight();
     $params->{'tvars'} = $self->{"templateVariables"};
     $params->{'mergeid'} = $self->mergeId();
+	$params->{'nonotify'} = $self->noCookieNotifications();
+	$params->{'address'} = $self->address();
 	
     return $params;
 }
