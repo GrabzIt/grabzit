@@ -20,6 +20,8 @@ module GrabzIt
 			@quality = -1
 			@transparent = false
 			@noAds = false
+			@noCookieNotifications = false
+			@address = nil			
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -204,6 +206,32 @@ module GrabzIt
 			@noAds = value
 		end		
 
+		# @return [Boolean] get if cookie notifications should be automatically hidden
+		def noCookieNotifications
+			@noCookieNotifications
+		end
+		
+		# Set to true if cookie notifications should be automatically hidden
+		#
+		# @param value [Boolean] hide cookie notifications
+		# @return [void]		
+		def noCookieNotifications=(value)
+			@noCookieNotifications = value
+		end
+
+		# @return [String] get the URL to execute the HTML code in
+		def address
+			@address
+		end
+		
+		# Set the URL to execute the HTML code in
+		#
+		# @param value [String] the address
+		# @return [void]		
+		def address=(value)
+			@address = value
+		end		
+		
 		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 		# GrabzIt to perform a HTTP post.
 		#
@@ -221,7 +249,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.b_to_str(@transparent),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.b_to_str(@transparent),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications))
 			
 			return items.join("|")
 		end
@@ -244,6 +272,8 @@ module GrabzIt
 			params['transparent'] = GrabzIt::Utility.b_to_str(@transparent)
 			params['noads'] = GrabzIt::Utility.b_to_str(@noAds)
 			params['post'] = GrabzIt::Utility.nil_check(@post)
+			params['address'] = GrabzIt::Utility.nil_check(@address)
+			params['nonotify'] = GrabzIt::Utility.b_to_str(@noCookieNotifications)
 			
 			return params		
 		end

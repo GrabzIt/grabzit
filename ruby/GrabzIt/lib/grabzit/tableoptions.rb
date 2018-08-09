@@ -13,6 +13,7 @@ module GrabzIt
 			@includeAllTables = false
 			@targetElement = nil
 			@requestAs = 0
+			@address = nil			
 		end
 		
 		# @return [Integer] the index of the table to be converted
@@ -93,6 +94,19 @@ module GrabzIt
 			@requestAs = value
 		end	
 
+		# @return [String] get the URL to execute the HTML code in
+		def address
+			@address
+		end
+		
+		# Set the URL to execute the HTML code in
+		#
+		# @param value [String] the address
+		# @return [void]		
+		def address=(value)
+			@address = value
+		end		
+		
 		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 		# GrabzIt to perform a HTTP post.
 		#
@@ -110,7 +124,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@tableNumberToInclude),GrabzIt::Utility.b_to_str(@includeAllTables),GrabzIt::Utility.b_to_str(@includeHeaderNames),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@tableNumberToInclude),GrabzIt::Utility.b_to_str(@includeAllTables),GrabzIt::Utility.b_to_str(@includeHeaderNames),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address))
 			
 			return items.join("|")
 		end
@@ -125,6 +139,7 @@ module GrabzIt
 			params['target'] = GrabzIt::Utility.nil_check(@targetElement)
 			params['requestmobileversion'] = GrabzIt::Utility.nil_int_check(@requestAs)
 			params['post'] = GrabzIt::Utility.nil_check(@post)
+			params['address'] = GrabzIt::Utility.nil_check(@address)
 			
 			return params
 		end
