@@ -76,6 +76,7 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_INVALID_ENCRYPTION_KEY: 171,
         PARAMETER_INVALID_NO_ADS: 172,
         PARAMETER_INVALID_PROXY: 173,
+		PARAMETER_INVALID_NO_NOTIFY: 174,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -389,7 +390,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
 		'pageWidth': 0,
 		'pageHeight': 0,
 		'proxy': '',
-		'mergeId': ''
+		'mergeId': '',
+		'noCookieNotifications':false,
+		'address': ''
     };
 
     context = _extend(defaults, options);
@@ -442,7 +445,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'width': context['pageWidth'],
         'height': context['pageHeight'],
 		'proxy': context['proxy'],
-		'mergeid': context['mergeId']
+		'mergeid': context['mergeId'],
+		'nonotify': context['noCookieNotifications'],
+		'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -453,7 +458,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement']
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
 	 + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
-	 + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId'];
+	 + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId']
+	 + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -490,7 +496,9 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
 		'pageWidth': 0,
 		'pageHeight': 0,
 		'proxy': '',
-		'mergeId': ''
+		'mergeId': '',
+		'noCookieNotifications':false,
+		'address': ''
     };
 
     context = _extend(defaults, options);
@@ -545,7 +553,9 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'width': context['pageWidth'],
         'height': context['pageHeight'],
 		'proxy': context['proxy'],
-		'mergeid': context['mergeId']
+		'mergeid': context['mergeId'],
+		'nonotify': context['noCookieNotifications'],
+		'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -556,7 +566,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
 	 + '|' + parseInt(context['marginRight']) + '|' + context['delay'] + '|' + parseInt(context['requestAs']) + '|' + context['country']
 	 + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
 	 + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
-	 + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'];
+	 + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -574,7 +584,8 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'exportUrl': '',
         'encryptionKey': '',
 		'postData':'',
-		'proxy': ''
+		'proxy': '',
+		'address': ''
     };
 
     context = _extend(defaults, options);
@@ -594,7 +605,8 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'export': context['exportUrl'],
         'encryption': context['encryptionKey'],
 		'post': context['postData'],
-		'proxy': context['proxy']
+		'proxy': context['proxy'],
+		'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -602,7 +614,8 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
     this.signaturePartOne = applicationSecret + '|' + url + '|';
     this.signaturePartTwo = '|' + context['customId'] + '|' + parseInt(context['tableNumberToInclude']) + '|' + _toInt(context['includeAllTables']) 
 	+ '|' + _toInt(context['includeHeaderNames']) + '|' + context['targetElement'] + '|' + context['format'] + '|' + parseInt(context['requestAs']) 
-	+ '|' + context['country'] + '|' + context['exportUrl'] + '|' + context['encryptionKey']  + '|' + context['postData'] + '|' + context['proxy'];
+	+ '|' + context['country'] + '|' + context['exportUrl'] + '|' + context['encryptionKey']  + '|' + context['postData'] + '|' + context['proxy']
+	+ '|' + context['address'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -678,7 +691,9 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'encryptionKey': '',
 		'noAds':false,
 		'postData':'',
-		'proxy': ''
+		'proxy': '',
+		'noCookieNotifications':false,
+		'address': ''
     };
 
     context = _extend(defaults, options);
@@ -710,7 +725,9 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'encryption': context['encryptionKey'],
 		'noads': _toInt(context['noAds']),
 		'post': context['postData'],
-		'proxy': context['proxy']
+		'proxy': context['proxy'],
+		'nonotify': context['noCookieNotifications'],
+		'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -719,7 +736,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
 	 + '|' + context['browserWidth'] + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] 
 	 + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs']) + '|' + context['country'] + '|' + context['quality'] 
 	 + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + _toInt(context['transparent']) 
-	 + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'];
+	 + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
+	 + '|' + _toInt(context['noCookieNotifications']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
