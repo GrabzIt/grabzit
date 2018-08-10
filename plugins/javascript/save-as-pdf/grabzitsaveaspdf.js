@@ -12,6 +12,7 @@ function GrabzIt(key)
 		this.encrypt = false;
 		this.postVars = '';
 		this.tVars = '';
+		this.retried = false;
 
 		this.aesjs = (function() {
 
@@ -333,6 +334,65 @@ function GrabzIt(key)
 
 			return this;
 		};
+		
+		this.ConvertPage = function(options)
+		{
+			if (options == null)
+			{
+				options = {};
+			}
+			
+			options['address'] = window.location.href;
+			
+			var div = document.createElement('div');
+			div.appendChild(document.documentElement.cloneNode(true));
+			var inputs = div.getElementsByTagName('input');
+			if (inputs != null)
+			{
+				for (var i = 0; i < inputs.length; i++) {
+					if (typeof(inputs[i].checked) !== 'undefined')
+					{
+						if (inputs[i].checked){
+							inputs[i].setAttribute('checked', 'true');
+						}
+						else{
+							inputs[i].removeAttribute('checked');
+						}
+					}
+					inputs[i].setAttribute('value', inputs[i].value);
+				}
+			}
+			var textareas = div.getElementsByTagName('textarea');
+			if (textareas != null)
+			{
+				for (var i = 0; i < textareas.length; i++) {
+					textareas[i].innerHTML = textareas[i].value;
+				}
+			}		
+			
+			var currentSelects = document.getElementsByTagName('select');
+			var selects = div.getElementsByTagName('select');
+			if (selects != null)
+			{
+				for (var i = 0; i < selects.length; i++) {
+					if (selects[i].options != null)
+					{
+						selects[i].innerHTML = "";
+						for (var j = 0; j < currentSelects[i].options.length; j++) {
+							var option = document.createElement("option");							
+							if(currentSelects[i].options[j].selected){
+								option.setAttribute('selected', 'selected');
+							}
+							option.setAttribute('value', currentSelects[i].options[j].value);
+							option.innerHTML = currentSelects[i].options[j].innerHTML;
+							selects[i].add(option);
+						}
+					}
+				}
+			}
+			
+			return this.ConvertHTML(div.innerHTML, options);
+		};		
 
 		this.UseSSL = function()
 		{
@@ -390,6 +450,23 @@ function GrabzIt(key)
 
 				results[k.toLowerCase()] = opts[k];
 			}
+			
+			if (results['target'] != null)
+			{
+				results['target'] = results['target'].replace('#','');
+			}
+			
+			if (typeof(results['onfinish']) === 'function'){
+				var functionName = 'grabzItOnFinish' + Math.floor(Math.random() * (1000000000+1));
+				window[functionName] = results['onfinish'];
+				results['onfinish'] = functionName;
+			}
+			
+			if (typeof(results['onerror']) === 'function'){
+				var functionName = 'grabzItOnError' + Math.floor(Math.random() * (1000000000+1));
+				window[functionName] = results['onerror'];
+				results['onerror'] = functionName;
+			}
 
 			return results;
 		}
@@ -413,6 +490,12 @@ function GrabzIt(key)
 			{
 				if (this.readyState == 4 && this.status == 200)
 				{
+					if (!that.retried && !this.responseText)
+					{
+						that.retried = true;
+						that._post(qs);
+						return;
+					}
 					that.elem.appendChild(that._handlePost(JSON.parse(this.responseText)));
 				}
 			};
@@ -460,7 +543,7 @@ function GrabzIt(key)
 			if (this.tVars != '' && !this.options['tvars'])
 			{
 				this.options['tvars'] = this.tVars;
-			}			
+			}
 			
 			for(var k in this.options)
 			{
@@ -469,9 +552,11 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify')
 				{
-					throw "Option " + k + " not recognized!";
+					var error = "Option " + k + " not recognized!";
+					document.documentElement.appendChild(this._createErrorMessage(error, null));
+					throw error;
 				}
 
 				var v = this.options[k];
@@ -497,12 +582,36 @@ function GrabzIt(key)
 			if (obj != null)
 			{
 				if (obj.ID == null || obj.ID == '')
-				{
-					throw obj.Message;
+				{					
+					return this._createErrorMessage(obj.Message, obj.Code);
 				}
 				return this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString('id', obj.ID));
 			}
 		};
+		
+		this._createErrorMessage = function(error, code){
+			var message = document.createElement('span');
+			message.innerHTML = '<strong>GrabzIt Error:</strong> ' + error;
+			if (this.options['errorid'] != null)
+			{
+				message.setAttribute('id', this.options['errorid']);
+			}
+			if (this.options['errorclass'] != null)
+			{
+				message.setAttribute('class', this.options['errorclass']);
+			}	
+			if (this.options['errorid'] == null && this.options['errorclass'] == null)
+			{
+				message.setAttribute('style', 'position:fixed !important;top:2% !important;left:50% !important;border:1px solid #FF0000 !important;background-color:#FFF !important;color:#FF0000 !important;padding:0.5em !important;transform: translateX(-50%) !important;z-index:1000000 !important');
+			}						
+			
+			if (this.options['onerror'] != null)
+			{
+				window[this.options['onerror']](error, code);
+			}			
+			
+			return message;
+		}
 
 		this._base64ToBytes = function(base64)
 		{
@@ -591,10 +700,15 @@ function GrabzIt(key)
 			{
 				defaultNode = document.body;
 			}
-			this.AddTo(defaultNode);
+			this.AddTo(defaultNode, true);
+		};
+		
+		this.CreateInvisible = function(){
+			this.options['noresult'] = 1;
+			this.Create();
 		};
 
-		this.AddTo = function(container)
+		this.AddTo = function(container, insert)
 		{
 			if (typeof container == 'string' || container instanceof String)
 			{
@@ -625,7 +739,19 @@ function GrabzIt(key)
 				return;
 			}
 
-			this.elem.appendChild(this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data)));
+			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data));
+			
+			if (insert)
+			{
+				try
+				{
+					this.elem.insertBefore(scriptNode, this.elem.firstChild);
+					return;
+				}
+				catch(e){}
+			}
+			
+			this.elem.appendChild(scriptNode);
 		};
 	})(key);
 }
