@@ -21,10 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.net.Authenticator;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
@@ -37,7 +38,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -49,7 +49,7 @@ import javax.xml.bind.JAXBException;
 
 /**
  * This client provides access to the GrabzIt web services
- * This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
+ * This API allows you to take capture websites for free and convert them into images, PDF's and tables.
  *
  * @version 3.0
  * @author GrabzIt
@@ -60,6 +60,7 @@ public class GrabzItClient {
     private final String applicationSecret;
 
     private Request request;
+    private Proxy proxy = null;
     private String protocol = "http";
     
     private final String BASE_URL_GET = "://api.grabz.it/services/";
@@ -79,6 +80,34 @@ public class GrabzItClient {
     {
         this.applicationKey = applicationKey;
         this.applicationSecret = applicationSecret;
+    }
+    
+    /**
+     * This method enables a local proxy server to be used for all requests
+     * @param proxyUrl the URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy
+     * 
+     * @throws MalformedURLException 
+     */
+    public void SetLocalProxy(String proxyUrl) throws MalformedURLException{
+        Authenticator.setDefault(null);
+        
+        if (proxyUrl == null || "".equals(proxyUrl))
+        {
+            this.proxy = null;
+            return;
+        }
+        
+        URL url = new URL(proxyUrl);            
+        this.proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(url.getHost(), url.getPort()));        
+
+        if (url.getUserInfo() != null)
+        {
+            String[] userInfoParts = url.getUserInfo().split(":");
+            if (userInfoParts.length == 2)
+            {
+                Authenticator.setDefault(new BasicAuthenticator(userInfoParts[0], userInfoParts[1]));
+            }
+        }
     }
     
     /**
@@ -1065,8 +1094,7 @@ public class GrabzItClient {
     {
         try
         {
-            URL req = new URL(url);
-            URLConnection connection = (URLConnection) req.openConnection();
+            URLConnection connection = getURLConnection(url);
             HttpUtility.CheckResponse(connection);        
             Response response = new Response();        
             return response.Parse(connection, clazz);
@@ -1079,8 +1107,7 @@ public class GrabzItClient {
     
     private <T> T post(String targetUrl, String parameters, Class<T> clazz) throws IOException, JAXBException, Exception
     {
-        URL url = new URL(targetUrl);
-        URLConnection conn = url.openConnection();
+        URLConnection conn = getURLConnection(targetUrl);                
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded"); 
         OutputStreamWriter writer = null;
@@ -1107,6 +1134,15 @@ public class GrabzItClient {
                 writer.close();
             }
         }
+    }
+
+    private URLConnection getURLConnection(String targetUrl) throws IOException, MalformedURLException {
+        URL url = new URL(targetUrl);
+        if (this.proxy == null)
+        {
+            return url.openConnection();
+        }
+        return url.openConnection(this.proxy);
     }
     
     private String getRootURL(boolean isPost)
