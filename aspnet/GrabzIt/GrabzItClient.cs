@@ -108,10 +108,10 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// This method sets the proxy for all requests to GrabzIt's web services to use.
+        /// This method enables a local proxy server to be used for all requests.
         /// </summary>
         /// <param name="proxyUrl">The URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy.</param>
-        public void SetProxy(string proxyUrl)
+        public void SetLocalProxy(string proxyUrl)
         {
             if (string.IsNullOrEmpty(proxyUrl))
             {

@@ -10,7 +10,7 @@ namespace GrabzIt.COM
     {
         string ApplicationKey { get; set; }
         string ApplicationSecret { get; set; }
-        void SetProxy(string proxyUrl);
+        void SetLocalProxy(string proxyUrl);
         void UseSSL(bool value);
         string CreateEncrpytionKey();
         void Decrypt(string path, string key);
