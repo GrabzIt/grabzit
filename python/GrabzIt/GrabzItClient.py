@@ -656,7 +656,7 @@ class GrabzItClient:
                     try:
                         encodedAuth = base64.b64encode(auth)
                     except TypeError:
-                        encodedAuth = base64.b64encode(auth.encode())
+                        encodedAuth = base64.b64encode(auth.encode()).decode('ascii')
                     
                     headers['Proxy-Authorization'] = 'Basic ' + encodedAuth 
 
