@@ -52,7 +52,7 @@ class GrabzItClient:
 				self.proxy = None
 			  
 		#
-		# This method enables a local proxy server to be used  for all requests
+		# This method enables a local proxy server to be used for all requests
 		#
 		# proxyUrl - the URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy
 		#
