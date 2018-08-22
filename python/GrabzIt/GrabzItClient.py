@@ -651,7 +651,14 @@ class GrabzItClient:
                 headers = {}
                 if username and password:
                     auth = '%s:%s' % (username, password)
-                    headers['Proxy-Authorization'] = 'Basic ' + base64.b64encode(auth) 
+                    
+                    encodedAuth = ''
+                    try:
+                        encodedAuth = base64.b64encode(auth)
+                    except TypeError:
+                        encodedAuth = base64.b64encode(auth.encode())
+                    
+                    headers['Proxy-Authorization'] = 'Basic ' + encodedAuth 
 
                 port = 80
                 if self.protocol == "https":
