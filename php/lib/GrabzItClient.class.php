@@ -25,6 +25,7 @@ class GrabzItClient
 	private $request;
 	private $connectionTimeout = 600;
 	private $protocol = "http";
+	private $proxy = null;
 
 	public function __construct($applicationKey, $applicationSecret)
 	{
@@ -70,6 +71,38 @@ class GrabzItClient
 			return;
 		}
 		$this->protocol = "http";
+	}
+	
+	
+	/*
+	This method enables a local proxy server to be used for all requests
+	
+	proxyUrl - the URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy
+	*/
+	public function SetLocalProxy($proxyUrl)
+	{
+		if ($proxyUrl == null || empty($proxy))
+		{
+			$this->proxy = null;
+			return;
+		}
+		
+		$url_parts = parse_url($proxyUrl);
+		
+		$this->proxy = new stdClass();
+		$this->proxy->host = $url_parts['host'];
+		$this->proxy->port = $url_parts['port'];
+		$this->proxy->username = null;
+		$this->proxy->password = null;
+		
+		if (isset($url_parts['user']))
+		{
+			$this->proxy->username = $url_parts['user'];
+		}
+		if (isset($url_parts['pass']))
+		{
+			$this->proxy->password = $url_parts['pass'];
+		}
 	}
 	
 	/*
@@ -725,12 +758,14 @@ class GrabzItClient
 			$options = array(
 				'http' => array(
 					'timeout' => $this->connectionTimeout,
-					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'header'  => array("Content-type: application/x-www-form-urlencoded"),
 					'method'  => 'POST',
 					'content' => http_build_query($parameters, '', '&')
 				)
 			);
 
+			$options = $this->addProxyToStreamContext($options);
+			
 			$context  = stream_context_create($options);
 			$response = @file_get_contents($url, false, $context);
 
@@ -757,7 +792,8 @@ class GrabzItClient
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
 			curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($parameters, '', '&'));
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-
+			$this->addProxyToCurl($ch);
+			
 			//execute post
 			$data = curl_exec($ch);
 
@@ -778,8 +814,9 @@ class GrabzItClient
 	{
 		if (ini_get('allow_url_fopen'))
 		{
-			$timeout = array('http' => array('timeout' => $this->connectionTimeout));
-			$context = stream_context_create($timeout);
+			$options = array('http' => array('timeout' => $this->connectionTimeout));
+			$options = $this->addProxyToStreamContext($options);
+			$context = stream_context_create($options);
 			$response = @file_get_contents($url, false, $context);
 			
 			if (isset($http_response_header))
@@ -800,7 +837,9 @@ class GrabzItClient
 			$ch = curl_init();
 			curl_setopt($ch,CURLOPT_URL,$url);
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->connectionTimeout);			
+			$this->addProxyToCurl($ch);
+			
 			$data = curl_exec($ch);
 			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -812,6 +851,41 @@ class GrabzItClient
 		}
 
 		throw new GrabzItException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItException::GENERIC_ERROR);
+	}
+	
+	private function addProxyToCurl($ch)
+	{
+		if ($this->proxy != null)
+		{
+			curl_setopt($ch, CURLOPT_PROXYPORT, $this->proxy->port);
+			curl_setopt($ch, CURLOPT_PROXYTYPE, 'HTTP');
+			curl_setopt($ch, CURLOPT_PROXY, $this->proxy->host);
+			if ($this->proxy->username != null && $this->proxy->password != null)
+			{
+				curl_setopt($ch, CURLOPT_PROXYUSERPWD, base64_encode($this->proxy->username . ':' . $this->proxy->password));
+			}
+		}		
+	}
+	
+	private function addProxyToStreamContext($options)
+	{
+		if ($this->proxy != null)
+		{
+			$options['http']['request_fulluri'] = true;
+			$options['http']['proxy'] = $this->proxy->host . ':' . $this->proxy->port;
+			if ($this->proxy->username != null && $this->proxy->password != null)
+			{
+				$headers = array();
+				if (isset($options['http']['header']))
+				{
+					$headers = $options['http']['header'];
+				}
+				array_push($headers, 'Proxy-Authorization: Basic' . base64_encode($this->proxy->username . ':' . $this->proxy->password));
+				$options['http']['header'] = $headers;
+			}
+		}		
+		
+		return $options;
 	}
 
 	private function checkHttpCode($httpCode)
