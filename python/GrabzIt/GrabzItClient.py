@@ -626,8 +626,7 @@ class GrabzItClient:
 					body = urlencode(fields)					
 					
  
-			h = self._getConnection()	 
-			h.putrequest('POST', selector)
+			h = self._getConnection('POST', selector)
 			h.putheader('content-type', content_type)
 			h.putheader('content-length', str(len(body)))
 			h.endheaders()
@@ -643,11 +642,12 @@ class GrabzItClient:
 			self.CheckResponseHeader(response.status);
 			return response.read()
 
-		def _getConnection(self):
+		def _getConnection(self, method, action):
 			hostname = "grabz.it"
 			port = 80
 			username = None
 			password = None
+			authHeader = None
 			
 			if self.protocol == "https":
 				port = 443
@@ -666,23 +666,23 @@ class GrabzItClient:
 				h = httpClient.HTTPSConnection(hostname, port)
 			
 			if self.proxy:
-				headers = {}
 				if username and password:
 					auth = '%s:%s' % (username, password)
 					
-					encodedAuth = ''
 					try:
-						encodedAuth = base64.b64encode(auth)
+						authHeader = base64.b64encode(auth)
 					except TypeError:
-						encodedAuth = base64.b64encode(auth.encode()).decode("ISO-8859-1")
-
-					h.putheader('proxy-authorization', 'Basic ' + encodedAuth)
-
+						authHeader = base64.b64encode(auth.encode()).decode("ISO-8859-1")
+                        
+				h.putheader('proxy-authorization', 'Basic ' + authHeader)
+                
 				port = 80
 				if self.protocol == "https":
 					port = 443				  
 				h.set_tunnel('grabz.it', port)
-				
+			
+			h.putrequest(method, action)
+
 			return h
 			
 		def EncodeMultipartFormdata(self, fields, files):
@@ -710,8 +710,8 @@ class GrabzItClient:
 			return mimetypes.guess_type(filename)[0] or 'application/octet-stream'
 		
 		def HTTPGet(self, url):
-			connection = self._getConnection()	
-			connection.request("GET", url)
+			connection = self._getConnection('GET', url)
+			connection.endheaders()
 			response = connection.getresponse()
 			self.CheckResponseHeader(response.status)
 			return response.read()		  
