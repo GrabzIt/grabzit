@@ -1,5 +1,5 @@
 <?php
-include_once("GrabzItBaseOptions.class.php");
+namespace GrabzIt;
 
 class GrabzItAnimationOptions extends GrabzItBaseOptions
 {	

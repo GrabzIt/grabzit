@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 
-include("lib/GrabzItClient.class.php");
+include("lib/GrabzItClient.php");
 include("config.php");
 
 $message = '';
@@ -40,7 +40,7 @@ if (count($_POST) > 0)
 
 		try
 		{
-			$grabzIt = new GrabzItClient($grabzItApplicationKey, $grabzItApplicationSecret);
+			$grabzIt = new \GrabzIt\GrabzItClient($grabzItApplicationKey, $grabzItApplicationSecret);
 			if ($format == "pdf")
 			{
 				if ($convert == 'html')

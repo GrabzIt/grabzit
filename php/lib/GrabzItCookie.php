@@ -1,4 +1,6 @@
 <?php
+namespace GrabzIt;
+
 class GrabzItCookie
 {
   public $Name;

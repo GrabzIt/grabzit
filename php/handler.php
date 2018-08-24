@@ -1,5 +1,5 @@
 <?php
-include("lib/GrabzItClient.class.php");
+include("lib/GrabzItClient.php");
 include("config.php");
 
 //This PHP file handles the GrabzIt callback
@@ -13,7 +13,7 @@ $format = $_GET["format"];
 //Custom id can be used to store user ids or whatever is needed for the later processing of the
 //resulting screenshot
 
-$grabzIt = new GrabzItClient($grabzItApplicationKey, $grabzItApplicationSecret);
+$grabzIt = new \GrabzIt\GrabzItClient($grabzItApplicationKey, $grabzItApplicationSecret);
 $result = $grabzIt->GetResult($id);
 
 if (!$result)
