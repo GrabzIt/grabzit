@@ -5,12 +5,14 @@
  */
 package it.grabz.grabzit;
 
+import java.io.UnsupportedEncodingException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.net.URLDecoder;
 
 /**
  *
- * @version 3.0
+ * @version 3.2
  * @author GrabzIt
  */
 public class BasicAuthenticator extends Authenticator  {
@@ -18,8 +20,11 @@ public class BasicAuthenticator extends Authenticator  {
     private String password;
     
     public BasicAuthenticator(String username, String password){
-        this.username = username;
-        this.password = password;
+        try{
+            this.username = URLDecoder.decode(username, "UTF-8");
+            this.password = URLDecoder.decode(password, "UTF-8");
+        }
+        catch(UnsupportedEncodingException e){}
     }
     
     @Override
