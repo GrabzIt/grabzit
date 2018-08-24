@@ -3,7 +3,8 @@
 import os
 
 try:
-	from urllib.parse import urlencode	
+	from urllib.parse import urlencode
+	from urllib.parse import unquote	
 	from urllib.request import urlopen
 	from urllib.parse import urlparse
 	from urllib.parse import quote
@@ -12,6 +13,7 @@ except ImportError:
 	from urllib import urlopen
 	from urlparse import urlparse
 	from urllib import urlencode
+	from urllib import unquote
 	from urllib import quote
 	import httplib as httpClient
 
@@ -656,8 +658,8 @@ class GrabzItClient:
 				url = urlparse(self.proxy)
 				hostname = url.hostname
 				port = url.port					 
-				username = url.username;
-				password = url.password
+				username = unquote(url.username)
+				password = unquote(url.password)
 					
 			h = None
 			if self.protocol == "http":
@@ -673,9 +675,9 @@ class GrabzItClient:
 						authHeader = base64.b64encode(auth)
 					except TypeError:
 						authHeader = base64.b64encode(auth.encode()).decode("ISO-8859-1")
-                        
+						
 				h.putheader('proxy-authorization', 'Basic ' + authHeader)
-                
+				
 				port = 80
 				if self.protocol == "https":
 					port = 443				  
