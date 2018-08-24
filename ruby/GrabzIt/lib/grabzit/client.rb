@@ -19,6 +19,7 @@ module GrabzIt
 	require File.join(File.dirname(__FILE__), 'tableoptions')
 	require File.join(File.dirname(__FILE__), 'pdfoptions')
 	require File.join(File.dirname(__FILE__), 'docxoptions')
+	require File.join(File.dirname(__FILE__), 'proxy')
 	
 	# This client provides access to the GrabzIt web services
 	# This API allows you to take screenshot of websites for free and convert them into images, PDF's and tables.
@@ -57,6 +58,7 @@ module GrabzIt
 			@applicationKey = applicationKey
 			@applicationSecret = applicationSecret
 			@protocol = 'http'
+			@proxy = Proxy.new()
 		end
 
 		# This method specifies the URL of the online video that should be converted into a animated GIF
@@ -260,15 +262,6 @@ module GrabzIt
 			end
 
 			return get_result_value(data, "ID")
-		end
-		
-		private
-		def take(sig, callBackURL)
-			if !@request.isPost()
-				return get(@request.url() + "?" + URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "url", @request.data())))
-			end
-			
-			return post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", CGI.escape(@request.data()))))
 		end
 
 		# Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. if no target path is provided
@@ -561,6 +554,18 @@ module GrabzIt
 				@protocol = 'http'
 			end
 		end
+	
+		# This method enables a local proxy server to be used for all requests
+		#
+		# @param value [String] the URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy
+		def set_local_proxy(value)
+			if value
+				uri = URI.parse(value)
+				@proxy = Proxy.new(uri.host, uri.port, uri.user, uri.password)
+			else
+				@proxy = Proxy.new()
+			end
+		end		
 		
 		# This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
 		#
@@ -599,6 +604,15 @@ module GrabzIt
 			decrypted << cipher.final();
 			return decrypted
 		end
+		
+		private
+		def take(sig, callBackURL)
+			if !@request.isPost()
+				return get(@request.url() + "?" + URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "url", @request.data())))
+			end
+			
+			return post(@request.url(), URI.encode_www_form(@request.options()._getParameters(@applicationKey, sig, callBackURL, "html", CGI.escape(@request.data()))))
+		end		
 
 		private
 		def find_watermarks(identifier = nil)
@@ -631,7 +645,7 @@ module GrabzIt
 		private
 		def get(url)
 			uri = URI.parse(url)
-			response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') { |http| http.get(uri.request_uri) }
+			response = Net::HTTP.start(uri.host, uri.port, @proxy.host(), @proxy.port(), @proxy.username(), @proxy.password(), :use_ssl => uri.scheme == 'https') { |http| http.get(uri.request_uri) }
 			response_check(response)
 			return response.body
 		end
@@ -640,7 +654,7 @@ module GrabzIt
 		def post(url, params)
 			headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
 			uri = URI.parse(url)
-			response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') { |http| http.post(uri.request_uri, params, headers) }
+			response = Net::HTTP.start(uri.host, uri.port, @proxy.host(), @proxy.port(), @proxy.username(), @proxy.password(), :use_ssl => uri.scheme == 'https') { |http| http.post(uri.request_uri, params, headers) }
 			response_check(response)
 			return response.body
 		end		
