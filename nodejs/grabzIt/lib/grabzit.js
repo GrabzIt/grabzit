@@ -1261,13 +1261,18 @@ GrabzItClient.prototype.use_ssl = function (value) {
 	this.port = 80;
 }
 
+/*
+* This method enables a local proxy server to be used for all requests
+* 
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#localproxy
+*/
 GrabzItClient.prototype.set_local_proxy = function (proxyUrl) {
     const pUrl = urlUtility.parse(proxyUrl);
 	this.proxy = {
 		'host':pUrl.hostname,
 		'port':pUrl.port,
-		'username':pUrl.username,
-		'password':pUrl.password
+		'username':decodeURIComponent(pUrl.username),
+		'password':decodeURIComponent(pUrl.password)
 	}
 }
 
