@@ -97,11 +97,11 @@ class GrabzItClient
 		
 		if (isset($url_parts['user']))
 		{
-			$this->proxy->username = $url_parts['user'];
+			$this->proxy->username = urldecode($url_parts['user']);
 		}
 		if (isset($url_parts['pass']))
 		{
-			$this->proxy->password = $url_parts['pass'];
+			$this->proxy->password = urldecode($url_parts['pass']);
 		}
 	}
 	
@@ -642,6 +642,8 @@ class GrabzItClient
 			)
 		);
 
+		$opts = $this->addProxyToStreamContext($opts);
+		
 		$context  = stream_context_create($opts);
 
 		$response = @file_get_contents('http://grabz.it/services/addwatermark.ashx', false, $context);
