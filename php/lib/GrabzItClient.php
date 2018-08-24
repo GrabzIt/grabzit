@@ -159,7 +159,7 @@ class GrabzItClient
 	url - The URL to convert into a animated GIF.
 	options - A instance of the GrabzItAnimationOptions class that defines any special options to use when creating the animated GIF.
 	*/
-	public function URLToAnimation($url, $options = null)
+	public function URLToAnimation($url, GrabzItAnimationOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -175,7 +175,7 @@ class GrabzItClient
 	url - The URL to capture as a screenshot.
 	options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the screenshot.
 	*/
-	public function URLToImage($url, $options = null)
+	public function URLToImage($url, GrabzItImageOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -191,7 +191,7 @@ class GrabzItClient
 	html - The HTML to convert into a image.
 	options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the image.
 	*/	
-	public function HTMLToImage($html, $options = null)
+	public function HTMLToImage($html, GrabzItImageOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -207,7 +207,7 @@ class GrabzItClient
 	path - The file path of a HTML file to convert into a image.
 	options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the image.
 	*/		
-	public function FileToImage($path, $options = null)
+	public function FileToImage($path, GrabzItImageOptions $options = null)
 	{
 		if (!file_exists($path))
 		{
@@ -223,7 +223,7 @@ class GrabzItClient
 	url - The URL to extract HTML tables from.
 	options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table.	
 	*/
-	public function URLToTable($url, $options = null)
+	public function URLToTable($url, GrabzItTableOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -239,7 +239,7 @@ class GrabzItClient
 	html - The HTML to extract HTML tables from.
 	options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table.	
 	*/
-	public function HTMLToTable($html, $options = null)
+	public function HTMLToTable($html, GrabzItTableOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -255,7 +255,7 @@ class GrabzItClient
 	path - The file path of a HTML file to extract HTML tables from.
 	options - A instance of the GrabzItTableOptions class that defines any special options to use when converting the HTML table.
 	*/	
-	public function FileToTable($path, $options = null)
+	public function FileToTable($path, GrabzItTableOptions $options = null)
 	{
 		if (!file_exists($path))
 		{
@@ -271,7 +271,7 @@ class GrabzItClient
 	url - The URL to capture as a PDF.
 	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
 	*/
-	public function URLToPDF($url, $options = null)
+	public function URLToPDF($url, GrabzItPDFOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -287,7 +287,7 @@ class GrabzItClient
 	html - The HTML to convert into a PDF.
 	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
 	*/	
-	public function HTMLToPDF($html, $options = null)
+	public function HTMLToPDF($html, GrabzItPDFOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -303,7 +303,7 @@ class GrabzItClient
 	path - The file path of a HTML file to convert into a PDF.
 	options - A instance of the GrabzItPDFOptions class that defines any special options to use when creating the PDF.
 	*/	
-	public function FileToPDF($path, $options = null)
+	public function FileToPDF($path, GrabzItPDFOptions $options = null)
 	{
 		if (!file_exists($path))
 		{
@@ -319,7 +319,7 @@ class GrabzItClient
 	url - The URL to capture as a DOCX.
 	options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
 	*/
-	public function URLToDOCX($url, $options = null)
+	public function URLToDOCX($url, GrabzItDOCXOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -335,7 +335,7 @@ class GrabzItClient
 	html - The HTML to convert into a DOCX.
 	options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
 	*/	
-	public function HTMLToDOCX($html, $options = null)
+	public function HTMLToDOCX($html, GrabzItDOCXOptions $options = null)
 	{
 		if ($options == null)
 		{
@@ -351,7 +351,7 @@ class GrabzItClient
 	path - The file path of a HTML file to convert into a DOCX.
 	options - A instance of the GrabzItDOCXOptions class that defines any special options to use when creating the DOCX.
 	*/	
-	public function FileToDOCX($path, $options = null)
+	public function FileToDOCX($path, GrabzItDOCXOptions $options = null)
 	{
 		if (!file_exists($path))
 		{

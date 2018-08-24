@@ -3,7 +3,7 @@ namespace GrabzIt;
 
 use Exception;
 
-class GrabzItException extends Exception {
+class GrabzItException extends \Exception {
     
     const SUCCESS = 0;
     const PARAMETER_NO_URL = 100;
