@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='GrabzIt',
-      version='3.3.0.0',
+      version='3.3.0',
       author='GrabzIt',
       author_email='support@grabz.it',
       url='https://grabz.it/api/python/',
