@@ -1,5 +1,9 @@
 <?php
-class GrabzItScrapeException extends Exception {
+namespace GrabzIt\Scraper;
+
+use Exception;
+
+class GrabzItScrapeException extends \Exception {
 
     const SUCCESS = 0;
     const PARAMETER_MISSING_SCRAPE_ID = 158;

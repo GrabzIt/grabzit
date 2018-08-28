@@ -1,4 +1,6 @@
 <?php
+namespace GrabzIt\Scraper;
+
 class GrabzItScrape
 {
   public $ID;

@@ -1,4 +1,6 @@
 <?php
+namespace GrabzIt\Scraper;
+
 /*
 Change a global variable contained within the scrape instructions
 */

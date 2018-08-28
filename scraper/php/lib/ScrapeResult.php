@@ -1,4 +1,8 @@
 <?php
+namespace GrabzIt\Scraper;
+
+use Exception;
+
 class ScrapeResult
 {
     private $extension;
@@ -15,7 +19,7 @@ class ScrapeResult
         }
         else if ($_SERVER['HTTP_USER_AGENT'] != 'GrabzIt')
         {
-            throw new Exception("A call originating from a non-GrabzIt server has been detected");
+            throw new \Exception("A call originating from a non-GrabzIt server has been detected");
         }
     }
     

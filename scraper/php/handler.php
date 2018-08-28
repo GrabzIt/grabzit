@@ -1,5 +1,6 @@
 <?php
-include("lib/ScrapeResult.class.php");
-$scrapeResult = new ScrapeResult();
+include("lib/ScrapeResult.php");
+
+$scrapeResult = new \GrabzIt\Scraper\ScrapeResult();
 $scrapeResult->save("results/".$scrapeResult->getFilename());
 ?>

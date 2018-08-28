@@ -1,15 +1,19 @@
 <?php
-include("lib/GrabzItScrapeClient.class.php");
+include("lib/GrabzItScrapeClient.php");
 include("config.php");
 
 $message = '';
-$grabzIt = new GrabzItScrapeClient($grabzItApplicationKey, $grabzItApplicationSecret);
+$grabzIt = new \GrabzIt\Scraper\GrabzItScrapeClient($grabzItApplicationKey, $grabzItApplicationSecret);
 
 if (count($_GET) > 0)
 {
     $id = $_GET["id"];
     $status = $_GET["status"];
-	$resultId = $_GET["resultId"];
+	$resultId;
+	if (isset($_GET["resultId"]))
+	{
+		$resultId = $_GET["resultId"];
+	}
 	try
 	{
 		if (!empty($resultId))

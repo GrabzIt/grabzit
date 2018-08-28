@@ -1,4 +1,5 @@
 <?php
+namespace GrabzIt\Scraper;
 /*
 Change the target of a scrape
 */
