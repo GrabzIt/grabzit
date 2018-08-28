@@ -17,6 +17,8 @@ namespace GrabzIt.Scraper
 {
     public class GrabzItScrapeClient
     {
+        private WebProxy proxy = null;
+
         public string ApplicationKey
         {
             get;
@@ -35,6 +37,20 @@ namespace GrabzIt.Scraper
         {
             this.ApplicationKey = applicationKey;
             this.ApplicationSecret = applicationSecret;
+        }
+
+        /// <summary>
+        /// This method enables a local proxy server to be used for all requests.
+        /// </summary>
+        /// <param name="proxyUrl">The URL, which can include a port if required, of the proxy. Providing a null will remove any previously set proxy.</param>
+        public void SetLocalProxy(string proxyUrl)
+        {
+            if (string.IsNullOrEmpty(proxyUrl))
+            {
+                this.proxy = null;
+                return;
+            }
+            this.proxy = new WebProxy(proxyUrl);
         }
 
         /// <summary>
@@ -188,7 +204,7 @@ namespace GrabzIt.Scraper
 
         private T Get<T>(string url)
         {
-            using (QuickWebClient client = new QuickWebClient())
+            using (QuickWebClient client = new QuickWebClient(this.proxy))
             {
                 try
                 {
@@ -205,7 +221,7 @@ namespace GrabzIt.Scraper
 
         private T Post<T>(string url, string parameters)
         {
-            using (QuickWebClient client = new QuickWebClient())
+            using (QuickWebClient client = new QuickWebClient(this.proxy))
             {
                 try
                 {
