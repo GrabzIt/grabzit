@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 
-include("lib/GrabzItClient.class.php");
+include("lib/GrabzItClient.php");
 include("config.php");
 
 $message = '';

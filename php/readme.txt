@@ -1,4 +1,4 @@
-GrabzIt 3.2
+GrabzIt 3.3
 ===========
 
 This library allows you to programmatically convert HTML and URL's into images, DOCX documents, PDF's, CSV's, spreadsheets and JSON. Additionally GrabzIt allows you to convert online videos into animated GIF's.
@@ -19,4 +19,5 @@ Ensure your application has read and write access to the "results" directory.
 
 Finally run the index.php to start converting web pages.
 
-More documentation can be found at: https://grabz.it/api/php/
+More documentation can be found at: https://grabz.it/api/php/ however the documentation is for PHP version 5.3.2 and above. This version 
+works in the same way but without PHP namespaces.

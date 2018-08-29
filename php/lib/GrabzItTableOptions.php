@@ -1,5 +1,5 @@
 <?php
-include_once("GrabzItBaseOptions.class.php");
+include_once("GrabzItBaseOptions.php");
 
 class GrabzItTableOptions extends GrabzItBaseOptions
 {

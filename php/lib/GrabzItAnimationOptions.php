@@ -1,5 +1,5 @@
 <?php
-include_once("GrabzItBaseOptions.class.php");
+include_once("GrabzItBaseOptions.php");
 
 class GrabzItAnimationOptions extends GrabzItBaseOptions
 {	
@@ -11,7 +11,8 @@ class GrabzItAnimationOptions extends GrabzItBaseOptions
 	private $speed = null;
 	private	$framesPerSecond = null;
 	private $repeat = null;
-	private $reverse = false;	
+	private $reverse = false;
+	private $quality = -1;	
 
 	/*
 	Set to true if the frames of the animated GIF should be reversed.

@@ -1,5 +1,5 @@
 <?php
-include("lib/GrabzItClient.class.php");
+include("lib/GrabzItClient.php");
 include("config.php");
 
 //This PHP file handles the GrabzIt callback

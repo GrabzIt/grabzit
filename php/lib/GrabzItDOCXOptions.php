@@ -1,27 +1,25 @@
 <?php
-include_once("GrabzItBaseOptions.class.php");
+include_once("GrabzItBaseOptions.php");
 
-class GrabzItPDFOptions extends GrabzItBaseOptions
+class GrabzItDOCXOptions extends GrabzItBaseOptions
 {	
 	private $includeBackground = true;
 	private $pagesize = 'A4';
 	private $orientation = 'Portrait';
+	private $includeImages = true;	
 	private $includeLinks = true;
-	private $includeOutline = false;
 	private $title = null;
-	private $coverURL = null;
 	private $marginTop = 10;
 	private $marginLeft = 10;
 	private $marginBottom = 10;
 	private $marginRight = 10;
 	private $requestAs = 0;
-	private $templateId = null;
-	private $customWaterMarkId = null;
 	private $quality = -1;
-	private $targetElement = null;	
 	private $hideElement = null;
 	private $waitForElement = null;
 	private $noAds = false;
+	private $templateId = null;
+	private $targetElement = null;
 	private $width = null;
 	private $height = null;	
 	private $browserWidth = null;
@@ -31,7 +29,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $address = null;
 	
 	/*
-	Set the width of the resulting PDF in mm.
+	Set the width of the resulting DOCX in mm.
 	*/
 	public function setPageWidth($value)
 	{
@@ -39,7 +37,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the width of the resulting PDF in mm.
+	Get the width of the resulting DOCX in mm.
 	*/
 	public function getPageWidth()
 	{
@@ -47,7 +45,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the height of the resulting PDF in mm.
+	Set the height of the resulting DOCX in mm.
 	*/
 	public function setPageHeight($value)
 	{
@@ -55,7 +53,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the height of the resulting PDF in mm.
+	Get the height of the resulting DOCX in mm.
 	*/
 	public function getPageHeight()
 	{
@@ -76,7 +74,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function getBrowserWidth()
 	{
 		return $this->browserWidth;
-	}	
+	}
 	
 	/*
 	Set the number of milliseconds to wait before creating the capture.
@@ -95,7 +93,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}	
 	
 	/*
-	Set to true if the background of the web page should be included in the PDF.
+	Set to true if background images should be included in the DOCX.
 	*/
 	public function setIncludeBackground($value)
 	{
@@ -103,7 +101,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get if the background of the web page should be included in the PDF.
+	Get if the background images should be included in the DOCX.
 	*/
 	public function getIncludeBackground()
 	{
@@ -111,7 +109,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the page size of the PDF to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'.
+	Set the page size of the DOCX to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter'.
 	*/
 	public function setPageSize($value)
 	{
@@ -120,7 +118,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the page size of the PDF to be returned.
+	Get the page size of the DOCX to be returned.
 	*/
 	public function getPageSize()
 	{
@@ -128,7 +126,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the orientation of the PDF to be returned: 'Landscape' or 'Portrait'.
+	Set the orientation of the DOCX to be returned: 'Landscape' or 'Portrait'.
 	*/
 	public function setOrientation($value)
 	{
@@ -137,7 +135,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the orientation of the PDF to be returned.
+	Get the orientation of the DOCX to be returned.
 	*/
 	public function getOrientation()
 	{
@@ -145,7 +143,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set to true if links should be included in the PDF.
+	Set to true if links should be included in the DOCX.
 	*/
 	public function setIncludeLinks($value)
 	{
@@ -153,7 +151,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get if the links should be included in the PDF.
+	Get if the links should be included in the DOCX.
 	*/
 	public function getIncludeLinks()
 	{
@@ -161,23 +159,23 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set to true if the PDF outline should be included.
+	Set to true if the DOCX should include non-background images.
 	*/
-	public function setIncludeOutline($value)
+	public function setIncludeImages($value)
 	{
-		$this->includeOutline = $value;
+		$this->includeImages = $value;
 	}
 
 	/*
-	Get if the PDF outline should be included.
+	Get if the DOCX should include non-background images.
 	*/
-	public function getIncludeOutline()
+	public function getIncludeImages()
 	{
-		return $this->includeOutline;
+		return $this->includeImages;
 	}
 
 	/*
-	Set a title for the PDF document.
+	Set a title for the DOCX document.
 	*/
 	public function setTitle($value)
 	{
@@ -185,27 +183,11 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get a title for the PDF document.
+	Get a title for the DOCX document.
 	*/
 	public function getTitle()
 	{
 		return $this->title;
-	}
-
-	/*
-	Set the URL of a web page that should be used as a cover page for the PDF.
-	*/
-	public function setCoverURL($value)
-	{
-		$this->coverURL = $value;
-	}
-
-	/*
-	Get the URL of a web page that should be used as a cover page for the PDF.
-	*/
-	public function getCoverURL()
-	{
-		return $this->coverURL;
 	}
 	
 	/*
@@ -257,7 +239,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}	
 
 	/*
-	Set the margin that should appear at the top of the PDF document page.
+	Set the margin that should appear at the top of the DOCX document page.
 	*/
 	public function setMarginTop($value)
 	{
@@ -265,7 +247,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the margin that should appear at the top of the PDF document page.
+	Get the margin that should appear at the top of the DOCX document page.
 	*/
 	public function getMarginTop()
 	{
@@ -273,7 +255,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the margin that should appear at the left of the PDF document page.
+	Set the margin that should appear at the left of the DOCX document page.
 	*/
 	public function setMarginLeft($value)
 	{
@@ -281,7 +263,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the margin that should appear at the left of the PDF document page.
+	Get the margin that should appear at the left of the DOCX document page.
 	*/
 	public function getMarginLeft()
 	{
@@ -289,7 +271,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the margin that should appear at the bottom of the PDF document page.
+	Set the margin that should appear at the bottom of the DOCX document page.
 	*/
 	public function setMarginBottom($value)
 	{
@@ -297,7 +279,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the margin that should appear at the bottom of the PDF document page.
+	Get the margin that should appear at the bottom of the DOCX document page.
 	*/
 	public function getMarginBottom()
 	{
@@ -305,7 +287,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set the margin that should appear at the right of the PDF document.
+	Set the margin that should appear at the right of the DOCX document.
 	*/
 	public function setMarginRight($value)
 	{
@@ -313,7 +295,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the margin that should appear at the right of the PDF document.
+	Get the margin that should appear at the right of the DOCX document.
 	*/
 	public function getMarginRight()
 	{
@@ -337,39 +319,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Set a template ID that specifies the header and footer of the PDF document.
-	*/
-	public function setTemplateId($value)
-	{
-		$this->templateId = $value;
-	}
-
-	/*
-	Get the template ID that specifies the header and footer of the PDF document.
-	*/
-	public function getTemplateId()
-	{
-		return $this->templateId;
-	}
-
-	/*
-	Set a custom watermark to add to the PDF.
-	*/
-	public function setCustomWaterMarkId($value)
-	{
-		$this->customWaterMarkId = $value;
-	}
-
-	/*
-	Get the custom watermark id.
-	*/
-	public function getCustomWaterMarkId()
-	{
-		return $this->customWaterMarkId;
-	}
-
-	/*
-	Set the quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality.
+	Set the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality.
 	*/
 	public function setQuality($value)
 	{
@@ -377,7 +327,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the quality of the PDF.
+	Get the quality of the DOCX.
 	*/
 	public function getQuality()
 	{
@@ -398,8 +348,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function getNoAds()
 	{
 		return $this->noAds;
-	}
-	
+	}	
+
 	/*
 	Set to true if cookie notification should be automatically hidden.
 	*/
@@ -430,10 +380,26 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function getAddress()
 	{
 		return $this->address;
-	}	
+	}
 	
 	/*
-	Set the ID of a capture that should be merged at the beginning of the new PDF document.
+	Set a template ID that specifies the header and footer of the DOCX document.
+	*/
+	public function setTemplateId($value)
+	{
+		$this->templateId = $value;
+	}
+
+	/*
+	Get the template ID that specifies the header and footer of the DOCX document.
+	*/
+	public function getTemplateId()
+	{
+		return $this->templateId;
+	}
+
+	/*
+	Set the ID of a capture that should be merged at the beginning of the new DOCX document.
 	*/
 	public function setMergeId($value)
 	{
@@ -441,7 +407,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get the ID of a capture that should be merged at the beginning of the new PDF document.
+	Get the ID of a capture that should be merged at the beginning of the new DOCX document.
 	*/
 	public function getMergeId()
 	{
@@ -458,7 +424,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function AddPostParameter($name, $value)
 	{
 		$this->post = $this->appendParameter($this->post, $name, $value);
-	}		
+	}
 	
 	/*
 	Define a custom template parameter and value, this method can be called multiple times to add multiple parameters.
@@ -469,8 +435,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	public function AddTemplateParameter($name, $value)
 	{
 		$this->templateVariables = $this->appendParameter($this->templateVariables, $name, $value);
-	}	
-
+	}
+	
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
 		$urlParam = '';
@@ -487,29 +453,25 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	  
 		return $this->nullToEmpty($applicationSecret)."|". $urlParam . $callBackURLParam . "|".$this->nullToEmpty($this->getCustomId()) ."|".
 		$this->nullToEmpty(intval($this->includeBackground)) ."|".
-		$this->nullToEmpty($this->pagesize) ."|".$this->nullToEmpty($this->orientation)."|".$this->nullToEmpty($this->customWaterMarkId)."|".
-		$this->nullToEmpty(intval($this->includeLinks))."|".$this->nullToEmpty(intval($this->includeOutline))."|".$this->nullToEmpty($this->title)."|".
-		$this->nullToEmpty($this->coverURL)."|".$this->nullToEmpty($this->marginTop)."|".$this->nullToEmpty($this->marginLeft)."|".$this->nullToEmpty($this->marginBottom)."|".
+		$this->nullToEmpty($this->pagesize) ."|".$this->nullToEmpty($this->orientation)."|".
+		$this->nullToEmpty(intval($this->includeImages))."|".$this->nullToEmpty(intval($this->includeLinks))."|".$this->nullToEmpty($this->title)."|".$this->nullToEmpty($this->marginTop)."|".$this->nullToEmpty($this->marginLeft)."|".$this->nullToEmpty($this->marginBottom)."|".
 		$this->nullToEmpty($this->marginRight)."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".
-		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->templateId)."|".
-		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
-		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
-		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications));
+		$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->quality)."|".
+		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->waitForElement)."|".
+		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".
+		$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->templateId)."|".$this->nullToEmpty($this->templateVariables)."|".
+		$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications));
 	}
-	
+
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
 	{
 		$params = $this->createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue);		
 		$params['background'] = $this->nullToEmpty(intval($this->includeBackground));
 		$params['pagesize'] = $this->nullToEmpty($this->pagesize);
 		$params['orientation'] = $this->nullToEmpty($this->orientation);
-		$params['templateid'] = $this->nullToEmpty($this->templateId);
-		$params['customwatermarkid'] = $this->nullToEmpty($this->customWaterMarkId);
 		$params['includelinks'] = $this->nullToEmpty(intval($this->includeLinks));
-		$params['includeoutline'] = $this->nullToEmpty(intval($this->includeOutline));
+		$params['includeimages'] = $this->nullToEmpty(intval($this->includeImages));
 		$params['title'] = $this->nullToEmpty($this->title);
-		$params['coverurl'] = $this->nullToEmpty($this->coverURL);
 		$params['mleft'] = $this->nullToEmpty($this->marginLeft);
 		$params['mright'] = $this->nullToEmpty($this->marginRight);
 		$params['mtop'] = $this->nullToEmpty($this->marginTop);
@@ -517,7 +479,6 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['delay'] = $this->nullToEmpty($this->delay);
 		$params['requestmobileversion'] = $this->nullToEmpty(intval($this->requestAs));
 		$params['quality'] = $this->nullToEmpty($this->quality);
-		$params['target'] = $this->nullToEmpty($this->targetElement);
 		$params['hide'] = $this->nullToEmpty($this->hideElement);
 		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
 		$params['noads'] = $this->nullToEmpty(intval($this->noAds));
@@ -526,6 +487,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['width'] = $this->nullToEmpty($this->width);
 		$params['height'] = $this->nullToEmpty($this->height);
 		$params['tvars'] = $this->nullToEmpty($this->templateVariables);
+		$params['target'] = $this->nullToEmpty($this->targetElement);
+		$params['templateid'] = $this->nullToEmpty($this->templateId);
 		$params['mergeid'] = $this->nullToEmpty($this->mergeId);
 		$params['address'] = $this->nullToEmpty($this->address);
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
