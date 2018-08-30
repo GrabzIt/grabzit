@@ -3,7 +3,7 @@ namespace GrabzIt;
 
 spl_autoload_register(function ($class_name) {
 	$file_name = str_replace("GrabzIt\\", '', $class_name) . '.php';
-	if (file_exists(__DIR__ .DIRECTORY_SEPARATOR. $file_name)) {
+	if (strpos($file_name, "GrabzIt") === 0) {
 		include($file_name);
 	}
 });
