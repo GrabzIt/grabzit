@@ -36,6 +36,12 @@ class HomeController < ActionController::Base
 		else
 			grabzItClient.url_to_docx(url)
 		end		
+	elsif format == "csv"
+		if isHtml
+			grabzItClient.html_to_table(html)
+		else
+			grabzItClient.url_to_table(url)
+		end
   	elsif format == "gif"
 	  	grabzItClient.url_to_animation(url)
   	else
