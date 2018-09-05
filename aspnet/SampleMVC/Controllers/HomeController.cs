@@ -42,6 +42,17 @@ namespace SampleMVC.Controllers
                         grabzItClient.URLToDOCX(form.URL);
                     }
                 }
+                else if (form.Format == "csv")
+                {
+                    if (form.Convert == "html")
+                    {
+                        grabzItClient.HTMLToTable(form.HTML);
+                    }
+                    else
+                    {
+                        grabzItClient.URLToTable(form.URL);
+                    }
+                }
                 else if (form.Format == "gif")
                 {
                     grabzItClient.URLToAnimation(form.URL);

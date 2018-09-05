@@ -57,6 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\csv.png" />
     <Content Include="Content\docx.png" />
     <Content Include="Content\pdf.png" />
     <Content Include="Content\style.css" />
@@ -66,6 +67,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\ui.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

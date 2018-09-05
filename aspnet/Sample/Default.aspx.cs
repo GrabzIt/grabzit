@@ -42,6 +42,17 @@ namespace Sample
                         grabzItClient.URLToDOCX(txtURL.Text);
                     }
                 }
+                else if (ddlFormat.SelectedValue == "csv")
+                {
+                    if (ddlConvert.SelectedValue == "html")
+                    {
+                        grabzItClient.HTMLToTable(txtHTML.Text);
+                    }
+                    else
+                    {
+                        grabzItClient.URLToTable(txtURL.Text);
+                    }
+                }
                 else if (ddlFormat.SelectedValue == "gif")
                 {
                     grabzItClient.URLToAnimation(txtURL.Text);
