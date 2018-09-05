@@ -3,8 +3,7 @@ extends layout
 block content
   h1 GrabzIt Demo
   p
-    span(id="spnScreenshot") Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture
-    span(class="hidden",id="spnGif") Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF
+    span(id="spnIntro") Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture
     |  should then be saved in the 
     a(href="results/",target="_blank") results directory
     |  . It may take a few seconds for it to appear! If nothing is happening check the 
@@ -24,7 +23,7 @@ block content
   form(action="/",method="post",class="inputForms")
     div(class="Row",id="divConvert")
        label Convert
-       select(name="convert",onchange="selectConvertChanged(this)")
+       select(name="convert",onchange="ui.selectConvertChanged(this)")
           option(value="url") URL
           option(value="html") HTML
     div(class="Row hidden",id="divHTML")
@@ -35,11 +34,12 @@ block content
        input(type="text",name="url",placeholder="http://www.example.com")
     div(class="Row")
        label Format
-       select(name="type",onchange="selectChanged(this)")
+       select(name="type",onchange="ui.selectChanged(this)")
           option(value="jpg") JPG
           option(value="pdf") PDF
           option(value="docx") DOCX
           option(value="gif") GIF
+          option(value="csv") CSV
     input(type="submit", value="Grabz It", style="margin-left:12em")
   form(action="/delete",method="get",class="inputForms")
     input(type="submit", value="Clear Results")

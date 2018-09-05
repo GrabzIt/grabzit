@@ -101,6 +101,14 @@ app.post('/', function (req, res) {
             client.url_to_docx(targetUrl);
         }
     }   
+    else if (req.body.type == "csv") {
+        if (isHtml){
+            client.html_to_table(req.body.html);
+        }
+        else {
+            client.url_to_table(targetUrl);
+        }
+    }	
     else if (req.body.type == "gif") {
         client.url_to_animation(targetUrl);
     }
