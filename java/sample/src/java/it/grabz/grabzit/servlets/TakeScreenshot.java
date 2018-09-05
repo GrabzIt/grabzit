@@ -63,6 +63,17 @@ public class TakeScreenshot extends HttpServlet{
                     client.URLToDOCX(url);
                 }   
             }
+            else if (format.equals("csv"))
+            {
+                if (isHtml)
+                {
+                    client.HTMLToTable(html);
+                }
+                else
+                {                    
+                    client.URLToTable(url);
+                }   
+            }
             else if (format.equals("gif"))
             {
                 client.URLToAnimation(url);
@@ -81,17 +92,17 @@ public class TakeScreenshot extends HttpServlet{
             if (useCallbackHandler(request))
             {
                 client.Save(Config.getHandlerUrl());
-                response.sendRedirect("/grabzit/?message=" + URLEncoder.encode("Processing...", "UTF-8"));
+                response.sendRedirect("/grabzit?message=" + URLEncoder.encode("Processing...", "UTF-8"));
             }
             else
             {
                 client.SaveTo(getServletContext().getRealPath("/results") + File.separator + randomUUID() + "." + format);
-                response.sendRedirect("/grabzit/");
+                response.sendRedirect("/grabzit");
             }
         }
         catch(Exception ex)
         {
-            response.sendRedirect("/grabzit/?error=" + URLEncoder.encode(ex.getMessage(), "UTF-8"));
+            response.sendRedirect("/grabzit?error=" + URLEncoder.encode(ex.getMessage(), "UTF-8"));
         }        
     }
     

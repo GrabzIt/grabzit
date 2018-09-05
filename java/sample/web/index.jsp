@@ -6,14 +6,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>GrabzIt Demo</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script type="text/javascript"  src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script type="text/javascript"  src="ajax/ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="grabzit/css/style.css">
+        <script type="text/javascript" src="grabzit/ajax/jquery.min.js"></script>
+        <script type="text/javascript" src="grabzit/ajax/ui.js"></script>
+        <script>
+        var ui = new UI('grabzit/ajax/results?r=', 'grabzit/css');
+        </script>        
     </head>
     <body>
         <h1>GrabzIt Demo</h1>
-        <form method="post" action="/grabzit/" class="inputForms">
-        <p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+        <form method="post" action="/grabzit" class="inputForms">
+        <p><span id="spnIntro">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
         <c:if test="${!useCallbackHandler}">
             <p>Either you have not updated the HandlerUrl setting found in the config.properties file to match the URL of the handler found in this demo app or you are using this demo application on your local machine.</p><p>This demo will still work although it will create captures synchronously, which will cause the web page to freeze when captures are generated. <u>Please wait for the capture to complete</u>.</p>
         </c:if>
@@ -34,7 +37,7 @@
         </span>
         </p>
 <div class="Row" id="divConvert">        
-<label>Convert </label><select name="convert" onchange="selectConvertChanged(this)">
+<label>Convert </label><select name="convert" onchange="ui.selectConvertChanged(this)">
   <option value="url">URL</option>
   <option value="html">HTML</option>
 </select>
@@ -46,11 +49,12 @@
 <label>URL </label><input text="input" name="url" placeholder="http://www.example.com"/>
 </div>
 <div class="Row">
-<label>Format </label><select name="format" onchange="selectChanged(this)">
+<label>Format </label><select name="format" onchange="ui.selectChanged(this)">
   <option value="jpg">JPG</option>
   <option value="pdf">PDF</option>
   <option value="docx">DOCX</option>
   <option value="gif">GIF</option>
+  <option value="csv">CSV</option>
 </select>
 </div>
         <input type="submit" value="Grabz It" style="margin-left:12em"/>

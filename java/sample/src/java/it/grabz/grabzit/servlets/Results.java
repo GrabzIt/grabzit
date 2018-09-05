@@ -36,7 +36,7 @@ public class Results extends HttpServlet{
                 {
                     response.getWriter().write(",");
                 }
-                response.getWriter().write("\"results/");
+                response.getWriter().write("\"grabzit/results/");
                 response.getWriter().write(listOfFiles[i].getName());
                 response.getWriter().write("\"");
                 multipleFiles = true;
