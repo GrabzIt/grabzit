@@ -49,6 +49,17 @@ if ($cgi->request_method() eq 'POST')
                 $grabzIt->URLToDOCX($url);
             }
 		}        
+		elsif ($format eq "csv")
+		{
+            if ($convert eq "html")
+            {
+                $grabzIt->HTMLToTable($html);
+            }
+            else
+            {
+                $grabzIt->URLToTable($url);
+            }
+		}		
 		elsif ($format eq "gif")
 		{
 		    $grabzIt->URLToAnimation($url);
@@ -91,13 +102,16 @@ print <<'HEADER';
 <title>GrabzIt Demo</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="ajax/jquery.min.js"></script>
 <script src="ajax/ui.js"></script>
+<script>
+var ui = new UI('ajax/results.pl?r=', 'css');
+</script>
 </head>
 <body>
 <h1>GrabzIt Demo</h1>
 <form method="post" action="index.pl" class="inputForms">
-<p><span id="spnScreenshot">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span><span class="hidden" id="spnGif">Enter the URL of the online video you want to convert into a animated GIF. The resulting animated GIF</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
+<p><span id="spnIntro">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 
 HEADER
 if ($cgi->remote_host() == '::1' || $cgi->remote_host() == "127.0.0.1")
@@ -120,7 +134,7 @@ if ($cgi->request_method() eq 'POST' && $cgi->param("delete") != "1")
 
 print <<'FOOTER';
 <div class="Row" id="divConvert">
-<label>Convert </label><select name="convert" onchange="selectConvertChanged(this)">
+<label>Convert </label><select name="convert" onchange="ui.selectConvertChanged(this)">
   <option value="url">URL</option>
   <option value="html">HTML</option>
 </select>
@@ -132,11 +146,12 @@ print <<'FOOTER';
 <label>URL </label><input text="input" name="url" placeholder="http://www.example.com"/>
 </div>
 <div class="Row">
-<label>Format </label><select name="format" onchange="selectChanged(this)">
+<label>Format </label><select name="format" onchange="ui.selectChanged(this)">
   <option value="jpg">JPG</option>
   <option value="pdf">PDF</option>
   <option value="docx">DOCX</option>  
   <option value="gif">GIF</option>
+  <option value="csv">CSV</option>
 </select>
 </div>
 <input type="submit" value="Grabz It" style="margin-left:12em"></input>
