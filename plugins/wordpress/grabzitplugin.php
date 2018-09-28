@@ -70,11 +70,21 @@ function grabzit_shortcodes_init()
     {
         if (current_user_can('manage_options'))
         {
-            add_options_page(__('GrabzIt Settings', 'grabzit-web-capture'), __('GrabzIt Settings', 'grabzit-web-capture'), 1, __('GrabzIt Settings', 'grabzit-web-capture'), "grabzit_admin");
+            add_options_page(__('GrabzIt', 'grabzit-web-capture'), __('GrabzIt', 'grabzit-web-capture'), 1, __('GrabzIt', 'grabzit-web-capture'), "grabzit_admin");
         }
     }
  
-    add_action('admin_menu', 'grabzit_admin_actions');    
+    add_action('admin_menu', 'grabzit_admin_actions');
+
+	function grabzit_plugin_action_links( $links )
+	{
+		$links = array_merge( array(
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=GrabzIt' ) ) . '">' . __( 'Settings', 'textdomain' ) . '</a>'
+		), $links );
+		return $links;
+	}    
+	
+	add_action('plugin_action_links_' . plugin_basename( __FILE__ ), 'grabzit_plugin_action_links');
 }
 add_action('init', 'grabzit_shortcodes_init');   
 ?>
