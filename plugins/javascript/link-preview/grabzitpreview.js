@@ -845,7 +845,7 @@ function GrabzItPreview(key, options)
 			}
 
 			var div = document.createElement('div');
-			div.setAttribute("style","display:none;z-index:100000;position:fixed;"+leftOrRight+":"+pos+"px;");
+			div.setAttribute("style","display:none;z-index:100000;position:absolute;"+leftOrRight+":"+pos+"px;");
 			div.id = guid;
 			div.className = "grabzit-preview-container";
 
