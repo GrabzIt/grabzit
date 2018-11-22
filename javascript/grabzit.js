@@ -500,12 +500,12 @@ function GrabzIt(key)
 				}
 			};
 
-			xhttp.open("POST", this._getBaseWebServiceUrl(), true);
+			xhttp.open("POST", this._getBaseWebServiceUrl(true), true);
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(qs);
 		};
 
-		this._getRootURL = function()
+		this._getRootURL = function(isPost)
 		{
 			if (this.protocol == null)
 			{
@@ -515,13 +515,18 @@ function GrabzIt(key)
 					this.protocol = 'http://';
 				}
 			}
+			
+			if (isPost)
+			{
+				return this.protocol + 'grabz.it/services/';
+			}
 
 			return this.protocol + 'api.grabz.it/services/';
 		};
 
-		this._getBaseWebServiceUrl = function()
+		this._getBaseWebServiceUrl = function(isPost)
 		{
-			return this._getRootURL() + 'javascript.ashx';
+			return this._getRootURL(isPost) + 'javascript.ashx';
 		};
 
 		this._createQueryString = function(sKey, sValue)
@@ -585,7 +590,7 @@ function GrabzIt(key)
 				{					
 					return this._createErrorMessage(obj.Message, obj.Code);
 				}
-				return this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString('id', obj.ID));
+				return this._createScriptNode(this._getBaseWebServiceUrl(false) + '?' + this._createQueryString('id', obj.ID));
 			}
 		};
 		
@@ -685,7 +690,7 @@ function GrabzIt(key)
 					}
 				};
 
-				xhttp.open("GET", that._getRootURL() + 'getjspicture.ashx?id='+id, true);
+				xhttp.open("GET", that._getRootURL(false) + 'getjspicture.ashx?id='+id, true);
 				xhttp.responseType = "blob";
 				xhttp.send();
 			}
@@ -739,7 +744,7 @@ function GrabzIt(key)
 				return;
 			}
 
-			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data));
+			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl(false) + '?' + this._createQueryString(this.dataKey, this.data));
 			
 			if (insert)
 			{
