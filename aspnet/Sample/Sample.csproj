@@ -75,8 +75,8 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="handler.ashx.cs">
-      <DependentUpon>handler.ashx</DependentUpon>
+    <Compile Include="Handler.ashx.cs">
+      <DependentUpon>Handler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,7 +90,7 @@
     <Content Include="ajax\ui.js" />
     <Content Include="css\pdf.png" />
     <Content Include="css\style.css" />
-    <Content Include="handler.ashx" />
+    <Content Include="Handler.ashx" />
     <Content Include="results\results.txt" />
   </ItemGroup>
   <ItemGroup>
