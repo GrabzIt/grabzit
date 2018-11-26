@@ -70,8 +70,7 @@ namespace Sample
                 }
                 if (UseCallbackHandler)
                 {
-                    grabzItClient.ScreenShotComplete += grabzIt_ScreenShotComplete;
-                    grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "GrabzIt.ashx");
+                    grabzItClient.Save(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath + "handler.ashx");
                     lblMessage.Text = "Processing...";
                     lblMessage.CssClass = string.Empty;
                     lblMessage.Style.Add("color", "green");
@@ -97,19 +96,6 @@ namespace Sample
             {
                 File.Delete(file);
             }
-        }
-
-        protected void grabzIt_ScreenShotComplete(object sender, ScreenShotEventArgs result)
-        {
-            if (!string.IsNullOrEmpty(result.Message))
-            {
-                lblMessage.Text = result.Message;
-                lblMessage.Style.Clear();
-                lblMessage.CssClass = "error";
-            }
-            GrabzItFile file = grabzItClient.GetResult(result.ID);
-            //Ensure that the application has the correct rights for this directory.
-            file.Save(Server.MapPath("~/results/" + result.Filename));
         }
 
         public bool UseCallbackHandler

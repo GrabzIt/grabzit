@@ -7,48 +7,38 @@ It is usually best to place these files in their own directory.
 
 To run the demos:
 
-First open the GrabzIt solution file then follow the below instructions for the two sample projects contained within.
+First open the GrabzIt solution file then follow the below instructions for the three sample projects contained within.
 
 Captures in a Web Application
 =============================
 
-The solution contains a project called Sample, which is a example web application.
+The solution contains two web application projects called Sample and Sample MVC, which is an example web application using Web Forms and MVC respectively. In order to use the callback handler contained in the sample projects, the project must be deployed to a publicly accessible web server. However, these demos will still work on a local machine by automatically using synchronous methods of downloading the captures instead.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+ As this example uses a callback handler it must be deployed to a publicly accessible web server.+
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+To configure these projects do the following:
 
-To configure this do the following:
-
-Then open web.config and change the application key and application secret to match your settings the first two parameters can be got from https://grabz.it/api
+Open the web.config contained in the project and change the application key and application secret to match your settings, which can be obtained from https://grabz.it/api
 
   <appSettings>
     <add key="ApplicationKey" value="APPLICATION KEY"/>
     <add key="ApplicationSecret" value="APPLICATION SECRET"/>
   </appSettings>
 
-Next add the GrabzIt http handler to the web.config with the location it is currently stored at.
+Ensure your application has read and write access to the "results" directory.
 
-      <httpHandlers>
-        <add verb="*" path="GrabzIt.ashx" type="GrabzIt.Handler, GrabzIt" />
-      </httpHandlers>
-
-Ensure your application has read and write access to the "screenshots" directory.
-
-Finally run the Default.aspx to start taking screenshots.
+Finally run your desired project to start creating captures.
 
 Captures in a Windows Application
 =================================
 
 The solution also contains a project called SampleConsole, which is a example windows console application that can be run on your local machine. To configure this do the following:
 
-Then open App.config and change the application key and application secret to match your settings the first two parameters can be got from https://grabz.it/api
+Then open App.config and change the application key and application secret to match your settings, which can be obtained from https://grabz.it/api
 
   <appSettings>
     <add key="ApplicationKey" value="APPLICATION KEY"/>
     <add key="ApplicationSecret" value="APPLICATION SECRET"/>
   </appSettings>
   
-Finally run the console application to create screenshots in windows.
+Finally run the console application to create captures in windows.
 
-More documentation can be found at: https://grabz.it/api/aspnet
+More documentation can be found at: https://grabz.it/api/aspnet/
