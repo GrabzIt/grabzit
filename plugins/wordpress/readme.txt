@@ -2,7 +2,7 @@
 Contributors: grabzit
 Tags: screenshot,html to pdf,html to image,html to docx,video to animated gif,web capture
 Requires at least: 4.5.0
-Tested up to: 4.9
+Tested up to: 5.0
 Requires PHP: 5
 Stable tag: trunk
 License: GPL2
@@ -30,3 +30,4 @@ If you have any questions please [ask our support team](https://grabz.it/contact
 == Changelog ==
 - Localized Plugin
 - Added customizable HTTP proxies
+- Added the ability to hide cookie notifications
