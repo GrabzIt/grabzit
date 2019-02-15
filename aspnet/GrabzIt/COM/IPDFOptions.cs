@@ -1,7 +1,9 @@
 ﻿using GrabzIt.Enums;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt.COM
 {
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     interface IPDFOptions
     {
         Country Country

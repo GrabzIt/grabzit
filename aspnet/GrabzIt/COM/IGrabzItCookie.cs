@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt.COM
 {
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     public interface IGrabzItCookie
     {
         string Name

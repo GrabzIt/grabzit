@@ -939,6 +939,24 @@ namespace GrabzIt
         /// <param name="value">The value of the cookie.</param>
         /// <param name="path">The website path the cookie relates to.</param>
         /// <param name="httponly">Is the cookie only used on HTTP</param>
+        /// <param name="expires">When the cookie expires.</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime expires)
+        {
+            return SetCookie(name, domain, value, path, httponly, expires);
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <param name="value">The value of the cookie.</param>
+        /// <param name="path">The website path the cookie relates to.</param>
+        /// <param name="httponly">Is the cookie only used on HTTP</param>
         /// <param name="expires">When the cookie expires. Pass a null value if it does not expire.</param>
         /// <returns>Returns true if the cookie was successfully set.</returns>
         public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime? expires)

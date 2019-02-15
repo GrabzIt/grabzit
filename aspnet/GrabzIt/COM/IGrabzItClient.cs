@@ -3,9 +3,15 @@ using GrabzIt.Enums;
 using GrabzIt.Parameters;
 using GrabzIt.Screenshots;
 using System;
+using System.Runtime.InteropServices;
 
 namespace GrabzIt.COM
 {
+    /// <summary>
+    /// To avoid overloading which may not work in certain enviroments such as VB6 we do not include all overrides possible:
+    /// https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1402-avoid-overloads-in-com-visible-interfaces?view=vs-2017
+    /// </summary>
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     public interface IGrabzItClient
     {
         string ApplicationKey { get; set; }
@@ -14,39 +20,24 @@ namespace GrabzIt.COM
         void UseSSL(bool value);
         string CreateEncrpytionKey();
         void Decrypt(string path, string key);
-        GrabzItFile Decrypt(GrabzItFile file, string key);
-        byte[] Decrypt(byte[] data, string key);
-        void URLToAnimation(string url);
         void URLToAnimation(string url, AnimationOptions options);
-        void URLToImage(string url);
-        void URLToImage(string url, ImageOptions options);        
-        void HTMLToImage(string html);
-        void HTMLToImage(string html, ImageOptions options);
-        void FileToImage(string path);
-        void FileToImage(string path, ImageOptions options);
-        void URLToTable(string url);
-        void URLToTable(string url, TableOptions options);
-        void HTMLToTable(string html);
-        void HTMLToTable(string html, TableOptions options);
-        void FileToTable(string path);
-        void FileToTable(string path, TableOptions options);
-        void URLToPDF(string url);
+        void URLToImage(string url, ImageOptions options);
         void URLToPDF(string url, PDFOptions options);
-        void HTMLToPDF(string html);
+        void URLToTable(string url, TableOptions options);
+        void URLToDOCX(string url, DOCXOptions options);
+        void HTMLToImage(string html, ImageOptions options);
+        void HTMLToTable(string html, TableOptions options);
         void HTMLToPDF(string html, PDFOptions options);
-        void FileToPDF(string path);
+        void HTMLToDOCX(string html, DOCXOptions options);
+        void FileToImage(string path, ImageOptions options);        
+        void FileToTable(string path, TableOptions options);
         void FileToPDF(string path, PDFOptions options);
-        string Save();
+        void FileToDOCX(string path, DOCXOptions options);
         string Save(string callBackURL);
-        GrabzItFile SaveTo();
         bool SaveTo(string saveToFile);
         Status GetStatus(string id);
         GrabzItCookie[] GetCookies(string domain);
-        bool SetCookie(string name, string domain);
-        bool SetCookie(string name, string domain, string value);
-        bool SetCookie(string name, string domain, string value, string path);
-        bool SetCookie(string name, string domain, string value, string path, bool httponly);
-        bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime? expires);
+        bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime expires);
         bool DeleteCookie(string name, string domain);
         bool AddWaterMark(string identifier, string path, HorizontalPosition xpos, VerticalPosition ypos);
         bool DeleteWaterMark(string identifier);

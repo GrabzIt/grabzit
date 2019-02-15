@@ -1,10 +1,12 @@
 ﻿using GrabzIt.Enums;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace GrabzIt.COM
 {
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     interface IImageOptions
     {
         Country Country
