@@ -346,6 +346,32 @@ function GrabzIt(key)
 			
 			var div = document.createElement('div');
 			div.appendChild(document.documentElement.cloneNode(true));
+			
+			var scripts = div.getElementsByTagName('script');
+			if (scripts != null)
+			{
+				for (var i = (scripts.length-1); i >= 0; i--) 
+				{
+					scripts[i].parentNode.removeChild(scripts[i]);
+				}
+			}
+			
+			var canvi = div.getElementsByTagName('canvas');			
+			var canviOriginal = document.getElementsByTagName('canvas');
+			if (canvi != null && canviOriginal != null)
+			{
+				for (var i = (canvi.length-1); i >= 0; i--) 
+				{
+					if (i > canviOriginal.length || (canviOriginal[i].width != canvi[i].width && canviOriginal[i].height != canvi[i].height))
+					{
+						continue;
+					}
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.innerHTML = "(function(){var scripts = document.getElementsByTagName('script'); var currentScript = scripts[scripts.length - 1]; var canvas = currentScript.previousSibling; var ctx = canvas.getContext('2d'); var img = new Image; img.onload = function(){ctx.drawImage(img,0,0);};img.src = '"+canviOriginal[i].toDataURL()+"';})();";
+					canvi[i].parentNode.insertBefore(s, canvi[i].nextSibling);
+				}
+			}
 			var inputs = div.getElementsByTagName('input');
 			if (inputs != null)
 			{
