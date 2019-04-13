@@ -4,6 +4,7 @@ using System.Web;
 
 namespace GrabzIt
 {
+#if NETFRAMEWORK
     [ComVisible(false)]
     public class Handler : IHttpHandler
     {
@@ -73,4 +74,5 @@ namespace GrabzIt
             }
         }
     }
+#endif
 }

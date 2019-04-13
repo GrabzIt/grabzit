@@ -1,7 +1,6 @@
 ﻿using GrabzIt.COM;
 using System;
 using System.Runtime.InteropServices;
-using System.Web;
 
 namespace GrabzIt.Cookies
 {
