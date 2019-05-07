@@ -23,6 +23,7 @@ customId = form.getvalue("customid")
 id = form.getvalue("id")
 filename = form.getvalue("filename")
 format = form.getvalue("format")
+targeterror = form.getvalue("targeterror")
 
 parser = SafeConfigParser()
 parser.read('config.ini')
