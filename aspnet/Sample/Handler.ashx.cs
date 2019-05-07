@@ -8,7 +8,7 @@ namespace Sample
 {
     public class Handler : GrabzIt.Handler
     {
-        protected override void Process(HttpContext context, string filename, string id, string message, string customId, string format)
+        protected override void Process(HttpContext context, string filename, string id, string message, string customId, string format, bool targetError)
         {
             GrabzItClient grabzItClient = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], ConfigurationManager.AppSettings["ApplicationSecret"]);
             GrabzItFile file = grabzItClient.GetResult(id);

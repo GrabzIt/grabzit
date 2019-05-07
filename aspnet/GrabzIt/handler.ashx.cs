@@ -13,6 +13,7 @@ namespace GrabzIt
         private const string MESSAGE = "message";
         private const string CUSTOMID = "customid";
         private const string FORMAT = "format";
+        private const string TARGET_ERROR = "targeterror";
 
         /// <summary>
         /// Process the parameters returned to the callback handler
@@ -25,6 +26,8 @@ namespace GrabzIt
             string message = string.Empty;
             string customId = string.Empty;
             string format = string.Empty;
+            bool targetError = false;
+
             if (context.Request.QueryString[ID] != null)
             {
                 id = HttpUtility.UrlDecode(context.Request.QueryString[ID]);
@@ -45,8 +48,12 @@ namespace GrabzIt
             {
                 format = HttpUtility.UrlDecode(context.Request.QueryString[FORMAT]);
             }
+            if (context.Request.QueryString[TARGET_ERROR] != null)
+            {
+                targetError = Convert.ToBoolean(HttpUtility.UrlDecode(context.Request.QueryString[TARGET_ERROR]));
+            }
 
-            Process(context, filename, id, message, customId, format);
+            Process(context, filename, id, message, customId, format, targetError);
         }
 
         /// <summary>
@@ -58,7 +65,8 @@ namespace GrabzIt
         /// <param name="message">Any message due to the processing</param>
         /// <param name="customId">Any custom id that was passed to the GrabzIt web service.</param>
         /// <param name="format">The format of the returned screenshot (e.g. PDF, JPG).</param>
-        protected virtual void Process(HttpContext context, string filename, string id, string message, string customId, string format)
+        /// <param name="targetError">If true, then the capture contains a generic error, due to an issue caused by the capture target</param>
+        protected virtual void Process(HttpContext context, string filename, string id, string message, string customId, string format, bool targetError)
         {
             if (GrabzItClient.WebClient != null)
             {

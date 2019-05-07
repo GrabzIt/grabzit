@@ -85,7 +85,7 @@ namespace SampleMVC.Controllers
             return View(form);
         }
 
-        public ActionResult Handler(string filename, string id, string message, string customId, string format)
+        public ActionResult Handler(string filename, string id, string message, string customId, string format, int targeterror)
         {
             GrabzItClient grabzItClient = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], ConfigurationManager.AppSettings["ApplicationSecret"]);
             GrabzItFile file = grabzItClient.GetResult(id);
