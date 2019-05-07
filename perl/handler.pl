@@ -22,6 +22,7 @@ $customId = $cgi->param("customid");
 $id = $cgi->param("id");
 $filename = $cgi->param("filename");
 $format = $cgi->param("format");
+$targetError = $cgi->param("targeterror");
 
 # Custom id can be used to store user ids or whatever is needed for the later processing of the
 # resulting screenshot
