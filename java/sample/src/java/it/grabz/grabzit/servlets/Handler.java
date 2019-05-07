@@ -27,7 +27,8 @@ public class Handler extends HttpServlet{
         String id = request.getParameter("id");
         String filename = request.getParameter("filename");
         String format = request.getParameter("format");
-
+        String targetError = request.getParameter("targeterror");
+        
         GrabzItClient client = new GrabzItClient(Config.getApplicationKey(), Config.getApplicationSecret());
 
         GrabzItFile file = null;
