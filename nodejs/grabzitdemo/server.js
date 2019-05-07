@@ -67,6 +67,7 @@ app.get('/handler', function (req, res) {
     var id = queryData.id;
     var filename = queryData.filename;
     var format = queryData.format;
+	var targeterror = queryData.targeterror;
 
     var client = new grabzit(config.applicationKey, config.applicationSecret);
 
