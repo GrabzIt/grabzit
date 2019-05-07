@@ -9,6 +9,7 @@ $customId = $_GET["customid"];
 $id = $_GET["id"];
 $filename = $_GET["filename"];
 $format = $_GET["format"];
+$targetError = $_GET["targeterror"];
 
 //Custom id can be used to store user ids or whatever is needed for the later processing of the
 //resulting screenshot
