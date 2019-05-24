@@ -346,6 +346,32 @@ function GrabzIt(key)
 			
 			var div = document.createElement('div');
 			div.appendChild(document.documentElement.cloneNode(true));
+			
+			var scripts = div.getElementsByTagName('script');
+			if (scripts != null)
+			{
+				for (var i = (scripts.length-1); i >= 0; i--) 
+				{
+					scripts[i].parentNode.removeChild(scripts[i]);
+				}
+			}
+			
+			var canvi = div.getElementsByTagName('canvas');			
+			var canviOriginal = document.getElementsByTagName('canvas');
+			if (canvi != null && canviOriginal != null)
+			{
+				for (var i = (canvi.length-1); i >= 0; i--) 
+				{
+					if (i > canviOriginal.length || (canviOriginal[i].width != canvi[i].width && canviOriginal[i].height != canvi[i].height))
+					{
+						continue;
+					}
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.innerHTML = "(function(){var scripts = document.getElementsByTagName('script'); var currentScript = scripts[scripts.length - 1]; var canvas = currentScript.previousSibling; var ctx = canvas.getContext('2d'); var img = new Image; img.onload = function(){ctx.drawImage(img,0,0);};img.src = '"+canviOriginal[i].toDataURL()+"';})();";
+					canvi[i].parentNode.insertBefore(s, canvi[i].nextSibling);
+				}
+			}
 			var inputs = div.getElementsByTagName('input');
 			if (inputs != null)
 			{
@@ -467,6 +493,12 @@ function GrabzIt(key)
 				window[functionName] = results['onerror'];
 				results['onerror'] = functionName;
 			}
+			
+			if (typeof(results['onstart']) === 'function'){
+				var functionName = 'grabzItOnStart' + Math.floor(Math.random() * (1000000000+1));
+				window[functionName] = results['onstart'];
+				results['onstart'] = functionName;
+			}	
 
 			return results;
 		}
@@ -500,12 +532,12 @@ function GrabzIt(key)
 				}
 			};
 
-			xhttp.open("POST", this._getBaseWebServiceUrl(), true);
+			xhttp.open("POST", this._getBaseWebServiceUrl(true), true);
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(qs);
 		};
 
-		this._getRootURL = function()
+		this._getRootURL = function(isPost)
 		{
 			if (this.protocol == null)
 			{
@@ -515,13 +547,18 @@ function GrabzIt(key)
 					this.protocol = 'http://';
 				}
 			}
+			
+			if (isPost)
+			{
+				return this.protocol + 'grabz.it/services/';
+			}
 
 			return this.protocol + 'api.grabz.it/services/';
 		};
 
-		this._getBaseWebServiceUrl = function()
+		this._getBaseWebServiceUrl = function(isPost)
 		{
-			return this._getRootURL() + 'javascript.ashx';
+			return this._getRootURL(isPost) + 'javascript.ashx';
 		};
 
 		this._createQueryString = function(sKey, sValue)
@@ -552,7 +589,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart')
 				{
 					var error = "Option " + k + " not recognized!";
 					document.documentElement.appendChild(this._createErrorMessage(error, null));
@@ -585,7 +622,7 @@ function GrabzIt(key)
 				{					
 					return this._createErrorMessage(obj.Message, obj.Code);
 				}
-				return this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString('id', obj.ID));
+				return this._createScriptNode(this._getBaseWebServiceUrl(false) + '?' + this._createQueryString('id', obj.ID));
 			}
 		};
 		
@@ -685,7 +722,7 @@ function GrabzIt(key)
 					}
 				};
 
-				xhttp.open("GET", that._getRootURL() + 'getjspicture.ashx?id='+id, true);
+				xhttp.open("GET", that._getRootURL(false) + 'getjspicture.ashx?id='+id, true);
 				xhttp.responseType = "blob";
 				xhttp.send();
 			}
@@ -739,7 +776,7 @@ function GrabzIt(key)
 				return;
 			}
 
-			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data));
+			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl(false) + '?' + this._createQueryString(this.dataKey, this.data));
 			
 			if (insert)
 			{
@@ -754,29 +791,6 @@ function GrabzIt(key)
 			this.elem.appendChild(scriptNode);
 		};
 	})(key);
-}
-
-function GrabzItPreviewFinished(id)
-{
-	var obj = document.getElementById("grabzit-screenshot-result");
-
-	if (obj != null)
-	{
-		obj.removeAttribute("id");
-		var children = obj.parentNode.parentNode.childNodes;
-
-		for (var j = 0; j < children.length; j++)
-		{
-			if (children[j].className == "grabzit-preview-loader")
-			{
-				children[j].style.display = "none";
-			}
-			if (children[j].className == "grabzit-preview-screenshot-frame")
-			{
-				children[j].style.display = "block";
-			}
-		}
-	}
 }
 
 function GrabzItPreview(key, options)
@@ -804,9 +818,12 @@ function GrabzItPreview(key, options)
 	{
 		var width = 197;
 		var height = 154;
-
+		var onFinishName = null;
+		var onErrorName = null;
+		
 		if (options != null)
 		{
+			options = GrabzIt()._cleanOptions(options);
 			if (options.width != null)
 			{
 				width = options.width;
@@ -814,6 +831,14 @@ function GrabzItPreview(key, options)
 			if (options.height != null)
 			{
 				height = options.height;
+			}			
+			if (options['onfinish'] != null)
+			{
+				onFinishName = options['onfinish'];
+			}
+			if (options['onerror'] != null)
+			{
+				onErrorName = options['onerror'];
 			}
 		}
 		else
@@ -872,8 +897,63 @@ function GrabzItPreview(key, options)
 			options['errorid'] = 'grabzit-screenshot-result';
 			options['errorclass'] = 'grabzit-preview-error';
 			options['displayclass'] = 'grabzit-preview-screenshot';
-			options['onfinish'] = 'GrabzItPreviewFinished';
-			options['onerror'] = 'GrabzItPreviewFinished';
+			
+			
+			options['onfinish'] = function(id){
+				var obj = document.getElementById("grabzit-screenshot-result");
+
+				if (obj != null)
+				{
+					obj.removeAttribute("id");
+					var children = obj.parentNode.parentNode.childNodes;
+
+					for (var j = 0; j < children.length; j++)
+					{
+						if (children[j].className == "grabzit-preview-loader")
+						{
+							children[j].style.display = "none";
+						}
+						if (children[j].className == "grabzit-preview-screenshot-frame")
+						{
+							children[j].style.display = "block";
+						}
+					}
+				}
+				
+				if (onFinishName != null)
+				{
+					var finishFunc = new Function(onFinishName + "('" + id + "')");
+					finishFunc();
+				}
+			};
+			
+			options['onerror'] = function(message, code){
+				var obj = document.getElementById("grabzit-screenshot-result");
+
+				if (obj != null)
+				{
+					obj.removeAttribute("id");
+					var children = obj.parentNode.parentNode.childNodes;
+
+					for (var j = 0; j < children.length; j++)
+					{
+						if (children[j].className == "grabzit-preview-loader")
+						{
+							children[j].style.display = "none";
+						}
+						if (children[j].className == "grabzit-preview-screenshot-frame")
+						{
+							children[j].style.display = "block";
+						}
+					}
+				}
+				
+				if (onErrorName != null)
+				{
+					var errorFunc = new Function(onErrorName + "('" + message + "'," + code + ")");
+					errorFunc();
+				}
+			};
 
 			try
 			{
