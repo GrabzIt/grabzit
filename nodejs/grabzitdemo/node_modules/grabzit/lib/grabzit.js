@@ -77,7 +77,8 @@ function GrabzItClient(applicationKey, applicationSecret)
         PARAMETER_INVALID_ENCRYPTION_KEY: 171,
         PARAMETER_INVALID_NO_ADS: 172,
         PARAMETER_INVALID_PROXY: 173,
-		PARAMETER_INVALID_NO_NOTIFY: 174,
+        PARAMETER_INVALID_NO_NOTIFY: 174,
+		PARAMETER_INVALID_HD: 176,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -87,13 +88,13 @@ function GrabzItClient(applicationKey, applicationSecret)
         UPGRADE_REQUIRED: 500,
         FILE_SAVE_ERROR: 600,
         FILE_NON_EXISTANT_PATH: 601
-        };
+    };
 
-        this.request = null;
-        this.port = 80;
-		this.proxy = null;
-        this.applicationKey = applicationKey;
-        this.applicationSecret = applicationSecret;
+    this.request = null;
+    this.port = 80;
+    this.proxy = null;
+    this.applicationKey = applicationKey;
+    this.applicationSecret = applicationSecret;
 }
 
 function _extend() {
@@ -271,23 +272,23 @@ function _get(self, url, type, oncomplete){
 function _http(self, options, type, oncomplete){
     var data = '';
 
-	if (this.proxy != null)
-	{
-		protocol = 'http';
-		if (this.port == 433)
-		{
-			protocol = 'https';
-		}
-		options.path = protocol + '://' + options.host + options.path
-		options.host = this.proxy.host;
-		options.port = this.proxy.port;
-		
-		if (this.proxy.username != null && this.proxy.password != null)
-		{
-			options.headers = {'proxy-authorization':'Basic ' + new Buffer(this.proxy.username + ':' + this.proxy.password).toString('base64')};
-		}
-	}
-	
+    if (this.proxy != null)
+    {
+        protocol = 'http';
+        if (this.port == 433)
+        {
+            protocol = 'https';
+        }
+        options.path = protocol + '://' + options.host + options.path
+        options.host = this.proxy.host;
+        options.port = this.proxy.port;
+        
+        if (this.proxy.username != null && this.proxy.password != null)
+        {
+            options.headers = {'proxy-authorization':'Basic ' + new Buffer(this.proxy.username + ':' + this.proxy.password).toString('base64')};
+        }
+    }
+    
     var request = _getNet().request(options, function (res) {
         if (type == 'binary') {
             res.setEncoding('binary');
@@ -397,21 +398,21 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'quality': -1,
         'country': '',
         'templateId': '',
-		'targetElement': '',
+        'targetElement': '',
         'hideElement': '',
         'waitForElement': '',
         'exportUrl': '',
         'encryptionKey': '',
-		'noAds':false,
-		'postData':'',
-		'browserWidth': '',
-		'templateVariables': '',
-		'pageWidth': 0,
-		'pageHeight': 0,
-		'proxy': '',
-		'mergeId': '',
-		'noCookieNotifications':false,
-		'address': ''
+        'noAds':false,
+        'postData':'',
+        'browserWidth': '',
+        'templateVariables': '',
+        'pageWidth': 0,
+        'pageHeight': 0,
+        'proxy': '',
+        'mergeId': '',
+        'noCookieNotifications':false,
+        'address': ''
     };
 
     context = _extend(defaults, options);
@@ -455,18 +456,18 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'waitfor': context['waitForElement'],
         'export': context['exportUrl'],
         'encryption': context['encryptionKey'],
-		'noads': _toInt(context['noAds']),
-		'post': context['postData'],
+        'noads': _toInt(context['noAds']),
+        'post': context['postData'],
         'templateid': context['templateId'],
-		'bwidth': context['browserWidth'],
-		'target': context['targetElement'],
-		'tvars': context['templateVariables'],
+        'bwidth': context['browserWidth'],
+        'target': context['targetElement'],
+        'tvars': context['templateVariables'],
         'width': context['pageWidth'],
         'height': context['pageHeight'],
-		'proxy': context['proxy'],
-		'mergeid': context['mergeId'],
-		'nonotify': _toInt(context['noCookieNotifications']),
-		'address': context['address']
+        'proxy': context['proxy'],
+        'mergeid': context['mergeId'],
+        'nonotify': _toInt(context['noCookieNotifications']),
+        'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -476,9 +477,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) + '|' + parseInt(context['marginRight']) + '|' + context['delay']
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) + '|' + context['hideElement']
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
-	 + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
-	 + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId']
-	 + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
+     + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
+     + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId']
+     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -508,16 +509,16 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'waitForElement': '',
         'exportUrl': '',
         'encryptionKey': '',
-		'noAds':false,
-		'postData':'',
-		'browserWidth': '',
-		'templateVariables': '',
-		'pageWidth': 0,
-		'pageHeight': 0,
-		'proxy': '',
-		'mergeId': '',
-		'noCookieNotifications':false,
-		'address': ''
+        'noAds':false,
+        'postData':'',
+        'browserWidth': '',
+        'templateVariables': '',
+        'pageWidth': 0,
+        'pageHeight': 0,
+        'proxy': '',
+        'mergeId': '',
+        'noCookieNotifications':false,
+        'address': ''
     };
 
     context = _extend(defaults, options);
@@ -571,21 +572,21 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'tvars': context['templateVariables'],
         'width': context['pageWidth'],
         'height': context['pageHeight'],
-		'proxy': context['proxy'],
-		'mergeid': context['mergeId'],
-		'nonotify': _toInt(context['noCookieNotifications']),
-		'address': context['address']
+        'proxy': context['proxy'],
+        'mergeid': context['mergeId'],
+        'nonotify': _toInt(context['noCookieNotifications']),
+        'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     var signaturePartTwo = '|' + context['customId'] + '|' + _toInt(context['includeBackground']) + '|' + pagesize + '|' + orientation
-  	 + '|' + context['customWaterMarkId'] + '|' + _toInt(context['includeLinks']) + '|' + _toInt(context['includeOutline']) + '|' + context['title'] 
-	 + '|' + context['coverUrl'] + '|' + parseInt(context['marginTop']) + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) 
-	 + '|' + parseInt(context['marginRight']) + '|' + context['delay'] + '|' + parseInt(context['requestAs']) + '|' + context['country']
-	 + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
-	 + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
-	 + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
+     + '|' + context['customWaterMarkId'] + '|' + _toInt(context['includeLinks']) + '|' + _toInt(context['includeOutline']) + '|' + context['title'] 
+     + '|' + context['coverUrl'] + '|' + parseInt(context['marginTop']) + '|' + parseInt(context['marginLeft']) + '|' + parseInt(context['marginBottom']) 
+     + '|' + parseInt(context['marginRight']) + '|' + context['delay'] + '|' + parseInt(context['requestAs']) + '|' + context['country']
+     + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
+     + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
+     + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -602,9 +603,9 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'country': '',
         'exportUrl': '',
         'encryptionKey': '',
-		'postData':'',
-		'proxy': '',
-		'address': ''
+        'postData':'',
+        'proxy': '',
+        'address': ''
     };
 
     context = _extend(defaults, options);
@@ -623,18 +624,18 @@ function _getTableRequestObject(applicationKey, applicationSecret, url, options,
         'country': context['country'],
         'export': context['exportUrl'],
         'encryption': context['encryptionKey'],
-		'post': context['postData'],
-		'proxy': context['proxy'],
-		'address': context['address']
+        'post': context['postData'],
+        'proxy': context['proxy'],
+        'address': context['address']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     this.signaturePartOne = applicationSecret + '|' + url + '|';
     this.signaturePartTwo = '|' + context['customId'] + '|' + parseInt(context['tableNumberToInclude']) + '|' + _toInt(context['includeAllTables']) 
-	+ '|' + _toInt(context['includeHeaderNames']) + '|' + context['targetElement'] + '|' + context['format'] + '|' + parseInt(context['requestAs']) 
-	+ '|' + context['country'] + '|' + context['exportUrl'] + '|' + context['encryptionKey']  + '|' + context['postData'] + '|' + context['proxy']
-	+ '|' + context['address'];
+    + '|' + _toInt(context['includeHeaderNames']) + '|' + context['targetElement'] + '|' + context['format'] + '|' + parseInt(context['requestAs']) 
+    + '|' + context['country'] + '|' + context['exportUrl'] + '|' + context['encryptionKey']  + '|' + context['postData'] + '|' + context['proxy']
+    + '|' + context['address'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -655,7 +656,7 @@ function _getAnimationRequestObject(applicationKey, applicationSecret, url, opti
         'country': '',
         'exportUrl': '',
         'encryptionKey': '',
-		'proxy': ''
+        'proxy': ''
     };
 
     context = _extend(defaults, options);
@@ -678,7 +679,7 @@ function _getAnimationRequestObject(applicationKey, applicationSecret, url, opti
         'quality': parseInt(context['quality']),
         'export': context['exportUrl'],
         'encryption': context['encryptionKey'],
-		'proxy': context['proxy']
+        'proxy': context['proxy']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -706,13 +707,14 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'country': '',
         'waitForElement': '',
         'exportUrl': '',
-        'transparent': 0,
+        'transparent': false,
         'encryptionKey': '',
-		'noAds':false,
-		'postData':'',
-		'proxy': '',
-		'noCookieNotifications':false,
-		'address': ''
+        'noAds':false,
+        'hd':false,
+        'postData':'',
+        'proxy': '',
+        'noCookieNotifications':false,
+        'address': ''
     };
 
     context = _extend(defaults, options);
@@ -740,23 +742,24 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'quality': parseInt(context['quality']),
         'waitfor': context['waitForElement'],
         'export': context['exportUrl'],
-        'transparent': context['transparent'],
+        'transparent': _toInt(context['transparent']),
         'encryption': context['encryptionKey'],
-		'noads': _toInt(context['noAds']),
-		'post': context['postData'],
-		'proxy': context['proxy'],
-		'nonotify': _toInt(context['noCookieNotifications']),
-		'address': context['address']
+        'noads': _toInt(context['noAds']),
+        'post': context['postData'],
+        'proxy': context['proxy'],
+        'nonotify': _toInt(context['noCookieNotifications']),
+        'address': context['address'],
+		'hd': _toInt(context['hd'])
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
 
     var signaturePartTwo = '|' + context['format'] + '|' + context['height'] + '|' + context['width'] + '|' + context['browserHeight'] 
-	 + '|' + context['browserWidth'] + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] 
-	 + '|' + context['customWaterMarkId'] + '|' + _toInt(context['requestAs']) + '|' + context['country'] + '|' + context['quality'] 
-	 + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + _toInt(context['transparent']) 
-	 + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-	 + '|' + _toInt(context['noCookieNotifications']);
+     + '|' + context['browserWidth'] + '|' + context['customId'] + '|' + context['delay'] + '|' + context['targetElement'] 
+     + '|' + context['customWaterMarkId'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) 
+     + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + _toInt(context['transparent']) 
+     + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -1256,9 +1259,9 @@ GrabzItClient.prototype.get_watermark = function (identifier, oncomplete) {
 GrabzItClient.prototype.use_ssl = function (value) {
     if (value){
         this.port = 433;
-		return;
-	}
-	this.port = 80;
+        return;
+    }
+    this.port = 80;
 }
 
 /*
@@ -1268,12 +1271,12 @@ GrabzItClient.prototype.use_ssl = function (value) {
 */
 GrabzItClient.prototype.set_local_proxy = function (proxyUrl) {
     const pUrl = urlUtility.parse(proxyUrl);
-	this.proxy = {
-		'host':pUrl.hostname,
-		'port':pUrl.port,
-		'username':decodeURIComponent(pUrl.username),
-		'password':decodeURIComponent(pUrl.password)
-	}
+    this.proxy = {
+        'host':pUrl.hostname,
+        'port':pUrl.port,
+        'username':decodeURIComponent(pUrl.username),
+        'password':decodeURIComponent(pUrl.password)
+    }
 }
 
 /*
@@ -1282,7 +1285,7 @@ GrabzItClient.prototype.set_local_proxy = function (proxyUrl) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#createencryptionkey
 */
 GrabzItClient.prototype.create_encryption_key = function () {
-	return new Buffer(crypto.randomBytes(32)).toString('base64');
+    return new Buffer(crypto.randomBytes(32)).toString('base64');
 }
 
 /*
@@ -1291,14 +1294,14 @@ GrabzItClient.prototype.create_encryption_key = function () {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decryptfile
 */
 GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
-	var data = _readFile(path);
-	var oncompleteEvent = oncomplete;
-	
-	file.writeFile(path, this.decrypt(data, key), 'binary', function (err) {
-		if (oncompleteEvent != null) {
-			oncompleteEvent(err, null)
-		}
-	});
+    var data = _readFile(path);
+    var oncompleteEvent = oncomplete;
+    
+    file.writeFile(path, this.decrypt(data, key), 'binary', function (err) {
+        if (oncompleteEvent != null) {
+            oncompleteEvent(err, null)
+        }
+    });
 }
 
 /*
@@ -1307,15 +1310,15 @@ GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decrypt
 */
 GrabzItClient.prototype.decrypt = function (data, key) {
-	if (data == null)
-	{
-		return null;
-	}
-	var iv = data.slice(0,16);
-	var payload = data.slice(16);
-	var decipher  = crypto.createDecipheriv('aes-256-cbc', new Buffer(key, 'base64'), iv);
-	decipher.setAutoPadding(false);
-	return decipher.update(payload);
+    if (data == null)
+    {
+        return null;
+    }
+    var iv = data.slice(0,16);
+    var payload = data.slice(16);
+    var decipher  = crypto.createDecipheriv('aes-256-cbc', new Buffer(key, 'base64'), iv);
+    decipher.setAutoPadding(false);
+    return decipher.update(payload);
 }
 
 module.exports = GrabzItClient;

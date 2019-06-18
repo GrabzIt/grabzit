@@ -31,7 +31,7 @@ function UI(ajaxUrl, resourceDir){
 
 	this.zoom = function(url)
 	{
-		clearTimeout(timeout);
+		clearTimeout(this.timeout);
 		$('#divResults').html('<img class="zoomedResult" title="Click to zoom out" onclick="ui.zoomout()" src="'+url+'">');
 	}
 
