@@ -21,7 +21,8 @@ module GrabzIt
 			@transparent = false
 			@noAds = false
 			@noCookieNotifications = false
-			@address = nil			
+			@address = nil
+			@hd = false
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -191,7 +192,20 @@ module GrabzIt
 		# @return [void]
 		def transparent=(value)
 			@transparent = value
-		end			
+		end
+		
+		# @return [Boolean] true if the image capture should be in high definition
+		def hd
+			@hd
+		end
+		
+		# Set to true if the image capture should be in high definition.
+		#
+		# @param value [Boolean] true if the image should be high definition
+		# @return [void]
+		def hd=(value)
+			@hd = value
+		end
 		
 		# @return [Boolean] get if adverts should be automatically hidden
 		def noAds
@@ -249,7 +263,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.b_to_str(@transparent),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.b_to_str(@transparent),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.b_to_str(@hd))
 			
 			return items.join("|")
 		end
@@ -274,8 +288,9 @@ module GrabzIt
 			params['post'] = GrabzIt::Utility.nil_check(@post)
 			params['address'] = GrabzIt::Utility.nil_check(@address)
 			params['nonotify'] = GrabzIt::Utility.b_to_str(@noCookieNotifications)
+			params['hd'] = GrabzIt::Utility.b_to_str(@hd)
 			
-			return params		
+			return params
 		end
 	end
 end
