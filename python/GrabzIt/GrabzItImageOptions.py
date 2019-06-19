@@ -21,6 +21,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             quality             set the quality of the screenshot where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
             transparent         set to true if the image capture should be transparent. This is only compatible with png and tiff images
             noAds               set to true if adverts should be automatically hidden
+            hd                  set to true if the image capture should be in high definition
             address                 the URL to execute the HTML code in
             noCookieNotifications   set to true if cookie notifications should be automatically hidden            
         """
@@ -40,6 +41,7 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.quality = -1
                 self.transparent = False
                 self.noAds = False
+                self.hd = False
                 self.noCookieNotifications = False
                 self.address = ''                
         
@@ -68,7 +70,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["customwatermarkid"] = str(self.customWaterMarkId) 
                 params["quality"] = int(self.quality)
                 params["transparent"] = int(self.transparent)                
-                params['noads'] = int(self.noAds)           
+                params['noads'] = int(self.noAds)
+                params['hd'] = int(self.hd)
                 params["post"] = str(self.post)
                 params["address"] = str(self.address)
                 params["nonotify"] = int(self.noCookieNotifications)
@@ -86,5 +89,5 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(self.format)+"|"+str(int(self.height))+"|"+str(int(self.width))+"|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))
+                "|"+str(int(self.delay))+"|"+str(self.targetElement)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(int(self.hd))
                 
