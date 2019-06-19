@@ -23,9 +23,10 @@ sub new
     $self->{"customWaterMarkId"} = '';
     $self->{"quality"} = -1;
     $self->{"transparent"} = 0;
-	$self->{"noAds"} = 0;
-	$self->{"address"} = '';
-	$self->{"noCookieNotifications"} = 0;	
+    $self->{"noAds"} = 0;
+    $self->{"address"} = '';
+    $self->{"noCookieNotifications"} = 0;
+    $self->{"hd"} = 0;
 
     bless $self, $class;
 
@@ -202,6 +203,19 @@ sub transparent
 }
 
 #
+# True if the image capture should be in high definition.
+#
+sub hd
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"hd"} = shift;
+    }
+    return $self->{"hd"};
+}
+
+#
 # True if adverts should be automatically hidden.
 #
 sub noAds
@@ -273,7 +287,7 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications();
+    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications()."|".$self->hd();
 }
 
 sub _getParameters($$$$$)
@@ -294,10 +308,11 @@ sub _getParameters($$$$$)
     $params->{'quality'} = $self->quality();
     $params->{'waitfor'} = $self->waitForElement();   
     $params->{'transparent'} = $self->transparent(); 
-	$params->{'noads'} = $self->noAds();
-	$params->{'post'} = $self->{"post"};
-	$params->{'nonotify'} = $self->noCookieNotifications();
-	$params->{'address'} = $self->address();	
+    $params->{'noads'} = $self->noAds();
+    $params->{'post'} = $self->{"post"};
+    $params->{'nonotify'} = $self->noCookieNotifications();
+    $params->{'address'} = $self->address();
+    $params->{'hd'} = $self->hd();
     
     return $params;
 }
