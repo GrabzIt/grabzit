@@ -111,6 +111,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        bool HD
+        {
+            get;
+            set;
+        }
+
         bool NoAds
         {
             get;

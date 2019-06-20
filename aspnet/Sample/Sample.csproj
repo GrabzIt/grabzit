@@ -45,7 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GrabzIt, Version=3.3.2.0, Culture=neutral, PublicKeyToken=d1123f66f1e59879, processorArchitecture=MSIL">
-      <HintPath>..\packages\GrabzIt.3.3.3\lib\net20\GrabzIt.dll</HintPath>
+      <HintPath>..\packages\GrabzIt.3.3.4\lib\net20\GrabzIt.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -66,7 +66,9 @@
     <Content Include="css\csv.png" />
     <Content Include="css\docx.png" />
     <Content Include="Default.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ajax\results.ashx.cs">

@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>GrabzIt.snk</AssemblyOriginatorKeyFile>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>GrabzIt Limited</Company>
     <PackageProjectUrl>https://grabz.it/</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/GrabzIt/grabzit/master/aspnet/license.txt</PackageLicenseUrl>
@@ -50,8 +50,9 @@ Additionally you can even convert online video's into animated GIF's.
 
 More documentation can be found at: https://grabz.it/api/aspnet</Description>
     <PackageReleaseNotes>- Now supports .Net Standard in addition to the .Net Framework
-- Added support for the new callback handler parameter: targetError</PackageReleaseNotes>
-    <Version>3.3.3</Version>
+- Added support for the new callback handler parameter: targetError
+- High definition screenshots can now be created</PackageReleaseNotes>
+    <Version>3.3.4</Version>
     <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>

@@ -149,6 +149,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        ///  True if the image capture should be in high definition.
+        /// </summary>
+        public bool HD
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// True if adverts should be automatically hidden.
         /// </summary>
         public bool NoAds
@@ -205,7 +214,8 @@ namespace GrabzIt.Parameters
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + TargetElement
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
             Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent) + "|" + EncryptionKey
-             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications);
+             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications)
+             + "|" + Convert.ToInt32(HD);
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -228,6 +238,7 @@ namespace GrabzIt.Parameters
             parameters.Add("post", post);
             parameters.Add("address", Address);
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
+            parameters.Add("hd", Convert.ToInt32(HD).ToString());
 
             return parameters;
         }
