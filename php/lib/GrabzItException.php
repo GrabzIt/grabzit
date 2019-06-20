@@ -72,6 +72,7 @@ class GrabzItException extends \Exception {
     const PARAMETER_INVALID_NO_ADS = 172;
     const PARAMETER_INVALID_PROXY = 173;
 	const PARAMETER_INVALID_NO_NOTIFY = 174;
+	const PARAMETER_INVALID_HD = 176;
     const NETWORK_SERVER_OFFLINE = 200;
     const NETWORK_GENERAL_ERROR = 201;
     const NETWORK_DDOS_ATTACK = 202;
