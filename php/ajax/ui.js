@@ -7,6 +7,10 @@ function UI(ajaxUrl, resourceDir){
 		//read result directory and display
 		$.getJSON(ajaxUrl+Math.floor((Math.random()*100000)+1), function(data) {
 			$.each(data, function(key, val) {
+				if (val)
+				{
+					val = val.replace(/\\/g,"/");
+				}
 				if (val.indexOf(".pdf") !== -1)
 				{
 					$('#divResults').append('<a title="Click to open" target="_blank" href="'+val+'"><img class="result" src="'+resourceDir+'/pdf.png"></img></a>');
@@ -31,13 +35,13 @@ function UI(ajaxUrl, resourceDir){
 
 	this.zoom = function(url)
 	{
-		clearTimeout(timeout);
+		clearTimeout(this.timeout);
 		$('#divResults').html('<img class="zoomedResult" title="Click to zoom out" onclick="ui.zoomout()" src="'+url+'">');
 	}
 
 	this.zoomout = function()
 	{
-		checkForResults();
+		this.checkForResults();
 	}
 
 	this.selectChanged = function(select) {
