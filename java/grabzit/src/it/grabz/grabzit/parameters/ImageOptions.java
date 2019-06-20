@@ -32,6 +32,7 @@ public class ImageOptions extends BaseOptions {
     private boolean noAds;
     private boolean noCookieNotifications;
     private String address;
+    private boolean hd;
 
     public ImageOptions()
     {
@@ -271,6 +272,20 @@ public class ImageOptions extends BaseOptions {
      */
     public void setAddress(String address) {
         this.address = address;
+    }        
+
+    /**
+     * @return true if the image should be in high definition
+     */
+    public boolean isHd() {
+        return hd;
+    }
+
+    /**
+     * @param set to true if the image should be in high definition
+     */
+    public void setHd(boolean hd) {
+        this.hd = hd;
     }    
     
     /**
@@ -306,7 +321,8 @@ public class ImageOptions extends BaseOptions {
         + "|" + browserWidth + "|" + getCustomId() + "|" + delay + "|" + targetElement + "|" + customWaterMarkId 
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent) + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications)
+        + "|" + ParameterUtility.toInt(hd);
     }    
     
     @Override
@@ -330,6 +346,7 @@ public class ImageOptions extends BaseOptions {
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));        
         params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
+        params.put("hd", String.valueOf(ParameterUtility.toInt(hd)));
         
         return params;
     }    
