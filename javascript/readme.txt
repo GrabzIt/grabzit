@@ -27,14 +27,14 @@ The ConvertURL or ConvertHTML method must be called and then either the AddTo, C
 	<div id="screenshot"></div>
 	<script>
 	//Call One
-	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com').AddTo('screenshot');
+	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.bbc.com').AddTo('screenshot');
 
 	//Call Two
 	var elem = document.getElementById('screenshot');
 	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').AddTo(elem);
 	
 	//Call Three
-	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com').Create();
+	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.bbc.com').Create();
 	
 	//Call Four
 	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').Create();	
@@ -54,7 +54,7 @@ The DataURI method requires a callback function this function must have one para
 	}	
 	
 	//Call One
-	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com').DataURI(callback);
+	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.bbc.com').DataURI(callback);
 
 	//Call Two
 	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').DataURI(callback);
@@ -68,7 +68,7 @@ With the CreateInvisible method the capture is created but not shown on the webp
 	<body>
 	<script>
 	//Call One
-	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com').CreateInvisible();
+	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.bbc.com').CreateInvisible();
 	
 	//Call Two
 	GrabzIt("YOUR APPLICATION KEY").ConvertHTML('<h1>Hello World</h1>').CreateInvisible();	
@@ -81,4 +81,6 @@ The Encrypt method automatically makes a cryptographically secure key and passes
 The options parameter takes all of the parameters found here (excluding the URL and application key parameters): https://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 250 x 200 you could do this like so:
 
 
-	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.google.com', {"width": 250, "height": 200}).AddTo('div_id');
+	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.bbc.com', {"width": 250, "height": 200}).AddTo('div_id');
+
+GrabzIt JavaScript Library can also be used as a ES 6 Module, for more information follow these step-by-step instructions: https://grabz.it/api/javascript/advanced/
