@@ -505,7 +505,7 @@ class GrabzItClient:
 		#
 		# This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
 		#				 
-		def CreateEncrpytionKey(self):
+		def CreateEncryptionKey(self):
 			return base64.standard_b64encode(os.urandom(32)).decode('utf-8')
 		
 		#
