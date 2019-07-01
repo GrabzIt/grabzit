@@ -106,7 +106,7 @@ class GrabzItClient
 	/*
 	This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
 	*/
-	public function CreateEncrpytionKey()
+	public function CreateEncryptionKey()
 	{
 		if (function_exists('random_bytes'))
 		{
