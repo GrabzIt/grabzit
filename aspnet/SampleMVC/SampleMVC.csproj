@@ -101,8 +101,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="GrabzIt, Version=3.3.2.0, Culture=neutral, PublicKeyToken=d1123f66f1e59879, processorArchitecture=MSIL">
-      <HintPath>..\packages\GrabzIt.3.3.4\lib\net20\GrabzIt.dll</HintPath>
+    <Reference Include="GrabzIt, Version=3.3.4.1, Culture=neutral, PublicKeyToken=d1123f66f1e59879, processorArchitecture=MSIL">
+      <HintPath>..\packages\GrabzIt.3.3.4.1\lib\net20\GrabzIt.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
