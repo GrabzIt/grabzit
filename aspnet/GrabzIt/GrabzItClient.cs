@@ -138,7 +138,7 @@ namespace GrabzIt
         /// This method creates an encryption key to pass to the <see cref="EncryptionKey"/> parameter.
         /// </summary>
         /// <returns>The encryption key</returns>
-        public string CreateEncrpytionKey()
+        public string CreateEncryptionKey()
         {
             RandomNumberGenerator rng = new RNGCryptoServiceProvider();
             byte[] tokenData = new byte[32];
