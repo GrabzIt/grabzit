@@ -15,7 +15,14 @@ import java.net.URLEncoder;
 public class ParameterUtility {
     public static String encode(String value) throws UnsupportedEncodingException
     {
-        return URLEncoder.encode(value, "UTF-8");
+        try 
+        {
+            return URLEncoder.encode(value, "UTF-8");
+        } 
+        catch (UnsupportedEncodingException e)
+        {
+            throw new AssertionError("In order to use GrabzIt UTF-8 needs to be supported by your Java Virtual Machine (JVM)");
+        } 
     }
 
     public static String nullCheck(String value)
