@@ -7,6 +7,8 @@ It is usually best to place these package files in their own directory.
 
 To run the demo
 
+Ensure the MBString extension is installed.
+
 Open config.php and change the application key and application secret parameters to match what is found here: https://grabz.it/api/
 
 If you are not on your local machine you can optionally change the handlerUrl to match the publicly accessible location of the GrabzItHandler.php file. Otherwise leave it as it is and the capture will be downloaded synchronously.
