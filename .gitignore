@@ -15,3 +15,11 @@ aspnet/Sample/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
 *.exe
 aspnet/SampleConsole/bin/Debug/SampleConsole.exe.config
 *.exe
+/java/grabzit/build/
+/java/grabzit/dist/
+/java/sample/build/
+*.pyc
+*.pyc
+*.pyc
+python/web.config
+/java/sample/dist/
