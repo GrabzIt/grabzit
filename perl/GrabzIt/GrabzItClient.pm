@@ -632,6 +632,7 @@ sub _get($)
 {
 	my ($self, $url) = @_;
 	$ua = LWP::UserAgent->new();
+	$ua->timeout(600);
 	
 	return $self->_handleResponse($ua->get($url));
 }
@@ -640,6 +641,7 @@ sub _post($$)
 {
 	my ($self, $url, $params) = @_;	   
 	$ua = LWP::UserAgent->new();
+	$ua->timeout(600);
 	
 	return $self->_handleResponse($ua->post($url, $params));
 }
