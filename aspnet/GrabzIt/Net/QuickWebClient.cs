@@ -21,7 +21,7 @@ namespace GrabzIt.Net
             {
                 request.Proxy = this.proxy;
                 request.KeepAlive = false;
-                request.Timeout = 300000;
+                request.Timeout = 600000;
             }
             return request;
         }
