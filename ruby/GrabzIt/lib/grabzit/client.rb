@@ -645,7 +645,7 @@ module GrabzIt
 		private
 		def get(url)
 			uri = URI.parse(url)
-			response = Net::HTTP.start(uri.host, uri.port, @proxy.host(), @proxy.port(), @proxy.username(), @proxy.password(), :use_ssl => uri.scheme == 'https') { |http| http.get(uri.request_uri) }
+			response = Net::HTTP.start(uri.host, uri.port, @proxy.host(), @proxy.port(), @proxy.username(), @proxy.password(), :use_ssl => uri.scheme == 'https', :read_timeout => 600) { |http| http.get(uri.request_uri) }
 			response_check(response)
 			return response.body
 		end
@@ -654,7 +654,7 @@ module GrabzIt
 		def post(url, params)
 			headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
 			uri = URI.parse(url)
-			response = Net::HTTP.start(uri.host, uri.port, @proxy.host(), @proxy.port(), @proxy.username(), @proxy.password(), :use_ssl => uri.scheme == 'https') { |http| http.post(uri.request_uri, params, headers) }
+			response = Net::HTTP.start(uri.host, uri.port, @proxy.host(), @proxy.port(), @proxy.username(), @proxy.password(), :use_ssl => uri.scheme == 'https', :read_timeout => 600) { |http| http.post(uri.request_uri, params, headers) }
 			response_check(response)
 			return response.body
 		end		
