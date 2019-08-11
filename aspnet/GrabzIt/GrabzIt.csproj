@@ -8,8 +8,8 @@
     <AssemblyTitle>GrabzIt</AssemblyTitle>
     <Product>GrabzIt - Capture the Web</Product>
     <Copyright>Copyright ©  2012-2019</Copyright>
-    <AssemblyVersion>3.3.4.2</AssemblyVersion>
-    <FileVersion>3.3.4.2</FileVersion>
+    <AssemblyVersion>3.3.4.3</AssemblyVersion>
+    <FileVersion>3.3.4.3</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -53,7 +53,7 @@ More documentation can be found at: https://grabz.it/api/aspnet</Description>
 - Added support for the new callback handler parameter: targetError
 - High definition screenshots can now be created
 - Fixed typo for the CreateEncryptionKey method</PackageReleaseNotes>
-    <Version>3.3.4.2</Version>
+    <Version>3.3.4.3</Version>
     <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
