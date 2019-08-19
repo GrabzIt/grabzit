@@ -16,7 +16,8 @@ public enum ImageFormat {
     BMP("bmp"),
     JPG("jpg"),
     TIFF("tiff"),
-    PNG("png");
+    PNG("png"),
+    WEBP("webp");
 
     private String value;
 
