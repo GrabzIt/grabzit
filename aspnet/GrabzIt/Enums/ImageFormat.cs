@@ -8,6 +8,7 @@
         bmp,
         jpg,
         tiff,
-        png
+        png,
+        webp
     }
 }
