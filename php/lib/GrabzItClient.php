@@ -748,7 +748,28 @@ class GrabzItClient
 
 	private function encode($text)
 	{
-		return md5(mb_convert_encoding($text, "ASCII", mb_detect_encoding($text)));
+		$sanitized = '';
+		if (function_exists('mb_convert_encoding'))
+		{
+			$sanitized = mb_convert_encoding($text, "ASCII", mb_detect_encoding($text));
+		}
+		else
+		{
+			if (!empty($text))
+			{
+				$chars = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
+				foreach($chars as $char)
+				{
+					if(preg_match('/[^\x20-\x7e]/', $char))
+					{
+						$sanitized .= '?';
+						continue;
+					}
+					$sanitized .= $char;
+				}
+			}
+		}
+		return md5($sanitized);
 	}
 
 	private function Post($url, $parameters)
