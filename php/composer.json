@@ -26,7 +26,6 @@
         "issues": "https://grabz.it/support/"
     },
     "require": {
-        "php": ">=5.0.0",		
-        "ext-mbstring": "*"
+        "php": ">=5.0.0"
     }
 }
