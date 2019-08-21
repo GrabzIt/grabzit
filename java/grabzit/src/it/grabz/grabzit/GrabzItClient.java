@@ -9,6 +9,7 @@ import it.grabz.grabzit.enums.HorizontalPosition;
 import it.grabz.grabzit.enums.VerticalPosition;
 import it.grabz.grabzit.parameters.AnimationOptions;
 import it.grabz.grabzit.parameters.DOCXOptions;
+import it.grabz.grabzit.parameters.HTMLOptions;
 import it.grabz.grabzit.parameters.ImageOptions;
 import it.grabz.grabzit.parameters.PDFOptions;
 import it.grabz.grabzit.parameters.ParameterUtility;
@@ -69,6 +70,8 @@ public class GrabzItClient {
     private final String TAKE_PDF = "takepdf.ashx";
     private final String TAKE_TABLE = "taketable.ashx";
     private final String TAKE_PICTURE = "takepicture.ashx";
+    private final String TAKE_HTML = "takehtml.ashx";
+    
     /**
      * Create a new instance of the Client class in order to access the GrabzIt API.
      *
@@ -259,7 +262,7 @@ public class GrabzItClient {
     /**
      * This method specifies the HTML that should be converted into a image.
      * @param html The HTML to convert into a image.
-     * @param options A instance of the PDFOptions class that defines any special options to use when creating the image.
+     * @param options A instance of the ImageOptions class that defines any special options to use when creating the image.
      * @throws UnsupportedEncodingException
      */
     public void HTMLToImage(String html, ImageOptions options) throws UnsupportedEncodingException
@@ -306,6 +309,83 @@ public class GrabzItClient {
     public void FileToImage(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
     {
         FileToImage(path, null);
+    }
+
+    /**
+     * This method specifies the URL that should be converted into rendered HTML.
+     * @param url The URL to capture as rendered HTML.
+     * @param options A instance of the HTMLOptions class that defines any special options to use when creating rendered HTML.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToRenderedHTML(String url, HTMLOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new HTMLOptions();
+        }
+        this.request = new Request(getRootURL(false) + TAKE_HTML, false, options, url);        
+    }
+    
+    /**
+     * This method specifies the URL that should be converted into rendered HTML.
+     * @param url The URL to capture as rendered HTML.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToRenderedHTML(String url) throws UnsupportedEncodingException
+    {
+        URLToRenderedHTML(url, null);
+    }    
+    
+    /**
+     * This method specifies the HTML that should be converted into rendered HTML.
+     * @param html The HTML to convert into rendered HTML.
+     * @param options A instance of the HTMLOptions class that defines any special options to use when creating the rendered HTML.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToRenderedHTML(String html, HTMLOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new HTMLOptions();
+        }
+        this.request = new Request(getRootURL(true) + TAKE_HTML, true, options, html);
+    }   
+    
+    /**
+     * This method specifies the HTML that should be converted into rendered HTML.
+     * @param html The HTML to convert into rendered HTML.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToRenderedHTML(String html) throws UnsupportedEncodingException
+    {
+        HTMLToRenderedHTML(html, null);
+    }    
+    
+    /**
+     * This method specifies a HTML file that should be converted into rendered HTML.
+     * @param path The file path of a HTML file to convert into rendered HTML.
+     * @param options A instance of the ImageOptions class that defines any special options to use when creating the rendered HTML.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToRenderedHTML(String path, HTMLOptions options) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        this.HTMLToRenderedHTML(fileToHTML(path), options);
+    }        
+
+    /**
+     * This method specifies a HTML file that should be converted into rendered HTML.
+     * @param path The file path of a HTML file to convert into rendered HTML.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToRenderedHTML(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        FileToRenderedHTML(path, null);
     }    
     
     /**
