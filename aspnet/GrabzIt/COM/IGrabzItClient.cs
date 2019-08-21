@@ -25,14 +25,17 @@ namespace GrabzIt.COM
         void URLToPDF(string url, PDFOptions options);
         void URLToTable(string url, TableOptions options);
         void URLToDOCX(string url, DOCXOptions options);
+        void URLToRenderedHTML(string url, HTMLOptions options);
         void HTMLToImage(string html, ImageOptions options);
         void HTMLToTable(string html, TableOptions options);
         void HTMLToPDF(string html, PDFOptions options);
         void HTMLToDOCX(string html, DOCXOptions options);
+        void HTMLToRenderedHTML(string html, HTMLOptions options);
         void FileToImage(string path, ImageOptions options);        
         void FileToTable(string path, TableOptions options);
         void FileToPDF(string path, PDFOptions options);
         void FileToDOCX(string path, DOCXOptions options);
+        void FileToRenderedHTML(string path, HTMLOptions options);
         string Save(string callBackURL);
         bool SaveTo(string saveToFile);
         Status GetStatus(string id);

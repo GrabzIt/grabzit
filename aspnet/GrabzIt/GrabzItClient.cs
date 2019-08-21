@@ -75,6 +75,7 @@ namespace GrabzIt
         private const string TakePDF = "takepdf.ashx";
         private const string TakeTable = "taketable.ashx";
         private const string TakeImage = "takepicture.ashx";
+        private const string TakeHTML = "takehtml.ashx";
 
         //Required by COM
         public GrabzItClient()
@@ -326,6 +327,87 @@ namespace GrabzIt
                 }
 
                 HTMLToImage(File.ReadAllText(path), options);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into rendered HTML.
+        /// </summary>
+        /// <param name="url">The URL to capture as rendered HTML.</param>
+        public void URLToRenderedHTML(string url)
+        {
+            URLToRenderedHTML(url, null);
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into rendered HTML.
+        /// </summary>
+        /// <param name="url">The URL to capture as rendered HTML.</param>
+        /// <param name="options">A instance of the HTMLOptions class that defines any special options to use when creating the rendered HTML.</param>
+        public void URLToRenderedHTML(string url, HTMLOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new HTMLOptions();
+                }
+
+                request.Store(GetRootURL(false) + TakeHTML, false, options, url);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into rendered HTML.
+        /// </summary>
+        /// <param name="html">The HTML to convert into rendered HTML.</param>
+        public void HTMLToRenderedHTML(string html)
+        {
+            HTMLToRenderedHTML(html, null);
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into rendered HTML.
+        /// </summary>
+        /// <param name="html">The HTML to convert into rendered HTML.</param>
+        /// <param name="options">A instance of the HTMLOptions class that defines any special options to use when creating the rendered HTML.</param>
+        public void HTMLToRenderedHTML(string html, HTMLOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new HTMLOptions();
+                }
+
+                request.Store(GetRootURL(true) + TakeHTML, true, options, html);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into rendered HTML.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into rendered HTML.</param>
+        public void FileToRenderedHTML(string path)
+        {
+            FileToRenderedHTML(path, null);
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into rendered HTML.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into rendered HTML.</param>
+        /// <param name="options">A instance of the HTMLOptions class that defines any special options to use when creating the rendered HTML.</param>
+        public void FileToRenderedHTML(string path, HTMLOptions options)
+        {
+            lock (thisLock)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+                }
+
+                HTMLToRenderedHTML(File.ReadAllText(path), options);
             }
         }
 
