@@ -20,6 +20,7 @@ use GrabzIt::GrabzItImageOptions;
 use GrabzIt::GrabzItTableOptions;
 use GrabzIt::GrabzItPDFOptions;
 use GrabzIt::GrabzItDOCXOptions;
+use GrabzIt::GrabzItHTMLOptions;
 
 use constant WebServicesBaseURL_GET => "://api.grabz.it/services/";
 use constant WebServicesBaseURL_POST => "://grabz.it/services/";
@@ -27,6 +28,7 @@ use constant TakePicture => "takepicture.ashx";
 use constant TakeTable => "taketable.ashx";
 use constant TakePDF => "takepdf.ashx";
 use constant TakeDOCX => "takedocx.ashx";
+use constant TakeHTML => "takehtml.ashx";
 use constant TrueString => "True";
 
 sub new
@@ -94,6 +96,44 @@ sub FileToImage($;$)
 {
 	my ($self, $path, $options) = @_;
 	$self->HTMLToImage($self->_readHTMLFile($path), $options);
+}
+
+#
+# This method specifies the URL that should be converted into rendered HTML.
+#
+# url - The URL to capture as rendered HTML.
+# options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML
+#
+sub URLToRenderedHTML($;$)
+{
+	my ($self, $url, $options) = @_;
+	$options ||= GrabzItHTMLOptions->new();	
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakeHTML, 0, $options, $url);
+}
+
+#
+# This method specifies the HTML that should be converted into rendered HTML.
+#
+# html - The HTML to convert into rendered HTML.
+# options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML
+#
+sub HTMLToRenderedHTML($;$)
+{
+	my ($self, $html, $options) = @_;
+	$options ||= GrabzItHTMLOptions->new();	
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakeHTML, 1, $options, $html);
+}
+
+#
+# This method specifies a HTML file that should be converted into rendered HTML.
+#
+# path - The file path of a HTML file to convert into rendered HTML.
+# options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML.
+#
+sub FileToRenderedHTML($;$)
+{
+	my ($self, $path, $options) = @_;
+	$self->HTMLToRenderedHTML($self->_readHTMLFile($path), $options);
 }
 
 #
