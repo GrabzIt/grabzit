@@ -34,6 +34,7 @@ from GrabzIt import GrabzItImageOptions
 from GrabzIt import GrabzItPDFOptions
 from GrabzIt import GrabzItDOCXOptions
 from GrabzIt import GrabzItTableOptions
+from GrabzIt import GrabzItHTMLOptions
 from GrabzIt import AES
 from GrabzIt import BlockFeeder
 
@@ -44,6 +45,7 @@ class GrabzItClient:
 		TakePDF = "takepdf.ashx"
 		TakeDOCX = "takedocx.ashx"
 		TakeTable = "taketable.ashx"
+		TakeHTML = "takehtml.ashx"
 		TrueString = "True"
 
 		def __init__(self, applicationKey, applicationSecret):
@@ -105,7 +107,40 @@ class GrabzItClient:
 		#				 
 		def FileToImage(self, path, options = None):
 				self.HTMLToImage(self.ReadFile(path), options)
-			   
+
+		#
+		# This method specifies the URL that should be converted into rendered HTML.
+		#
+		# url - The URL to capture as rendered HTML
+		# options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML
+		#
+		def URLToRenderedHTML(self, url, options = None):
+				if (options == None):
+						options = GrabzItHTMLOptions.GrabzItHTMLOptions()
+				
+				self.request = Request.Request(self.WebServicesBaseURL + self.TakeHTML, False, options, url)
+
+		#
+		# This method specifies the HTML that should be converted into rendered HTML.
+		#
+		# html - The HTML to convert into rendered HTML
+		# options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the rendered HTML
+		#				 
+		def HTMLToRenderedHTML(self, html, options = None):
+				if (options == None):
+						options = GrabzItHTMLOptions.GrabzItHTMLOptions()
+				
+				self.request = Request.Request(self.WebServicesBaseURL + self.TakeHTML, True, options, html)
+
+		#
+		# This method specifies a HTML file that should be converted into rendered HTML.
+		#
+		# path - The file path of a HTML file to convert into rendered HTML
+		# options - A instance of the GrabzItImageOptions class that defines any special options to use when creating the rendered HTML
+		#				 
+		def FileToRenderedHTML(self, path, options = None):
+				self.HTMLToRenderedHTML(self.ReadFile(path), options)#
+
 		#
 		# This method specifies the URL that the HTML tables should be extracted from.
 		#
