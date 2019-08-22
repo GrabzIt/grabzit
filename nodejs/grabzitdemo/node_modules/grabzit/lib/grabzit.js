@@ -764,6 +764,62 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
 
+function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, isPost, target) {
+    var defaults = {
+        'customId': '',
+        'browserWidth': '',
+        'browserHeight': '',
+        'delay': '',
+        'requestAs': 0,
+        'country': '',
+        'waitForElement': '',
+        'exportUrl': '',
+        'encryptionKey': '',
+        'noAds':false,
+        'postData':'',
+        'proxy': '',
+        'noCookieNotifications':false,
+        'address': ''
+    };
+
+    context = _extend(defaults, options);
+
+    var startDelay = 0;
+
+    if (context['delay'] != '') {
+        startDelay = context['delay']
+    }
+
+    this.requestParams = {
+        'key': applicationKey,
+        'bwidth': context['browserWidth'],
+        'bheight': context['browserHeight'],
+        'customid': context['customid'],
+        'delay': context['delay'],
+        'requestmobileversion': parseInt(context['requestAs']),
+        'country': context['country'],
+        'waitfor': context['waitForElement'],
+        'export': context['exportUrl'],
+        'encryption': context['encryptionKey'],
+        'noads': _toInt(context['noAds']),
+        'post': context['postData'],
+        'proxy': context['proxy'],
+        'nonotify': _toInt(context['noCookieNotifications']),
+        'address': context['address']
+    };
+
+    requestParams = _addTargetToRequest(requestParams, isPost, target);
+
+    var signaturePartTwo = '|' + context['browserHeight'] 
+     + '|' + context['browserWidth'] + '|' + context['customId'] + '|' + context['delay']
+     + '|' + parseInt(context['requestAs']) + '|' + context['country'] 
+     + '|' + context['exportUrl'] + '|' + context['waitForElement']
+     + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
+     + '|' + _toInt(context['noCookieNotifications']);
+
+    return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
+}
+
 function _addTargetToRequest(requestParams, isPost, target){
     if (!isPost)
     {
@@ -913,6 +969,33 @@ GrabzItClient.prototype.html_to_image = function (html, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.file_to_image = function (path, options) {
+    this.html_to_image(_readFile(path), options);
+};
+
+/*
+* This method specifies the URL that should be converted into rendered HTML.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+*/
+GrabzItClient.prototype.url_to_rendered_html = function (url, options) {
+    this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml.ashx', options, false, url);
+};
+
+/*
+* This method specifies the HTML that should be converted into rendered HTML.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+*/
+GrabzItClient.prototype.html_to_rendered_html = function (html, options) {
+    this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml.ashx', options, true, html);
+};
+
+/*
+* This method specifies a HTML file that should be converted into rendered HTML.
+*
+* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+*/
+GrabzItClient.prototype.file_to_rendered_html = function (path, options) {
     this.html_to_image(_readFile(path), options);
 };
 
