@@ -20,6 +20,7 @@ GrabzIt\GrabzItImageOptions.py
 GrabzIt\GrabzItDOCXOptions.py
 GrabzIt\GrabzItBaseOptions.py
 GrabzIt\GrabzItAnimationOptions.py
+GrabzIt\GrabzItHTMLOptions.py
 GrabzIt\__init__.py
 ajax\results.py
 ajax\ui.js
