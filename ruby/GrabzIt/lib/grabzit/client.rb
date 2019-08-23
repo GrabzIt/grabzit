@@ -16,6 +16,7 @@ module GrabzIt
 	require File.join(File.dirname(__FILE__), 'exception')
 	require File.join(File.dirname(__FILE__), 'animationoptions')
 	require File.join(File.dirname(__FILE__), 'imageoptions')
+	require File.join(File.dirname(__FILE__), 'htmloptions')
 	require File.join(File.dirname(__FILE__), 'tableoptions')
 	require File.join(File.dirname(__FILE__), 'pdfoptions')
 	require File.join(File.dirname(__FILE__), 'docxoptions')
@@ -46,6 +47,8 @@ module GrabzIt
 		private_constant :TakePDF
 		TakeDOCX = "takedocx.ashx"
 		private_constant :TakeDOCX
+		TakeHTML = "takehtml.ashx"
+		private_constant :TakeHTML
 		TrueString = "True"
 		private_constant :TrueString
 		
@@ -113,6 +116,45 @@ module GrabzIt
 		# @return [void]		
 		def file_to_image(path, options = nil)		
 			html_to_image(read_file(path), options)
+		end
+
+		# This method specifies the URL that should be converted into rendered HTML
+		#
+		# @param url [String] the URL to capture as rendered HTML
+		# @param options [HTMLOptions, nil] a instance of the HTMLOptions class that defines any special options to use when creating the rendered HTML
+		# @return [void]		
+		def url_to_rendered_html(url, options = nil)		
+
+			if options == nil
+				options = HTMLOptions.new()
+			end
+		
+			@request = Request.new(@protocol + WebServicesBaseURLGet + TakeHTML, false, options, url)
+			return nil
+		end
+
+		# This method specifies the HTML that should be converted into rendered HTML
+		#
+		# @param html [String] the HTML to convert into rendered HTML
+		# @param options [HTMLOptions, nil] a instance of the HTMLOptions class that defines any special options to use when creating the rendered HTML
+		# @return [void]		
+		def html_to_rendered_html(html, options = nil)		
+
+			if options == nil
+				options = HTMLOptions.new()
+			end
+		
+			@request = Request.new(@protocol + WebServicesBaseURLPost + TakeHTML, true, options, html)
+			return nil
+		end		
+
+		# This method specifies a HTML file that should be converted into rendered HTML
+		#
+		# @param path [String] the file path of a HTML file to convert into rendered HTML
+		# @param options [HTMLOptions, nil] a instance of the HTMLOptions class that defines any special options to use when creating rendered HTML
+		# @return [void]		
+		def file_to_rendered_html(path, options = nil)		
+			html_to_rendered_html(read_file(path), options)
 		end
 		
 		# This method specifies the URL that the HTML tables should be extracted from
