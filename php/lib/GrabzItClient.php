@@ -5,6 +5,8 @@ include_once("GrabzItRequest.php");
 include_once("GrabzItPDFOptions.php");
 include_once("GrabzItDOCXOptions.php");
 include_once("GrabzItImageOptions.php");
+include_once("GrabzItHTMLOptions.php");
+include_once("GrabzItBaseOptions.php");
 include_once("GrabzItAnimationOptions.php");
 include_once("GrabzItTableOptions.php");
 include_once("GrabzItWaterMark.php");
@@ -18,6 +20,7 @@ class GrabzItClient
 	const TakeTable = "taketable.ashx";
 	const TakePDF = "takepdf.ashx";
 	const TakeDOCX = "takedocx.ashx";
+	const TakeHTML = "takehtml.ashx";
 	const TrueString = "True";
 
 	private $applicationKey;
@@ -217,7 +220,55 @@ class GrabzItClient
 		}
 		
 		$this->HTMLToImage(file_get_contents($path), $options);
-	}	
+	}
+	
+	/*
+	This method specifies the URL that should be converted into rendered HTML.
+
+	url - The URL to capture as rendered HTML.
+	options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML.
+	*/
+	public function URLToRenderedHTML($url, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItHTMLOptions();			
+		}		
+
+		$this->request = new GrabzItRequest($this->getRootUrl(false) . GrabzItClient::TakeHTML, false, $options, $url);
+	}
+
+	/*
+	This method specifies the HTML that should be converted into rendered HTML.
+
+	html - The HTML to convert into rendered HTML.
+	options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML.
+	*/	
+	public function HTMLToRenderedHTML($html, $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItHTMLOptions();			
+		}		
+
+		$this->request = new GrabzItRequest($this->getRootUrl(true) . GrabzItClient::TakeHTML, true, $options, $html);
+	}
+
+	/*
+	This method specifies a HTML file that should be converted into rendered HTML.
+
+	path - The file path of a HTML file to convert into rendered HTML.
+	options - A instance of the GrabzItHTMLOptions class that defines any special options to use when creating the rendered HTML.
+	*/		
+	public function FileToRenderedHTML($path, $options = null)
+	{
+		if (!file_exists($path))
+		{
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
+		}
+		
+		$this->HTMLToRenderedHTML(file_get_contents($path), $options);
+	}
 
 	/*
 	This method specifies the URL that the HTML tables should be extracted from.
