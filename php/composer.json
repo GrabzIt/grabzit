@@ -1,11 +1,11 @@
 {
     "name": "grabzit/grabzit",
 	"type": "library",
-	"keywords": ["screenshots","PDF","DOCX","HTML","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion","HTML to PDF","HTML to DOCX","HTML to Image","URL to PDF","URL to DOCX","URL to Image"],
+	"keywords": ["screenshots","PDF","DOCX","HTML","table","capture","PNG","JPG","BMP","TIFF","API","web","images","videos","animated gif","csv","xlsx","video conversion","HTML to PDF","HTML to DOCX","HTML to Image","URL to PDF","URL to DOCX","URL to Image", "Rendered HTML"],
     "homepage": "https://grabz.it/",
     "description": "Use our API to allow your app to create images, DOCX documents and PDF's from URL's or raw HTML. Additionally GrabzIt allows you to convert online videos into animated GIF's or HTML tables into CSV's.",
 	"license": "MIT",
-	"version":"3.3.4.3",
+	"version":"3.3.5",
 	"autoload": {
 		"psr-4": {
 			"GrabzIt\\": "lib/"
