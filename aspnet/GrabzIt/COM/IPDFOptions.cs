@@ -60,6 +60,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        CSSMediaType CSSMediaType
+        {
+            get;
+            set;
+        }
+
         bool IncludeLinks
         {
             get;

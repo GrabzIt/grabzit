@@ -31,6 +31,7 @@ namespace GrabzIt.Parameters
 	        Quality = -1;
             HideElement = string.Empty;
             Address = string.Empty;
+            CSSMediaType = CSSMediaType.Screen;
         }
         /// <summary>
         /// If true the background of the web page should be included in the PDF
@@ -85,7 +86,16 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
+        /// <summary>
+        /// The CSS Media Type of the PDF to be returned: 'Screen' or 'Print'
+        /// </summary>
+        public CSSMediaType CSSMediaType
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// True if links should be included in the PDF
         /// </summary>
@@ -313,7 +323,8 @@ namespace GrabzIt.Parameters
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
-             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications);
+             + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address
+             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower();
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -347,6 +358,7 @@ namespace GrabzIt.Parameters
             parameters.Add("mergeid", MergeId);
             parameters.Add("address", Address);
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
+            parameters.Add("media", CSSMediaType.ToString().ToLower());
 
             return parameters;
         }
