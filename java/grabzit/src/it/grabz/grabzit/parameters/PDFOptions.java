@@ -6,6 +6,7 @@
 package it.grabz.grabzit.parameters;
 
 import it.grabz.grabzit.enums.BrowserType;
+import it.grabz.grabzit.enums.CSSMediaType;
 import it.grabz.grabzit.enums.PageOrientation;
 import it.grabz.grabzit.enums.PageSize;
 import java.io.UnsupportedEncodingException;
@@ -44,6 +45,7 @@ public class PDFOptions extends BaseOptions {
     private String mergeId;
     private boolean noCookieNotifications;
     private String address;
+    private CSSMediaType cssMediaType;
     
     public PDFOptions()
     {
@@ -71,6 +73,7 @@ public class PDFOptions extends BaseOptions {
         this.templateVariables = "";
         this.mergeId = "";
         this.address = "";
+        this.cssMediaType = CSSMediaType.SCREEN;
     }
     
     /**
@@ -114,6 +117,20 @@ public class PDFOptions extends BaseOptions {
     public void setOrientation(PageOrientation orientation) {
         this.orientation = orientation;
     }
+    
+    /**
+     * @return the CSS media type of the PDF either Screen or Print.
+     */
+    public CSSMediaType getCSSMediaType() {
+        return cssMediaType;
+    }
+
+    /**
+     * @param cssMediaType the orientation of the PDF either portrait or landscape.
+     */
+    public void setCSSMediaType(CSSMediaType cssMediaType) {
+        this.cssMediaType = cssMediaType;
+    } 
 
     /**
      * @return if the links should be included in the PDF.
@@ -484,7 +501,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables
-        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
+        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + cssMediaType.getValue();
     }    
     
     @Override
@@ -519,6 +536,7 @@ public class PDFOptions extends BaseOptions {
         params.put("mergeid", ParameterUtility.encode(ParameterUtility.nullCheck(mergeId)));
         params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
+        params.put("media", String.valueOf(cssMediaType.getValue()));
         
         return params;
     }    
