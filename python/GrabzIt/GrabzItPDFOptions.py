@@ -33,6 +33,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 			mergeId					the ID of a capture that should be merged at the beginning of the new PDF document
 			address					the URL to execute the HTML code in
 			noCookieNotifications	set to true if cookie notifications should be automatically hidden
+			cssMediaType			the css media type to use either 'Print' or 'Screen'
 		"""
 		
 		def __init__(self):
@@ -63,6 +64,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 				self.mergeId = ''
 				self.noCookieNotifications = False
 				self.address = ''
+				self.cssMediaType = ''
 				
 		#
 		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -113,6 +115,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 				params["mergeid"] = str(self.mergeId)
 				params["address"] = str(self.address)
 				params["nonotify"] = int(self.noCookieNotifications)
+				params["media"] = str(self.cssMediaType)
 				
 				return params
 				
@@ -131,4 +134,4 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 				"|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
 				"|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+\
 				"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))+"|"+str(int(self.pageHeight))+\
-				"|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))
+				"|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.cssMediaType)
