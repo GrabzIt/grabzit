@@ -72,6 +72,7 @@ namespace GrabzIt.Enums
         ParameterInvalidProxy = 173,
         ParameterInvalidNoNotify = 174,
         ParameterInvalidHD = 176,
+        ParameterInvalidMediaType = 177,
         NetworkServerOffline = 200,
         NetworkGeneralError = 201,
         NetworkDDOSAttack = 202,
