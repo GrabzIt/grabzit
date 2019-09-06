@@ -36,7 +36,8 @@ sub new
     $self->{"height"} = 0;
 	$self->{"mergeId"} = '';
 	$self->{"address"} = '';
-	$self->{"noCookieNotifications"} = 0;		
+	$self->{"noCookieNotifications"} = 0;
+	$self->{"cssMediaType"} = '';
         
     bless $self, $class;
 
@@ -80,6 +81,19 @@ sub orientation
         $self->{"orientation"} = ucfirst(shift);
     }
     return $self->{"orientation"};
+}
+
+#
+# The CSS Media Type of the PDF to be returned: 'Print' or 'Screen'
+#
+sub cssMediaType
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"cssMediaType"} = ucfirst(shift);
+    }
+    return $self->{"cssMediaType"};
 }
 
 #
@@ -431,7 +445,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
     "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType();
 }
 
 sub _getParameters($$$$$)
@@ -467,6 +481,7 @@ sub _getParameters($$$$$)
     $params->{'mergeid'} = $self->mergeId();
 	$params->{'nonotify'} = $self->noCookieNotifications();
 	$params->{'address'} = $self->address();
+	$params->{'media'} = $self->cssMediaType();
 	
     return $params;
 }
