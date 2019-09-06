@@ -518,7 +518,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'proxy': '',
         'mergeId': '',
         'noCookieNotifications':false,
-        'address': ''
+        'address': '',
+        'cssMediaType': ''
     };
 
     context = _extend(defaults, options);
@@ -575,7 +576,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'proxy': context['proxy'],
         'mergeid': context['mergeId'],
         'nonotify': _toInt(context['noCookieNotifications']),
-        'address': context['address']
+        'address': context['address'],
+        'media': context['cssMediaType']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -586,7 +588,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
      + '|' + parseInt(context['marginRight']) + '|' + context['delay'] + '|' + parseInt(context['requestAs']) + '|' + context['country']
      + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
-     + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']);
+     + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications'])
+	 + '|' + context['cssMediaType'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
