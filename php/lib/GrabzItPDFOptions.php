@@ -29,6 +29,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $mergeId = null;
 	private $noCookieNotifications = false;
 	private $address = null;
+	private $cssMediaType = null;
 	
 	/*
 	Set the width of the resulting PDF in mm.
@@ -143,6 +144,23 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	{
 		return $this->orientation;
 	}
+	
+	/*
+	Set the CSS Media Type of the PDF to be returned: 'Print' or 'Screen'.
+	*/
+	public function setCSSMediaType($value)
+	{
+		$value = ucfirst($value);
+		$this->cssMediaType = $value;
+	}
+
+	/*
+	Get the CSS Media Type of the PDF to be returned.
+	*/
+	public function getCSSMediaType()
+	{
+		return $this->cssMediaType;
+	}	
 
 	/*
 	Set to true if links should be included in the PDF.
@@ -495,7 +513,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
-		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications));
+		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->cssMediaType);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -529,6 +547,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['mergeid'] = $this->nullToEmpty($this->mergeId);
 		$params['address'] = $this->nullToEmpty($this->address);
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
+		$params['media'] = $this->nullToEmpty($this->cssMediaType);
 		
 		return $params;
 	}
