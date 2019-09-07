@@ -589,7 +589,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart' && k != 'hd' && k != 'media')
 				{
 					var error = "Option " + k + " not recognized!";
 					document.documentElement.appendChild(this._createErrorMessage(error, null));
@@ -831,7 +831,7 @@ function GrabzItPreview(key, options)
 			if (options.height != null)
 			{
 				height = options.height;
-			}			
+			}
 			if (options['onfinish'] != null)
 			{
 				onFinishName = options['onfinish'];
