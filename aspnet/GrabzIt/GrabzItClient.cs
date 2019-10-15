@@ -250,6 +250,24 @@ namespace GrabzIt
         }
 
         /// <summary>
+        /// This method specifies the URL of the web page that should be converted into a SEO report.
+        /// </summary>
+        /// <param name="url">The URL to convert into a report.</param>
+        /// <param name="options">A instance of the SEOOptions class that defines any special options to use when creating the report.</param>
+        public void URLToSEOReport(string url, SEOOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new SEOOptions();
+                }
+
+                request.Store(GetRootURL(false) + "takeseo.ashx", false, options, url);
+            }
+        }
+
+        /// <summary>
         /// This method specifies the URL that should be converted into a image screenshot.
         /// </summary>
         /// <param name="url">The URL to capture as a screenshot.</param>

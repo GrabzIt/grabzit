@@ -21,6 +21,7 @@ namespace GrabzIt.COM
         string CreateEncryptionKey();
         void Decrypt(string path, string key);
         void URLToAnimation(string url, AnimationOptions options);
+        void URLToSEOReport(string url, SEOOptions options);
         void URLToImage(string url, ImageOptions options);
         void URLToPDF(string url, PDFOptions options);
         void URLToTable(string url, TableOptions options);
