@@ -198,6 +198,12 @@ namespace GrabzIt.COM
             set;
         }
 
+        string Password
+        {
+            get;
+            set;
+        }
+
         void AddPostParameter(string name, string value);
         void AddTemplateParameter(string name, string value);
     }

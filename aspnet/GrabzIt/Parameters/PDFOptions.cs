@@ -284,6 +284,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// Protect the PDF document with this password
+        /// </summary>
+        public string Password
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -324,7 +333,7 @@ namespace GrabzIt.Parameters
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
              + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address
-             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower();
+             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -359,6 +368,7 @@ namespace GrabzIt.Parameters
             parameters.Add("address", Address);
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
             parameters.Add("media", CSSMediaType.ToString().ToLower());
+            parameters.Add("password", Password);
 
             return parameters;
         }

@@ -254,6 +254,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// Protect the DOCX document with this password
+        /// </summary>
+        public string Password
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -294,7 +303,7 @@ namespace GrabzIt.Parameters
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|"
             + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" +
             TargetElement + "|" + TemplateId + "|" + templateVariables + "|" + PageHeight + "|" + PageWidth + "|" + BrowserWidth + "|" + Proxy + "|" + MergeId + "|" + Address 
-            + "|" + Convert.ToInt32(NoCookieNotifications);
+            + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + Password;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -326,6 +335,7 @@ namespace GrabzIt.Parameters
             parameters.Add("mergeid", MergeId);
             parameters.Add("address", Address);
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
+            parameters.Add("password", Password);
 
             return parameters;
         }
