@@ -46,6 +46,7 @@ public class PDFOptions extends BaseOptions {
     private boolean noCookieNotifications;
     private String address;
     private CSSMediaType cssMediaType;
+    private String password;
     
     public PDFOptions()
     {
@@ -74,6 +75,7 @@ public class PDFOptions extends BaseOptions {
         this.mergeId = "";
         this.address = "";
         this.cssMediaType = CSSMediaType.SCREEN;
+        this.password = "";
     }
     
     /**
@@ -452,7 +454,21 @@ public class PDFOptions extends BaseOptions {
      */
     public void setAddress(String address) {
         this.address = address;
-    }    
+    }  
+    
+    /**
+     * @return password that protects the PDF document.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to use to protect the PDF document with.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }        
     
     /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -501,7 +517,8 @@ public class PDFOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + templateId + "|" + hideElement
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables
-        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + cssMediaType.getValue();
+        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + cssMediaType.getValue()
+        + "|" + password;
     }    
     
     @Override
@@ -537,6 +554,7 @@ public class PDFOptions extends BaseOptions {
         params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         params.put("media", String.valueOf(cssMediaType.getValue()));
+        params.put("password", password);
         
         return params;
     }    

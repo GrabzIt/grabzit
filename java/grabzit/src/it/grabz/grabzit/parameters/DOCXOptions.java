@@ -42,6 +42,7 @@ public class DOCXOptions extends BaseOptions {
     private String mergeId;
     private boolean noCookieNotifications;
     private String address;
+    private String password;
     
     public DOCXOptions()
     {
@@ -67,6 +68,7 @@ public class DOCXOptions extends BaseOptions {
         this.targetElement = ""; 
         this.mergeId = "";
         this.address = "";
+        this.password = "";
     }
     
     /**
@@ -406,6 +408,20 @@ public class DOCXOptions extends BaseOptions {
     }    
     
     /**
+     * @return password that protects the DOCX document.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to use to protect the DOCX document with.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }    
+    
+    /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
      * GrabzIt to perform a HTTP post.        
      * 
@@ -452,7 +468,8 @@ public class DOCXOptions extends BaseOptions {
         + "|" + delay + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey() + "|" + ParameterUtility.toInt(noAds) + "|" + post
         + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth
-        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
+        + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications)
+        + "|" + password;
     }    
     
     @Override
@@ -485,6 +502,7 @@ public class DOCXOptions extends BaseOptions {
         params.put("mergeid", ParameterUtility.encode(ParameterUtility.nullCheck(mergeId)));
         params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
+        params.put("password", password);
         
         return params;
     }    
