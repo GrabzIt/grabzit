@@ -30,7 +30,8 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             browserWidth            the width of the browser in pixels
             mergeId                 the ID of a capture that should be merged at the beginning of the new DOCX document
             address                 the URL to execute the HTML code in
-            noCookieNotifications   set to true if cookie notifications should be automatically hidden            
+            noCookieNotifications   set to true if cookie notifications should be automatically hidden
+            password                the password to protect the DOCX document with
         """
         
         def __init__(self):
@@ -58,7 +59,8 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.targetElement = ''
                 self.mergeId = ''
                 self.noCookieNotifications = False
-                self.address = ''                
+                self.address = ''
+                self.password = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -106,7 +108,8 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["templateid"] = str(self.templateId)
                 params["mergeid"] = str(self.mergeId)
                 params["address"] = str(self.address)
-                params["nonotify"] = int(self.noCookieNotifications)                
+                params["nonotify"] = int(self.noCookieNotifications)
+                params["password"] = str(self.password)
                 
                 return params
                 
@@ -126,4 +129,4 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
                 "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.targetElement)+"|"+str(self.templateId)+"|"+\
                 str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))+"|"+\
-                str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))
+                str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.password)
