@@ -30,6 +30,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $noCookieNotifications = false;
 	private $address = null;
 	private $cssMediaType = null;
+	private $password = null;
 	
 	/*
 	Set the width of the resulting PDF in mm.
@@ -467,6 +468,22 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 	
 	/*
+	Set password to protect the PDF document.
+	*/
+	public function setPassword($value)
+	{
+		$this->password = $value;
+	}
+
+	/*
+	Get password to protect the PDF document with.
+	*/
+	public function getPassword()
+	{
+		return $this->password;
+	}
+	
+	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 	GrabzIt to perform a HTTP post.
 
@@ -513,7 +530,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
-		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->cssMediaType);
+		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->cssMediaType)."|".
+		$this->nullToEmpty($this->password);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -548,6 +566,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['address'] = $this->nullToEmpty($this->address);
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['media'] = $this->nullToEmpty($this->cssMediaType);
+		$params['password'] = $this->nullToEmpty($this->password);
 		
 		return $params;
 	}
