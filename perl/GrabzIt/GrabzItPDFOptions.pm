@@ -38,6 +38,7 @@ sub new
 	$self->{"address"} = '';
 	$self->{"noCookieNotifications"} = 0;
 	$self->{"cssMediaType"} = '';
+	$self->{"password"} = '';
         
     bless $self, $class;
 
@@ -94,6 +95,19 @@ sub cssMediaType
         $self->{"cssMediaType"} = ucfirst(shift);
     }
     return $self->{"cssMediaType"};
+}
+
+#
+# Protect the PDF document with this password
+#
+sub password
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"password"} = shift;
+    }
+    return $self->{"password"};
 }
 
 #
@@ -445,7 +459,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
     "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType()."|".$self->password();
 }
 
 sub _getParameters($$$$$)
@@ -482,6 +496,7 @@ sub _getParameters($$$$$)
 	$params->{'nonotify'} = $self->noCookieNotifications();
 	$params->{'address'} = $self->address();
 	$params->{'media'} = $self->cssMediaType();
+	$params->{'password'} = $self->password();
 	
     return $params;
 }

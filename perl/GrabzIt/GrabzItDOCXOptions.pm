@@ -35,7 +35,8 @@ sub new
 	$self->{"mergeId"} = '';
 	$self->{"address"} = '';
 	$self->{"noCookieNotifications"} = 0;		
-        
+    $self->{"password"} = '';
+	
     bless $self, $class;
 
     return $self;
@@ -277,6 +278,19 @@ sub address
 }
 
 #
+# Protect the DOCX document with this password
+#
+sub password
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"password"} = shift;
+    }
+    return $self->{"password"};
+}
+
+#
 # The width of the browser in pixels
 #
 sub browserWidth
@@ -403,7 +417,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
     $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
 	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password();
 }
 
 sub _getParameters($$$$$)
@@ -437,6 +451,7 @@ sub _getParameters($$$$$)
 	$params->{'mergeid'} = $self->mergeId();
 	$params->{'nonotify'} = $self->noCookieNotifications();
 	$params->{'address'} = $self->address();
+	$params->{'password'} = $self->password();
     
     return $params;
 }
