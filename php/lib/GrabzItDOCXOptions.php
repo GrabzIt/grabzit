@@ -417,7 +417,7 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	
 	
 	/*
-	Set password to protect the PDF document.
+	Set password to protect the DOCX document.
 	*/
 	public function setPassword($value)
 	{
@@ -425,7 +425,7 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	}
 
 	/*
-	Get password to protect the PDF document with.
+	Get password to protect the DOCX document with.
 	*/
 	public function getPassword()
 	{
