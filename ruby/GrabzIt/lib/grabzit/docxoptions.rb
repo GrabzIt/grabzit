@@ -30,7 +30,8 @@ module GrabzIt
 			@targetElement = nil
 			@mergeId = nil
 			@noCookieNotifications = false
-			@address = nil			
+			@address = nil
+			@password = nil
 		end
 		
 		# @return [Boolean] true if the background images of the web page should be included in the DOCX
@@ -346,7 +347,20 @@ module GrabzIt
 		# @return [void]		
 		def address=(value)
 			@address = value
-		end				
+		end	
+		
+		# @return [String] get the password that protects the DOCX document
+		def password
+			@password
+		end
+		
+		# Set the password that protects the DOCX document
+		#
+		# @param value [String] the password
+		# @return [void]		
+		def password=(value)
+			@password = value
+		end
 
 		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 		# GrabzIt to perform a HTTP post.
@@ -373,7 +387,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.b_to_str(@includeImages),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@mergeId),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.b_to_str(@includeImages),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@mergeId),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.nil_check(@password))
 			return items.join("|")
 		end
 		
@@ -406,6 +420,7 @@ module GrabzIt
 			params['mergeid'] = GrabzIt::Utility.nil_check(@mergeId)
 			params['address'] = GrabzIt::Utility.nil_check(@address)
 			params['nonotify'] = GrabzIt::Utility.b_to_str(@noCookieNotifications)
+			params['password'] = GrabzIt::Utility.nil_check(@password)
 			
 			return params;
 		end		
