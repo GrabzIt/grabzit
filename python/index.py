@@ -25,7 +25,7 @@ except ImportError:
 	from ConfigParser import SafeConfigParser
 
 parser = SafeConfigParser()
-parser.read("config.ini")
+parser.read(os.path.dirname(os.path.abspath(__file__)) + os.path.sep + "config.ini")
 
 def useCallbackHandler():
 	regex = re.compile(r'^(?:http|ftp)s?://' # http:// or https://
@@ -43,7 +43,7 @@ message = ""
 if os.environ['REQUEST_METHOD'] == 'POST':
 		form = cgi.FieldStorage()
 		if form.getvalue("delete") == "1":
-			r = glob.glob('results/*')
+			r = glob.glob(os.path.dirname(os.path.abspath(__file__)) + os.path.sep + 'results/*')
 			for i in r:
 				os.remove(i)
 		else:
@@ -71,7 +71,7 @@ if os.environ['REQUEST_METHOD'] == 'POST':
 				if useCallbackHandler():
 					grabzIt.Save(parser.get("GrabzIt", "handlerUrl"))
 				else:
-					grabzIt.SaveTo("results" + os.sep + str(uuid.uuid4()) + "." + form.getvalue("format"))
+					grabzIt.SaveTo(os.path.dirname(os.path.abspath(__file__)) + os.path.sep + "results" + os.sep + str(uuid.uuid4()) + "." + form.getvalue("format"))
 			except Exception as e:
 				message = str(e)
 

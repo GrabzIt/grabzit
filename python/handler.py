@@ -36,7 +36,7 @@ result = grabzIt.GetResult(id)
 
 if result != None:
 	#Ensure that the application has the correct rights for this directory.
-	fo = open("results" + os.sep + filename, "wb")
+	fo = open(os.path.dirname(os.path.abspath(__file__)) + os.path.sep + "results" + os.sep + filename, "wb")
 	fo.write(result)
 	fo.close()
     
