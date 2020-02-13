@@ -69,8 +69,7 @@ namespace GrabzIt
             set;
         }
 
-        private const string BaseURLGet = "://api.grabz.it/services/";
-        private const string BaseURLPost = "://grabz.it/services/";
+        private const string BaseURL = "://api.grabz.it/services/";
         private const string TakeDOCX = "takedocx.ashx";
         private const string TakePDF = "takepdf.ashx";
         private const string TakeTable = "taketable.ashx";
@@ -245,7 +244,7 @@ namespace GrabzIt
                     options = new AnimationOptions();
                 }
 
-                request.Store(GetRootURL(false) + "takeanimation.ashx", false, options, url);
+                request.Store(GetRootURL() + "takeanimation.ashx", false, options, url);
             }
         }
 
@@ -263,7 +262,7 @@ namespace GrabzIt
                     options = new SEOOptions();
                 }
 
-                request.Store(GetRootURL(false) + "takeseo.ashx", false, options, url);
+                request.Store(GetRootURL() + "takeseo.ashx", false, options, url);
             }
         }
 
@@ -290,7 +289,7 @@ namespace GrabzIt
                     options = new ImageOptions();
                 }
 
-                request.Store(GetRootURL(false) + TakeImage, false, options, url);
+                request.Store(GetRootURL() + TakeImage, false, options, url);
             }
         }
 
@@ -317,7 +316,7 @@ namespace GrabzIt
                     options = new ImageOptions();
                 }
 
-                request.Store(GetRootURL(true) + TakeImage, true, options, html);
+                request.Store(GetRootURL() + TakeImage, true, options, html);
             }
         }
 
@@ -371,7 +370,7 @@ namespace GrabzIt
                     options = new HTMLOptions();
                 }
 
-                request.Store(GetRootURL(false) + TakeHTML, false, options, url);
+                request.Store(GetRootURL() + TakeHTML, false, options, url);
             }
         }
 
@@ -398,7 +397,7 @@ namespace GrabzIt
                     options = new HTMLOptions();
                 }
 
-                request.Store(GetRootURL(true) + TakeHTML, true, options, html);
+                request.Store(GetRootURL() + TakeHTML, true, options, html);
             }
         }
 
@@ -452,7 +451,7 @@ namespace GrabzIt
                     options = new TableOptions();
                 }
 
-                request.Store(GetRootURL(false) + TakeTable, false, options, url);
+                request.Store(GetRootURL() + TakeTable, false, options, url);
             }
         }
 
@@ -480,7 +479,7 @@ namespace GrabzIt
                     options = new TableOptions();
                 }
 
-                request.Store(GetRootURL(true) + TakeTable, true, options, html);
+                request.Store(GetRootURL() + TakeTable, true, options, html);
             }
         }
 
@@ -534,7 +533,7 @@ namespace GrabzIt
                     options = new PDFOptions();
                 }
 
-                request.Store(GetRootURL(false) + TakePDF, false, options, url);
+                request.Store(GetRootURL() + TakePDF, false, options, url);
             }
         }
 
@@ -561,7 +560,7 @@ namespace GrabzIt
                     options = new PDFOptions();
                 }
 
-                request.Store(GetRootURL(true) + TakePDF, true, options, html);
+                request.Store(GetRootURL() + TakePDF, true, options, html);
             }
         }
 
@@ -615,7 +614,7 @@ namespace GrabzIt
                     options = new DOCXOptions();
                 }
 
-                request.Store(GetRootURL(false) + TakeDOCX, false, options, url);
+                request.Store(GetRootURL() + TakeDOCX, false, options, url);
             }
         }
 
@@ -642,7 +641,7 @@ namespace GrabzIt
                     options = new DOCXOptions();
                 }
 
-                request.Store(GetRootURL(true) + TakeDOCX, true, options, html);
+                request.Store(GetRootURL() + TakeDOCX, true, options, html);
             }
         }
 
@@ -893,12 +892,12 @@ namespace GrabzIt
                 }
                 else if (((int)response.StatusCode) >= 400)
                 {
-                    throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NetworkGeneralError);
+                    throw new GrabzItException("A network error occurred when connecting to GrabzIt.", ErrorCode.NetworkGeneralError);
                 }
             }
             else if (e.Status == WebExceptionStatus.NameResolutionFailure)
             {
-                throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", ErrorCode.NetworkGeneralError);
+                throw new GrabzItException("A network error occurred when connecting to GrabzIt.", ErrorCode.NetworkGeneralError);
             }
         }
 
@@ -926,7 +925,7 @@ namespace GrabzIt
                 }
 
                 string url = string.Format("{0}getstatus.ashx?id={1}",
-                                                          GetRootURL(false), id);
+                                                          GetRootURL(), id);
                 GetStatusResult webResult = Get<GetStatusResult>(url);
 
                 if (webResult == null)
@@ -950,7 +949,7 @@ namespace GrabzIt
                 string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, domain));
 
                 string url = string.Format("{0}getcookies.ashx?domain={1}&key={2}&sig={3}",
-                                                          GetRootURL(false), domain, ApplicationKey, sig);
+                                                          GetRootURL(), domain, ApplicationKey, sig);
 
                 GetCookiesResult webResult = Get<GetCookiesResult>(url);
 
@@ -1072,7 +1071,7 @@ namespace GrabzIt
                                                value, path, (httponly ? 1 : 0), expiresStr, 0));
 
                 string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
-                                                           GetRootURL(false), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
+                                                           GetRootURL(), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
 
@@ -1100,7 +1099,7 @@ namespace GrabzIt
                 string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, name, domain, 1));
 
                 string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
-                                                          GetRootURL(false), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
+                                                          GetRootURL(), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
 
@@ -1155,7 +1154,7 @@ namespace GrabzIt
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}deletewatermark.ashx?key={1}&identifier={2}&sig={3}",
-                                                          GetRootURL(false), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
+                                                          GetRootURL(), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
 
             GenericResult webResult = Get<GenericResult>(url);
@@ -1196,7 +1195,7 @@ namespace GrabzIt
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}getwatermarks.ashx?key={1}&identifier={2}&sig={3}",
-                                                          GetRootURL(false), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
+                                                          GetRootURL(), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
             GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
 
@@ -1226,7 +1225,7 @@ namespace GrabzIt
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
                                                                                 "{0}getfile.ashx?id={1}",
-                                                                                GetRootURL(false), id));
+                                                                                GetRootURL(), id));
                 request.KeepAlive = false;
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -1253,13 +1252,9 @@ namespace GrabzIt
             }
         }
 
-        private string GetRootURL(bool isPost)
+        private string GetRootURL()
         {
-            if (isPost)
-            {
-                return this.protocol + BaseURLPost;
-            }
-            return this.protocol + BaseURLGet;
+            return this.protocol + BaseURL;
         }
 
         private void CheckForException(IException result)

@@ -7,9 +7,9 @@
     <UpgradeBackupLocation />
     <AssemblyTitle>GrabzIt</AssemblyTitle>
     <Product>GrabzIt - Capture the Web</Product>
-    <Copyright>Copyright ©  2012-2019</Copyright>
-    <AssemblyVersion>3.3.7.0</AssemblyVersion>
-    <FileVersion>3.3.7.0</FileVersion>
+    <Copyright>Copyright ©  2012-2020</Copyright>
+    <AssemblyVersion>3.4.5.0</AssemblyVersion>
+    <FileVersion>3.4.5.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -49,13 +49,9 @@ You can even convert HTML directly into images, DOCX documents, PDF's, or captur
 Additionally you can even convert online video's into animated GIF's.
 
 More documentation can be found at: https://grabz.it/api/aspnet</Description>
-    <PackageReleaseNotes>- Now supports .Net Standard in addition to the .Net Framework
-- Added support for the new callback handler parameter: targetError
-- High definition screenshots can now be created
-- Now supports webp images
-- Added support for returning rendered HTML
-- PDF and DOCX documents and be password protected</PackageReleaseNotes>
-    <Version>3.3.7.0</Version>
+    <PackageReleaseNotes>- Improved error messages
+- All requests now go via api.grabz.it</PackageReleaseNotes>
+    <Version>3.4.5.0</Version>
     <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
