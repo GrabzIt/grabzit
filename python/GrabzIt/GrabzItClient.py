@@ -40,6 +40,7 @@ from GrabzIt import BlockFeeder
 
 class GrabzItClient:
 
+		WebServiceHostName = "api.grabz.it"
 		WebServicesBaseURL = "/services/"
 		TakePicture = "takepicture.ashx"
 		TakePDF = "takepdf.ashx"
@@ -680,7 +681,7 @@ class GrabzItClient:
 			return response.read()
 
 		def _getConnection(self, method, action):
-			hostname = "grabz.it"
+			hostname = self.WebServiceHostName
 			port = 80
 			username = None
 			password = None
@@ -716,7 +717,7 @@ class GrabzItClient:
 				port = 80
 				if self.protocol == "https":
 					port = 443				  
-				h.set_tunnel('grabz.it', port)
+				h.set_tunnel(self.WebServiceHostName, port)
 			
 			h.putrequest(method, action)
 
@@ -755,9 +756,9 @@ class GrabzItClient:
 		
 		def CheckResponseHeader(self, httpCode):
 				if httpCode == 403:
-						raise GrabzItException.GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException.GrabzItException.NETWORK_DDOS_ATTACK)
+						raise GrabzItException.GrabzItException('Rate limit reached. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException.GrabzItException.NETWORK_DDOS_ATTACK)
 				elif httpCode >= 400:
-						raise GrabzItException.GrabzItException('A network error occured when connecting to the GrabzIt servers.', GrabzItException.GrabzItException.NETWORK_GENERAL_ERROR)
+						raise GrabzItException.GrabzItException('A network error occurred when connecting to GrabzIt.', GrabzItException.GrabzItException.NETWORK_GENERAL_ERROR)
 
 		def CreateSignature(self, value):
 				md5 = hashlib.md5()
