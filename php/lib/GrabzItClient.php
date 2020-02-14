@@ -10,8 +10,7 @@ spl_autoload_register(function ($class_name) {
 
 class GrabzItClient
 {
-	const WebServicesBaseURL_GET = "://api.grabz.it/services/";
-	const WebServicesBaseURL_POST = "://grabz.it/services/";
+	const WebServicesBaseURL = "://api.grabz.it/services/";
 	const TakePicture = "takepicture.ashx";
 	const TakeTable = "taketable.ashx";
 	const TakePDF = "takepdf.ashx";
@@ -167,7 +166,7 @@ class GrabzItClient
 			$options = new GrabzItAnimationOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(false) . "takeanimation.ashx", false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . "takeanimation.ashx", false, $options, $url);
 	}
 
 	/*
@@ -183,7 +182,7 @@ class GrabzItClient
 			$options = new GrabzItImageOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(false) . GrabzItClient::TakePicture, false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakePicture, false, $options, $url);
 	}
 
 	/*
@@ -199,7 +198,7 @@ class GrabzItClient
 			$options = new GrabzItImageOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(true) . GrabzItClient::TakePicture, true, $options, $html);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakePicture, true, $options, $html);
 	}
 
 	/*
@@ -231,7 +230,7 @@ class GrabzItClient
 			$options = new GrabzItHTMLOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(false) . GrabzItClient::TakeHTML, false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeHTML, false, $options, $url);
 	}
 
 	/*
@@ -247,7 +246,7 @@ class GrabzItClient
 			$options = new GrabzItHTMLOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(true) . GrabzItClient::TakeHTML, true, $options, $html);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeHTML, true, $options, $html);
 	}
 
 	/*
@@ -279,7 +278,7 @@ class GrabzItClient
 			$options = new GrabzItTableOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(false) . GrabzItClient::TakeTable, false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeTable, false, $options, $url);
 	}
 	
 	/*
@@ -295,7 +294,7 @@ class GrabzItClient
 			$options = new GrabzItTableOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(true) . GrabzItClient::TakeTable, true, $options, $html);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeTable, true, $options, $html);
 	}	
 	
 	/*
@@ -327,7 +326,7 @@ class GrabzItClient
 			$options = new GrabzItPDFOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(false) . GrabzItClient::TakePDF, false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakePDF, false, $options, $url);
 	}
 
 	/*
@@ -343,7 +342,7 @@ class GrabzItClient
 			$options = new GrabzItPDFOptions();			
 		}
 
-		$this->request = new GrabzItRequest($this->getRootUrl(true) . GrabzItClient::TakePDF, true, $options, $html);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakePDF, true, $options, $html);
 	}
 
 	/*
@@ -375,7 +374,7 @@ class GrabzItClient
 			$options = new GrabzItDOCXOptions();
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl(false) . GrabzItClient::TakeDOCX, false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeDOCX, false, $options, $url);
 	}
 
 	/*
@@ -391,7 +390,7 @@ class GrabzItClient
 			$options = new GrabzItDOCXOptions();
 		}
 
-		$this->request = new GrabzItRequest($this->getRootUrl(true) . GrabzItClient::TakeDOCX, true, $options, $html);
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeDOCX, true, $options, $html);
 	}
 
 	/*
@@ -522,7 +521,7 @@ class GrabzItClient
 			return null;
 		}
 
-		$result = $this->Get($this->getRootUrl(false) . "getstatus.ashx?id=" . $id);
+		$result = $this->Get($this->getRootUrl() . "getstatus.ashx?id=" . $id);
 
 		$obj = simplexml_load_string($result);
 
@@ -549,7 +548,7 @@ class GrabzItClient
 			return null;
 		}
 
-		$result = $this->Get($this->getRootUrl(false) . "getfile.ashx?id=" . $id);
+		$result = $this->Get($this->getRootUrl() . "getfile.ashx?id=" . $id);
 
 		if (empty($result))
 		{
@@ -572,7 +571,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get($this->getRootUrl(false) . "getcookies.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get($this->getRootUrl() . "getcookies.ashx?" . $qs));
 
 		$result = array();
 
@@ -614,7 +613,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".urlencode($expires)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get($this->getRootUrl(false) . "setcookie.ashx?" . $qs));
+		return $this->isSuccessful($this->Get($this->getRootUrl() . "setcookie.ashx?" . $qs));
 	}
 
 	/*
@@ -631,7 +630,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
 
-		return $this->isSuccessful($this->Get($this->getRootUrl(false) . "setcookie.ashx?" . $qs));
+		return $this->isSuccessful($this->Get($this->getRootUrl() . "setcookie.ashx?" . $qs));
 	}
 
 	/*
@@ -693,7 +692,7 @@ class GrabzItClient
 		
 		$context  = stream_context_create($opts);
 
-		$response = @file_get_contents('http://grabz.it/services/addwatermark.ashx', false, $context);
+		$response = @file_get_contents($this->getRootUrl() . 'addwatermark.ashx', false, $context);
 
 		if (isset($http_response_header))
 		{
@@ -721,7 +720,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get($this->getRootUrl(false) . "deletewatermark.ashx?" . $qs));
+		return $this->isSuccessful($this->Get($this->getRootUrl() . "deletewatermark.ashx?" . $qs));
 	}
 
 	/*
@@ -759,7 +758,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get($this->getRootUrl(false) . "getwatermarks.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get($this->getRootUrl() . "getwatermarks.ashx?" . $qs));
 
 		$result = array();
 
@@ -962,21 +961,17 @@ class GrabzItClient
 	{
 		if ($httpCode == 403)
 		{
-			throw new GrabzItException('Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
+			throw new GrabzItException('Rate limit reached. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.', GrabzItException::NETWORK_DDOS_ATTACK);
 		}
 		else if ($httpCode >= 400)
 		{
-			throw new GrabzItException("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR);
+			throw new GrabzItException("A network error occurred when connecting to GrabzIt.", GrabzItException::NETWORK_GENERAL_ERROR);
 		}
 	}
 	
-	private function getRootUrl($isPost)
+	private function getRootUrl()
 	{
-		if ($isPost)
-		{
-			return $this->protocol . GrabzItClient::WebServicesBaseURL_POST;
-		}
-		return $this->protocol . GrabzItClient::WebServicesBaseURL_GET;
+		return $this->protocol . GrabzItClient::WebServicesBaseURL;
 	}
 
 	private function checkResponseHeader($header)
