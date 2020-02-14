@@ -35,10 +35,8 @@ module GrabzIt
 	# @see http://grabz.it/api/ruby/ GrabzIt Ruby API
 	class Client
 
-		WebServicesBaseURLGet = "://api.grabz.it/services/"
-		private_constant :WebServicesBaseURLGet	
-		WebServicesBaseURLPost = "://grabz.it/services/"
-		private_constant :WebServicesBaseURLPost
+		WebServicesBaseURL = "://api.grabz.it/services/"
+		private_constant :WebServicesBaseURL	
 		TakePicture = "takepicture.ashx"	
 		private_constant :TakePicture
 		TakeTable = "taketable.ashx"
@@ -75,7 +73,7 @@ module GrabzIt
 				options = AnimationOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLGet + "takeanimation.ashx", false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + "takeanimation.ashx", false, options, url)
 			return nil
 		end
 
@@ -90,7 +88,7 @@ module GrabzIt
 				options = ImageOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLGet + TakePicture, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakePicture, false, options, url)
 			return nil
 		end
 
@@ -105,7 +103,7 @@ module GrabzIt
 				options = ImageOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLPost + TakePicture, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakePicture, true, options, html)
 			return nil
 		end		
 
@@ -129,7 +127,7 @@ module GrabzIt
 				options = HTMLOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLGet + TakeHTML, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeHTML, false, options, url)
 			return nil
 		end
 
@@ -144,7 +142,7 @@ module GrabzIt
 				options = HTMLOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLPost + TakeHTML, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeHTML, true, options, html)
 			return nil
 		end		
 
@@ -168,7 +166,7 @@ module GrabzIt
 				options = TableOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLGet + TakeTable, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeTable, false, options, url)
 			return nil			
 		end	
 		
@@ -183,7 +181,7 @@ module GrabzIt
 				options = TableOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLPost + TakeTable, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeTable, true, options, html)
 			return nil
 		end		
 
@@ -207,7 +205,7 @@ module GrabzIt
 				options = PDFOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLGet + TakePDF, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakePDF, false, options, url)
 			return nil			
 		end	
 		
@@ -222,7 +220,7 @@ module GrabzIt
 				options = PDFOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLPost + TakePDF, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakePDF, true, options, html)
 			return nil
 		end		
 
@@ -246,7 +244,7 @@ module GrabzIt
 				options = DOCXOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLGet + TakeDOCX, false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeDOCX, false, options, url)
 			return nil			
 		end	
 		
@@ -261,7 +259,7 @@ module GrabzIt
 				options = DOCXOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURLPost + TakeDOCX, true, options, html)
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeDOCX, true, options, html)
 			return nil
 		end		
 
@@ -366,7 +364,7 @@ module GrabzIt
 				return nil
 			end			
 			
-			result = get(@protocol + WebServicesBaseURLGet + "getstatus.ashx?id=" + GrabzIt::Utility.nil_check(id))
+			result = get(@protocol + WebServicesBaseURL + "getstatus.ashx?id=" + GrabzIt::Utility.nil_check(id))
 
 			doc = REXML::Document.new(result)
 
@@ -388,7 +386,7 @@ module GrabzIt
 				return nil
 			end
 			
-			return get(@protocol + WebServicesBaseURLGet + "getfile.ashx?id=" + GrabzIt::Utility.nil_check(id))
+			return get(@protocol + WebServicesBaseURL + "getfile.ashx?id=" + GrabzIt::Utility.nil_check(id))
 		end
 
 		# Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well
@@ -406,7 +404,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			result = get(@protocol + WebServicesBaseURLGet + "getcookies.ashx?" + qs)
+			result = get(@protocol + WebServicesBaseURL + "getcookies.ashx?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -461,7 +459,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# Delete a custom cookie or block a global cookie from being used
@@ -483,7 +481,7 @@ module GrabzIt
 			qs.concat("&delete=1&sig=")
 			qs.concat(sig)
 
-			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# Get your uploaded custom watermark
@@ -583,7 +581,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			return (get_result_value(get(@protocol + WebServicesBaseURLGet + "deletewatermark.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURL + "deletewatermark.ashx?" + qs), "Result") == TrueString)
 		end
 
 		# This method sets if requests to GrabzIt's API should use SSL or not
@@ -667,7 +665,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			result = get(@protocol + WebServicesBaseURLGet + "getwatermarks.ashx?" + qs)
+			result = get(@protocol + WebServicesBaseURL + "getwatermarks.ashx?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -707,7 +705,7 @@ module GrabzIt
 			if statusCode == 403
 				raise GrabzItException.new(response.body, GrabzItException::NETWORK_DDOS_ATTACK)
 			elsif statusCode >= 400
-				raise GrabzItException.new("A network error occured when connecting to the GrabzIt servers.", GrabzItException::NETWORK_GENERAL_ERROR)
+				raise GrabzItException.new("A network error occurred when connecting to GrabzIt.", GrabzItException::NETWORK_GENERAL_ERROR)
 			end
 		end
 		
