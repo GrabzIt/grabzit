@@ -1,7 +1,7 @@
 {
   "name": "@grabzit/js",
-  "description": "Automatically convert HTML or URL's into images, DOCX or PDF documents using JavaScript. Additionally convert online videos into animated GIF's or convert HTML tables to CSV.",
-  "version": "3.3.7",
+  "description": "Automatically convert HTML or URL's into images, rendered HTML, DOCX or PDF documents using JavaScript. Additionally convert online videos into animated GIF's or convert HTML tables to CSV.",
+  "version": "3.4.5.1",
   "browser": "./grabzit.min.js",
   "keywords": [
     "screenshots",
