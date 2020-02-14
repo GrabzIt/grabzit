@@ -521,7 +521,7 @@ module GrabzIt
 
 			boundary = '--------------------------'+Time.now.to_f.to_s
 
-			url = @protocol + "://grabz.it/services/addwatermark.ashx"
+			url = @protocol + "://api.grabz.it/services/addwatermark.ashx"
 			uri = URI.parse(url)
 
 			file = File.open(path, "rb")
