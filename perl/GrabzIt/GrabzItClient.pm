@@ -22,8 +22,7 @@ use GrabzIt::GrabzItPDFOptions;
 use GrabzIt::GrabzItDOCXOptions;
 use GrabzIt::GrabzItHTMLOptions;
 
-use constant WebServicesBaseURL_GET => "://api.grabz.it/services/";
-use constant WebServicesBaseURL_POST => "://grabz.it/services/";
+use constant WebServicesBaseURL => "://api.grabz.it/services/";
 use constant TakePicture => "takepicture.ashx";
 use constant TakeTable => "taketable.ashx";
 use constant TakePDF => "takepdf.ashx";
@@ -57,7 +56,7 @@ sub URLToAnimation($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItAnimationOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . "takeanimation.ashx", 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . "takeanimation.ashx", 0, $options, $url);
 }
 
 #
@@ -70,7 +69,7 @@ sub URLToImage($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItImageOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakePicture, 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakePicture, 0, $options, $url);
 }
 
 #
@@ -83,7 +82,7 @@ sub HTMLToImage($;$)
 {
 	my ($self, $html, $options) = @_;
 	$options ||= GrabzItImageOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakePicture, 1, $options, $html);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakePicture, 1, $options, $html);
 }
 
 #
@@ -108,7 +107,7 @@ sub URLToRenderedHTML($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItHTMLOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakeHTML, 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeHTML, 0, $options, $url);
 }
 
 #
@@ -121,7 +120,7 @@ sub HTMLToRenderedHTML($;$)
 {
 	my ($self, $html, $options) = @_;
 	$options ||= GrabzItHTMLOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakeHTML, 1, $options, $html);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeHTML, 1, $options, $html);
 }
 
 #
@@ -146,7 +145,7 @@ sub URLToTable($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItTableOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakeTable, 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeTable, 0, $options, $url);
 }
 
 #
@@ -159,7 +158,7 @@ sub HTMLToTable($;$)
 {
 	my ($self, $html, $options) = @_;
 	$options ||= GrabzItTableOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakeTable, 1, $options, $html);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeTable, 1, $options, $html);
 }
 
 #
@@ -184,7 +183,7 @@ sub URLToPDF($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItPDFOptions->new();	  
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakePDF, 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakePDF, 0, $options, $url);
 }
 
 #
@@ -197,7 +196,7 @@ sub HTMLToPDF($;$)
 {
 	my ($self, $html, $options) = @_;
 	$options ||= GrabzItPDFOptions->new();	  
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakePDF, 1, $options, $html);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakePDF, 1, $options, $html);
 }
 
 #
@@ -222,7 +221,7 @@ sub URLToDOCX($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItDOCXOptions->new();	   
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(false) . TakeDOCX, 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeDOCX, 0, $options, $url);
 }
 
 #
@@ -235,7 +234,7 @@ sub HTMLToDOCX($;$)
 {
 	my ($self, $html, $options) = @_;
 	$options ||= GrabzItDOCXOptions->new();	   
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl(true) . TakeDOCX, 1, $options, $html);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeDOCX, 1, $options, $html);
 }
 
 #
@@ -373,7 +372,7 @@ sub GetResult($)
 		return;
 	}	
 	
-	my $url = $self->_getRootUrl(false) . "getfile.ashx?id=" . $id;
+	my $url = $self->_getRootUrl() . "getfile.ashx?id=" . $id;
 	
 	return $self->_get($url);
 }
@@ -396,7 +395,7 @@ sub GetStatus($)
 		return;
 	}
 	
-	my $url = $self->_getRootUrl(false) . "getstatus.ashx?id=" . $id;
+	my $url = $self->_getRootUrl() . "getstatus.ashx?id=" . $id;
 	
 	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
@@ -422,7 +421,7 @@ sub GetCookies($)
 	$sig =	$self->_encode($self->{_applicationSecret}."|".$domain);
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl(false) . "getcookies.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "getcookies.ashx?" . $qs;
 
 	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
@@ -479,7 +478,7 @@ sub SetCookie($$;$$$$)
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&value=".uri_escape($value)."&path=".uri_escape($path)."&httponly=".$httponly."&expires=".uri_escape($expires)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl(false) . "setcookie.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "setcookie.ashx?" . $qs;
 
 	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
@@ -500,7 +499,7 @@ sub DeleteCookie($$)
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&delete=1&sig=".$sig;
 
-	my $url = $self->_getRootUrl(false) . "setcookie.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "setcookie.ashx?" . $qs;
 
 	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
@@ -537,7 +536,7 @@ sub AddWaterMark($$$$)
 	
 	$ua = LWP::UserAgent->new();  
 		
-	$req = POST $self->{protocol} . '://grabz.it/services/addwatermark.ashx', 
+	$req = POST $self->{protocol} . WebServicesBaseURL . 'addwatermark.ashx', 
 		   content_type => 'multipart/form-data', 
 		   content		=> [ 
 				 key => $self->{_applicationKey}, 
@@ -588,7 +587,7 @@ sub _getWaterMarks($)
 	
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl(false) . "getwatermarks.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "getwatermarks.ashx?" . $qs;
 
 	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
@@ -629,7 +628,7 @@ sub DeleteWaterMark($)
 	$sig =	$self->_encode($self->{_applicationSecret}."|".$identifier);
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl(false) . "deletewatermark.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "deletewatermark.ashx?" . $qs;
 
 	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
@@ -650,14 +649,10 @@ sub UseSSL($)
 	$self->{protocol} = "http";
 }
 
-sub _getRootUrl($)
+sub _getRootUrl()
 {
-	my ($self, $post) = @_;
-	if ($value)
-	{
-		return $self->{protocol} . WebServicesBaseURL_POST;
-	}
-	return $self->{protocol} . WebServicesBaseURL_GET;
+	my ($self) = @_;
+	return $self->{protocol} . WebServicesBaseURL;
 }
 
 sub _encode($)
