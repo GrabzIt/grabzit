@@ -532,12 +532,12 @@ function GrabzIt(key)
 				}
 			};
 
-			xhttp.open("POST", this._getBaseWebServiceUrl(true), true);
+			xhttp.open("POST", this._getBaseWebServiceUrl(), true);
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send(qs);
 		};
 
-		this._getRootURL = function(isPost)
+		this._getRootURL = function()
 		{
 			if (this.protocol == null)
 			{
@@ -547,18 +547,13 @@ function GrabzIt(key)
 					this.protocol = 'http://';
 				}
 			}
-			
-			if (isPost)
-			{
-				return this.protocol + 'grabz.it/services/';
-			}
 
 			return this.protocol + 'api.grabz.it/services/';
 		};
 
-		this._getBaseWebServiceUrl = function(isPost)
+		this._getBaseWebServiceUrl = function()
 		{
-			return this._getRootURL(isPost) + 'javascript.ashx';
+			return this._getRootURL() + 'javascript.ashx';
 		};
 
 		this._createQueryString = function(sKey, sValue)
@@ -589,7 +584,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart' && k != 'hd' && k != 'media')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart' && k != 'hd' && k != 'media' && k != 'password')
 				{
 					var error = "Option " + k + " not recognized!";
 					document.documentElement.appendChild(this._createErrorMessage(error, null));
@@ -622,7 +617,7 @@ function GrabzIt(key)
 				{					
 					return this._createErrorMessage(obj.Message, obj.Code);
 				}
-				return this._createScriptNode(this._getBaseWebServiceUrl(false) + '?' + this._createQueryString('id', obj.ID));
+				return this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString('id', obj.ID));
 			}
 		};
 		
@@ -722,7 +717,7 @@ function GrabzIt(key)
 					}
 				};
 
-				xhttp.open("GET", that._getRootURL(false) + 'getjspicture.ashx?id='+id, true);
+				xhttp.open("GET", that._getRootURL() + 'getjspicture.ashx?id='+id, true);
 				xhttp.responseType = "blob";
 				xhttp.send();
 			}
@@ -776,7 +771,7 @@ function GrabzIt(key)
 				return;
 			}
 
-			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl(false) + '?' + this._createQueryString(this.dataKey, this.data));
+			var scriptNode = this._createScriptNode(this._getBaseWebServiceUrl() + '?' + this._createQueryString(this.dataKey, this.data));
 			
 			if (insert)
 			{
