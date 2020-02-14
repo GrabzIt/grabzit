@@ -687,11 +687,11 @@ sub _handleResponse($)
 	
 	if ($response->code == 403)
 	{
-		die 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
+		die 'Rate limit reached. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
 	}
 	elsif ($response->code >= 400)
 	{
-		die 'A network error occured when connecting to the GrabzIt servers.';
+		die 'A network error occurred when connecting to GrabzIt.';
 	}
 	
 	return $response->decoded_content;
