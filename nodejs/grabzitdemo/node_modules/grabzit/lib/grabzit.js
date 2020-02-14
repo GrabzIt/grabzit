@@ -245,7 +245,7 @@ function _getFormDataForPost(fields, files) {
 
 function _post(self, url, params, type, oncomplete){
     var options = {
-        host: 'grabz.it',
+        host: 'api.grabz.it',
         port: this.port,
         path: '/services/'+url,
         method: 'POST',
@@ -330,7 +330,7 @@ function _getNet(self){
 function _getError(self, res, data){
     if (res.statusCode == 403) {
         var error = new Error();
-        error.message = 'Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
+        error.message = 'Rate limit reached. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.';
         error.code = self.ERROR_CODES.NETWORK_DDOS_ATTACK;
 
         return error;
@@ -338,7 +338,7 @@ function _getError(self, res, data){
 
     if (res.statusCode >= 400) {
         var error = new Error();
-        error.message = 'A network error occured when connecting to the GrabzIt servers.';
+        error.message = 'A network error occurred when connecting to GrabzIt.';
         error.code = self.ERROR_CODES.NETWORK_GENERAL_ERROR;
 
         return error;
