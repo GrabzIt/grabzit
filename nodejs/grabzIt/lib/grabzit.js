@@ -1256,7 +1256,7 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
         var headerparams = _getFormDataForPost(fields, files);
 
         var post_options = {
-            host: 'grabz.it',
+            host: 'api.grabz.it',
             method: 'POST',
             port: this.port,
             path: '/services/addwatermark.ashx',
