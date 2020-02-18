@@ -13,6 +13,7 @@ function GrabzIt(key)
 		this.postVars = '';
 		this.tVars = '';
 		this.retried = false;
+		this.ajaxObj = null;
 
 		this.aesjs = (function() {
 
@@ -505,11 +506,21 @@ function GrabzIt(key)
 
 		this._createXHTTP = function()
 		{
+			if (this.ajaxObj)
+			{
+				return this.ajaxObj;
+			}
+			
 			if (window.XMLHttpRequest)
 			{
-				return new XMLHttpRequest();
+				this.ajaxObj = new XMLHttpRequest();
 			}
-			return new ActiveXObject("Microsoft.XMLHTTP");
+			else
+			{
+				this.ajaxObj = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			return this.ajaxObj;
 		};
 
 		this._post = function(qs)

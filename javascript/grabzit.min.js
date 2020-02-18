@@ -1,6 +1,6 @@
 function GrabzIt(key)
 {return new(function(key)
-{this.key=key;this.data=null;this.dataKey=null;this.options=null;this.post=!1;this.elem=null;this.protocol=null;this.encrypt=!1;this.postVars='';this.tVars='';this.retried=!1;this.aesjs=(function(){function checkInt(value){return(parseInt(value)===value)}
+{this.key=key;this.data=null;this.dataKey=null;this.options=null;this.post=!1;this.elem=null;this.protocol=null;this.encrypt=!1;this.postVars='';this.tVars='';this.retried=!1;this.ajaxObj=null;this.aesjs=(function(){function checkInt(value){return(parseInt(value)===value)}
 function checkInts(arrayish){if(!checkInt(arrayish.length)){return!1}
 for(var i=0;i<arrayish.length;i++){if(!checkInt(arrayish[i])||arrayish[i]<0||arrayish[i]>255){return!1}}
 return!0}
@@ -84,9 +84,12 @@ if(typeof(results.onerror)==='function'){var functionName='grabzItOnError'+Math.
 if(typeof(results.onstart)==='function'){var functionName='grabzItOnStart'+Math.floor(Math.random()*(1000000000+1));window[functionName]=results.onstart;results.onstart=functionName}
 return results}
 this._createXHTTP=function()
-{if(window.XMLHttpRequest)
-{return new XMLHttpRequest()}
-return new ActiveXObject("Microsoft.XMLHTTP")};this._post=function(qs)
+{if(this.ajaxObj)
+{return this.ajaxObj}
+if(window.XMLHttpRequest)
+{this.ajaxObj=new XMLHttpRequest()}
+else{this.ajaxObj=new ActiveXObject("Microsoft.XMLHTTP")}
+return this.ajaxObj};this._post=function(qs)
 {var xhttp=this._createXHTTP();var that=this;xhttp.onreadystatechange=function()
 {if(this.readyState==4&&this.status==200)
 {if(!that.retried&&!this.responseText)
