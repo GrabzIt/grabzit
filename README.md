@@ -12,11 +12,11 @@ Example
 We have made the programming libraries as simple as possible to use. To create a capture you must first call a method that specifies what you want to capture such as the URLToImage method followed by the Save method. You will need a application key and application secret, but you can get these for free from [https://grabz.it](https://grabz.it).
 
 ```php
-include("GrabzItClient.class.php");
+include("GrabzItClient.php");
 
 //Create the GrabzItClient class
 //Replace "APPLICATION KEY", "APPLICATION SECRET" with the values from your account!
-$grabzIt = new GrabzItClient("APPLICATION KEY", "APPLICATION SECRET");
+$grabzIt = new \GrabzIt\GrabzItClient("APPLICATION KEY", "APPLICATION SECRET");
 //Take the picture the method will return the unique identifier assigned to this task
 $grabzIt->URLToImage("http://www.google.com");
 $id = $grabzIt->Save("http://www.example.com/handler.php");
@@ -27,7 +27,7 @@ Notice that in the above example the location of the handler.php is defined this
 The handler that accepts the callback and saves the image is below.
 
 ```php
-include("GrabzItClient.class.php");
+include("GrabzItClient.php");
 
 $message = $_GET["message"];
 $customId = $_GET["customid"];
@@ -38,7 +38,7 @@ $format = $_GET["format"];
 //Custom id can be used to store user ids or whatever is needed for the later processing of the
 //resulting screenshot
 
-$grabzIt = new GrabzItClient("APPLICATION KEY", "APPLICATION SECRET");
+$grabzIt = new \GrabzIt\GrabzItClient("APPLICATION KEY", "APPLICATION SECRET");
 $result = $grabzIt->GetResult($id);
 
 if (!$result)
