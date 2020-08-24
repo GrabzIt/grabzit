@@ -22,7 +22,7 @@ class HttpUtility {
         int statusCode = httpConnection.getResponseCode();
         if (statusCode == 403)
         {
-            throw new GrabzItException("Potential DDOS Attack Detected. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.", ErrorCode.NETWORKDDOSATTACK);
+            throw new GrabzItException("Rate limit reached. Please wait for your service to resume shortly. Also please slow the rate of requests you are sending to GrabzIt to ensure this does not happen in the future.", ErrorCode.NETWORKDDOSATTACK);
         }
         else if (statusCode >= 400)
         {
