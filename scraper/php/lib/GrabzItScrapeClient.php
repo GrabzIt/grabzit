@@ -3,7 +3,7 @@ namespace GrabzIt\Scraper;
 
 spl_autoload_register(function ($class_name) {
 	$file_name = str_replace("GrabzIt\\Scraper\\", '', $class_name) . '.php';
-	if (file_exists(__DIR__ ."\\". $file_name)) {
+	if (strpos($file_name, "GrabzIt") === 0) {
 		include($file_name);
 	}
 });
@@ -279,7 +279,7 @@ class GrabzItScrapeClient
 			
 			if ($response === FALSE)
 			{
-				throw new GrabzItException("An unknown network error occurred.", GrabzItException::NETWORK_GENERAL_ERROR);
+				throw new GrabzItScrapeException("An unknown network error occurred.", GrabzItException::NETWORK_GENERAL_ERROR);
 			}
 
 			return $response;
@@ -309,7 +309,7 @@ class GrabzItScrapeClient
 			return $data;
 		}
 		
-		throw new GrabzItException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItException::GENERIC_ERROR);
+		throw new GrabzItScrapeException("Unable to contact GrabzIt's servers. Please install the CURL extension or set allow_url_fopen to 1 in the php.ini file.", GrabzItScrapeException::GENERIC_ERROR);
 	}
 	
 	private function addProxyToCurl($ch)
