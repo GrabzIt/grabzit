@@ -82,6 +82,7 @@ function GrabzItClient(applicationKey, applicationSecret)
 		PARAMETER_INVALID_MEDIA_TYPE: 177,
 		PARAMETER_INVALID_PASSWORD: 178,
 		PARAMETER_INVALID_MERGE: 179,
+		PARAMETER_INVALID_CLICK_VALUE: 180,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -416,7 +417,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'mergeId': '',
         'noCookieNotifications':false,
         'address': '',
-		'password': ''
+		'password': '',
+		'click':''
     };
 
     context = _extend(defaults, options);
@@ -472,7 +474,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'mergeid': context['mergeId'],
         'nonotify': _toInt(context['noCookieNotifications']),
         'address': context['address'],
-		'password': context['password']
+		'password': context['password'],
+		'click': context['click']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -484,7 +487,7 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
      + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
      + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId']
-     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) + '|' + context['password'];
+     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) + '|' + context['password'] + '|' + context['click'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -525,7 +528,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'noCookieNotifications':false,
         'address': '',
         'cssMediaType': '',
-		'password': ''
+		'password': '',
+		'click':''
     };
 
     context = _extend(defaults, options);
@@ -584,7 +588,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'nonotify': _toInt(context['noCookieNotifications']),
         'address': context['address'],
         'media': context['cssMediaType'],
-		'password': context['password']
+		'password': context['password'],
+		'click': context['click']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -596,7 +601,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
      + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
      + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications'])
-	 + '|' + context['cssMediaType'] + '|' + context['password'];
+	 + '|' + context['cssMediaType'] + '|' + context['password'] + '|' + context['click'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -724,7 +729,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'postData':'',
         'proxy': '',
         'noCookieNotifications':false,
-        'address': ''
+        'address': '',
+		'click': ''
     };
 
     context = _extend(defaults, options);
@@ -759,7 +765,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'proxy': context['proxy'],
         'nonotify': _toInt(context['noCookieNotifications']),
         'address': context['address'],
-		'hd': _toInt(context['hd'])
+		'hd': _toInt(context['hd']),
+		'click': context['click'],
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -769,7 +776,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
      + '|' + context['customWaterMarkId'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) 
      + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + _toInt(context['transparent']) 
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']);
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']) + '|' + context['click'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -789,7 +796,8 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'postData':'',
         'proxy': '',
         'noCookieNotifications':false,
-        'address': ''
+        'address': '',
+		'click': ''
     };
 
     context = _extend(defaults, options);
@@ -815,7 +823,8 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'post': context['postData'],
         'proxy': context['proxy'],
         'nonotify': _toInt(context['noCookieNotifications']),
-        'address': context['address']
+        'address': context['address'],
+		'click': context['click']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -825,7 +834,7 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement']
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-     + '|' + _toInt(context['noCookieNotifications']);
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + context['click'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
