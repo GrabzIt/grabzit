@@ -725,7 +725,7 @@ module GrabzIt
 
 		private
 		def encode(text)
-			return Digest::MD5.hexdigest(text.encode('ascii', {:invalid => :replace, :undef => :replace, :replace => '?'}))
+			return Digest::MD5.hexdigest(text.encode('ascii', **{:invalid => :replace, :undef => :replace, :replace => '?'}))
 		end
 
 		private

@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'grabzit'
-  s.version     = '3.4.5'
+  s.version     = '3.5.1'
   s.license = 'MIT'
-  s.date        = %q{2019-08-23}
+  s.date        = %q{2021-07-09}
   s.summary     = "GrabzIt Ruby Client"
   s.description = "Use GrabzIt to convert HTML or URL's into images, PDF, rendered HTML or DOCX. These captures have highly customizable options include altering quality, delay, size, browser type, geographic location and much more. Additionally GrabzIt can even convert HTML tables on the web into a CSV or Excel spreadsheet. As well as enabling online video's to be converted into animated GIF's."
   s.authors     = ["GrabzIt"]
