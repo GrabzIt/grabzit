@@ -32,6 +32,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             address                 the URL to execute the HTML code in
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             password                the password to protect the DOCX document with
+            clickElement            the CSS selector of the HTML element in the web page to click
         """
         
         def __init__(self):
@@ -61,6 +62,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.noCookieNotifications = False
                 self.address = ''
                 self.password = ''
+                self.clickElement = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -110,6 +112,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["address"] = str(self.address)
                 params["nonotify"] = int(self.noCookieNotifications)
                 params["password"] = str(self.password)
+                params["click"] = str(self.clickElement)
                 
                 return params
                 
@@ -129,4 +132,4 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
                 "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.targetElement)+"|"+str(self.templateId)+"|"+\
                 str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))+"|"+\
-                str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.password)
+                str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.password)+"|"+str(self.clickElement)

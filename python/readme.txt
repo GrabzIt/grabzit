@@ -1,4 +1,4 @@
-GrabzIt 3.4
+GrabzIt 3.5
 ===========
 This library allows you to programmatically convert web pages and HTML into images, DOCX, rendered HTML, PDF's, CSV's and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIF's.
 

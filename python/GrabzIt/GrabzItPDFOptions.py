@@ -35,6 +35,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             cssMediaType            the css media type to use either 'Print' or 'Screen'
             password                the password to protect the PDF document with
+            clickElement            the CSS selector of the HTML element in the web page to click
         """
         
         def __init__(self):
@@ -67,6 +68,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.address = ''
                 self.cssMediaType = ''
                 self.password = ''
+                self.clickElement = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -119,6 +121,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["nonotify"] = int(self.noCookieNotifications)
                 params["media"] = str(self.cssMediaType)
                 params["password"] = str(self.password)
+                params["click"] = str(self.clickElement)
                 
                 return params
                 
@@ -137,4 +140,4 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+\
                 "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))+"|"+str(int(self.pageHeight))+\
-                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.cssMediaType)+"|"+str(self.password)
+                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.cssMediaType)+"|"+str(self.password)+"|"+str(self.clickElement)
