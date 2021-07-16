@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	 version="3.0">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <servlet>
+        <servlet-name>static-resource</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>static-resource</servlet-name>
+        <url-pattern>/results/*</url-pattern>
+        <url-pattern>/css/*</url-pattern>
+        <url-pattern>/ajax/*</url-pattern>        
+    </servlet-mapping>    
+    <servlet>
+        <servlet-name>results</servlet-name>
+        <servlet-class>it.grabz.sample.servlets.Results</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>results</servlet-name>
+        <url-pattern>/ajax/results</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>clear</servlet-name>
+        <servlet-class>it.grabz.sample.servlets.ClearResults</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>clear</servlet-name>
+        <url-pattern>/clear</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>takescreenshot</servlet-name>
+        <servlet-class>it.grabz.sample.servlets.TakeScreenshot</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>takescreenshot</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>handler</servlet-name>
+        <servlet-class>it.grabz.sample.servlets.Handler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>handler</servlet-name>
+        <url-pattern>/handler</url-pattern>
+    </servlet-mapping>
+</web-app>
