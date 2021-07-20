@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use FindBin 1.51 qw( $RealBin );
+use lib $RealBin;
 use CGI;
 use CGI::Carp qw(warningsToBrowser fatalsToBrowser); 
 use File::Path;
@@ -114,11 +116,11 @@ var ui = new UI('ajax/results.pl?r=', 'css');
 <p><span id="spnIntro">Enter the HTML or URL you want to convert into a DOCX, PDF or Image. The resulting capture</span> should then be saved in the <a href="results/" target="_blank">results directory</a>. It may take a few seconds for it to appear! If nothing is happening check the <a href="https://grabz.it/account/diagnostics" target="_blank">diagnostics panel</a> to see if there is an error.</p>
 
 HEADER
-if ($cgi->remote_host() == '::1' || $cgi->remote_host() == "127.0.0.1")
+if ($cgi->remote_host() eq '::1' || $cgi->remote_host() eq "127.0.0.1")
 {
 	print '<p>As you are using this demo application on your local machine it will create captures synchronously, which will cause the web page to freeze while captures are generated. <u>Please wait for the capture to complete</u>.</p>';
 }
-if ($cgi->request_method() eq 'POST' && $cgi->param("delete") != "1")
+if ($cgi->request_method() eq 'POST' && $cgi->param('delete') ne '1')
 { 
 	if ($message ne '')
 	{

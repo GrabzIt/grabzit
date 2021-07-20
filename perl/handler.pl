@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use FindBin 1.51 qw( $RealBin );
+use lib $RealBin;
 use CGI;
 use CGI::Carp qw(warningsToBrowser fatalsToBrowser); 
 use Config::IniFiles;

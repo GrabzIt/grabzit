@@ -36,6 +36,7 @@ sub new
 	$self->{"address"} = '';
 	$self->{"noCookieNotifications"} = 0;		
     $self->{"password"} = '';
+    $self->{"clickElement"} = '';
 	
     bless $self, $class;
 
@@ -210,6 +211,19 @@ sub quality
         $self->{"quality"} = shift;
     }
     return $self->{"quality"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to click
+#
+sub clickElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"clickElement"} = shift;
+    }
+    return $self->{"clickElement"};
 }
 
 #
@@ -417,7 +431,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
     $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
 	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password()."|".$self->clickElement();
 }
 
 sub _getParameters($$$$$)
@@ -452,6 +466,7 @@ sub _getParameters($$$$$)
 	$params->{'nonotify'} = $self->noCookieNotifications();
 	$params->{'address'} = $self->address();
 	$params->{'password'} = $self->password();
+    $params->{'click'} = $self->clickElement();
     
     return $params;
 }

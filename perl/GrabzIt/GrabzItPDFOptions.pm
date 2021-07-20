@@ -39,6 +39,7 @@ sub new
 	$self->{"noCookieNotifications"} = 0;
 	$self->{"cssMediaType"} = '';
 	$self->{"password"} = '';
+    $self->{"clickElement"} = '';
         
     bless $self, $class;
 
@@ -333,6 +334,19 @@ sub mergeId
 }
 
 #
+# The CSS selector of the HTML element in the web page to click
+#
+sub clickElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"clickElement"} = shift;
+    }
+    return $self->{"clickElement"};
+}
+
+#
 # The CSS selector of the only HTML element in the web page to capture
 #
 sub targetElement
@@ -459,7 +473,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
     "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType()."|".$self->password();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType()."|".$self->password()."|".$self->clickElement();
 }
 
 sub _getParameters($$$$$)
@@ -497,6 +511,7 @@ sub _getParameters($$$$$)
 	$params->{'address'} = $self->address();
 	$params->{'media'} = $self->cssMediaType();
 	$params->{'password'} = $self->password();
+    $params->{'click'} = $self->clickElement();
 	
     return $params;
 }

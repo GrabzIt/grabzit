@@ -27,6 +27,7 @@ sub new
     $self->{"address"} = '';
     $self->{"noCookieNotifications"} = 0;
     $self->{"hd"} = 0;
+    $self->{"clickElement"} = '';
 
     bless $self, $class;
 
@@ -109,6 +110,19 @@ sub delay
         $self->{"delay"} = shift;
     }
     return $self->{"delay"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to click
+#
+sub clickElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"clickElement"} = shift;
+    }
+    return $self->{"clickElement"};
 }
 
 #
@@ -287,7 +301,8 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications()."|".$self->hd();
+    "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications()."|".$self->hd().
+    "|".$self->clickElement();
 }
 
 sub _getParameters($$$$$)
@@ -313,6 +328,7 @@ sub _getParameters($$$$$)
     $params->{'nonotify'} = $self->noCookieNotifications();
     $params->{'address'} = $self->address();
     $params->{'hd'} = $self->hd();
+    $params->{'click'} = $self->clickElement();
     
     return $params;
 }
