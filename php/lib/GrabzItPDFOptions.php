@@ -18,6 +18,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $templateId = null;
 	private $customWaterMarkId = null;
 	private $quality = -1;
+	private $clickElement = null;
 	private $targetElement = null;	
 	private $hideElement = null;
 	private $waitForElement = null;
@@ -226,6 +227,22 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	{
 		return $this->coverURL;
 	}
+	
+	/*
+	Set the CSS selector of the HTML element in the web page to click.
+	*/
+	public function setClickElement($value)
+	{
+		$this->clickElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to click.
+	*/
+	public function getClickElement()
+	{
+		return $this->clickElement;
+	}		
 	
 	/*
 	Set the CSS selector of the only HTML element in the web page to capture.
@@ -531,7 +548,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
 		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->cssMediaType)."|".
-		$this->nullToEmpty($this->password);
+		$this->nullToEmpty($this->password)."|".$this->nullToEmpty($this->clickElement);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -567,6 +584,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['media'] = $this->nullToEmpty($this->cssMediaType);
 		$params['password'] = $this->nullToEmpty($this->password);
+		$params['click'] = $this->nullToEmpty($this->clickElement);
 		
 		return $params;
 	}

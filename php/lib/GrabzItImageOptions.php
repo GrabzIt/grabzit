@@ -11,6 +11,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	private $width = null;
 	private $height = null;
 	private $format = null;
+	private $clickElement = null;
 	private $targetElement = null;
 	private $hideElement = null;
 	private $waitForElement = null;
@@ -99,6 +100,22 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	{
 		return $this->format;
 	}
+	
+	/*
+	Set the CSS selector of the HTML element in the web page to click.
+	*/
+	public function setClickElement($value)
+	{
+		$this->clickElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to click.
+	*/
+	public function getClickElement()
+	{
+		return $this->clickElement;
+	}	
 
 	/*
 	Set the CSS selector of the only HTML element in the web page to capture.
@@ -323,7 +340,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty($this->targetElement)
 		."|".$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
 		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty(intval($this->hd));  
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty(intval($this->hd))."|".$this->nullToEmpty($this->clickElement);  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -347,6 +364,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['address'] = $this->nullToEmpty($this->address);
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['hd'] = $this->nullToEmpty(intval($this->hd));
+		$params['click'] = $this->nullToEmpty($this->clickElement);
 		
 		return $params;
 	}
