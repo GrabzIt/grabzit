@@ -15,23 +15,24 @@ namespace GrabzIt.Parameters
         public PDFOptions()
         {
             IncludeBackground = true;
-	        PageSize = PageSize.A4;
-	        Orientation = PageOrientation.Portrait;
-	        IncludeLinks = true;
-	        IncludeOutline = false;
-	        Title = string.Empty;
-	        CoverURL = string.Empty;
-	        MarginTop = 10;
-	        MarginLeft = 10;
-	        MarginBottom = 10;
-	        MarginRight = 10;
-	        RequestAs = BrowserType.StandardBrowser;
-	        TemplateId = string.Empty;
-	        CustomWaterMarkId = string.Empty;
-	        Quality = -1;
+            PageSize = PageSize.A4;
+            Orientation = PageOrientation.Portrait;
+            IncludeLinks = true;
+            IncludeOutline = false;
+            Title = string.Empty;
+            CoverURL = string.Empty;
+            MarginTop = 10;
+            MarginLeft = 10;
+            MarginBottom = 10;
+            MarginRight = 10;
+            RequestAs = BrowserType.StandardBrowser;
+            TemplateId = string.Empty;
+            CustomWaterMarkId = string.Empty;
+            Quality = -1;
             HideElement = string.Empty;
             Address = string.Empty;
             CSSMediaType = CSSMediaType.Screen;
+            ClickElement = string.Empty;
         }
         /// <summary>
         /// If true the background of the web page should be included in the PDF
@@ -39,9 +40,9 @@ namespace GrabzIt.Parameters
         public bool IncludeBackground
         {
             get;
-            set;   
+            set;
         }
-        
+
         /// <summary>
         /// The page size of the PDF to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter', 'Legal'.
         /// </summary>
@@ -104,7 +105,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// True if the PDF outline should be included
         /// </summary>
@@ -113,7 +114,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// Provide a title to the PDF document
         /// </summary>
@@ -122,7 +123,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The URL of a web page that should be used as a cover page for the PDF
         /// </summary>
@@ -130,8 +131,8 @@ namespace GrabzIt.Parameters
         {
             get;
             set;
-        } 
-        
+        }
+
         /// <summary>
         /// The margin that should appear at the top of the PDF document page
         /// </summary>
@@ -140,7 +141,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The margin that should appear at the left of the PDF document page
         /// </summary>
@@ -149,7 +150,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The margin that should appear at the bottom of the PDF document page
         /// </summary>
@@ -158,7 +159,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The margin that should appear at the right of the PDF document
         /// </summary>
@@ -167,7 +168,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The number of milliseconds to wait before creating the capture
         /// </summary>
@@ -183,7 +184,7 @@ namespace GrabzIt.Parameters
                 delay = value;
             }
         }
-        
+
         /// <summary>
         /// Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
         /// </summary>
@@ -192,7 +193,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// Add a template ID that specifies the header and footer of the PDF document
         /// </summary>
@@ -201,7 +202,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// Add a custom watermark to each page of the PDF document
         /// </summary>
@@ -210,11 +211,20 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         /// </summary>
         public int Quality
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to click
+        /// </summary>
+        public string ClickElement
         {
             get;
             set;
@@ -328,33 +338,33 @@ namespace GrabzIt.Parameters
             }
 
             return applicationSecret + "|" + urlParam + callBackURLParam +
-            "|" + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + CustomWaterMarkId + "|" 
+            "|" + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + CustomWaterMarkId + "|"
             + Convert.ToInt32(IncludeLinks) + "|" + Convert.ToInt32(IncludeOutline) + "|" + Title + "|" + CoverURL + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
              + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address
-             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password;
+             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password + "|" + ClickElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
         {
             Dictionary<string, string> parameters = CreateParameters(applicationKey, signature, callBackURL, dataName, dataValue);
-		    parameters.Add("background", Convert.ToInt32(IncludeBackground).ToString());
-		    parameters.Add("pagesize", PageSize.ToString().ToUpper());
-		    parameters.Add("orientation", Orientation.ToString());
-		    parameters.Add("templateid", TemplateId);
-		    parameters.Add("customwatermarkid", CustomWaterMarkId);
-		    parameters.Add("includelinks", Convert.ToInt32(IncludeLinks).ToString());
-		    parameters.Add("includeoutline", Convert.ToInt32(IncludeOutline).ToString());
-		    parameters.Add("title", Title);
-		    parameters.Add("coverurl", CoverURL);
-		    parameters.Add("mleft", MarginLeft.ToString());
-		    parameters.Add("mright", MarginRight.ToString());
-		    parameters.Add("mtop", MarginTop.ToString());
-		    parameters.Add("mbottom", MarginBottom.ToString());
-		    parameters.Add("delay", Delay.ToString());
-		    parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());		
-		    parameters.Add("quality", Quality.ToString());
+            parameters.Add("background", Convert.ToInt32(IncludeBackground).ToString());
+            parameters.Add("pagesize", PageSize.ToString().ToUpper());
+            parameters.Add("orientation", Orientation.ToString());
+            parameters.Add("templateid", TemplateId);
+            parameters.Add("customwatermarkid", CustomWaterMarkId);
+            parameters.Add("includelinks", Convert.ToInt32(IncludeLinks).ToString());
+            parameters.Add("includeoutline", Convert.ToInt32(IncludeOutline).ToString());
+            parameters.Add("title", Title);
+            parameters.Add("coverurl", CoverURL);
+            parameters.Add("mleft", MarginLeft.ToString());
+            parameters.Add("mright", MarginRight.ToString());
+            parameters.Add("mtop", MarginTop.ToString());
+            parameters.Add("mbottom", MarginBottom.ToString());
+            parameters.Add("delay", Delay.ToString());
+            parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
+            parameters.Add("quality", Quality.ToString());
             parameters.Add("target", TargetElement);
             parameters.Add("hide", HideElement);
             parameters.Add("waitfor", WaitForElement);
@@ -369,6 +379,7 @@ namespace GrabzIt.Parameters
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
             parameters.Add("media", CSSMediaType.ToString().ToLower());
             parameters.Add("password", Password);
+            parameters.Add("click", ClickElement);
 
             return parameters;
         }

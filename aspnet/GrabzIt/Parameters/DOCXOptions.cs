@@ -14,21 +14,22 @@ namespace GrabzIt.Parameters
         public DOCXOptions()
         {
             IncludeBackground = true;
-	        PageSize = PageSize.A4;
-	        Orientation = PageOrientation.Portrait;
-	        IncludeLinks = true;
-	        IncludeImages = true;
-	        Title = string.Empty;
-	        MarginTop = 10;
-	        MarginLeft = 10;
-	        MarginBottom = 10;
-	        MarginRight = 10;
-	        RequestAs = BrowserType.StandardBrowser;
-	        Quality = -1;
+            PageSize = PageSize.A4;
+            Orientation = PageOrientation.Portrait;
+            IncludeLinks = true;
+            IncludeImages = true;
+            Title = string.Empty;
+            MarginTop = 10;
+            MarginLeft = 10;
+            MarginBottom = 10;
+            MarginRight = 10;
+            RequestAs = BrowserType.StandardBrowser;
+            Quality = -1;
             HideElement = string.Empty;
             TemplateId = string.Empty;
             TargetElement = string.Empty;
             Address = string.Empty;
+            ClickElement = string.Empty;
         }
         /// <summary>
         /// If true background images should be included in the DOCX
@@ -36,9 +37,9 @@ namespace GrabzIt.Parameters
         public bool IncludeBackground
         {
             get;
-            set;   
+            set;
         }
-        
+
         /// <summary>
         /// The page size of the DOCX to be returned: 'A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6', 'Letter', 'Legal'.
         /// </summary>
@@ -155,7 +156,7 @@ namespace GrabzIt.Parameters
             get;
             set;
         }
-        
+
         /// <summary>
         /// The number of milliseconds to wait before creating the capture
         /// </summary>
@@ -171,7 +172,7 @@ namespace GrabzIt.Parameters
                 delay = value;
             }
         }
-        
+
         /// <summary>
         /// Request screenshot in different forms: Standard Browser, Mobile Browser and Search Engine
         /// </summary>
@@ -185,6 +186,15 @@ namespace GrabzIt.Parameters
         /// The quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality
         /// </summary>
         public int Quality
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to click
+        /// </summary>
+        public string ClickElement
         {
             get;
             set;
@@ -297,31 +307,31 @@ namespace GrabzIt.Parameters
                 callBackURLParam = callBackURL;
             }
 
-            return applicationSecret + "|" + urlParam + callBackURLParam + "|" 
-            + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + Convert.ToInt32(IncludeImages) + "|" 
+            return applicationSecret + "|" + urlParam + callBackURLParam + "|"
+            + CustomId + "|" + Convert.ToInt32(IncludeBackground) + "|" + PageSize.ToString().ToUpper() + "|" + Orientation + "|" + Convert.ToInt32(IncludeImages) + "|"
             + Convert.ToInt32(IncludeLinks) + "|" + Title + "|" + MarginTop + "|" + MarginLeft + "|"
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|"
             + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" +
-            TargetElement + "|" + TemplateId + "|" + templateVariables + "|" + PageHeight + "|" + PageWidth + "|" + BrowserWidth + "|" + Proxy + "|" + MergeId + "|" + Address 
-            + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + Password;
+            TargetElement + "|" + TemplateId + "|" + templateVariables + "|" + PageHeight + "|" + PageWidth + "|" + BrowserWidth + "|" + Proxy + "|" + MergeId + "|" + Address
+            + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + Password + "|" + ClickElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
         {
             Dictionary<string, string> parameters = CreateParameters(applicationKey, signature, callBackURL, dataName, dataValue);
-		    parameters.Add("background", Convert.ToInt32(IncludeBackground).ToString());
-		    parameters.Add("pagesize", PageSize.ToString().ToUpper());
-		    parameters.Add("orientation", Orientation.ToString());
-		    parameters.Add("includelinks", Convert.ToInt32(IncludeLinks).ToString());
-		    parameters.Add("includeimages", Convert.ToInt32(IncludeImages).ToString());
-		    parameters.Add("title", Title);
-		    parameters.Add("mleft", MarginLeft.ToString());
-		    parameters.Add("mright", MarginRight.ToString());
-		    parameters.Add("mtop", MarginTop.ToString());
-		    parameters.Add("mbottom", MarginBottom.ToString());
-		    parameters.Add("delay", Delay.ToString());
-		    parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());		
-		    parameters.Add("quality", Quality.ToString());
+            parameters.Add("background", Convert.ToInt32(IncludeBackground).ToString());
+            parameters.Add("pagesize", PageSize.ToString().ToUpper());
+            parameters.Add("orientation", Orientation.ToString());
+            parameters.Add("includelinks", Convert.ToInt32(IncludeLinks).ToString());
+            parameters.Add("includeimages", Convert.ToInt32(IncludeImages).ToString());
+            parameters.Add("title", Title);
+            parameters.Add("mleft", MarginLeft.ToString());
+            parameters.Add("mright", MarginRight.ToString());
+            parameters.Add("mtop", MarginTop.ToString());
+            parameters.Add("mbottom", MarginBottom.ToString());
+            parameters.Add("delay", Delay.ToString());
+            parameters.Add("requestmobileversion", Convert.ToInt32(RequestAs).ToString());
+            parameters.Add("quality", Quality.ToString());
             parameters.Add("hide", HideElement);
             parameters.Add("waitfor", WaitForElement);
             parameters.Add("noads", Convert.ToInt32(NoAds).ToString());
@@ -336,6 +346,7 @@ namespace GrabzIt.Parameters
             parameters.Add("address", Address);
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
             parameters.Add("password", Password);
+            parameters.Add("click", ClickElement);
 
             return parameters;
         }
