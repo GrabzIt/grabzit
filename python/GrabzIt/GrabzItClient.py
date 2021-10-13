@@ -42,11 +42,11 @@ class GrabzItClient:
 
 		WebServiceHostName = "api.grabz.it"
 		WebServicesBaseURL = "/services/"
-		TakePicture = "takepicture.ashx"
-		TakePDF = "takepdf.ashx"
-		TakeDOCX = "takedocx.ashx"
-		TakeTable = "taketable.ashx"
-		TakeHTML = "takehtml.ashx"
+		TakePicture = "takepicture"
+		TakePDF = "takepdf"
+		TakeDOCX = "takedocx"
+		TakeTable = "taketable"
+		TakeHTML = "takehtml"
 		TrueString = "True"
 
 		def __init__(self, applicationKey, applicationSecret):
@@ -74,7 +74,7 @@ class GrabzItClient:
 				if (options == None):
 						options = GrabzItAnimationOptions.GrabzItAnimationOptions()
 				
-				self.request = Request.Request(self.WebServicesBaseURL + "takeanimation.ashx", False, options, url)
+				self.request = Request.Request(self.WebServicesBaseURL + "takeanimation", False, options, url)
 			
 		#
 		# This method specifies the URL that should be converted into a image screenshot.
@@ -321,7 +321,7 @@ class GrabzItClient:
 				if (id == "" or id == None):
 						return None
 				
-				result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURL + "getfile.ashx?id=" + id)).getvalue()
+				result = io.BytesIO(self.HTTPGet(self.WebServicesBaseURL + "getfile?id=" + id)).getvalue()
 				
 				if result == None or len(result) == 0:
 						return None
@@ -340,7 +340,7 @@ class GrabzItClient:
 				if (id == "" or id == None):
 						return None
 				
-				result = self.HTTPGet(self.WebServicesBaseURL + "getstatus.ashx?id=" + id)	 
+				result = self.HTTPGet(self.WebServicesBaseURL + "getstatus?id=" + id)	 
 				
 				dom = minidom.parseString(result)
 				
@@ -394,7 +394,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig
 
-				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getcookies.ashx?" + encoded_qs))
+				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getcookies?" + encoded_qs))
 
 				self.CheckForException(dom)
 						
@@ -439,7 +439,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig;
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setcookie.ashx?" + encoded_qs))				  
+				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setcookie?" + encoded_qs))				  
 
 		#
 		# Delete a custom cookie or block a global cookie from being used.
@@ -458,7 +458,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig;
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setcookie.ashx?" + encoded_qs))				  
+				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setcookie?" + encoded_qs))				  
 
 		#
 		# Add a new custom watermark.
@@ -486,7 +486,7 @@ class GrabzItClient:
 				fields['ypos'] = str(ypos)
 				fields['sig'] = sig
 		
-				return self.IsSuccessful(self.HTTPPost("/services/addwatermark.ashx", fields, files))
+				return self.IsSuccessful(self.HTTPPost("/services/addwatermark", fields, files))
 				
 		#
 		# Delete a custom watermark.
@@ -504,7 +504,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "deletewatermark.ashx?" + encoded_qs));		  
+				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "deletewatermark?" + encoded_qs));		  
 
 		#
 		# Get your uploaded custom watermarks
@@ -584,7 +584,7 @@ class GrabzItClient:
 				
 				encoded_qs += "&sig="+sig;			   
 
-				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getwatermarks.ashx?" + encoded_qs))
+				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getwatermarks?" + encoded_qs))
 
 				self.CheckForException(dom)
 						
