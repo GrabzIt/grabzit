@@ -93,7 +93,7 @@ class GrabzItScrapeClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".$id."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "getscrapes.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "getscrapes?" . $qs));
 
 		$result = array();
 
@@ -143,7 +143,7 @@ class GrabzItScrapeClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&id=".urlencode($id)."&status=".urlencode($status)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "setscrapestatus.ashx?" . $qs));
+		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "setscrapestatus?" . $qs));
 	}
 	
 	/*
@@ -170,7 +170,7 @@ class GrabzItScrapeClient
 		$qs["type"] = $property->GetTypeName();
 		$qs["sig"] = $sig;
 
-		return $this->isSuccessful($this->Post(GrabzItScrapeClient::WebServicesBaseURL . "setscrapeproperty.ashx", $qs));
+		return $this->isSuccessful($this->Post(GrabzItScrapeClient::WebServicesBaseURL . "setscrapeproperty", $qs));
 	}
 	
 	/*
@@ -192,7 +192,7 @@ class GrabzItScrapeClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&id=".urlencode($id)."&spiderId=".urlencode($resultId)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "sendscrape.ashx?" . $qs));
+		return $this->isSuccessful($this->Get(GrabzItScrapeClient::WebServicesBaseURL . "sendscrape?" . $qs));
 	}	 
 
 	private function isSuccessful($result)

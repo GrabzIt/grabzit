@@ -13,6 +13,7 @@ function GrabzIt(key)
 		this.postVars = '';
 		this.tVars = '';
 		this.retried = false;
+		this.ajaxObj = null;
 
 		this.aesjs = (function() {
 
@@ -477,11 +478,6 @@ function GrabzIt(key)
 				results[k.toLowerCase()] = opts[k];
 			}
 			
-			if (results['target'] != null)
-			{
-				results['target'] = results['target'].replace('#','');
-			}
-			
 			if (typeof(results['onfinish']) === 'function'){
 				var functionName = 'grabzItOnFinish' + Math.floor(Math.random() * (1000000000+1));
 				window[functionName] = results['onfinish'];
@@ -505,11 +501,21 @@ function GrabzIt(key)
 
 		this._createXHTTP = function()
 		{
+			if (this.ajaxObj)
+			{
+				return this.ajaxObj;
+			}
+			
 			if (window.XMLHttpRequest)
 			{
-				return new XMLHttpRequest();
+				this.ajaxObj = new XMLHttpRequest();
 			}
-			return new ActiveXObject("Microsoft.XMLHTTP");
+			else
+			{
+				this.ajaxObj = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			return this.ajaxObj;
 		};
 
 		this._post = function(qs)
@@ -553,7 +559,7 @@ function GrabzIt(key)
 
 		this._getBaseWebServiceUrl = function()
 		{
-			return this._getRootURL() + 'javascript.ashx';
+			return this._getRootURL() + 'javascript';
 		};
 
 		this._createQueryString = function(sKey, sValue)
@@ -584,7 +590,7 @@ function GrabzIt(key)
 				k != 'onfinish' && k != 'onerror' && k != 'delay' && k != 'bwidth' && k != 'bheight' &&
 				k != 'height' && k != 'width' && k != 'target' && k != 'requestas' && k != 'download' && k != 'suppresserrors' && k != 'displayid' && k != 'displayclass' && k != 'background' && k != 'pagesize' && k != 'orientation' && k != 'includelinks' && k != 'includeoutline' && k != 'title' && k != 'coverurl' && k != 'mtop' && k != 'mleft' && k != 'mbottom' && k != 'mright' && k != 'tabletoinclude' && k != 'includeheadernames' && k != 'includealltables' && k != 'start' && k != 'duration' && k != 'speed' && k != 'fps' && k != 'repeat' && k != 'reverse' &&
 				k != 'templateid' && k != 'noresult' && k != 'hide' && k != 'includeimages' && k != 'export' && k != 'waitfor' && k != 'transparent' &&
-				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart' && k != 'hd' && k != 'media' && k != 'password')
+				k != 'encryption' && k != 'post' && k != 'noads' && k != 'tvars' && k != 'proxy' && k != 'mergeid' && k != 'address' && k != 'nonotify' && k != 'cachelength' && k != 'onstart' && k != 'hd' && k != 'media' && k != 'password' && k != 'click')
 				{
 					var error = "Option " + k + " not recognized!";
 					document.documentElement.appendChild(this._createErrorMessage(error, null));
@@ -717,7 +723,7 @@ function GrabzIt(key)
 					}
 				};
 
-				xhttp.open("GET", that._getRootURL() + 'getjspicture.ashx?id='+id, true);
+				xhttp.open("GET", that._getRootURL() + 'getjspicture?id='+id, true);
 				xhttp.responseType = "blob";
 				xhttp.send();
 			}

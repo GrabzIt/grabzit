@@ -37,15 +37,15 @@ module GrabzIt
 
 		WebServicesBaseURL = "://api.grabz.it/services/"
 		private_constant :WebServicesBaseURL	
-		TakePicture = "takepicture.ashx"	
+		TakePicture = "takepicture"	
 		private_constant :TakePicture
-		TakeTable = "taketable.ashx"
+		TakeTable = "taketable"
 		private_constant :TakeTable
-		TakePDF = "takepdf.ashx"
+		TakePDF = "takepdf"
 		private_constant :TakePDF
-		TakeDOCX = "takedocx.ashx"
+		TakeDOCX = "takedocx"
 		private_constant :TakeDOCX
-		TakeHTML = "takehtml.ashx"
+		TakeHTML = "takehtml"
 		private_constant :TakeHTML
 		TrueString = "True"
 		private_constant :TrueString
@@ -73,7 +73,7 @@ module GrabzIt
 				options = AnimationOptions.new()
 			end
 		
-			@request = Request.new(@protocol + WebServicesBaseURL + "takeanimation.ashx", false, options, url)
+			@request = Request.new(@protocol + WebServicesBaseURL + "takeanimation", false, options, url)
 			return nil
 		end
 
@@ -364,7 +364,7 @@ module GrabzIt
 				return nil
 			end			
 			
-			result = get(@protocol + WebServicesBaseURL + "getstatus.ashx?id=" + GrabzIt::Utility.nil_check(id))
+			result = get(@protocol + WebServicesBaseURL + "getstatus?id=" + GrabzIt::Utility.nil_check(id))
 
 			doc = REXML::Document.new(result)
 
@@ -386,7 +386,7 @@ module GrabzIt
 				return nil
 			end
 			
-			return get(@protocol + WebServicesBaseURL + "getfile.ashx?id=" + GrabzIt::Utility.nil_check(id))
+			return get(@protocol + WebServicesBaseURL + "getfile?id=" + GrabzIt::Utility.nil_check(id))
 		end
 
 		# Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well
@@ -404,7 +404,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			result = get(@protocol + WebServicesBaseURL + "getcookies.ashx?" + qs)
+			result = get(@protocol + WebServicesBaseURL + "getcookies?" + qs)
 
 			doc = REXML::Document.new(result)
 
@@ -459,7 +459,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			return (get_result_value(get(@protocol + WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURL + "setcookie?" + qs), "Result") == TrueString)
 		end
 
 		# Delete a custom cookie or block a global cookie from being used
@@ -481,7 +481,7 @@ module GrabzIt
 			qs.concat("&delete=1&sig=")
 			qs.concat(sig)
 
-			return (get_result_value(get(@protocol + WebServicesBaseURL + "setcookie.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURL + "setcookie?" + qs), "Result") == TrueString)
 		end
 
 		# Get your uploaded custom watermark
@@ -521,7 +521,7 @@ module GrabzIt
 
 			boundary = '--------------------------'+Time.now.to_f.to_s
 
-			url = @protocol + "://api.grabz.it/services/addwatermark.ashx"
+			url = @protocol + "://api.grabz.it/services/addwatermark"
 			uri = URI.parse(url)
 
 			file = File.open(path, "rb")
@@ -581,7 +581,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			return (get_result_value(get(@protocol + WebServicesBaseURL + "deletewatermark.ashx?" + qs), "Result") == TrueString)
+			return (get_result_value(get(@protocol + WebServicesBaseURL + "deletewatermark?" + qs), "Result") == TrueString)
 		end
 
 		# This method sets if requests to GrabzIt's API should use SSL or not
@@ -665,7 +665,7 @@ module GrabzIt
 			qs.concat("&sig=")
 			qs.concat(sig)
 
-			result = get(@protocol + WebServicesBaseURL + "getwatermarks.ashx?" + qs)
+			result = get(@protocol + WebServicesBaseURL + "getwatermarks?" + qs)
 
 			doc = REXML::Document.new(result)
 

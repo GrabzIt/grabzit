@@ -64,11 +64,11 @@ public class GrabzItClient {
     private String protocol = "http";
     
     private final String BASE_URL = "://api.grabz.it/services/";
-    private final String TAKE_DOCX = "takedocx.ashx";
-    private final String TAKE_PDF = "takepdf.ashx";
-    private final String TAKE_TABLE = "taketable.ashx";
-    private final String TAKE_PICTURE = "takepicture.ashx";
-    private final String TAKE_HTML = "takehtml.ashx";
+    private final String TAKE_DOCX = "takedocx";
+    private final String TAKE_PDF = "takepdf";
+    private final String TAKE_TABLE = "taketable";
+    private final String TAKE_PICTURE = "takepicture";
+    private final String TAKE_HTML = "takehtml";
     
     /**
      * Create a new instance of the Client class in order to access the GrabzIt API.
@@ -219,7 +219,7 @@ public class GrabzItClient {
         {
             options = new AnimationOptions();
         }
-        this.request = new Request(getRootURL() + "takeanimation.ashx", false, options, url);        
+        this.request = new Request(getRootURL() + "takeanimation", false, options, url);        
     }   
     
     /**
@@ -807,7 +807,7 @@ public class GrabzItClient {
             return null;
         }
         
-        return get(getRootURL() + "getstatus.ashx?id=" + id, Status.class);
+        return get(getRootURL() + "getstatus?id=" + id, Status.class);
     }
 
     /**
@@ -822,7 +822,7 @@ public class GrabzItClient {
         
         String sig = encrypt(String.format("%s|%s", this.applicationSecret, domain));
 
-        String url = String.format("%sgetcookies.ashx?domain=%s&key=%s&sig=%s",
+        String url = String.format("%sgetcookies?domain=%s&key=%s&sig=%s",
                                                   getRootURL(), domain, applicationKey, sig);
         Cookies cookies = get(url, Cookies.class);
         
@@ -948,7 +948,7 @@ public class GrabzItClient {
         String sig = encrypt(String.format("%s|%s|%s|%s|%s|%s|%s|%s", applicationSecret, name, domain,
                                       value, path, (httponly ? 1 : 0), expiresStr, 0));
         
-        String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
+        String url = String.format("%ssetcookie?name=%s&domain=%s&value=%s&path=%s&httponly=%s&expires=%s&key=%s&sig=%s",
                                                   getRootURL(), ParameterUtility.encode(name), ParameterUtility.encode(domain), ParameterUtility.encode(value), ParameterUtility.encode(path), (httponly ? 1 : 0), ParameterUtility.encode(expiresStr), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
@@ -975,7 +975,7 @@ public class GrabzItClient {
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, name, domain, 1));
 
-        String url = String.format("%ssetcookie.ashx?name=%s&domain=%s&delete=1&key=%s&sig=%s",
+        String url = String.format("%ssetcookie?name=%s&domain=%s&delete=1&key=%s&sig=%s",
                                                   getRootURL(), ParameterUtility.encode(name), ParameterUtility.encode(domain), applicationKey, sig);
 
         GenericResult webResult = get(url, GenericResult.class);
@@ -1010,7 +1010,7 @@ public class GrabzItClient {
         
         String sig = encrypt(String.format("%s|%s|%s|%s", applicationSecret, identifier, String.valueOf(xpos.getValue()), String.valueOf(ypos.getValue())));
 
-        String url = this.protocol + BASE_URL + "addwatermark.ashx";
+        String url = this.protocol + BASE_URL + "addwatermark";
         
         Post post = new Post(url, "UTF-8");
  
@@ -1041,7 +1041,7 @@ public class GrabzItClient {
         
         String sig = encrypt(String.format("%s|%s", applicationSecret, identifier));
 
-        String url = String.format("%sdeletewatermark.ashx?key=%s&identifier=%s&sig=%s",
+        String url = String.format("%sdeletewatermark?key=%s&identifier=%s&sig=%s",
                                                               getRootURL(), ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
 
         GenericResult webResult = get(url, GenericResult.class);
@@ -1092,7 +1092,7 @@ public class GrabzItClient {
         
         String sig =  encrypt(String.format("%s|%s", applicationSecret, identifier));
 
-        String url = String.format("%sgetwatermarks.ashx?key=%s&identifier=%s&sig=%s",
+        String url = String.format("%sgetwatermarks?key=%s&identifier=%s&sig=%s",
                                                           getRootURL(), ParameterUtility.encode(applicationKey), ParameterUtility.encode(identifier), sig);
 
         WaterMarks watermarks = get(url, WaterMarks.class);
@@ -1121,7 +1121,7 @@ public class GrabzItClient {
             return null;
         }
         
-        String url = String.format("%sgetfile.ashx?id=%s", getRootURL(), id);
+        String url = String.format("%sgetfile?id=%s", getRootURL(), id);
 
         URL requestUrl = new URL(url);
         URLConnection connection = (URLConnection) requestUrl.openConnection();

@@ -70,11 +70,11 @@ namespace GrabzIt
         }
 
         private const string BaseURL = "://api.grabz.it/services/";
-        private const string TakeDOCX = "takedocx.ashx";
-        private const string TakePDF = "takepdf.ashx";
-        private const string TakeTable = "taketable.ashx";
-        private const string TakeImage = "takepicture.ashx";
-        private const string TakeHTML = "takehtml.ashx";
+        private const string TakeDOCX = "takedocx";
+        private const string TakePDF = "takepdf";
+        private const string TakeTable = "taketable";
+        private const string TakeImage = "takepicture";
+        private const string TakeHTML = "takehtml";
 
         //Required by COM
         public GrabzItClient()
@@ -244,7 +244,7 @@ namespace GrabzIt
                     options = new AnimationOptions();
                 }
 
-                request.Store(GetRootURL() + "takeanimation.ashx", false, options, url);
+                request.Store(GetRootURL() + "takeanimation", false, options, url);
             }
         }
 
@@ -262,7 +262,7 @@ namespace GrabzIt
                     options = new SEOOptions();
                 }
 
-                request.Store(GetRootURL() + "takeseo.ashx", false, options, url);
+                request.Store(GetRootURL() + "takeseo", false, options, url);
             }
         }
 
@@ -924,7 +924,7 @@ namespace GrabzIt
                     return null;
                 }
 
-                string url = string.Format("{0}getstatus.ashx?id={1}",
+                string url = string.Format("{0}getstatus?id={1}",
                                                           GetRootURL(), id);
                 GetStatusResult webResult = Get<GetStatusResult>(url);
 
@@ -948,7 +948,7 @@ namespace GrabzIt
             {
                 string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, domain));
 
-                string url = string.Format("{0}getcookies.ashx?domain={1}&key={2}&sig={3}",
+                string url = string.Format("{0}getcookies?domain={1}&key={2}&sig={3}",
                                                           GetRootURL(), domain, ApplicationKey, sig);
 
                 GetCookiesResult webResult = Get<GetCookiesResult>(url);
@@ -1070,7 +1070,7 @@ namespace GrabzIt
                 string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", ApplicationSecret, name, domain,
                                                value, path, (httponly ? 1 : 0), expiresStr, 0));
 
-                string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
+                string url = string.Format("{0}setcookie?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
                                                            GetRootURL(), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
@@ -1098,7 +1098,7 @@ namespace GrabzIt
             {
                 string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, name, domain, 1));
 
-                string url = string.Format("{0}setcookie.ashx?name={1}&domain={2}&delete=1&key={3}&sig={4}",
+                string url = string.Format("{0}setcookie?name={1}&domain={2}&delete=1&key={3}&sig={4}",
                                                           GetRootURL(), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
 
                 GenericResult webResult = Get<GenericResult>(url);
@@ -1126,7 +1126,7 @@ namespace GrabzIt
 
             string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, identifier, (int)xpos, (int)ypos));
 
-            string url = "http://grabz.it/services/addwatermark.ashx";
+            string url = "http://grabz.it/services/addwatermark";
 
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("key", ApplicationKey);
@@ -1153,7 +1153,7 @@ namespace GrabzIt
         {
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
-            string url = string.Format("{0}deletewatermark.ashx?key={1}&identifier={2}&sig={3}",
+            string url = string.Format("{0}deletewatermark?key={1}&identifier={2}&sig={3}",
                                                           GetRootURL(), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
 
@@ -1194,7 +1194,7 @@ namespace GrabzIt
         {
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
-            string url = string.Format("{0}getwatermarks.ashx?key={1}&identifier={2}&sig={3}",
+            string url = string.Format("{0}getwatermarks?key={1}&identifier={2}&sig={3}",
                                                           GetRootURL(), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
             GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
@@ -1224,7 +1224,7 @@ namespace GrabzIt
             lock (thisLock)
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
-                                                                                "{0}getfile.ashx?id={1}",
+                                                                                "{0}getfile?id={1}",
                                                                                 GetRootURL(), id));
                 request.KeepAlive = false;
 

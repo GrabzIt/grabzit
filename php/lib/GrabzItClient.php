@@ -11,11 +11,11 @@ spl_autoload_register(function ($class_name) {
 class GrabzItClient
 {
 	const WebServicesBaseURL = "://api.grabz.it/services/";
-	const TakePicture = "takepicture.ashx";
-	const TakeTable = "taketable.ashx";
-	const TakePDF = "takepdf.ashx";
-	const TakeDOCX = "takedocx.ashx";
-	const TakeHTML = "takehtml.ashx";
+	const TakePicture = "takepicture";
+	const TakeTable = "taketable";
+	const TakePDF = "takepdf";
+	const TakeDOCX = "takedocx";
+	const TakeHTML = "takehtml";
 	const TrueString = "True";
 
 	private $applicationKey;
@@ -166,7 +166,7 @@ class GrabzItClient
 			$options = new GrabzItAnimationOptions();			
 		}		
 
-		$this->request = new GrabzItRequest($this->getRootUrl() . "takeanimation.ashx", false, $options, $url);
+		$this->request = new GrabzItRequest($this->getRootUrl() . "takeanimation", false, $options, $url);
 	}
 
 	/*
@@ -521,7 +521,7 @@ class GrabzItClient
 			return null;
 		}
 
-		$result = $this->Get($this->getRootUrl() . "getstatus.ashx?id=" . $id);
+		$result = $this->Get($this->getRootUrl() . "getstatus?id=" . $id);
 
 		$obj = simplexml_load_string($result);
 
@@ -548,7 +548,7 @@ class GrabzItClient
 			return null;
 		}
 
-		$result = $this->Get($this->getRootUrl() . "getfile.ashx?id=" . $id);
+		$result = $this->Get($this->getRootUrl() . "getfile?id=" . $id);
 
 		if (empty($result))
 		{
@@ -571,7 +571,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get($this->getRootUrl() . "getcookies.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get($this->getRootUrl() . "getcookies?" . $qs));
 
 		$result = array();
 
@@ -613,7 +613,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&value=".urlencode($value)."&path=".urlencode($path)."&httponly=".intval($httponly)."&expires=".urlencode($expires)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get($this->getRootUrl() . "setcookie.ashx?" . $qs));
+		return $this->isSuccessful($this->Get($this->getRootUrl() . "setcookie?" . $qs));
 	}
 
 	/*
@@ -630,7 +630,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&domain=".urlencode($domain)."&name=".urlencode($name)."&delete=1&sig=".$sig;
 
-		return $this->isSuccessful($this->Get($this->getRootUrl() . "setcookie.ashx?" . $qs));
+		return $this->isSuccessful($this->Get($this->getRootUrl() . "setcookie?" . $qs));
 	}
 
 	/*
@@ -692,7 +692,7 @@ class GrabzItClient
 		
 		$context  = stream_context_create($opts);
 
-		$response = @file_get_contents($this->getRootUrl() . 'addwatermark.ashx', false, $context);
+		$response = @file_get_contents($this->getRootUrl() . 'addwatermark', false, $context);
 
 		if (isset($http_response_header))
 		{
@@ -720,7 +720,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
-		return $this->isSuccessful($this->Get($this->getRootUrl() . "deletewatermark.ashx?" . $qs));
+		return $this->isSuccessful($this->Get($this->getRootUrl() . "deletewatermark?" . $qs));
 	}
 
 	/*
@@ -758,7 +758,7 @@ class GrabzItClient
 
 		$qs = "key=" .urlencode($this->applicationKey)."&identifier=".urlencode($identifier)."&sig=".$sig;
 
-		$obj = $this->getResultObject($this->Get($this->getRootUrl() . "getwatermarks.ashx?" . $qs));
+		$obj = $this->getResultObject($this->Get($this->getRootUrl() . "getwatermarks?" . $qs));
 
 		$result = array();
 

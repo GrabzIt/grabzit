@@ -56,7 +56,7 @@ class GrabzItScrapeClient:
 				
 				encoded_qs += "&sig="+sig
 
-				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getscrapes.ashx?" + encoded_qs))
+				dom = minidom.parseString(self.HTTPGet(self.WebServicesBaseURL + "getscrapes?" + encoded_qs))
 
 				self.CheckForException(dom)
 						
@@ -99,7 +99,7 @@ class GrabzItScrapeClient:
 				
 				encoded_qs += "&sig="+sig;
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setscrapestatus.ashx?" + encoded_qs))								 
+				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "setscrapestatus?" + encoded_qs))								 
 				
 		#
 		#Set a property of a scrape
@@ -122,7 +122,7 @@ class GrabzItScrapeClient:
 			fields['type'] = property.GetTypeName()
 			fields['sig'] = sig
 			
-			return self.IsSuccessful(self.HTTPPost("/services/scraper/setscrapeproperty.ashx", fields))
+			return self.IsSuccessful(self.HTTPPost("/services/scraper/setscrapeproperty", fields))
 		#
 		#Re-sends the scrape result with the matching scrape id and result id using the export parameters stored in the scrape. 
 		#
@@ -140,7 +140,7 @@ class GrabzItScrapeClient:
 				
 				encoded_qs += "&sig="+sig;
 
-				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "sendscrape.ashx?" + encoded_qs))				 
+				return self.IsSuccessful(self.HTTPGet(self.WebServicesBaseURL + "sendscrape?" + encoded_qs))				 
 				
 		
 		def IsSuccessful(self, result):

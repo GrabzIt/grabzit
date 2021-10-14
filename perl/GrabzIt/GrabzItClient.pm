@@ -23,11 +23,11 @@ use GrabzIt::GrabzItDOCXOptions;
 use GrabzIt::GrabzItHTMLOptions;
 
 use constant WebServicesBaseURL => "://api.grabz.it/services/";
-use constant TakePicture => "takepicture.ashx";
-use constant TakeTable => "taketable.ashx";
-use constant TakePDF => "takepdf.ashx";
-use constant TakeDOCX => "takedocx.ashx";
-use constant TakeHTML => "takehtml.ashx";
+use constant TakePicture => "takepicture";
+use constant TakeTable => "taketable";
+use constant TakePDF => "takepdf";
+use constant TakeDOCX => "takedocx";
+use constant TakeHTML => "takehtml";
 use constant TrueString => "True";
 
 sub new
@@ -56,7 +56,7 @@ sub URLToAnimation($;$)
 {
 	my ($self, $url, $options) = @_;
 	$options ||= GrabzItAnimationOptions->new();	
-	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . "takeanimation.ashx", 0, $options, $url);
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . "takeanimation", 0, $options, $url);
 }
 
 #
@@ -372,7 +372,7 @@ sub GetResult($)
 		return;
 	}	
 	
-	my $url = $self->_getRootUrl() . "getfile.ashx?id=" . $id;
+	my $url = $self->_getRootUrl() . "getfile?id=" . $id;
 	
 	return $self->_get($url);
 }
@@ -395,7 +395,7 @@ sub GetStatus($)
 		return;
 	}
 	
-	my $url = $self->_getRootUrl() . "getstatus.ashx?id=" . $id;
+	my $url = $self->_getRootUrl() . "getstatus?id=" . $id;
 	
 	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
@@ -421,7 +421,7 @@ sub GetCookies($)
 	$sig =	$self->_encode($self->{_applicationSecret}."|".$domain);
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl() . "getcookies.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "getcookies?" . $qs;
 
 	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
@@ -478,7 +478,7 @@ sub SetCookie($$;$$$$)
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&value=".uri_escape($value)."&path=".uri_escape($path)."&httponly=".$httponly."&expires=".uri_escape($expires)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl() . "setcookie.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "setcookie?" . $qs;
 
 	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
@@ -499,7 +499,7 @@ sub DeleteCookie($$)
 
 	$qs = "key=" .$self->{_applicationKey}."&domain=".uri_escape($domain)."&name=".uri_escape($name)."&delete=1&sig=".$sig;
 
-	my $url = $self->_getRootUrl() . "setcookie.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "setcookie?" . $qs;
 
 	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }
@@ -536,7 +536,7 @@ sub AddWaterMark($$$$)
 	
 	$ua = LWP::UserAgent->new();  
 		
-	$req = POST $self->{protocol} . WebServicesBaseURL . 'addwatermark.ashx', 
+	$req = POST $self->{protocol} . WebServicesBaseURL . 'addwatermark', 
 		   content_type => 'multipart/form-data', 
 		   content		=> [ 
 				 key => $self->{_applicationKey}, 
@@ -587,7 +587,7 @@ sub _getWaterMarks($)
 	
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl() . "getwatermarks.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "getwatermarks?" . $qs;
 
 	my $result = $self->_get($url);	
 	die "Could not contact GrabzIt\n" unless defined $result;
@@ -628,7 +628,7 @@ sub DeleteWaterMark($)
 	$sig =	$self->_encode($self->{_applicationSecret}."|".$identifier);
 	$qs = "key=" .uri_escape($self->{_applicationKey})."&identifier=".uri_escape($identifier)."&sig=".$sig;
 
-	my $url = $self->_getRootUrl() . "deletewatermark.ashx?" . $qs;
+	my $url = $self->_getRootUrl() . "deletewatermark?" . $qs;
 
 	return ($self->_getResultValue($self->_get($url), 'Result') eq GrabzItClient::TrueString);
 }

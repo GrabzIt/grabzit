@@ -8,8 +8,8 @@
     <AssemblyTitle>GrabzIt</AssemblyTitle>
     <Product>GrabzIt - Capture the Web</Product>
     <Copyright>Copyright ©  2012-2021</Copyright>
-    <AssemblyVersion>3.5.0.0</AssemblyVersion>
-    <FileVersion>3.5.0.0</FileVersion>
+    <AssemblyVersion>3.5.2.0</AssemblyVersion>
+    <FileVersion>3.5.2.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -49,8 +49,9 @@ You can even convert HTML directly into images, DOCX documents, PDF's, or captur
 Additionally you can even convert online video's into animated GIF's.
 
 More documentation can be found at: https://grabz.it/api/aspnet</Description>
-    <PackageReleaseNotes>- Now can click on a HTML element before performing a capture</PackageReleaseNotes>
-    <Version>3.5.0.0</Version>
+    <PackageReleaseNotes>- Now can click on a HTML element before performing a capture
+</PackageReleaseNotes>
+    <Version>3.5.2.0</Version>
     <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
@@ -64,9 +65,7 @@ More documentation can be found at: https://grabz.it/api/aspnet</Description>
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Net\QuickWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Net\QuickWebClient.cs" />
     <Compile Update="handler.ashx.cs">
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
