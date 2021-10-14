@@ -6,7 +6,6 @@ using GrabzIt.Scraper.Results;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -81,7 +80,7 @@ namespace GrabzIt.Scraper
         {
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
-            string url = string.Format("{0}getscrapes.ashx?key={1}&identifier={2}&sig={3}",
+            string url = string.Format("{0}getscrapes?key={1}&identifier={2}&sig={3}",
                                                       BaseURL, ApplicationKey, identifier, sig);
 
             GetScrapesResult webResult = Get<GetScrapesResult>(url);
@@ -109,7 +108,7 @@ namespace GrabzIt.Scraper
                 return false;
             }
 
-            string url = string.Format("{0}setscrapeproperty.ashx", BaseURL);
+            string url = string.Format("{0}setscrapeproperty", BaseURL);
             string sig = Encrypt(string.Format("{0}|{1}|{2}", ApplicationSecret, id, property.Type));
 
             Dictionary<string, string> qs = new Dictionary<string, string>();
@@ -146,7 +145,7 @@ namespace GrabzIt.Scraper
 
             string sig = Encrypt(string.Format("{0}|{1}|{2}", ApplicationSecret, id, resultId));
 
-            string url = string.Format("{0}sendscrape.ashx?key={1}&id={2}&spiderId={3}&sig={4}",
+            string url = string.Format("{0}sendscrape?key={1}&id={2}&spiderId={3}&sig={4}",
                                                       BaseURL, ApplicationKey, id, resultId, sig);
 
             GenericResult webResult = Get<GenericResult>(url);
@@ -176,7 +175,7 @@ namespace GrabzIt.Scraper
 
             string sig = Encrypt(string.Format("{0}|{1}|{2}", ApplicationSecret, id, status.ToString()));
 
-            string url = string.Format("{0}setscrapestatus.ashx?key={1}&id={2}&status={3}&sig={4}",
+            string url = string.Format("{0}setscrapestatus?key={1}&id={2}&status={3}&sig={4}",
                                                       BaseURL, ApplicationKey, id, status.ToString(), sig);
 
             GenericResult webResult = Get<GenericResult>(url);

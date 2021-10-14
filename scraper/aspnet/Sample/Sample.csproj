@@ -19,6 +19,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -87,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GrabzIt.Scraper\GrabzIt.Scraper.csproj">
-      <Project>{3cd53b59-8746-4317-a3aa-fd8a68612d16}</Project>
+      <Project>{CBCF253A-284F-4F26-8BB9-5C684F1B5ED2}</Project>
       <Name>GrabzIt.Scraper</Name>
     </ProjectReference>
   </ItemGroup>

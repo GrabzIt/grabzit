@@ -1,71 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3CD53B59-8746-4317-A3AA-FD8A68612D16}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GrabzIt.Scraper</RootNamespace>
-    <AssemblyName>GrabzIt.Scraper</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFrameworks>netstandard2.1;net40;</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>GrabzIt</Authors>
+    <AssemblyVersion>1.2.5.0</AssemblyVersion>
+    <FileVersion>1.2.5.0</FileVersion>
+    <Version>1.2.5</Version>
+    <Company>GrabzIt Limited</Company>
+    <Product>GrabzIt - Scrape the Web</Product>
+    <Summary>Use GrabzIt.Scraper to integrate web scraping into your application. This package enables your application to control GrabzIt  scrapes, deciding when to stop or start them and then callback functional</Summary>
+    <Description>Use GrabzIt.Scraper to integrate web scraping into your application. This package enables your application to control GrabzIt scrapes, deciding when to stop or start them and then callback functionality makes it easy to integrate the scraped data back into your app.</Description>
+    <Copyright>Copyright ©  2015-2021</Copyright>
+    <PackageProjectUrl>https://grabz.it/scraper/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/scraper/aspnet</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/GrabzIt/grabzit/master/scraper/aspnet/license.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>scraper, scrape, integrate, web data</PackageTags>
+    <NeutralLanguage></NeutralLanguage>
+    <PackageReleaseNotes>- Made compatible with .NET Core
+- Moved to new web service URL's</PackageReleaseNotes>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\ErrorCode.cs" />
-    <Compile Include="Enums\ScrapeStatus.cs" />
-    <Compile Include="GrabzItScrapeException.cs" />
-    <Compile Include="GrabzItScrapeClient.cs" />
-    <Compile Include="Net\QuickWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Property\IProperty.cs" />
-    <Compile Include="Property\KeyValue.cs" />
-    <Compile Include="Property\Target.cs" />
-    <Compile Include="Property\Variable.cs" />
-    <Compile Include="Results\GenericResult.cs" />
-    <Compile Include="Results\GetScrapesResult.cs" />
-    <Compile Include="Results\GrabzItScrape.cs" />
-    <Compile Include="Results\GrabzItScrapeHistory.cs" />
-    <Compile Include="Results\IException.cs" />
-    <Compile Include="ScrapeResult.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
+    <PackageReference Include="System.Xml.XmlSerializer">
+      <Version>4.3.0</Version>
+    </PackageReference>
+  </ItemGroup>  
 </Project>
