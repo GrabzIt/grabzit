@@ -188,7 +188,7 @@ function _getWaterMarks(applicationKey, applicationSecret, identifier, oncomplet
         'sig': sig
     };
 
-    _get(this, 'getwatermarks.ashx?' + querystring.stringify(params), 'watermarks', oncomplete);
+    _get(this, 'getwatermarks?' + querystring.stringify(params), 'watermarks', oncomplete);
 }
 
 function _getFormDataForPost(fields, files) {
@@ -880,7 +880,7 @@ function _readFile(filePath)
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.url_to_pdf = function (url, options) {
-    this.request = _getPDFRequestObject(this.applicationKey, this.applicationSecret, 'takepdf.ashx', options, false, url);
+    this.request = _getPDFRequestObject(this.applicationKey, this.applicationSecret, 'takepdf', options, false, url);
 };
 
 /*
@@ -889,7 +889,7 @@ GrabzItClient.prototype.url_to_pdf = function (url, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.html_to_pdf = function (html, options) {
-    this.request = _getPDFRequestObject(this.applicationKey, this.applicationSecret, 'takepdf.ashx', options, true, html);
+    this.request = _getPDFRequestObject(this.applicationKey, this.applicationSecret, 'takepdf', options, true, html);
 };
 
 /*
@@ -907,7 +907,7 @@ GrabzItClient.prototype.file_to_pdf = function (path, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.url_to_docx = function (url, options) {
-    this.request = _getDOCXRequestObject(this.applicationKey, this.applicationSecret, 'takedocx.ashx', options, false, url);
+    this.request = _getDOCXRequestObject(this.applicationKey, this.applicationSecret, 'takedocx', options, false, url);
 };
 
 /*
@@ -916,7 +916,7 @@ GrabzItClient.prototype.url_to_docx = function (url, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.html_to_docx = function (html, options) {
-    this.request = _getDOCXRequestObject(this.applicationKey, this.applicationSecret, 'takedocx.ashx', options, true, html);
+    this.request = _getDOCXRequestObject(this.applicationKey, this.applicationSecret, 'takedocx', options, true, html);
 };
 
 /*
@@ -934,7 +934,7 @@ GrabzItClient.prototype.file_to_docx = function (path, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.url_to_table = function (url, options) {
-     this.request = _getTableRequestObject(this.applicationKey, this.applicationSecret, 'taketable.ashx', options, false, url);
+     this.request = _getTableRequestObject(this.applicationKey, this.applicationSecret, 'taketable', options, false, url);
 };
 
 /*
@@ -943,7 +943,7 @@ GrabzItClient.prototype.url_to_table = function (url, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.html_to_table = function (html, options) {
-    this.request = _getTableRequestObject(this.applicationKey, this.applicationSecret, 'taketable.ashx', options, true, html);
+    this.request = _getTableRequestObject(this.applicationKey, this.applicationSecret, 'taketable', options, true, html);
 };
 
 /*
@@ -961,7 +961,7 @@ GrabzItClient.prototype.file_to_table = function (path, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.url_to_animation = function (url, options) {
-    this.request = _getAnimationRequestObject(this.applicationKey, this.applicationSecret, 'takeanimation.ashx', options, false, url);
+    this.request = _getAnimationRequestObject(this.applicationKey, this.applicationSecret, 'takeanimation', options, false, url);
 };
 
 /*
@@ -970,7 +970,7 @@ GrabzItClient.prototype.url_to_animation = function (url, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.url_to_image = function (url, options) {
-    this.request = _getImageRequestObject(this.applicationKey, this.applicationSecret, 'takepicture.ashx', options, false, url);
+    this.request = _getImageRequestObject(this.applicationKey, this.applicationSecret, 'takepicture', options, false, url);
 };
 
 /*
@@ -979,7 +979,7 @@ GrabzItClient.prototype.url_to_image = function (url, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.html_to_image = function (html, options) {
-    this.request = _getImageRequestObject(this.applicationKey, this.applicationSecret, 'takepicture.ashx', options, true, html);
+    this.request = _getImageRequestObject(this.applicationKey, this.applicationSecret, 'takepicture', options, true, html);
 };
 
 /*
@@ -997,7 +997,7 @@ GrabzItClient.prototype.file_to_image = function (path, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.url_to_rendered_html = function (url, options) {
-    this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml.ashx', options, false, url);
+    this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml', options, false, url);
 };
 
 /*
@@ -1006,7 +1006,7 @@ GrabzItClient.prototype.url_to_rendered_html = function (url, options) {
 * For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
 */
 GrabzItClient.prototype.html_to_rendered_html = function (html, options) {
-    this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml.ashx', options, true, html);
+    this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml', options, true, html);
 };
 
 /*
@@ -1135,7 +1135,7 @@ GrabzItClient.prototype.get_result = function (id, oncomplete) {
         }
         return;
     }
-    _get(this, 'getfile.ashx?id=' + id, 'binary', oncomplete)
+    _get(this, 'getfile?id=' + id, 'binary', oncomplete)
 };
 
 /*
@@ -1150,7 +1150,7 @@ GrabzItClient.prototype.get_status = function (id, oncomplete) {
         }
         return;
     }
-    _get(this, 'getstatus.ashx?id=' + id, 'status', oncomplete);
+    _get(this, 'getstatus?id=' + id, 'status', oncomplete);
 };
 
 /*
@@ -1167,7 +1167,7 @@ GrabzItClient.prototype.get_cookies = function (domain, oncomplete) {
         'sig':sig
     };
 
-    _get(this, 'getcookies.ashx?' + querystring.stringify(params), 'cookies', oncomplete)
+    _get(this, 'getcookies?' + querystring.stringify(params), 'cookies', oncomplete)
 };
 
 /*
@@ -1199,7 +1199,7 @@ GrabzItClient.prototype.set_cookie = function (name, domain, options, oncomplete
         'sig': sig
     };
 
-    _get(this, 'setcookie.ashx?' + querystring.stringify(params), 'result', oncomplete);
+    _get(this, 'setcookie?' + querystring.stringify(params), 'result', oncomplete);
 };
 
 /*
@@ -1219,7 +1219,7 @@ GrabzItClient.prototype.delete_cookie = function (name, domain, oncomplete) {
         'sig': sig
     };
 
-    _get(this, 'setcookie.ashx?' + querystring.stringify(params), 'result', oncomplete);
+    _get(this, 'setcookie?' + querystring.stringify(params), 'result', oncomplete);
 };
 
 /*
@@ -1268,7 +1268,7 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
             host: 'api.grabz.it',
             method: 'POST',
             port: this.port,
-            path: '/services/addwatermark.ashx',
+            path: '/services/addwatermark',
             headers: headerparams.headers
         };
 
@@ -1315,7 +1315,7 @@ GrabzItClient.prototype.delete_watermark = function (identifier, oncomplete) {
         'sig': sig
     };
 
-    _get(this, 'deletewatermark.ashx?' + querystring.stringify(params), 'result', oncomplete);
+    _get(this, 'deletewatermark?' + querystring.stringify(params), 'result', oncomplete);
 };
 
 /*
