@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.txt')) as f:
     long_description = f.read()
 
 setup(name='GrabzIt',
-      version='3.5.1',
+      version='3.5.2',
       author='GrabzIt',
       author_email='support@grabz.it',
       url='https://grabz.it/api/python/',
