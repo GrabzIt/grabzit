@@ -1,24 +1,43 @@
-﻿using System;
-using System.IO;
+﻿using GrabzIt.Scraper.Net;
+#if NETSTANDARD
+using Microsoft.AspNetCore.Http;
+#endif
+#if NETFRAMEWORK
 using System.Web;
-using System.Web.Script.Serialization;
+#endif
+using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace GrabzIt.Scraper
 {
     public class ScrapeResult
     {
-        private HttpRequestBase request;
+        private IGenericRequest genericRequest;
         private string data;
         private string filename;
         private string extension;
 
+#if NETFRAMEWORK
         public ScrapeResult(HttpRequest request) : this(new HttpRequestWrapper(request)){}
 
         public ScrapeResult(HttpRequestBase request)
         {
-            this.request = request;
-            if (this.request.UserAgent != "GrabzIt")
+            this.genericRequest = new FrameworkRequest(request);
+            UserAgentCheck();
+        }
+#endif
+#if NETSTANDARD
+        public ScrapeResult(HttpRequest request)
+        {
+            this.genericRequest = new CoreRequest(request);
+            UserAgentCheck();
+        }
+#endif
+        private void UserAgentCheck()
+        {
+            if (genericRequest.UserAgent != "GrabzIt")
             {
                 throw new Exception("A call originating from a non-GrabzIt server has been detected");
             }
@@ -31,18 +50,13 @@ namespace GrabzIt.Scraper
             this.extension = Path.GetExtension(path).Substring(1).ToLower();
         }
 
-        private HttpPostedFileBase getFile()
-        {
-            return request.Files["file"];
-        }
-
         public string FileName
         {
             get
             {
                 if (string.IsNullOrEmpty(filename))
                 {
-                    HttpPostedFileBase file = getFile();
+                    IGenericFile file = genericRequest.GetFile();
                     if (file != null)
                     {
                         filename = Path.GetFileName(file.FileName);
@@ -58,10 +72,9 @@ namespace GrabzIt.Scraper
             {
                 if (string.IsNullOrEmpty(extension))
                 {
-                    HttpPostedFileBase file = getFile();
-                    if (file != null)
+                    if (!string.IsNullOrEmpty(FileName))
                     {
-                        extension = Path.GetExtension(file.FileName).Substring(1).ToLower();
+                        extension = Path.GetExtension(FileName).Substring(1).ToLower();
                     }
                 }
                 return extension;
@@ -84,8 +97,8 @@ namespace GrabzIt.Scraper
         public T FromJSON<T>()
         {
             if (Extension == "json")
-            {
-                return new JavaScriptSerializer().Deserialize<T>(ToString());
+            {                
+                return JsonConvert.DeserializeObject<T>(ToString());
             }
             return default(T);
         }
@@ -107,10 +120,10 @@ namespace GrabzIt.Scraper
         {
             if (string.IsNullOrEmpty(data))
             {
-                HttpPostedFileBase file = getFile();
+                IGenericFile file = genericRequest.GetFile();
                 if (file != null)
                 {
-                    using (StreamReader sr = new StreamReader(file.InputStream))
+                    using (StreamReader sr = new StreamReader(file.Data))
                     {
                         data = sr.ReadToEnd();
                     }

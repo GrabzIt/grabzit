@@ -1,0 +1,17 @@
+1) Generate javadoc cd C:\Apps\GrabzItAPIs\java\grabzit\src
+2) "C:\Program Files\Java\jdk1.8.0_141\bin\javadoc.exe" -d "C:\Apps\GrabzItAPIs\java\grabzit\doc" it.grabz.grabzit
+3) Update version number in pom.xml
+4) Sign each file by using the command:
+
+gpg -ab pom.xml
+
+As explained here: http://central.sonatype.org/pages/manual-staging-bundle-creation-and-deployment.html
+
+https://oss.sonatype.org/
+
+Note that the key username is GrabzIt and the password is P@55w0rd
+
+3) Zip all the files including the source and javadocs (generated from the command in netbeans) then rename to bundle.jar
+
+4) Manually upload as a bundle artifiact then when it passes release it
+

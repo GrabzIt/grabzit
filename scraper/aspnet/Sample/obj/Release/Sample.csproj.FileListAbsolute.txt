@@ -1,0 +1,11 @@
+C:\Apps\grabzit\scraper\aspnet\Sample\obj\Release\Sample.csproj.AssemblyReference.cache
+C:\Apps\grabzit\scraper\aspnet\Sample\obj\Release\Sample.csproj.CoreCompileInputs.cache
+C:\Apps\grabzit\scraper\aspnet\Sample\bin\Sample.dll.config
+C:\Apps\grabzit\scraper\aspnet\Sample\bin\Sample.dll
+C:\Apps\grabzit\scraper\aspnet\Sample\bin\Sample.pdb
+C:\Apps\grabzit\scraper\aspnet\Sample\bin\GrabzIt.Scraper.dll
+C:\Apps\grabzit\scraper\aspnet\Sample\bin\Newtonsoft.Json.dll
+C:\Apps\grabzit\scraper\aspnet\Sample\bin\GrabzIt.Scraper.pdb
+C:\Apps\grabzit\scraper\aspnet\Sample\obj\Release\Sample.csproj.CopyComplete
+C:\Apps\grabzit\scraper\aspnet\Sample\obj\Release\Sample.dll
+C:\Apps\grabzit\scraper\aspnet\Sample\obj\Release\Sample.pdb

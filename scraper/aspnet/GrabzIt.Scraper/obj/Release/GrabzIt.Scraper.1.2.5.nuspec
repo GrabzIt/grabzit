@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>GrabzIt.Scraper</id>
+    <version>1.2.5</version>
+    <authors>GrabzIt</authors>
+    <licenseUrl>https://raw.githubusercontent.com/GrabzIt/grabzit/master/scraper/aspnet/license.txt</licenseUrl>
+    <projectUrl>https://grabz.it/scraper/</projectUrl>
+    <description>Use GrabzIt.Scraper to integrate web scraping into your application. This package enables your application to control GrabzIt scrapes, deciding when to stop or start them and then callback functionality makes it easy to integrate the scraped data back into your app.</description>
+    <releaseNotes>- Made compatible with .NET Core
+- Moved to new web service URL's</releaseNotes>
+    <copyright>2015-2021</copyright>
+    <tags>scraper, scrape, integrate, web data</tags>
+    <repository type="git" url="https://github.com/GrabzIt/grabzit/tree/master/scraper/aspnet" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+        <dependency id="System.Xml.XmlSerializer" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.0" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework=".NETFramework4.0" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="C:\Apps\grabzit\scraper\aspnet\GrabzIt.Scraper\bin\Release\net40\GrabzIt.Scraper.dll" target="lib\net40\GrabzIt.Scraper.dll" />
+    <file src="C:\Apps\grabzit\scraper\aspnet\GrabzIt.Scraper\bin\Release\netstandard2.1\GrabzIt.Scraper.dll" target="lib\netstandard2.1\GrabzIt.Scraper.dll" />
+  </files>
+</package>

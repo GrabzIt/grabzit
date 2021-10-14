@@ -1,0 +1,9 @@
+C:\Apps\grabzit\aspnet\GrabzIt\bin\Debug\net20\GrabzIt.dll
+C:\Apps\grabzit\aspnet\GrabzIt\bin\Debug\net20\GrabzIt.pdb
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.AssemblyInfoInputs.cache
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.AssemblyInfo.cs
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.csproj.CoreCompileInputs.cache
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.dll
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.pdb
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Debug\net20\GrabzIt.csproj.AssemblyReference.cache

@@ -1,0 +1,9 @@
+C:\Apps\grabzit\aspnet\SampleConsole\bin\Release\SampleConsole.exe.config
+C:\Apps\grabzit\aspnet\SampleConsole\bin\Release\SampleConsole.exe
+C:\Apps\grabzit\aspnet\SampleConsole\bin\Release\SampleConsole.pdb
+C:\Apps\grabzit\aspnet\SampleConsole\bin\Release\GrabzIt.dll
+C:\Apps\grabzit\aspnet\SampleConsole\obj\Release\SampleConsole.csprojAssemblyReference.cache
+C:\Apps\grabzit\aspnet\SampleConsole\obj\Release\SampleConsole.csproj.CoreCompileInputs.cache
+C:\Apps\grabzit\aspnet\SampleConsole\obj\Release\SampleConsole.csproj.CopyComplete
+C:\Apps\grabzit\aspnet\SampleConsole\obj\Release\SampleConsole.exe
+C:\Apps\grabzit\aspnet\SampleConsole\obj\Release\SampleConsole.pdb

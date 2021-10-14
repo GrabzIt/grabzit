@@ -1,0 +1,9 @@
+C:\Apps\grabzit\aspnet\GrabzIt\bin\Release\net40\GrabzIt.dll
+C:\Apps\grabzit\aspnet\GrabzIt\bin\Release\net40\GrabzIt.pdb
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.csproj.AssemblyReference.cache
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.AssemblyInfoInputs.cache
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.AssemblyInfo.cs
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.csproj.CoreCompileInputs.cache
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.dll
+C:\Apps\grabzit\aspnet\GrabzIt\obj\Release\net40\GrabzIt.pdb
