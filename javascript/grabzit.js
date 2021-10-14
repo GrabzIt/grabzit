@@ -559,7 +559,7 @@ function GrabzIt(key)
 
 		this._getBaseWebServiceUrl = function()
 		{
-			return this._getRootURL() + 'javascript.ashx';
+			return this._getRootURL() + 'javascript';
 		};
 
 		this._createQueryString = function(sKey, sValue)
@@ -723,7 +723,7 @@ function GrabzIt(key)
 					}
 				};
 
-				xhttp.open("GET", that._getRootURL() + 'getjspicture.ashx?id='+id, true);
+				xhttp.open("GET", that._getRootURL() + 'getjspicture?id='+id, true);
 				xhttp.responseType = "blob";
 				xhttp.send();
 			}
