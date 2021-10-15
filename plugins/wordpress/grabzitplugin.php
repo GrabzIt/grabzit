@@ -2,8 +2,8 @@
    /*
    Plugin Name: GrabzIt Web Capture
    Plugin URI: https://grabz.it
-   Description: Use a simple shortcode to screenshot a webpage or convert any text or HTML snippet into images, PDF's, DOCX, Animated GIF's, CSV, JSON and more! To get started: activate the GrabzIt Web Capture and go to the GrabzIt API page to get your Application Key. 
-   Version: 1.0.1
+   Description: Use a simple shortcode to screenshot a webpage or convert any text or HTML snippet into images, rendered HTML, PDF's, DOCX, Animated GIF's, CSV, JSON and more! To get started: activate the GrabzIt Web Capture and go to the GrabzIt API page to get your Application Key. 
+   Version: 1.0.8
    Author: GrabzIt Limited
    Author URI:   https://grabz.it/index.aspx
    License: GPL2
