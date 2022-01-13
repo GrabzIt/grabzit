@@ -16,12 +16,6 @@ function useCallbackHandler($grabzItHandlerUrl)
 
 if (count($_POST) > 0)
 {
-	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
-	{
-		//remove magic quotes from the input
-		$_POST = array_map( 'stripslashes', $_POST);
-	}
-
 	if (isset($_POST["delete"]) && $_POST["delete"] == 1)
 	{
 		$files = glob('results/*');
