@@ -120,7 +120,7 @@ public abstract class BaseOptions {
         {
             return qs;
         }
-        if (!"".equals(post))
+        if (!"".equals(qs))
         {
             qs += "&"; 
         }

@@ -110,7 +110,7 @@ namespace GrabzIt.Parameters
             {
                 return qs;
             }
-            if (!string.IsNullOrEmpty(post))
+            if (!string.IsNullOrEmpty(qs))
             {
                 qs += "&"; 
             }
