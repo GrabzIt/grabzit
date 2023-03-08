@@ -16,7 +16,9 @@ using GrabzIt.COM;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using GrabzIt.Parameters;
-
+#if !ASYNCNOTALLOWED
+using System.Threading.Tasks;
+#endif
 namespace GrabzIt
 {
     [ClassInterface(ClassInterfaceType.None)]
@@ -56,7 +58,9 @@ namespace GrabzIt
         private WebProxy proxy = null;
         private Object thisLock = new Object();
         private Object eventLock = new Object();
-
+#if !ASYNCNOTALLOWED
+        private SemaphoreSlim thisSlim = new SemaphoreSlim(1, 1);
+#endif
         public string ApplicationKey
         {
             get;
@@ -838,6 +842,117 @@ namespace GrabzIt
             return true;
         }
 
+#if !ASYNCNOTALLOWED
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
+        /// </summary>
+        /// <param name="saveToFile">The file path that the screenshot should saved to.</param>
+        /// <returns>Returns the true if it is successful otherwise it throws an exception.</returns>
+        public async Task<bool> SaveToAsync(string saveToFile)
+        {
+            int attempt = 0;
+            while (true)
+            {
+                try
+                {
+                    GrabzItFile result = await SaveToAsync().ConfigureAwait(false);
+
+                    if (result == null)
+                    {
+                        return false;
+                    }
+
+                    result.Save(saveToFile);
+                    break;
+                }
+                catch (GrabzItException e)
+                {
+                    throw e;
+                }
+                catch (Exception ex)
+                {
+                    if (attempt < 3)
+                    {
+                        attempt++;
+                        continue;
+                    }
+                    throw new GrabzItException("An error occurred trying to save the capture to: " +
+                                        saveToFile, ErrorCode.FileSaveError, ex);
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot and returns a GrabzItFile object
+        /// </summary>
+        /// <remarks>
+        /// Warning, this is a SYNCHONOUS method and can take up to 5 minutes before a response
+        /// </remarks>
+        /// <returns>Returns a GrabzItFile object containing the screenshot data.</returns>
+        public async Task<GrabzItFile> SaveToAsync()
+        {
+            await thisSlim.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                string id = Save();
+
+                if (string.IsNullOrEmpty(id))
+                {
+                    return null;
+                }
+
+                //Wait until it is possible to be ready
+                await Task.Delay(3000 + request.Options.GetStartDelay()).ConfigureAwait(false);
+
+                //Wait for it to be ready.
+                while (true)
+                {
+                    Status status = await GetStatusAsync(id).ConfigureAwait(false);
+
+                    if (!status.Cached && !status.Processing)
+                    {
+                        throw new GrabzItException("The capture did not complete with the error: " + status.Message, ErrorCode.RenderingError);
+                    }
+
+                    if (status.Cached)
+                    {
+                        GrabzItFile result = await GetResultAsync(id).ConfigureAwait(false);
+
+                        if (result == null)
+                        {
+                            throw new GrabzItException("The capture could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
+                        }
+
+                        return result;
+                    }
+
+                    await Task.Delay(3000).ConfigureAwait(false);
+                }
+            }
+            finally
+            {
+                thisSlim.Release();
+            }
+        }
+
+        private async Task<T> GetAsync<T>(string url)
+        {
+            using (QuickWebClient client = new QuickWebClient(this.proxy))
+            {
+                try
+                {
+                    string result = await client.DownloadStringTaskAsync(url).ConfigureAwait(false);
+                    return DeserializeResult<T>(result);
+                }
+                catch (WebException e)
+                {
+                    HandleWebException(e);
+                    return default(T);
+                }
+            }
+        }
+#endif
         private T Get<T>(string url)
         {
             using (QuickWebClient client = new QuickWebClient(this.proxy))
@@ -936,6 +1051,32 @@ namespace GrabzIt
                 return webResult.GetStatus();
             }
         }
+
+#if !ASYNCNOTALLOWED
+        /// <summary>
+        /// Get the current status of a GrabzIt screenshot
+        /// </summary>
+        /// <param name="id">The id of the screenshot</param>
+        /// <returns>A Status object representing the screenshot</returns>
+        public async Task<Status> GetStatusAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            string url = string.Format("{0}getstatus?id={1}",
+                                                        GetRootURL(), id);
+            GetStatusResult webResult = await GetAsync<GetStatusResult>(url).ConfigureAwait(false);
+
+            if (webResult == null)
+            {
+                return null;
+            }
+
+            return webResult.GetStatus();
+        }
+#endif
 
         /// <summary>
         /// Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
@@ -1251,6 +1392,48 @@ namespace GrabzIt
                 }
             }
         }
+
+#if !ASYNCNOTALLOWED
+        /// <summary>
+        /// This method returns the screenshot.
+        /// </summary>
+        /// <param name="id">The unique identifier of the screenshot, returned by the callback handler or the Save method</param>
+        /// <returns>GrabzItFile - which represents the screenshot</returns>
+        public async Task<GrabzItFile> GetResultAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
+                                                                            "{0}getfile?id={1}",
+                                                                            GetRootURL(), id));
+            request.KeepAlive = false;
+
+            using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync().ConfigureAwait(false))
+            {
+                if (response.ContentLength == 0)
+                {
+                    return null;
+                }
+
+                using (Stream stream = response.GetResponseStream())
+                {
+                    byte[] buffer = new byte[131072];
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        int read;
+                        while ((read = await stream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
+                        {
+                            await ms.WriteAsync(buffer, 0, read).ConfigureAwait(false);
+                        }
+                        return new GrabzItFile(ms.ToArray());
+                    }
+                }
+            }
+        }
+#endif
 
         private string GetRootURL()
         {

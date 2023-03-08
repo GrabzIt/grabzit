@@ -56,6 +56,12 @@ More documentation can be found at: https://grabz.it/api/aspnet</Description>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
   </PropertyGroup>
+  <PropertyGroup>
+    <Frameworks>|net20|net35|net40|net403|</Frameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Frameworks.Contains('|$(TargetFramework)|'))">
+    <DefineConstants>$(DefineConstants);ASYNCNOTALLOWED</DefineConstants>
+  </PropertyGroup>  
   <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
     <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
