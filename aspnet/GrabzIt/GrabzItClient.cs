@@ -79,6 +79,7 @@ namespace GrabzIt
         private const string TakeTable = "taketable";
         private const string TakeImage = "takepicture";
         private const string TakeHTML = "takehtml";
+        private const string TakeVideo = "takevideo";
 
         //Required by COM
         public GrabzItClient()
@@ -321,6 +322,60 @@ namespace GrabzIt
                 }
 
                 request.Store(GetRootURL() + TakeImage, true, options, html);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a video.
+        /// </summary>
+        /// <param name="url">The URL to capture as a video.</param>
+        public void URLToVideo(string url)
+        {
+            URLToVideo(url, null);
+        }
+
+        /// <summary>
+        /// This method specifies the URL that should be converted into a video.
+        /// </summary>
+        /// <param name="url">The URL to capture as a video.</param>
+        /// <param name="options">A instance of the VideoOptions class that defines any special options to use when creating the video.</param>
+        public void URLToVideo(string url, VideoOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new VideoOptions();
+                }
+
+                request.Store(GetRootURL() + TakeVideo, false, options, url);
+            }
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into a video.
+        /// </summary>
+        /// <param name="html">The HTML to convert into a video.</param>
+        public void HTMLToVideo(string html)
+        {
+            HTMLToVideo(html, null);
+        }
+
+        /// <summary>
+        /// This method specifies the HTML that should be converted into a video.
+        /// </summary>
+        /// <param name="html">The HTML to convert into a video.</param>
+        /// <param name="options">A instance of the VideoOptions class that defines any special options to use when creating the video.</param>
+        public void HTMLToVideo(string html, VideoOptions options)
+        {
+            lock (thisLock)
+            {
+                if (options == null)
+                {
+                    options = new VideoOptions();
+                }
+
+                request.Store(GetRootURL() + TakeVideo, true, options, html);
             }
         }
 

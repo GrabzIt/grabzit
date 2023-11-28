@@ -11,12 +11,13 @@ namespace SampleConsole
         private static string PDF = "P";
         private static string DOCX = "D";
         private static string GIF = "G";
+        private static string VIDEO = "V";
 
         static void Main(string[] args)
         {
             while (true)
             {
-                Console.WriteLine("Return Capture as PDF (P), DOCX (D), JPEG (J) or Animated GIF (G)? Enter P, J or G.");
+                Console.WriteLine("Return Capture as PDF (P), DOCX (D), JPEG (J), Video (V) or Animated GIF (G)? Enter P, J, V or G.");
                 string formatType = Console.ReadLine();
 
                 bool convertUrl = true;
@@ -55,6 +56,10 @@ namespace SampleConsole
                     {
                         format = ".gif";
                     }
+                    else if (formatType == VIDEO)
+                    {
+                        format = ".mp4";
+                    }
 
                     string filename = Guid.NewGuid().ToString() + format;
 
@@ -78,6 +83,17 @@ namespace SampleConsole
                         else
                         {
                             grabzIt.HTMLToDOCX(inputData);
+                        }
+                    }
+                    else if (formatType == VIDEO)
+                    {
+                        if (convertUrl)
+                        {
+                            grabzIt.URLToVideo(inputData);
+                        }
+                        else
+                        {
+                            grabzIt.HTMLToVideo(inputData);
                         }
                     }
                     else if (formatType == GIF)

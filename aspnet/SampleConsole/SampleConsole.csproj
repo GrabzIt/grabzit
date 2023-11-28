@@ -36,9 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GrabzIt, Version=3.3.4.1, Culture=neutral, PublicKeyToken=d1123f66f1e59879, processorArchitecture=MSIL">
-      <HintPath>..\packages\GrabzIt.3.3.4.1\lib\net20\GrabzIt.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -67,6 +64,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GrabzIt\GrabzIt.csproj">
+      <Project>{fbe0e172-5653-4fa1-9013-90f1496904f3}</Project>
+      <Name>GrabzIt</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
