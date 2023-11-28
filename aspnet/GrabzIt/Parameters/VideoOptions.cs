@@ -153,13 +153,7 @@ namespace GrabzIt.Parameters
             {
                 callBackURLParam = callBackURL;
             }
-            Console.WriteLine(applicationSecret + "|" + urlParam + callBackURLParam +
-            "|" + BrowserHeight
-            + "|" + BrowserWidth + "|" + CustomId
-            + "|" + CustomWaterMarkId + "|" + Start + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country)
-            + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey
-             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications)
-             + "|" + ClickElement + "|" + FramesPerSecond + "|" + Duration);
+
             return applicationSecret + "|" + urlParam + callBackURLParam +
             "|" + BrowserHeight
             + "|" + BrowserWidth + "|" + CustomId 
