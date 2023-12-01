@@ -42,7 +42,7 @@
     <PackageProjectUrl>https://grabz.it/</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/GrabzIt/grabzit/master/aspnet/license.txt</PackageLicenseUrl>
     <PackageIconUrl>https://cdn.grabzit.com/images/icons/64x64.png</PackageIconUrl>
-    <Description>Use GrabzIt to take PDF, DOCX, rendered HTML or image screenshots of websites. The screenshots are highly customizable options include altering quality, delay, size, browser type, geographic location and much more.
+    <Description>Use GrabzIt to take PDF, DOCX, Video, rendered HTML or image screenshots of websites. The screenshots are highly customizable options include altering quality, delay, size, browser type, geographic location and much more.
 
 You can even convert HTML directly into images, DOCX documents, PDF's, or capture tables from web pages and convert them into a CSV, JSON or Excel documents.
 
@@ -51,7 +51,7 @@ Additionally you can even convert online video's into animated GIF's.
 More documentation can be found at: https://grabz.it/api/aspnet</Description>
     <PackageReleaseNotes>- Now can click on a HTML element before performing a capture
 </PackageReleaseNotes>
-    <Version>3.5.4.0</Version>
+    <Version>3.5.5.0</Version>
     <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
