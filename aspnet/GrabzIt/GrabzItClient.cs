@@ -488,6 +488,33 @@ namespace GrabzIt
         }
 
         /// <summary>
+        /// This method specifies a HTML file that should be converted into a video.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into a video.</param>
+        public void FileToVideo(string path)
+        {
+            FileToVideo(path, null);
+        }
+
+        /// <summary>
+        /// This method specifies a HTML file that should be converted into a video.
+        /// </summary>
+        /// <param name="path">The file path of a HTML file to convert into a video.</param>
+        /// <param name="options">A instance of the VideoOptions class that defines any special options to use when creating the video.</param>
+        public void FileToVideo(string path, VideoOptions options)
+        {
+            lock (thisLock)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new GrabzItException(string.Concat("File: ", path, " does not exist"), ErrorCode.FileNonExistantPath);
+                }
+
+                HTMLToVideo(File.ReadAllText(path), options);
+            }
+        }
+
+        /// <summary>
         /// This method specifies the URL that the HTML tables should be extracted from.
         /// </summary>
         /// <param name="url">The URL to extract HTML tables from.</param>
