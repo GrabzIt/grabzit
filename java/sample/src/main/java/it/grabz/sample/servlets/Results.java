@@ -2,12 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.grabz.grabzit.servlets;
+package it.grabz.sample.servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +21,6 @@ public class Results extends HttpServlet{
         String path = getServletContext().getRealPath("/results");
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
-        List<String> results = new ArrayList<String>();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.getWriter().write("[");

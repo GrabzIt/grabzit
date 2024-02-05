@@ -2,7 +2,7 @@
 
 package GrabzItTableOptions;
 
-use GrabzIt::GrabzItBaseOptions;
+use GrabzItBaseOptions;
 
 @ISA = qw(GrabzItBaseOptions);
 

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.grabz.grabzit.servlets;
+package it.grabz.sample.servlets;
 
 import java.io.File;
 import java.io.IOException;

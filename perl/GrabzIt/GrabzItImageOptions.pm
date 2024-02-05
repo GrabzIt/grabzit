@@ -2,7 +2,7 @@
 
 package GrabzItImageOptions;
 
-use GrabzIt::GrabzItBaseOptions;
+use GrabzItBaseOptions;
 
 @ISA = qw(GrabzItBaseOptions);
 

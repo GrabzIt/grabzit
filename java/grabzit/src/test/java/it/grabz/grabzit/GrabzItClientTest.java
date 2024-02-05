@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.JAXBException;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,7 +32,6 @@ public class GrabzItClientTest {
     private boolean isSubscribedAccount;
     private final String WaterMark_Identifier = "test_java_watermark";
     private final String WaterMark_Path = "watermark.png";
-    private final String HTML_Path = "test.html";
     private final String Cookie_Name = "test_cookie";
     private final String Cookie_Domain = ".example.com";
     private GrabzItClient client;

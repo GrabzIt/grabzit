@@ -6,10 +6,6 @@ import cgitb
 import glob
 import uuid
 import re
-try:
-	import configparser
-except ImportError:
-	import ConfigParser as configparser
 
 cgitb.enable()
 
@@ -20,11 +16,11 @@ from GrabzIt import GrabzItImageOptions
 from GrabzIt import GrabzItAnimationOptions
 from GrabzIt import GrabzItTableOptions
 try:
-	from configparser import SafeConfigParser
+	from configparser import ConfigParser
 except ImportError:
-	from ConfigParser import SafeConfigParser
+	from ConfigParser import ConfigParser
 
-parser = SafeConfigParser()
+parser = ConfigParser()
 parser.read(os.path.dirname(os.path.abspath(__file__)) + os.path.sep + "config.ini")
 
 def useCallbackHandler():

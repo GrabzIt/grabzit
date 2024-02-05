@@ -2,7 +2,7 @@
 
 package GrabzItHTMLOptions;
 
-use GrabzIt::GrabzItBaseOptions;
+use GrabzItBaseOptions;
 
 @ISA = qw(GrabzItBaseOptions);
 

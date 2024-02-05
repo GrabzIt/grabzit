@@ -2,7 +2,7 @@
 
 package GrabzItAnimationOptions;
 
-use GrabzIt::GrabzItBaseOptions;
+use GrabzItBaseOptions;
 
 @ISA = qw(GrabzItBaseOptions);
 

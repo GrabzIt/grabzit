@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'grabzit'
+require_relative '../lib/grabzit.rb'
 
 class GrabzItTest < Test::Unit::TestCase
 	Cookie_Name = "test_cookie"
