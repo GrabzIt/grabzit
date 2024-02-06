@@ -37,8 +37,8 @@ public class GrabzItClientTest {
     private GrabzItClient client;
     
     public GrabzItClientTest() {
-        applicationKey = "APPLICAION KEY";
-        applicationSecret = "APPLICATION SECRET";
+        applicationKey = "c3VwcG9ydEBncmFiei5pdA==";
+        applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi=";
         isSubscribedAccount = true;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
@@ -136,6 +136,20 @@ public class GrabzItClientTest {
             Assert.fail("An error occured when trying to take a PDF screenshot: " + ex.getMessage());
         }
     }        
+
+    @Test
+    public void testTakeVideo() throws IOException, JAXBException, Exception
+    {
+        try
+        {
+            client.URLToImage("https://grabz.it/upgrade/#Settings");
+            Assert.assertNotNull("Failed to take video using URLToVideo method", client.Save());
+        }
+        catch(Exception ex)
+        {
+            Assert.fail("An error occured when trying to convert a URL into a video: " + ex.getMessage());
+        }
+    }
     
     @Test
     public void testTakeImage() throws IOException, JAXBException, Exception
@@ -411,6 +425,5 @@ public class GrabzItClientTest {
         URL location = GrabzItClientTest.class.getProtectionDomain().getCodeSource().getLocation();
         String path = location.getFile();
         path = path.substring(1);
-        return path + item;       
-    }
+        return path + item;     }
 }

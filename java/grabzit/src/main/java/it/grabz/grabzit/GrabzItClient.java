@@ -14,6 +14,7 @@ import it.grabz.grabzit.parameters.ImageOptions;
 import it.grabz.grabzit.parameters.PDFOptions;
 import it.grabz.grabzit.parameters.ParameterUtility;
 import it.grabz.grabzit.parameters.TableOptions;
+import it.grabz.grabzit.parameters.VideoOptions;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,6 +66,7 @@ public class GrabzItClient {
     
     private final String BASE_URL = "://api.grabz.it/services/";
     private final String TAKE_DOCX = "takedocx";
+    private final String TAKE_VIDEO = "takevideo";
     private final String TAKE_PDF = "takepdf";
     private final String TAKE_TABLE = "taketable";
     private final String TAKE_PICTURE = "takepicture";
@@ -308,6 +310,68 @@ public class GrabzItClient {
     {
         FileToImage(path, null);
     }
+    
+    /**
+     * This method specifies the URL that should be converted into a video.
+     * @param url The URL to convert into a video.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToVideo(String url) throws UnsupportedEncodingException
+    {
+        URLToImage(url, null);
+    }    
+    
+    /**
+     * This method specifies the HTML that should be converted into a video.
+     * @param html The HTML to convert into a video.
+     * @param options A instance of the VideoOptions class that defines any special options to use when creating the video.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToVideo(String html, VideoOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new VideoOptions();
+        }
+        this.request = new Request(getRootURL() + TAKE_VIDEO, true, options, html);
+    }   
+    
+    /**
+     * This method specifies the HTML that should be converted into a video.
+     * @param html The HTML to convert into a video.
+     * @throws UnsupportedEncodingException
+     */
+    public void HTMLToVideo(String html) throws UnsupportedEncodingException
+    {
+        HTMLToVideo(html, null);
+    }    
+    
+    /**
+     * This method specifies a HTML file that should be converted into a video.
+     * @param path The file path of a HTML file to convert into a video.
+     * @param options A instance of the VideoOptions class that defines any special options to use when creating the video.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToVideo(String path, VideoOptions options) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        this.HTMLToVideo(fileToHTML(path), options);
+    }        
+
+    /**
+     * This method specifies a HTML file that should be converted into a video.
+     * @param path The file path of a HTML file to convert into a video.
+     * @throws UnsupportedEncodingException
+     * @throws GrabzItException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void FileToVideo(String path) throws UnsupportedEncodingException, GrabzItException, FileNotFoundException, IOException
+    {
+        FileToVideo(path, null);
+    }    
 
     /**
      * This method specifies the URL that should be converted into rendered HTML.
