@@ -1,6 +1,3 @@
-aspnet/GrabzIt/bin/Release/GrabzIt.dll
-aspnet/GrabzIt/bin/Release/GrabzIt.pdb
-aspnet/GrabzIt/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
 aspnet/SampleConsole/bin
 aspnet/Sample/bin
 aspnet/GrabzIt/bin
@@ -11,9 +8,14 @@ aspnet/GrabzIt/obj
 scraper/aspnet/Sample/obj
 scraper/aspnet/GrabzIt.Scraper/obj
 scraper/aspnet/Sample/bin
-scraper/aspnet/SampleMVC/obj
+aspnet/SampleMVC/obj
+aspnet/SampleMVC/bin
 scraper/aspnet/GrabzIt.Scraper/bin
 scraper/aspnet/.vs
+aspnet/.vs
+aspnet/Sample/.vs
+aspnet/SampleMVC/.vs
+aspnet/SampleConsole/.vs
 *.tlb
 aspnet/GrabzIt/obj/Release/GrabzIt.csproj.FileListAbsolute.txt
 aspnet/GrabzIt/obj/Release/GrabzIt.dll
