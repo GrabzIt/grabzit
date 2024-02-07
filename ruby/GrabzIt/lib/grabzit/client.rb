@@ -1,4 +1,4 @@
-# The public REST API for http://grabz.it
+# The public REST API for https://grabz.it
 # @example To include the GrabzIt module do the following
 #    require 'grabzit'
 module GrabzIt	
@@ -32,13 +32,15 @@ module GrabzIt
 	#    grabzItClient.save("http://www.mysite.com/grabzit/handler")
 	# @version 3.0
 	# @author GrabzIt
-	# @see http://grabz.it/api/ruby/ GrabzIt Ruby API
+	# @see https://grabz.it/api/ruby/ GrabzIt Ruby API
 	class Client
 
 		WebServicesBaseURL = "://api.grabz.it/services/"
 		private_constant :WebServicesBaseURL	
 		TakePicture = "takepicture"	
 		private_constant :TakePicture
+		TakeVideo = "takevideo"	
+		private_constant :TakeVideo	
 		TakeTable = "taketable"
 		private_constant :TakeTable
 		TakePDF = "takepdf"
@@ -54,7 +56,7 @@ module GrabzIt
 		#
 		# @param applicationKey [String] your application key
 		# @param applicationSecret [String] your application secret
-		# @see http://grabz.it/register.aspx You can get an application key and secret by registering for free with GrabzIt		
+		# @see https://grabz.it/login/create/ You can get an application key and secret by registering for free with GrabzIt		
 		def initialize(applicationKey, applicationSecret)
 			@applicationKey = applicationKey
 			@applicationSecret = applicationSecret
@@ -115,6 +117,45 @@ module GrabzIt
 		def file_to_image(path, options = nil)		
 			html_to_image(read_file(path), options)
 		end
+
+		# This method specifies the URL that should be converted into a video
+		#
+		# @param url [String] the URL to capture as a video
+		# @param options [VideoOptions, nil] a instance of the VideoOptions class that defines any special options to use when creating a video
+		# @return [void]		
+		def url_to_video(url, options = nil)		
+
+			if options == nil
+				options = VideoOptions.new()
+			end
+		
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeVideo, false, options, url)
+			return nil
+		end
+
+		# This method specifies the HTML that should be converted into a video
+		#
+		# @param html [String] the HTML to convert into a video
+		# @param options [VideoOptions, nil] a instance of the VideoOptions class that defines any special options to use when creating a video
+		# @return [void]		
+		def html_to_video(html, options = nil)		
+
+			if options == nil
+				options = VideoOptions.new()
+			end
+		
+			@request = Request.new(@protocol + WebServicesBaseURL + TakeVideo, true, options, html)
+			return nil
+		end		
+
+		# This method specifies a HTML file that should be converted into a video
+		#
+		# @param path [String] the file path of a HTML file to convert into a video
+		# @param options [VideoOptions, nil] a instance of the VideoOptions class that defines any special options to use when creating a video
+		# @return [void]		
+		def file_to_video(path, options = nil)		
+			html_to_video(read_file(path), options)
+		end	
 
 		# This method specifies the URL that should be converted into rendered HTML
 		#

@@ -31,6 +31,14 @@ class GrabzItTest < Test::Unit::TestCase
 		end		
 	end
 
+	def test_html_to_video
+		assert_nothing_raised "An error occured when trying to take convert HTML to a video" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			grabzItClient.html_to_video("<h1>Hello world</h1>");
+			assert_not_equal(false, grabzItClient.save(), "HTML not converted")
+		end		
+	end	
+
 	def test_html_to_pdf
 		assert_nothing_raised "An error occured when trying to take convert HTML to a pdf" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
