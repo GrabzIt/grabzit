@@ -19,3 +19,17 @@ test('html converts to image', done => {
     client.html_to_image("<h1>Hello world</h1>");    
     client.save(null, callback);
 }, 10000);
+
+test('html converts to video', done => {
+    function callback(error, id){
+        try {
+            expect(error).toBeNull();
+            done();
+        } catch (error) {
+            done(error);
+        }
+    }
+
+    client.html_to_video("<h1>Hello world</h1>");    
+    client.save(null, callback);
+}, 10000);

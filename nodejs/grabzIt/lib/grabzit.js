@@ -781,6 +781,69 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
 
+function _getVideoRequestObject(applicationKey, applicationSecret, url, options, isPost, target) {
+    var defaults = {
+        'customId': '',
+        'browserWidth': '',
+        'browserHeight': '',
+        'framesPerSecond': 0,
+        'duration': 10,
+        'start': 0,
+        'requestAs': 0,
+        'customWaterMarkId': '',
+        'country': '',
+        'waitForElement': '',
+        'exportUrl': '',
+        'encryptionKey': '',
+        'noAds':false,
+        'postData':'',
+        'proxy': '',
+        'noCookieNotifications':false,
+        'address': '',
+		'clickElement': ''
+    };
+
+    context = _extend(defaults, options);
+
+    var startDelay = 0;
+    if (context['start'] != '') {
+        startDelay = context['start']
+    }   
+
+    this.requestParams = {
+        'key': applicationKey,
+        'fps': context['framesPerSecond'],
+        'duration': context['duration'],
+        'start': startDelay,
+        'bwidth': context['browserWidth'],
+        'bheight': context['browserHeight'],
+        'customid': context['customid'],
+        'customwatermarkid': context['customWaterMarkId'],
+        'requestmobileversion': parseInt(context['requestAs']),
+        'country': context['country'],
+        'waitfor': context['waitForElement'],
+        'export': context['exportUrl'],
+        'encryption': context['encryptionKey'],
+        'noads': _toInt(context['noAds']),
+        'post': context['postData'],
+        'proxy': context['proxy'],
+        'nonotify': _toInt(context['noCookieNotifications']),
+        'address': context['address'],
+		'click': context['clickElement'],
+    };
+
+    requestParams = _addTargetToRequest(requestParams, isPost, target);
+
+    var signaturePartTwo = '|' + context['browserHeight'] + '|' + context['browserWidth'] + '|' + context['customId']
+     + '|' + context['customWaterMarkId'] + '|' + parseInt(context['start'])
+     + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + context['exportUrl'] 
+     + '|' + context['waitForElement'] + '|' +  context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] 
+     + '|' + context['proxy'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) 
+     + '|' + context['clickElement'] + '|' + parseFloat(context['framesPerSecond']) + '|' + parseInt(context['duration']);
+
+    return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
+}
+
 function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, isPost, target) {
     var defaults = {
         'customId': '',
@@ -877,7 +940,7 @@ function _readFile(filePath)
 /*
 * This method specifies the URL that should be converted into a PDF.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.url_to_pdf = function (url, options) {
     this.request = _getPDFRequestObject(this.applicationKey, this.applicationSecret, 'takepdf', options, false, url);
@@ -886,7 +949,7 @@ GrabzItClient.prototype.url_to_pdf = function (url, options) {
 /*
 * This method specifies the HTML that should be converted into a PDF.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.html_to_pdf = function (html, options) {
     this.request = _getPDFRequestObject(this.applicationKey, this.applicationSecret, 'takepdf', options, true, html);
@@ -895,7 +958,7 @@ GrabzItClient.prototype.html_to_pdf = function (html, options) {
 /*
 * This method specifies a HTML file that should be converted into a PDF.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.file_to_pdf = function (path, options) {
     this.html_to_pdf(_readFile(path), options);
@@ -904,7 +967,7 @@ GrabzItClient.prototype.file_to_pdf = function (path, options) {
 /*
 * This method specifies the URL that should be converted into a DOCX document.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.url_to_docx = function (url, options) {
     this.request = _getDOCXRequestObject(this.applicationKey, this.applicationSecret, 'takedocx', options, false, url);
@@ -913,7 +976,7 @@ GrabzItClient.prototype.url_to_docx = function (url, options) {
 /*
 * This method specifies the HTML that should be converted into a DOCX document.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.html_to_docx = function (html, options) {
     this.request = _getDOCXRequestObject(this.applicationKey, this.applicationSecret, 'takedocx', options, true, html);
@@ -922,7 +985,7 @@ GrabzItClient.prototype.html_to_docx = function (html, options) {
 /*
 * This method specifies a HTML file that should be converted into a DOCX document.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.file_to_docx = function (path, options) {
     this.html_to_docx(_readFile(path), options);
@@ -931,7 +994,7 @@ GrabzItClient.prototype.file_to_docx = function (path, options) {
 /*
 * This method specifies the URL that the HTML tables should be extracted from.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.url_to_table = function (url, options) {
      this.request = _getTableRequestObject(this.applicationKey, this.applicationSecret, 'taketable', options, false, url);
@@ -940,7 +1003,7 @@ GrabzItClient.prototype.url_to_table = function (url, options) {
 /*
 * This method specifies the HTML that the HTML tables should be extracted from.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.html_to_table = function (html, options) {
     this.request = _getTableRequestObject(this.applicationKey, this.applicationSecret, 'taketable', options, true, html);
@@ -949,7 +1012,7 @@ GrabzItClient.prototype.html_to_table = function (html, options) {
 /*
 * This method specifies a HTML file that the HTML tables should be extracted from.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.file_to_table = function (path, options) {
     this.html_to_table(_readFile(path), options);
@@ -958,7 +1021,7 @@ GrabzItClient.prototype.file_to_table = function (path, options) {
 /*
 * This method specifies the URL of the online video that should be converted into a animated GIF.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.url_to_animation = function (url, options) {
     this.request = _getAnimationRequestObject(this.applicationKey, this.applicationSecret, 'takeanimation', options, false, url);
@@ -967,7 +1030,7 @@ GrabzItClient.prototype.url_to_animation = function (url, options) {
 /*
 * This method specifies the URL that should be converted into a image screenshot.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.url_to_image = function (url, options) {
     this.request = _getImageRequestObject(this.applicationKey, this.applicationSecret, 'takepicture', options, false, url);
@@ -976,7 +1039,7 @@ GrabzItClient.prototype.url_to_image = function (url, options) {
 /*
 * This method specifies the HTML that should be converted into a image.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.html_to_image = function (html, options) {
     this.request = _getImageRequestObject(this.applicationKey, this.applicationSecret, 'takepicture', options, true, html);
@@ -985,16 +1048,43 @@ GrabzItClient.prototype.html_to_image = function (html, options) {
 /*
 * This method specifies a HTML file that should be converted into a image.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.file_to_image = function (path, options) {
     this.html_to_image(_readFile(path), options);
 };
 
 /*
+* This method specifies the URL that should be converted into a video.
+*
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
+*/
+GrabzItClient.prototype.url_to_video = function (url, options) {
+    this.request = _getVideoRequestObject(this.applicationKey, this.applicationSecret, 'takevideo', options, false, url);
+};
+
+/*
+* This method specifies the HTML that should be converted into a video.
+*
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
+*/
+GrabzItClient.prototype.html_to_video = function (html, options) {
+    this.request = _getVideoRequestObject(this.applicationKey, this.applicationSecret, 'takevideo', options, true, html);
+};
+
+/*
+* This method specifies a HTML file that should be converted into a video.
+*
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
+*/
+GrabzItClient.prototype.file_to_video = function (path, options) {
+    this.html_to_video(_readFile(path), options);
+};
+
+/*
 * This method specifies the URL that should be converted into rendered HTML.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.url_to_rendered_html = function (url, options) {
     this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml', options, false, url);
@@ -1003,7 +1093,7 @@ GrabzItClient.prototype.url_to_rendered_html = function (url, options) {
 /*
 * This method specifies the HTML that should be converted into rendered HTML.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.html_to_rendered_html = function (html, options) {
     this.request = _getHTMLRequestObject(this.applicationKey, this.applicationSecret, 'takehtml', options, true, html);
@@ -1012,7 +1102,7 @@ GrabzItClient.prototype.html_to_rendered_html = function (html, options) {
 /*
 * This method specifies a HTML file that should be converted into rendered HTML.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/
 */
 GrabzItClient.prototype.file_to_rendered_html = function (path, options) {
     this.html_to_image(_readFile(path), options);
@@ -1021,7 +1111,7 @@ GrabzItClient.prototype.file_to_rendered_html = function (path, options) {
 /*
 * Calls the GrabzIt web service to take the screenshot.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#save
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#save
 */
 GrabzItClient.prototype.save = function (callBackUrl, oncomplete) {
     if (this.request == null) {
@@ -1047,7 +1137,7 @@ GrabzItClient.prototype.save = function (callBackUrl, oncomplete) {
 /*
 * Calls the GrabzIt web service to take the screenshot and saves it to the target path provided. If no target path is provided it returns the screenshot byte data.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#saveto
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#saveto
 */
 GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
     if (saveToFile == null) {
@@ -1126,7 +1216,7 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
 /*
 * This method returns the screenshot itself. If nothing is returned then something has gone wrong or the screenshot is not ready yet.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getresult
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#getresult
 */
 GrabzItClient.prototype.get_result = function (id, oncomplete) {
     if (id == '' || id == null) {
@@ -1141,7 +1231,7 @@ GrabzItClient.prototype.get_result = function (id, oncomplete) {
 /*
 * Get the current status of a GrabzIt screenshot.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getstatus
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#getstatus
 */
 GrabzItClient.prototype.get_status = function (id, oncomplete) {
     if (id == '' || id == null) {
@@ -1156,7 +1246,7 @@ GrabzItClient.prototype.get_status = function (id, oncomplete) {
 /*
 * Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getcookies
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#getcookies
 */
 GrabzItClient.prototype.get_cookies = function (domain, oncomplete) {
     var sig = _createSignature(this.applicationSecret+'|'+domain);
@@ -1173,7 +1263,7 @@ GrabzItClient.prototype.get_cookies = function (domain, oncomplete) {
 /*
 * Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global cookie is overridden.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#setcookie
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#setcookie
 */
 GrabzItClient.prototype.set_cookie = function (name, domain, options, oncomplete) {
 
@@ -1205,7 +1295,7 @@ GrabzItClient.prototype.set_cookie = function (name, domain, options, oncomplete
 /*
 * Delete a custom cookie or block a global cookie from being used.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#deletecookie
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#deletecookie
 */
 GrabzItClient.prototype.delete_cookie = function (name, domain, oncomplete) {
 
@@ -1225,7 +1315,7 @@ GrabzItClient.prototype.delete_cookie = function (name, domain, oncomplete) {
 /*
 * Add a new custom watermark.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#addwatermark
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#addwatermark
 */
 GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, ypos, oncomplete) {
 
@@ -1304,7 +1394,7 @@ GrabzItClient.prototype.add_watermark = function (identifier, filePath, xpos, yp
 /*
 * Delete a custom watermark.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#deletewatermark
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#deletewatermark
 */
 GrabzItClient.prototype.delete_watermark = function (identifier, oncomplete) {
     var sig = _createSignature(this.applicationSecret + '|' + identifier);
@@ -1321,7 +1411,7 @@ GrabzItClient.prototype.delete_watermark = function (identifier, oncomplete) {
 /*
 * Get your uploaded custom watermarks.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getwatermarks
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#getwatermarks
 */
 GrabzItClient.prototype.get_watermarks = function (oncomplete) {
     _getWaterMarks(this.applicationKey, this.applicationSecret, '', oncomplete);
@@ -1330,7 +1420,7 @@ GrabzItClient.prototype.get_watermarks = function (oncomplete) {
 /*
 * Get your uploaded custom watermark.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#getwatermark
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#getwatermark
 */
 GrabzItClient.prototype.get_watermark = function (identifier, oncomplete) {
     _getWaterMarks(this.applicationKey, this.applicationSecret, identifier, function (err, watermarks) {
@@ -1356,7 +1446,7 @@ GrabzItClient.prototype.get_watermark = function (identifier, oncomplete) {
 /*
 * This method sets if requests to GrabzIt's API should use SSL or not
 * 
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#usessl
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#usessl
 */
 GrabzItClient.prototype.use_ssl = function (value) {
     if (value){
@@ -1369,7 +1459,7 @@ GrabzItClient.prototype.use_ssl = function (value) {
 /*
 * This method enables a local proxy server to be used for all requests
 * 
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#localproxy
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#localproxy
 */
 GrabzItClient.prototype.set_local_proxy = function (proxyUrl) {
     const pUrl = urlUtility.parse(proxyUrl);
@@ -1384,7 +1474,7 @@ GrabzItClient.prototype.set_local_proxy = function (proxyUrl) {
 /*
 * This method creates a cryptographically secure encryption key to pass to the encryption key parameter.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#createencryptionkey
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#createencryptionkey
 */
 GrabzItClient.prototype.create_encryption_key = function () {
     return new Buffer(crypto.randomBytes(32)).toString('base64');
@@ -1393,7 +1483,7 @@ GrabzItClient.prototype.create_encryption_key = function () {
 /*
 * This method will decrypt a encrypted capture file, using the key you passed to the encryption key parameter.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decryptfile
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#decryptfile
 */
 GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
     var data = _readFile(path);
@@ -1409,7 +1499,7 @@ GrabzItClient.prototype.decrypt_file = function (path, key, oncomplete) {
 /*
 * This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
 *
-* For more detailed documentation please visit: http://grabz.it/api/nodejs/grabzitclient.aspx#decrypt
+* For more detailed documentation please visit: https://grabz.it/api/nodejs/technical-documentation/#decrypt
 */
 GrabzItClient.prototype.decrypt = function (data, key) {
     if (data == null)

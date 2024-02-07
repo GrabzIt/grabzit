@@ -1,7 +1,7 @@
 {
   "name": "grabzit",
-  "description": "Automatically convert HTML or URL's into images, DOCX, rendered HTML or PDF documents. Additionally convert online videos into animated GIF's or convert HTML tables to CSV.",
-  "version": "3.5.2",
+  "description": "Automatically convert HTML or URL's into images, DOCX, videos, rendered HTML or PDF documents. Additionally convert online videos into animated GIF's or convert HTML tables to CSV.",
+  "version": "3.5.3",
   "main": "./lib/grabzit",
   "scripts": {
     "test": "jest"
@@ -11,6 +11,7 @@
     "html to pdf",
     "html to image",
     "html to docx",
+    "html to video",
     "screengrab",
     "api",
     "pdf",
