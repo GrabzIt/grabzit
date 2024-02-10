@@ -12,6 +12,7 @@ class GrabzItClient
 {
 	const WebServicesBaseURL = "://api.grabz.it/services/";
 	const TakePicture = "takepicture";
+	const TakeVideo = "takevideo";
 	const TakeTable = "taketable";
 	const TakePDF = "takepdf";
 	const TakeDOCX = "takedocx";
@@ -215,6 +216,54 @@ class GrabzItClient
 		}
 		
 		$this->HTMLToImage(file_get_contents($path), $options);
+	}	
+
+	/*
+	This method specifies the URL that should be converted into a video.
+
+	url - The URL to capture as a video.
+	options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video.
+	*/
+	public function URLToVideo($url, GrabzItVideoOptions $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItVideoOptions();			
+		}		
+
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeVideo, false, $options, $url);
+	}
+
+	/*
+	This method specifies the HTML that should be converted into a video.
+
+	html - The HTML to convert into a video.
+	options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video.
+	*/	
+	public function HTMLToVideo($html, GrabzItVideoOptions $options = null)
+	{
+		if ($options == null)
+		{
+			$options = new GrabzItVideoOptions();			
+		}		
+
+		$this->request = new GrabzItRequest($this->getRootUrl() . GrabzItClient::TakeVideo, true, $options, $html);
+	}
+
+	/*
+	This method specifies a HTML file that should be converted into a video.
+
+	path - The file path of a HTML file to convert into a video.
+	options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video.
+	*/		
+	public function FileToVideo($path, GrabzItVideoOptions $options = null)
+	{
+		if (!file_exists($path))
+		{
+			throw new GrabzItException("File: " . $path . " does not exist", GrabzItException::FILE_NON_EXISTANT_PATH);
+		}
+		
+		$this->HTMLToVideo(file_get_contents($path), $options);
 	}	
 
 	/*

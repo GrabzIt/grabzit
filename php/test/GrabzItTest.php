@@ -9,9 +9,9 @@ final class GrabzItTest extends TestCase
     private $applicationKey;
     private $applicationSecret;
     protected function setUp(): void
-    {
+    {        
         $this->applicationKey = "YOUR APPLICATION KEY";
-        $this->applicationKey = "YOUR APPLICATION SECRET";
+        $this->applicationSecret = "YOUR APPLICATION SECRET";
     }
     public function testHtmlToImage(): void
     {
@@ -19,4 +19,11 @@ final class GrabzItTest extends TestCase
         $client->HTMLToImage("<h1>Hello world</h1>");
         $this->assertEquals(true, $client->Save(), "HTML not converted");
     }
+
+    public function testHtmlToVideo(): void
+    {
+        $client = new GrabzItClient($this->applicationKey, $this->applicationSecret);
+        $client->HTMLToVideo("<h1>Hello world</h1>");
+        $this->assertEquals(true, $client->Save(), "HTML not converted");
+    }    
 }
