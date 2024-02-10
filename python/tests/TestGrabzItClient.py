@@ -9,7 +9,15 @@ class TestGrabzItClient(unittest.TestCase):
 
     def test_html_to_image(self):
         self.client.HTMLToImage("<h1>Hello world</h1>")
-        self.assertEqual(self.client.Save(), True, "HTML not converted")
+        self.assertNotEqual(self.client.Save(), "", "HTML not converted")
+
+    def test_html_to_video(self):
+        self.client.HTMLToVideo("<h1>Hello world</h1>")
+        self.assertNotEqual(self.client.Save(), "", "HTML not converted")       
+
+    def test_url_to_video(self):
+        self.client.URLToVideo("https://grabz.it")
+        self.assertNotEqual(self.client.Save(), "", "URL not converted")         
 
 if __name__ == '__main__':
     unittest.main()

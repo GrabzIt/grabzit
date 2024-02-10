@@ -35,6 +35,7 @@ from GrabzIt import GrabzItPDFOptions
 from GrabzIt import GrabzItDOCXOptions
 from GrabzIt import GrabzItTableOptions
 from GrabzIt import GrabzItHTMLOptions
+from GrabzIt import GrabzItVideoOptions
 from GrabzIt import AES
 from GrabzIt import BlockFeeder
 
@@ -43,6 +44,7 @@ class GrabzItClient:
 		WebServiceHostName = "api.grabz.it"
 		WebServicesBaseURL = "/services/"
 		TakePicture = "takepicture"
+		TakeVideo = "takevideo"
 		TakePDF = "takepdf"
 		TakeDOCX = "takedocx"
 		TakeTable = "taketable"
@@ -108,6 +110,39 @@ class GrabzItClient:
 		#				 
 		def FileToImage(self, path, options = None):
 				self.HTMLToImage(self.ReadFile(path), options)
+
+		#
+		# This method specifies the URL that should be converted into a video.
+		#
+		# url - The URL to capture as a video
+		# options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video
+		#
+		def URLToVideo(self, url, options = None):
+				if (options == None):
+						options = GrabzItVideoOptions.GrabzItVideoOptions()
+				
+				self.request = Request.Request(self.WebServicesBaseURL + self.TakeVideo, False, options, url)
+
+		#
+		# This method specifies the HTML that should be converted into a video.
+		#
+		# html - The HTML to convert into a video
+		# options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video
+		#				 
+		def HTMLToVideo(self, html, options = None):
+				if (options == None):
+						options = GrabzItVideoOptions.GrabzItVideoOptions()
+				
+				self.request = Request.Request(self.WebServicesBaseURL + self.TakeVideo, True, options, html)
+
+		#
+		# This method specifies a HTML file that should be converted into a video.
+		#
+		# path - The file path of a HTML file to convert into a video
+		# options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video
+		#				 
+		def FileToVideo(self, path, options = None):
+				self.HTMLToVideo(self.ReadFile(path), options)
 
 		#
 		# This method specifies the URL that should be converted into rendered HTML.
@@ -678,7 +713,11 @@ class GrabzItClient:
 			response = h.getresponse()
 			
 			self.CheckResponseHeader(response.status);
-			return response.read()
+			r = response.read()
+			response.close()
+			h.close()
+
+			return r
 
 		def _getConnection(self, method, action):
 			hostname = self.WebServiceHostName
@@ -752,7 +791,11 @@ class GrabzItClient:
 			connection.endheaders()
 			response = connection.getresponse()
 			self.CheckResponseHeader(response.status)
-			return response.read()		  
+			r = response.read()
+			response.close()
+			connection.close()
+
+			return r		  
 		
 		def CheckResponseHeader(self, httpCode):
 				if httpCode == 403:
