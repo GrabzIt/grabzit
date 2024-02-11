@@ -93,6 +93,7 @@ public class VideoOptions extends BaseOptions{
      * @param start the starting time of the web page that should be converted into a video.
      */
     public void setStart(int start) {
+        this.delay = start;
         this.start = start;
     }
 

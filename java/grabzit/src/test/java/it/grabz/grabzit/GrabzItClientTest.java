@@ -37,8 +37,8 @@ public class GrabzItClientTest {
     private GrabzItClient client;
     
     public GrabzItClientTest() {
-        applicationKey = "c3VwcG9ydEBncmFiei5pdA==";
-        applicationSecret = "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi=";
+        applicationKey = "YOUR APPLICATION KEY";
+        applicationSecret = "YOUR APPLICATION SECRET";
         isSubscribedAccount = true;
         client = new GrabzItClient(applicationKey, applicationSecret);
     }
