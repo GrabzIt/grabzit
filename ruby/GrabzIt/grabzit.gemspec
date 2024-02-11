@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["GrabzIt"]
   s.require_paths = ["lib"]
   s.email       = 'support@grabz.it'
-  s.files       = ["Rakefile", "lib/grabzit.rb", "lib/grabzit/client.rb","lib/grabzit/cookie.rb","lib/grabzit/screenshotstatus.rb", "lib/grabzit/watermark.rb", "lib/grabzit/exception.rb", "lib/grabzit/baseoptions.rb", "lib/grabzit/utility.rb", "lib/grabzit/animationoptions.rb", "lib/grabzit/request.rb", "lib/grabzit/tableoptions.rb", "lib/grabzit/imageoptions.rb", "lib/grabzit/htmloptions.rb", "lib/grabzit/pdfoptions.rb", "lib/grabzit/docxoptions.rb", "lib/grabzit/proxy.rb", "test/test.png", "test/test_grabzit.rb"]
+  s.files       = ["Rakefile", "lib/grabzit.rb", "lib/grabzit/client.rb","lib/grabzit/cookie.rb","lib/grabzit/screenshotstatus.rb", "lib/grabzit/watermark.rb", "lib/grabzit/exception.rb", "lib/grabzit/baseoptions.rb", "lib/grabzit/utility.rb", "lib/grabzit/animationoptions.rb", "lib/grabzit/request.rb", "lib/grabzit/tableoptions.rb", "lib/grabzit/imageoptions.rb", "lib/grabzit/htmloptions.rb", "lib/grabzit/pdfoptions.rb", "lib/grabzit/docxoptions.rb", "lib/grabzit/videooptions.rb", "lib/grabzit/proxy.rb", "test/test.png", "test/test_grabzit.rb"]
   s.homepage    = 'https://grabz.it/api/ruby'
   s.add_dependency('rake')
 end
