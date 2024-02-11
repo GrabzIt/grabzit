@@ -668,7 +668,7 @@ module GrabzIt
 
 		# This method will decrypt a encrypted capture, using the key you passed to the encryption key parameter.
 		#
-		# @param path [String] the encrypted bytes
+		# @param data [Array<Byte>] the encrypted bytes
 		# @param key [String] the encryption key
 		# @return [Array<Byte>] an array of decrypted bytes
 		def decrypt(data, key)

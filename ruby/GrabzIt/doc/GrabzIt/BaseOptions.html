@@ -6,15 +6,15 @@
 <title>
   Class: GrabzIt::BaseOptions
   
-    &mdash; Documentation by YARD 0.9.5
+    &mdash; Documentation by YARD 0.9.34
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "GrabzIt::BaseOptions";
   relpath = '../';
 </script>
@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="nav_wrap">
-      <iframe id="nav" src="../class_list.html"></iframe>
+      <iframe id="nav" src="../class_list.html?1"></iframe>
       <div id="resizer"></div>
     </div>
 
@@ -58,8 +58,6 @@
 </div>
         <div class="clear"></div>
       </div>
-
-      <iframe id="search_frame" src="../class_list.html"></iframe>
 
       <div id="content"><h1>Class: GrabzIt::BaseOptions
   
@@ -125,26 +123,10 @@
     </li>
   
 </ul>
-<p class="tag_title">Version:</p>
-<ul class="version">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'>
-<p>3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="AnimationOptions.html" title="GrabzIt::AnimationOptions (class)">AnimationOptions</a></span>, <span class='object_link'><a href="ImageOptions.html" title="GrabzIt::ImageOptions (class)">ImageOptions</a></span>, <span class='object_link'><a href="PDFOptions.html" title="GrabzIt::PDFOptions (class)">PDFOptions</a></span>, <span class='object_link'><a href="TableOptions.html" title="GrabzIt::TableOptions (class)">TableOptions</a></span></p>
+  <p class="children"><span class='object_link'><a href="AnimationOptions.html" title="GrabzIt::AnimationOptions (class)">AnimationOptions</a></span>, <span class='object_link'><a href="DOCXOptions.html" title="GrabzIt::DOCXOptions (class)">DOCXOptions</a></span>, <span class='object_link'><a href="HTMLOptions.html" title="GrabzIt::HTMLOptions (class)">HTMLOptions</a></span>, <span class='object_link'><a href="ImageOptions.html" title="GrabzIt::ImageOptions (class)">ImageOptions</a></span>, <span class='object_link'><a href="PDFOptions.html" title="GrabzIt::PDFOptions (class)">PDFOptions</a></span>, <span class='object_link'><a href="TableOptions.html" title="GrabzIt::TableOptions (class)">TableOptions</a></span>, <span class='object_link'><a href="VideoOptions.html" title="GrabzIt::VideoOptions (class)">VideoOptions</a></span></p>
 </div>
 
 
@@ -164,7 +146,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#country-instance_method" title="#country (instance method)">#<strong>country</strong>(value)  &#x21d2; void </a>
+      <a href="#country-instance_method" title="#country (instance method)">#<strong>country</strong>  &#x21d2; String </a>
     
 
     
@@ -179,8 +161,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the country the capture should be created from: Default = "", UK =
-"UK", US = "US".</p>
+<p>The country the capture should be created from.</p>
 </div></span>
   
 </li>
@@ -189,7 +170,55 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#customId-instance_method" title="#customId (instance method)">#<strong>customId</strong>(value)  &#x21d2; void </a>
+      <a href="#country=-instance_method" title="#country= (instance method)">#<strong>country=</strong>(value)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the country the capture should be created from: Default = “”, Singapore = “SG”, UK = “UK”, US = “US”.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#customId-instance_method" title="#customId (instance method)">#<strong>customId</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The custom identifier that you can pass through to the web service.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#customId=-instance_method" title="#customId= (instance method)">#<strong>customId=</strong>(value)  &#x21d2; void </a>
     
 
     
@@ -210,6 +239,150 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#encryptionKey-instance_method" title="#encryptionKey (instance method)">#<strong>encryptionKey</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The encryption key that will be used to encrypt your capture.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#encryptionKey=-instance_method" title="#encryptionKey= (instance method)">#<strong>encryptionKey=</strong>(value)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the encryption key that will be used to encrypt your capture.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#exportURL-instance_method" title="#exportURL (instance method)">#<strong>exportURL</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The export URL that should be used to transfer the capture to a third party location.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#exportURL=-instance_method" title="#exportURL= (instance method)">#<strong>exportURL=</strong>(value)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the export URL that should be used to transfer the capture to a third party location.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#proxy-instance_method" title="#proxy (instance method)">#<strong>proxy</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The HTTP proxy that should be used to create the capture.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#proxy=-instance_method" title="#proxy= (instance method)">#<strong>proxy=</strong>(value)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the HTTP proxy that should be used to create the capture.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -222,7 +395,66 @@
       <div class="method_details first">
   <h3 class="signature first" id="country-instance_method">
   
-    #<strong>country</strong>(value)  &#x21d2; <tt>void</tt> 
+    #<strong>country</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the country the capture should be created from.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the country the capture should be created from.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_country'>country</span>
+	<span class='ivar'>@country</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="country=-instance_method">
+  
+    #<strong>country=</strong>(value)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -231,8 +463,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the country the capture should be created from: Default = "", UK =
-"UK", US = "US".</p>
+<p>Set the country the capture should be created from: Default = “”, Singapore = “SG”, UK = “UK”, US = “US”.</p>
 
 
   </div>
@@ -266,15 +497,15 @@
       <pre class="lines">
 
 
-26
-27
-28</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 38</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_country'>country</span>
-	<span class='ivar'>@country</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_country='>country=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+	<span class='ivar'>@country</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -284,7 +515,66 @@
       <div class="method_details ">
   <h3 class="signature " id="customId-instance_method">
   
-    #<strong>customId</strong>(value)  &#x21d2; <tt>void</tt> 
+    #<strong>customId</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the custom identifier that you can pass through to the web service.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the custom identifier that you can pass through to the web service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_customId'>customId</span>
+	<span class='ivar'>@customId</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="customId=-instance_method">
+  
+    #<strong>customId=</strong>(value)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -293,8 +583,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set a custom identifier to pass to the web service. This will be returned
-with the callback URL you have specified.</p>
+<p>Set a custom identifier to pass to the web service. This will be returned with the callback URL you have specified.</p>
 
 
   </div>
@@ -328,15 +617,375 @@ with the callback URL you have specified.</p>
       <pre class="lines">
 
 
-13
-14
-15</pre>
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_customId'>customId</span>
-	<span class='ivar'>@customId</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_customId='>customId=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+	<span class='ivar'>@customId</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="encryptionKey-instance_method">
+  
+    #<strong>encryptionKey</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the encryption key that will be used to encrypt your capture.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the encryption key that will be used to encrypt your capture.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_encryptionKey'>encryptionKey</span>
+	<span class='ivar'>@encryptionKey</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="encryptionKey=-instance_method">
+  
+    #<strong>encryptionKey=</strong>(value)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Set the encryption key that will be used to encrypt your capture.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>encryption key to use</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 64</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_encryptionKey='>encryptionKey=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+	<span class='ivar'>@encryptionKey</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="exportURL-instance_method">
+  
+    #<strong>exportURL</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the export URL that should be used to transfer the capture to a third party location.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the export URL that should be used to transfer the capture to a third party location.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_exportURL'>exportURL</span>
+	<span class='ivar'>@exportURL</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="exportURL=-instance_method">
+  
+    #<strong>exportURL=</strong>(value)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Set the export URL that should be used to transfer the capture to a third party location.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>export URL to use</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 51</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_exportURL='>exportURL=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+	<span class='ivar'>@exportURL</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="proxy-instance_method">
+  
+    #<strong>proxy</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the HTTP proxy that should be used to create the capture.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the HTTP proxy that should be used to create the capture.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_proxy'>proxy</span>
+	<span class='ivar'>@proxy</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="proxy=-instance_method">
+  
+    #<strong>proxy=</strong>(value)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Set the HTTP proxy that should be used to create the capture.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>HTTP proxy to use</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/baseoptions.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_proxy='>proxy=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+	<span class='ivar'>@proxy</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -348,9 +997,9 @@ with the callback URL you have specified.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 18 07:52:17 2016 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-1.9.3).
+  Generated on Sun Feb 11 22:35:23 2024 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.2.3).
 </div>
 
     </div>

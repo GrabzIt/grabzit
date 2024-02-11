@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: GrabzIt::PDFOptions
+  Class: GrabzIt::DOCXOptions
   
     &mdash; Documentation by YARD 0.9.34
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "GrabzIt::PDFOptions";
+  pathId = "GrabzIt::DOCXOptions";
   relpath = '../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../_index.html">Index (P)</a> &raquo;
+    <a href="../_index.html">Index (D)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../GrabzIt.html" title="GrabzIt (module)">GrabzIt</a></span></span>
      &raquo; 
-    <span class="title">PDFOptions</span>
+    <span class="title">DOCXOptions</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: GrabzIt::PDFOptions
+      <div id="content"><h1>Class: GrabzIt::DOCXOptions
   
   
   
@@ -76,7 +76,7 @@
           
             <li class="next"><span class='object_link'><a href="BaseOptions.html" title="GrabzIt::BaseOptions (class)">BaseOptions</a></span></li>
           
-            <li class="next">GrabzIt::PDFOptions</li>
+            <li class="next">GrabzIt::DOCXOptions</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -96,7 +96,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/grabzit/pdfoptions.rb</dd>
+    <dd>lib/grabzit/docxoptions.rb</dd>
   </dl>
   
 </div>
@@ -104,7 +104,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Represents all of the options available when creating a PDF</p>
+<p>Represents all of the options available when creating a DOCX</p>
 
 
   </div>
@@ -137,7 +137,7 @@
       
         
         <div class='inline'>
-<p>3.0</p>
+<p>3.1</p>
 </div>
       
     </li>
@@ -354,150 +354,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#coverURL-instance_method" title="#coverURL (instance method)">#<strong>coverURL</strong>  &#x21d2; String </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>The URL of a web page that should be used as a cover page for the PDF.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#coverURL=-instance_method" title="#coverURL= (instance method)">#<strong>coverURL=</strong>(value)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Set the URL of a web page that should be used as a cover page for the PDF.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#cssMediaType-instance_method" title="#cssMediaType (instance method)">#<strong>cssMediaType</strong>  &#x21d2; String </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>The CSS Media Type of the PDF to be returned.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#cssMediaType=-instance_method" title="#cssMediaType= (instance method)">#<strong>cssMediaType=</strong>(value)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Set the CSS Media Type of the PDF to be returned: ‘Print’ or ‘Screen’.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#customWaterMarkId-instance_method" title="#customWaterMarkId (instance method)">#<strong>customWaterMarkId</strong>  &#x21d2; String </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>The custom watermark id.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#customWaterMarkId=-instance_method" title="#customWaterMarkId= (instance method)">#<strong>customWaterMarkId=</strong>(value)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Set a custom watermark to add to the PDF.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#delay-instance_method" title="#delay (instance method)">#<strong>delay</strong>  &#x21d2; Integer </a>
     
 
@@ -609,7 +465,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>True if the background of the web page should be included in the PDF.</p>
+<p>True if the background images of the web page should be included in the DOCX.</p>
 </div></span>
   
 </li>
@@ -633,7 +489,55 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set to true if the background of the web page should be included in the PDF.</p>
+<p>Set to true if the background images of the web page should be included in the DOCX.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#includeImages-instance_method" title="#includeImages (instance method)">#<strong>includeImages</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>True if web page images should be included.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#includeImages=-instance_method" title="#includeImages= (instance method)">#<strong>includeImages=</strong>(value)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set to true if web page images should be included.</p>
 </div></span>
   
 </li>
@@ -657,7 +561,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>True if the links should be included in the PDF.</p>
+<p>True if the links should be included in the DOCX.</p>
 </div></span>
   
 </li>
@@ -681,7 +585,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set to true if links should be included in the PDF.</p>
+<p>Set to true if links should be included in the DOCX.</p>
 </div></span>
   
 </li>
@@ -690,55 +594,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#includeOutline-instance_method" title="#includeOutline (instance method)">#<strong>includeOutline</strong>  &#x21d2; Boolean </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>True if the PDF outline should be included.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#includeOutline=-instance_method" title="#includeOutline= (instance method)">#<strong>includeOutline=</strong>(value)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Set to true if the PDF outline should be included.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; PDFOptions </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; DOCXOptions </a>
     
 
     
@@ -755,7 +611,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of PDFOptions.</p>
+<p>A new instance of DOCXOptions.</p>
 </div></span>
   
 </li>
@@ -779,7 +635,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The margin that should appear at the bottom of the PDF document page.</p>
+<p>The margin that should appear at the bottom of the DOCX document page.</p>
 </div></span>
   
 </li>
@@ -803,7 +659,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the margin that should appear at the bottom of the PDF document page.</p>
+<p>Set the margin that should appear at the bottom of the DOCX document page.</p>
 </div></span>
   
 </li>
@@ -827,7 +683,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The margin that should appear at the left of the PDF document page.</p>
+<p>The margin that should appear at the left of the DOCX document page.</p>
 </div></span>
   
 </li>
@@ -851,7 +707,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the margin that should appear at the left of the PDF document page.</p>
+<p>Set the margin that should appear at the left of the DOCX document page.</p>
 </div></span>
   
 </li>
@@ -875,7 +731,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The margin that should appear at the right of the PDF document.</p>
+<p>The margin that should appear at the right of the DOCX document.</p>
 </div></span>
   
 </li>
@@ -899,7 +755,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the margin that should appear at the right of the PDF document.</p>
+<p>Set the margin that should appear at the right of the DOCX document.</p>
 </div></span>
   
 </li>
@@ -923,7 +779,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The margin that should appear at the top of the PDF document page.</p>
+<p>The margin that should appear at the top of the DOCX document page.</p>
 </div></span>
   
 </li>
@@ -947,7 +803,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the margin that should appear at the top of the PDF document page.</p>
+<p>Set the margin that should appear at the top of the DOCX document page.</p>
 </div></span>
   
 </li>
@@ -971,7 +827,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Get the ID of a capture that should be merged at the beginning of the new PDF document.</p>
+<p>Get the ID of a capture that should be merged at the beginning of the new DOCX document.</p>
 </div></span>
   
 </li>
@@ -995,7 +851,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the ID of a capture that should be merged at the beginning of the new PDF document.</p>
+<p>Set the ID of a capture that should be merged at the beginning of the new DOCX document.</p>
 </div></span>
   
 </li>
@@ -1115,7 +971,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The orientation of the PDF to be returned.</p>
+<p>The orientation of the DOCX to be returned.</p>
 </div></span>
   
 </li>
@@ -1139,7 +995,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the orientation of the PDF to be returned: ‘Landscape’ or ‘Portrait’.</p>
+<p>Set the orientation of the DOCX to be returned: ‘Landscape’ or ‘Portrait’.</p>
 </div></span>
   
 </li>
@@ -1163,7 +1019,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Get the page height of the resulting PDF in mm.</p>
+<p>Get the page height of the resulting DOCX in mm.</p>
 </div></span>
   
 </li>
@@ -1187,7 +1043,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the page height of the resulting PDF in mm.</p>
+<p>Set the page height of the resulting DOCX in mm.</p>
 </div></span>
   
 </li>
@@ -1211,7 +1067,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The page size of the PDF to be returned.</p>
+<p>The page size of the DOCX to be returned.</p>
 </div></span>
   
 </li>
@@ -1235,7 +1091,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the page size of the PDF to be returned: ‘A3’, ‘A4’, ‘A5’, ‘A6’, ‘B3’, ‘B4’, ‘B5’, ‘B6’, ‘Letter’.</p>
+<p>Set the page size of the DOCX to be returned: ‘A3’, ‘A4’, ‘A5’, ‘A6’, ‘B3’, ‘B4’, ‘B5’, ‘B6’, ‘Letter’.</p>
 </div></span>
   
 </li>
@@ -1259,7 +1115,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Get the page width of the resulting PDF in mm.</p>
+<p>Get the page width of the resulting DOCX in mm.</p>
 </div></span>
   
 </li>
@@ -1283,7 +1139,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the page width of the resulting PDF in mm.</p>
+<p>Set the page width of the resulting DOCX in mm.</p>
 </div></span>
   
 </li>
@@ -1307,7 +1163,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Get the password that protects the PDF document.</p>
+<p>Get the password that protects the DOCX document.</p>
 </div></span>
   
 </li>
@@ -1331,7 +1187,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the password that protects the PDF document.</p>
+<p>Set the password that protects the DOCX document.</p>
 </div></span>
   
 </li>
@@ -1355,7 +1211,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The quality of the PDF.</p>
+<p>The quality of the DOCX.</p>
 </div></span>
   
 </li>
@@ -1379,7 +1235,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set the quality of the PDF where 0 is poor and 100 excellent.</p>
+<p>Set the quality of the DOCX where 0 is poor and 100 excellent.</p>
 </div></span>
   
 </li>
@@ -1499,7 +1355,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The template ID that specifies the header and footer of the PDF document.</p>
+<p>The template ID that specifies the header and footer of the DOCX document.</p>
 </div></span>
   
 </li>
@@ -1523,7 +1379,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set a template ID that specifies the header and footer of the PDF document.</p>
+<p>Set a template ID that specifies the header and footer of the DOCX document.</p>
 </div></span>
   
 </li>
@@ -1547,7 +1403,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A title for the PDF document.</p>
+<p>A title for the DOCX document.</p>
 </div></span>
   
 </li>
@@ -1571,7 +1427,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Set a title for the PDF document.</p>
+<p>Set a title for the DOCX document.</p>
 </div></span>
   
 </li>
@@ -1645,7 +1501,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="GrabzIt::PDFOptions (class)">PDFOptions</a></span></tt> 
+    #<strong>initialize</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="GrabzIt::DOCXOptions (class)">DOCXOptions</a></span></tt> 
   
 
   
@@ -1654,7 +1510,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of PDFOptions.</p>
+<p>Returns a new instance of DOCXOptions.</p>
 
 
   </div>
@@ -1696,13 +1552,10 @@
 33
 34
 35
-36
-37
-38
-39</pre>
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='rparen'>)</span>
 	<span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -1710,18 +1563,14 @@
 	<span class='ivar'>@pagesize</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A4</span><span class='tstring_end'>&#39;</span></span>
 	<span class='ivar'>@orientation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Portrait</span><span class='tstring_end'>&#39;</span></span>
 	<span class='ivar'>@includeLinks</span> <span class='op'>=</span> <span class='kw'>true</span>
-	<span class='ivar'>@includeOutline</span> <span class='op'>=</span> <span class='kw'>false</span>
+	<span class='ivar'>@includeImages</span> <span class='op'>=</span> <span class='kw'>true</span>
 	<span class='ivar'>@title</span> <span class='op'>=</span> <span class='kw'>nil</span>
-	<span class='ivar'>@coverURL</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@marginTop</span> <span class='op'>=</span> <span class='int'>10</span>
 	<span class='ivar'>@marginLeft</span> <span class='op'>=</span> <span class='int'>10</span>
 	<span class='ivar'>@marginBottom</span> <span class='op'>=</span> <span class='int'>10</span>
 	<span class='ivar'>@marginRight</span> <span class='op'>=</span> <span class='int'>10</span>
 	<span class='ivar'>@requestAs</span> <span class='op'>=</span> <span class='int'>0</span>
-	<span class='ivar'>@templateId</span> <span class='op'>=</span> <span class='kw'>nil</span>
-	<span class='ivar'>@customWaterMarkId</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@quality</span> <span class='op'>=</span> <span class='op'>-</span><span class='int'>1</span>
-	<span class='ivar'>@targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@hideElement</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@waitForElement</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@noAds</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -1729,10 +1578,11 @@
 	<span class='ivar'>@templateVariables</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@width</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@height</span> <span class='op'>=</span> <span class='kw'>nil</span>
+	<span class='ivar'>@templateId</span> <span class='op'>=</span> <span class='kw'>nil</span>
+	<span class='ivar'>@targetElement</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@mergeId</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@noCookieNotifications</span> <span class='op'>=</span> <span class='kw'>false</span>
 	<span class='ivar'>@address</span> <span class='op'>=</span> <span class='kw'>nil</span>
-	<span class='ivar'>@cssMediaType</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@password</span> <span class='op'>=</span> <span class='kw'>nil</span>
 	<span class='ivar'>@clickElement</span> <span class='op'>=</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
@@ -1810,12 +1660,12 @@
       <pre class="lines">
 
 
-426
-427
-428</pre>
+384
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 426</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 384</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_post_parameter'>add_post_parameter</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@post</span> <span class='op'>=</span> <span class='id identifier rubyid_appendParameter'>appendParameter</span><span class='lparen'>(</span><span class='ivar'>@post</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -1887,12 +1737,12 @@
       <pre class="lines">
 
 
-434
-435
-436</pre>
+392
+393
+394</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 434</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 392</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_template_parameter'>add_template_parameter</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@templateVariables</span> <span class='op'>=</span> <span class='id identifier rubyid_appendParameter'>appendParameter</span><span class='lparen'>(</span><span class='ivar'>@templateVariables</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -1946,12 +1796,12 @@
       <pre class="lines">
 
 
-396
-397
-398</pre>
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_address'>address</span>
 	<span class='ivar'>@address</span>
@@ -2007,12 +1857,12 @@
       <pre class="lines">
 
 
-404
-405
-406</pre>
+362
+363
+364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_address='>address=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@address</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -2066,12 +1916,12 @@
       <pre class="lines">
 
 
-201
-202
-203</pre>
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_browserWidth'>browserWidth</span>
 	<span class='ivar'>@browserWidth</span>
@@ -2127,12 +1977,12 @@
       <pre class="lines">
 
 
-209
-210
-211</pre>
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_browserWidth='>browserWidth=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@browserWidth</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -2186,12 +2036,12 @@
       <pre class="lines">
 
 
-344
-345
-346</pre>
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clickElement'>clickElement</span>
 	<span class='ivar'>@clickElement</span>
@@ -2247,377 +2097,15 @@
       <pre class="lines">
 
 
-352
-353
-354</pre>
+309
+310
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 309</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clickElement='>clickElement=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@clickElement</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="coverURL-instance_method">
-  
-    #<strong>coverURL</strong>  &#x21d2; <tt>String</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Returns the URL of a web page that should be used as a cover page for the PDF.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the URL of a web page that should be used as a cover page for the PDF</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-136
-137
-138</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 136</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_coverURL'>coverURL</span>
-	<span class='ivar'>@coverURL</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="coverURL=-instance_method">
-  
-    #<strong>coverURL=</strong>(value)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the URL of a web page that should be used as a cover page for the PDF</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>value</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>cover URL</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-144
-145
-146</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 144</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_coverURL='>coverURL=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-	<span class='ivar'>@coverURL</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="cssMediaType-instance_method">
-  
-    #<strong>cssMediaType</strong>  &#x21d2; <tt>String</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Returns the CSS Media Type of the PDF to be returned.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the CSS Media Type of the PDF to be returned</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-83
-84
-85</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 83</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_cssMediaType'>cssMediaType</span>
-	<span class='ivar'>@cssMediaType</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="cssMediaType=-instance_method">
-  
-    #<strong>cssMediaType=</strong>(value)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the CSS Media Type of the PDF to be returned: ‘Print’ or ‘Screen’</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>value</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>CSS Media Type</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-91
-92
-93
-94</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 91</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_cssMediaType='>cssMediaType=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../GrabzIt.html" title="GrabzIt (module)">GrabzIt</a></span></span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
-	<span class='ivar'>@cssMediaType</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="customWaterMarkId-instance_method">
-  
-    #<strong>customWaterMarkId</strong>  &#x21d2; <tt>String</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Returns the custom watermark id.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the custom watermark id.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-279
-280
-281</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 279</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_customWaterMarkId'>customWaterMarkId</span>
-	<span class='ivar'>@customWaterMarkId</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="customWaterMarkId=-instance_method">
-  
-    #<strong>customWaterMarkId=</strong>(value)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set a custom watermark to add to the PDF.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>value</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>custom watermark id</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-287
-288
-289</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 287</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_customWaterMarkId='>customWaterMarkId=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-	<span class='ivar'>@customWaterMarkId</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2668,12 +2156,12 @@
       <pre class="lines">
 
 
-240
-241
-242</pre>
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delay'>delay</span>
 	<span class='ivar'>@delay</span>
@@ -2729,12 +2217,12 @@
       <pre class="lines">
 
 
-248
-249
-250</pre>
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delay='>delay=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@delay</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -2788,12 +2276,12 @@
       <pre class="lines">
 
 
-318
-319
-320</pre>
+275
+276
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hideElement'>hideElement</span>
 	<span class='ivar'>@hideElement</span>
@@ -2849,12 +2337,12 @@
       <pre class="lines">
 
 
-326
-327
-328</pre>
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 283</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hideElement='>hideElement=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@hideElement</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -2876,7 +2364,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns true if the background of the web page should be included in the PDF.</p>
+<p>Returns true if the background images of the web page should be included in the DOCX.</p>
 
 
   </div>
@@ -2895,7 +2383,7 @@
       
         &mdash;
         <div class='inline'>
-<p>true if the background of the web page should be included in the PDF</p>
+<p>true if the background images of the web page should be included in the DOCX</p>
 </div>
       
     </li>
@@ -2908,12 +2396,12 @@
       <pre class="lines">
 
 
-42
-43
-44</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_includeBackground'>includeBackground</span>
 	<span class='ivar'>@includeBackground</span>
@@ -2935,7 +2423,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set to true if the background of the web page should be included in the PDF</p>
+<p>Set to true if the background images of the web page should be included in the DOCX</p>
 
 
   </div>
@@ -2955,7 +2443,7 @@
       
         &mdash;
         <div class='inline'>
-<p>include background</p>
+<p>include background images</p>
 </div>
       
     </li>
@@ -2969,12 +2457,12 @@
       <pre class="lines">
 
 
-50
-51
-52</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_includeBackground='>includeBackground=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@includeBackground</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -2985,9 +2473,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="includeLinks-instance_method">
+  <h3 class="signature " id="includeImages-instance_method">
   
-    #<strong>includeLinks</strong>  &#x21d2; <tt>Boolean</tt> 
+    #<strong>includeImages</strong>  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -2996,7 +2484,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns true if the links should be included in the PDF.</p>
+<p>Returns true if web page images should be included.</p>
 
 
   </div>
@@ -3015,7 +2503,7 @@
       
         &mdash;
         <div class='inline'>
-<p>true if the links should be included in the PDF</p>
+<p>true if web page images should be included</p>
 </div>
       
     </li>
@@ -3028,12 +2516,132 @@
       <pre class="lines">
 
 
-97
-98
-99</pre>
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_includeImages'>includeImages</span>
+	<span class='ivar'>@includeImages</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="includeImages=-instance_method">
+  
+    #<strong>includeImages=</strong>(value)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Set to true if web page images should be included</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>include images</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_includeImages='>includeImages=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+	<span class='ivar'>@includeImages</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="includeLinks-instance_method">
+  
+    #<strong>includeLinks</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns true if the links should be included in the DOCX.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>true if the links should be included in the DOCX</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_includeLinks'>includeLinks</span>
 	<span class='ivar'>@includeLinks</span>
@@ -3055,7 +2663,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set to true if links should be included in the PDF</p>
+<p>Set to true if links should be included in the DOCX</p>
 
 
   </div>
@@ -3089,135 +2697,15 @@
       <pre class="lines">
 
 
-105
-106
-107</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_includeLinks='>includeLinks=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@includeLinks</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="includeOutline-instance_method">
-  
-    #<strong>includeOutline</strong>  &#x21d2; <tt>Boolean</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Returns true if the PDF outline should be included.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>true if the PDF outline should be included</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-110
-111
-112</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 110</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_includeOutline'>includeOutline</span>
-	<span class='ivar'>@includeOutline</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="includeOutline=-instance_method">
-  
-    #<strong>includeOutline=</strong>(value)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set to true if the PDF outline should be included</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>value</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>include links</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-118
-119
-120</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 118</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_includeOutline='>includeOutline=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-	<span class='ivar'>@includeOutline</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3236,7 +2724,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the margin that should appear at the bottom of the PDF document page.</p>
+<p>Returns the margin that should appear at the bottom of the DOCX document page.</p>
 
 
   </div>
@@ -3255,7 +2743,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the margin that should appear at the bottom of the PDF document page</p>
+<p>the margin that should appear at the bottom of the DOCX document page</p>
 </div>
       
     </li>
@@ -3268,12 +2756,12 @@
       <pre class="lines">
 
 
-175
-176
-177</pre>
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginBottom'>marginBottom</span>
 	<span class='ivar'>@marginBottom</span>
@@ -3295,7 +2783,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the margin that should appear at the bottom of the PDF document page</p>
+<p>Set the margin that should appear at the bottom of the DOCX document page</p>
 
 
   </div>
@@ -3329,12 +2817,12 @@
       <pre class="lines">
 
 
-183
-184
-185</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginBottom='>marginBottom=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@marginBottom</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -3356,7 +2844,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the margin that should appear at the left of the PDF document page.</p>
+<p>Returns the margin that should appear at the left of the DOCX document page.</p>
 
 
   </div>
@@ -3375,7 +2863,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the margin that should appear at the left of the PDF document page</p>
+<p>the margin that should appear at the left of the DOCX document page</p>
 </div>
       
     </li>
@@ -3388,12 +2876,12 @@
       <pre class="lines">
 
 
-162
-163
-164</pre>
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginLeft'>marginLeft</span>
 	<span class='ivar'>@marginLeft</span>
@@ -3415,7 +2903,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the margin that should appear at the left of the PDF document page</p>
+<p>Set the margin that should appear at the left of the DOCX document page</p>
 
 
   </div>
@@ -3449,12 +2937,12 @@
       <pre class="lines">
 
 
-170
-171
-172</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginLeft='>marginLeft=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@marginLeft</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -3476,7 +2964,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the margin that should appear at the right of the PDF document.</p>
+<p>Returns the margin that should appear at the right of the DOCX document.</p>
 
 
   </div>
@@ -3495,7 +2983,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the margin that should appear at the right of the PDF document</p>
+<p>the margin that should appear at the right of the DOCX document</p>
 </div>
       
     </li>
@@ -3508,12 +2996,12 @@
       <pre class="lines">
 
 
-188
-189
-190</pre>
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginRight'>marginRight</span>
 	<span class='ivar'>@marginRight</span>
@@ -3535,7 +3023,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the margin that should appear at the right of the PDF document</p>
+<p>Set the margin that should appear at the right of the DOCX document</p>
 
 
   </div>
@@ -3569,12 +3057,12 @@
       <pre class="lines">
 
 
-196
-197
-198</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginRight='>marginRight=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@marginRight</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -3596,7 +3084,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the margin that should appear at the top of the PDF document page.</p>
+<p>Returns the margin that should appear at the top of the DOCX document page.</p>
 
 
   </div>
@@ -3615,7 +3103,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the margin that should appear at the top of the PDF document page</p>
+<p>the margin that should appear at the top of the DOCX document page</p>
 </div>
       
     </li>
@@ -3628,12 +3116,12 @@
       <pre class="lines">
 
 
-149
-150
-151</pre>
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginTop'>marginTop</span>
 	<span class='ivar'>@marginTop</span>
@@ -3655,7 +3143,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the margin that should appear at the top of the PDF document page</p>
+<p>Set the margin that should appear at the top of the DOCX document page</p>
 
 
   </div>
@@ -3689,12 +3177,12 @@
       <pre class="lines">
 
 
-157
-158
-159</pre>
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_marginTop='>marginTop=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@marginTop</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -3716,7 +3204,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns get the ID of a capture that should be merged at the beginning of the new PDF document.</p>
+<p>Returns get the ID of a capture that should be merged at the beginning of the new DOCX document.</p>
 
 
   </div>
@@ -3735,7 +3223,7 @@
       
         &mdash;
         <div class='inline'>
-<p>get the ID of a capture that should be merged at the beginning of the new PDF document</p>
+<p>get the ID of a capture that should be merged at the beginning of the new DOCX document</p>
 </div>
       
     </li>
@@ -3748,12 +3236,12 @@
       <pre class="lines">
 
 
-357
-358
-359</pre>
+314
+315
+316</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 314</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mergeId'>mergeId</span>
 	<span class='ivar'>@mergeId</span>
@@ -3775,7 +3263,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the ID of a capture that should be merged at the beginning of the new PDF document</p>
+<p>Set the ID of a capture that should be merged at the beginning of the new DOCX document</p>
 
 
   </div>
@@ -3809,12 +3297,12 @@
       <pre class="lines">
 
 
-365
-366
-367</pre>
+322
+323
+324</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 322</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mergeId='>mergeId=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@mergeId</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -3868,12 +3356,12 @@
       <pre class="lines">
 
 
-370
-371
-372</pre>
+327
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 327</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noAds'>noAds</span>
 	<span class='ivar'>@noAds</span>
@@ -3929,12 +3417,12 @@
       <pre class="lines">
 
 
-378
-379
-380</pre>
+335
+336
+337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 335</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noAds='>noAds=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@noAds</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -3988,12 +3476,12 @@
       <pre class="lines">
 
 
-383
-384
-385</pre>
+341
+342
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 341</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noCookieNotifications'>noCookieNotifications</span>
 	<span class='ivar'>@noCookieNotifications</span>
@@ -4049,12 +3537,12 @@
       <pre class="lines">
 
 
-391
-392
-393</pre>
+349
+350
+351</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 349</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noCookieNotifications='>noCookieNotifications=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@noCookieNotifications</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -4076,7 +3564,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the orientation of the PDF to be returned.</p>
+<p>Returns the orientation of the DOCX to be returned.</p>
 
 
   </div>
@@ -4095,7 +3583,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the orientation of the PDF to be returned</p>
+<p>the orientation of the DOCX to be returned</p>
 </div>
       
     </li>
@@ -4108,12 +3596,12 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_orientation'>orientation</span>
 	<span class='ivar'>@orientation</span>
@@ -4135,7 +3623,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the orientation of the PDF to be returned: ‘Landscape’ or ‘Portrait’</p>
+<p>Set the orientation of the DOCX to be returned: ‘Landscape’ or ‘Portrait’</p>
 
 
   </div>
@@ -4169,13 +3657,13 @@
       <pre class="lines">
 
 
-77
-78
-79
-80</pre>
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_orientation='>orientation=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../GrabzIt.html" title="GrabzIt (module)">GrabzIt</a></span></span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
@@ -4198,7 +3686,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns get the page height of the resulting PDF in mm.</p>
+<p>Returns get the page height of the resulting DOCX in mm.</p>
 
 
   </div>
@@ -4217,7 +3705,7 @@
       
         &mdash;
         <div class='inline'>
-<p>get the page height of the resulting PDF in mm</p>
+<p>get the page height of the resulting DOCX in mm</p>
 </div>
       
     </li>
@@ -4230,12 +3718,12 @@
       <pre class="lines">
 
 
-227
-228
-229</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pageHeight'>pageHeight</span>
 	<span class='ivar'>@height</span>
@@ -4257,7 +3745,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the page height of the resulting PDF in mm</p>
+<p>Set the page height of the resulting DOCX in mm</p>
 
 
   </div>
@@ -4291,12 +3779,12 @@
       <pre class="lines">
 
 
-235
-236
-237</pre>
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pageHeight='>pageHeight=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@height</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -4318,7 +3806,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the page size of the PDF to be returned.</p>
+<p>Returns the page size of the DOCX to be returned.</p>
 
 
   </div>
@@ -4337,7 +3825,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the page size of the PDF to be returned</p>
+<p>the page size of the DOCX to be returned</p>
 </div>
       
     </li>
@@ -4350,12 +3838,12 @@
       <pre class="lines">
 
 
-55
-56
-57</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pagesize'>pagesize</span>
 	<span class='ivar'>@pagesize</span>
@@ -4377,7 +3865,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the page size of the PDF to be returned: ‘A3’, ‘A4’, ‘A5’, ‘A6’, ‘B3’, ‘B4’, ‘B5’, ‘B6’, ‘Letter’</p>
+<p>Set the page size of the DOCX to be returned: ‘A3’, ‘A4’, ‘A5’, ‘A6’, ‘B3’, ‘B4’, ‘B5’, ‘B6’, ‘Letter’</p>
 
 
   </div>
@@ -4411,13 +3899,13 @@
       <pre class="lines">
 
 
-63
-64
-65
-66</pre>
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pagesize='>pagesize=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../GrabzIt.html" title="GrabzIt (module)">GrabzIt</a></span></span><span class='op'>::</span><span class='const'>Utility</span><span class='period'>.</span><span class='id identifier rubyid_nil_check'>nil_check</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span>
@@ -4440,7 +3928,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns get the page width of the resulting PDF in mm.</p>
+<p>Returns get the page width of the resulting DOCX in mm.</p>
 
 
   </div>
@@ -4459,7 +3947,7 @@
       
         &mdash;
         <div class='inline'>
-<p>get the page width of the resulting PDF in mm.</p>
+<p>get the page width of the resulting DOCX in mm.</p>
 </div>
       
     </li>
@@ -4472,12 +3960,12 @@
       <pre class="lines">
 
 
-214
-215
-216</pre>
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pageWidth'>pageWidth</span>
 	<span class='ivar'>@width</span>
@@ -4499,7 +3987,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the page width of the resulting PDF in mm</p>
+<p>Set the page width of the resulting DOCX in mm</p>
 
 
   </div>
@@ -4533,12 +4021,12 @@
       <pre class="lines">
 
 
-222
-223
-224</pre>
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pageWidth='>pageWidth=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@width</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -4560,7 +4048,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns get the password that protects the PDF document.</p>
+<p>Returns get the password that protects the DOCX document.</p>
 
 
   </div>
@@ -4579,7 +4067,7 @@
       
         &mdash;
         <div class='inline'>
-<p>get the password that protects the PDF document</p>
+<p>get the password that protects the DOCX document</p>
 </div>
       
     </li>
@@ -4592,12 +4080,12 @@
       <pre class="lines">
 
 
-409
-410
-411</pre>
+367
+368
+369</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 367</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_password'>password</span>
 	<span class='ivar'>@password</span>
@@ -4619,7 +4107,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the password that protects the PDF document</p>
+<p>Set the password that protects the DOCX document</p>
 
 
   </div>
@@ -4653,12 +4141,12 @@
       <pre class="lines">
 
 
-417
-418
-419</pre>
+375
+376
+377</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 417</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_password='>password=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@password</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -4680,7 +4168,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the quality of the PDF.</p>
+<p>Returns the quality of the DOCX.</p>
 
 
   </div>
@@ -4699,7 +4187,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the quality of the PDF.</p>
+<p>the quality of the DOCX.</p>
 </div>
       
     </li>
@@ -4712,12 +4200,12 @@
       <pre class="lines">
 
 
-292
-293
-294</pre>
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 292</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 249</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quality'>quality</span>
 	<span class='ivar'>@quality</span>
@@ -4739,7 +4227,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set the quality of the PDF where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</p>
+<p>Set the quality of the DOCX where 0 is poor and 100 excellent. The default is -1 which uses the recommended quality</p>
 
 
   </div>
@@ -4773,12 +4261,12 @@
       <pre class="lines">
 
 
-300
-301
-302</pre>
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quality='>quality=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@quality</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -4832,12 +4320,12 @@
       <pre class="lines">
 
 
-253
-254
-255</pre>
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 253</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 223</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requestAs'>requestAs</span>
 	<span class='ivar'>@requestAs</span>
@@ -4893,12 +4381,12 @@
       <pre class="lines">
 
 
-261
-262
-263</pre>
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 231</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requestAs='>requestAs=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@requestAs</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -4952,12 +4440,12 @@
       <pre class="lines">
 
 
-305
-306
-307</pre>
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 305</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_targetElement'>targetElement</span>
 	<span class='ivar'>@targetElement</span>
@@ -5013,12 +4501,12 @@
       <pre class="lines">
 
 
-313
-314
-315</pre>
+270
+271
+272</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 313</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_targetElement='>targetElement=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@targetElement</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -5040,7 +4528,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the template ID that specifies the header and footer of the PDF document.</p>
+<p>Returns the template ID that specifies the header and footer of the DOCX document.</p>
 
 
   </div>
@@ -5059,7 +4547,7 @@
       
         &mdash;
         <div class='inline'>
-<p>the template ID that specifies the header and footer of the PDF document</p>
+<p>the template ID that specifies the header and footer of the DOCX document</p>
 </div>
       
     </li>
@@ -5072,12 +4560,12 @@
       <pre class="lines">
 
 
-266
-267
-268</pre>
+236
+237
+238</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 236</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_templateId'>templateId</span>
 	<span class='ivar'>@templateId</span>
@@ -5099,7 +4587,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set a template ID that specifies the header and footer of the PDF document</p>
+<p>Set a template ID that specifies the header and footer of the DOCX document</p>
 
 
   </div>
@@ -5133,12 +4621,12 @@
       <pre class="lines">
 
 
-274
-275
-276</pre>
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 274</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_templateId='>templateId=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@templateId</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -5160,7 +4648,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a title for the PDF document.</p>
+<p>Returns a title for the DOCX document.</p>
 
 
   </div>
@@ -5179,7 +4667,7 @@
       
         &mdash;
         <div class='inline'>
-<p>a title for the PDF document</p>
+<p>a title for the DOCX document</p>
 </div>
       
     </li>
@@ -5192,12 +4680,12 @@
       <pre class="lines">
 
 
-123
-124
-125</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span>
 	<span class='ivar'>@title</span>
@@ -5219,7 +4707,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Set a title for the PDF document</p>
+<p>Set a title for the DOCX document</p>
 
 
   </div>
@@ -5239,7 +4727,7 @@
       
         &mdash;
         <div class='inline'>
-<p>PDF title</p>
+<p>DOCX title</p>
 </div>
       
     </li>
@@ -5253,12 +4741,12 @@
       <pre class="lines">
 
 
-131
-132
-133</pre>
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_title='>title=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@title</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -5312,12 +4800,12 @@
       <pre class="lines">
 
 
-331
-332
-333</pre>
+288
+289
+290</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 288</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_waitForElement'>waitForElement</span>
 	<span class='ivar'>@waitForElement</span>
@@ -5373,12 +4861,12 @@
       <pre class="lines">
 
 
-339
-340
-341</pre>
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grabzit/pdfoptions.rb', line 339</span>
+      <pre class="code"><span class="info file"># File 'lib/grabzit/docxoptions.rb', line 296</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_waitForElement='>waitForElement=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 	<span class='ivar'>@waitForElement</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -5393,7 +4881,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Feb 11 22:35:22 2024 by
+  Generated on Sun Feb 11 22:35:23 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.3).
 </div>
