@@ -1,6 +1,6 @@
 Convert the Web!
 ================
-GrabzIt aspires to allow any programming language no matter how basic to turn a website or HTML into a fully rendered Image, PDF, DOCX. As well as converting HTML tables into JSON, XML, CSV or Excel and online videos into animated GIF's.
+GrabzIt aspires to allow any programming language no matter how basic to turn a website or HTML into a fully rendered Image, video, PDF, DOCX. As well as converting HTML tables into JSON, XML, CSV or Excel and online videos into animated GIF's.
 
 To do this we provide client libraries that enables a developer to create a capture, once complete, our server then sends a callback to your app to allow it to be processed.
 
