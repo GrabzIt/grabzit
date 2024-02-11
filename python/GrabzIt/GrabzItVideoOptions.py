@@ -26,7 +26,7 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.browserWidth = 0
                 self.browserHeight = 0
                 self.start = 0
-                self.duration = 1
+                self.duration = 10
                 self.framesPerSecond = 0
                 self.customWaterMarkId = ''
                 self.clickElement = ''
