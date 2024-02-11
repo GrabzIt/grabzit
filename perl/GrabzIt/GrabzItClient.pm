@@ -17,6 +17,7 @@ use GrabzItWaterMark;
 use GrabzItRequest;
 use GrabzItAnimationOptions;
 use GrabzItImageOptions;
+use GrabzItVideoOptions;
 use GrabzItTableOptions;
 use GrabzItPDFOptions;
 use GrabzItDOCXOptions;
@@ -24,6 +25,7 @@ use GrabzItHTMLOptions;
 
 use constant WebServicesBaseURL => "://api.grabz.it/services/";
 use constant TakePicture => "takepicture";
+use constant TakeVideo => "takevideo";
 use constant TakeTable => "taketable";
 use constant TakePDF => "takepdf";
 use constant TakeDOCX => "takedocx";
@@ -95,6 +97,44 @@ sub FileToImage($;$)
 {
 	my ($self, $path, $options) = @_;
 	$self->HTMLToImage($self->_readHTMLFile($path), $options);
+}
+
+#
+# This method specifies the URL that should be converted into a video.
+#
+# url - The URL to convert into a video.
+# options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video
+#
+sub URLToVideo($;$)
+{
+	my ($self, $url, $options) = @_;
+	$options ||= GrabzItVideoOptions->new();	
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeVideo, 0, $options, $url);
+}
+
+#
+# This method specifies the HTML that should be converted into video.
+#
+# html - The HTML to convert into a video.
+# options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video
+#
+sub HTMLToVideo($;$)
+{
+	my ($self, $html, $options) = @_;
+	$options ||= GrabzItVideoOptions->new();	
+	$self->{request} = GrabzItRequest->new($self->_getRootUrl() . TakeVideo, 1, $options, $html);
+}
+
+#
+# This method specifies a HTML file that should be converted into a video.
+#
+# path - The file path of a HTML file to convert into a video.
+# options - A instance of the GrabzItVideoOptions class that defines any special options to use when creating the video.
+#
+sub FileToImage($;$)
+{
+	my ($self, $path, $options) = @_;
+	$self->HTMLToVideo($self->_readHTMLFile($path), $options);
 }
 
 #

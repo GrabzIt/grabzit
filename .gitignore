@@ -48,3 +48,4 @@ java/sample/target
 java/grabzit/nbproject
 java/tmp-maven/tmp
 nodejs/grabzIt/node_modules
+python/dist
