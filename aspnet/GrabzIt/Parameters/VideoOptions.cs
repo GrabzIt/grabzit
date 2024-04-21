@@ -130,6 +130,24 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The height of the resulting video in pixels
+        /// </summary>
+        public int OutputHeight
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The width of the resulting video in pixels
+        /// </summary>
+        public int OutputWidth
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -160,7 +178,7 @@ namespace GrabzIt.Parameters
             + "|" + CustomWaterMarkId + "|" + Start + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) 
             + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey
              + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications)
-             + "|" + ClickElement + "|" + FramesPerSecond + "|" + Duration;
+             + "|" + ClickElement + "|" + FramesPerSecond + "|" + Duration + "|" + OutputWidth + "|" + OutputHeight;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -179,6 +197,8 @@ namespace GrabzIt.Parameters
             parameters.Add("click", ClickElement);
             parameters.Add("fps", FramesPerSecond.ToString());
             parameters.Add("duration", Duration.ToString());
+            parameters.Add("width", OutputWidth.ToString());
+            parameters.Add("height", OutputHeight.ToString());
 
             return parameters;
         }

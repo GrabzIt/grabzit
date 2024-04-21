@@ -7,9 +7,9 @@
     <UpgradeBackupLocation />
     <AssemblyTitle>GrabzIt</AssemblyTitle>
     <Product>GrabzIt - Capture the Web</Product>
-    <Copyright>Copyright ©  2012-2021</Copyright>
-    <AssemblyVersion>3.5.4.0</AssemblyVersion>
-    <FileVersion>3.5.4.0</FileVersion>
+    <Copyright>Copyright ©  2012-2024</Copyright>
+    <AssemblyVersion>3.5.5.0</AssemblyVersion>
+    <FileVersion>3.5.5.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -44,20 +44,21 @@
     <PackageIconUrl>https://cdn.grabzit.com/images/icons/64x64.png</PackageIconUrl>
     <Description>Use GrabzIt to take PDF, DOCX, Video, rendered HTML or image screenshots of websites. The screenshots are highly customizable options include altering quality, delay, size, browser type, geographic location and much more.
 
-You can even convert HTML directly into images, DOCX documents, PDF's, or capture tables from web pages and convert them into a CSV, JSON or Excel documents.
+You can even convert HTML directly into images, DOCX documents, PDF's, videos, or capture tables from web pages and convert them into a CSV, JSON or Excel documents.
 
 Additionally you can even convert online video's into animated GIF's.
 
 More documentation can be found at: https://grabz.it/api/aspnet</Description>
-    <PackageReleaseNotes>- Now can click on a HTML element before performing a capture
+    <PackageReleaseNotes>- You can now scale videos converted from HTML
 </PackageReleaseNotes>
     <Version>3.5.6</Version>
-    <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
+    <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, mp4, video, bmp, gif, png, tiff, csv, xlsx, json, html coversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup>
     <Frameworks>|net20|net35|net40|net403|</Frameworks>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition="$(Frameworks.Contains('|$(TargetFramework)|'))">
     <DefineConstants>$(DefineConstants);ASYNCNOTALLOWED</DefineConstants>
@@ -79,6 +80,9 @@ More documentation can be found at: https://grabz.it/api/aspnet</Description>
   <ItemGroup>
     <EmbeddedResource Include="handler.ashx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>  
   <ItemGroup>
     <None Include="GrabzIt.snk" />
   </ItemGroup>
