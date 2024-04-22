@@ -786,6 +786,8 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
         'customId': '',
         'browserWidth': '',
         'browserHeight': '',
+        'width': '',
+        'height': '',
         'framesPerSecond': 0,
         'duration': 10,
         'start': 0,
@@ -817,6 +819,8 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
         'start': startDelay,
         'bwidth': context['browserWidth'],
         'bheight': context['browserHeight'],
+        'width': context['width'],
+        'height': context['height'],
         'customid': context['customid'],
         'customwatermarkid': context['customWaterMarkId'],
         'requestmobileversion': parseInt(context['requestAs']),
@@ -839,7 +843,8 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + context['exportUrl'] 
      + '|' + context['waitForElement'] + '|' +  context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] 
      + '|' + context['proxy'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) 
-     + '|' + context['clickElement'] + '|' + parseFloat(context['framesPerSecond']) + '|' + parseInt(context['duration']);
+     + '|' + context['clickElement'] + '|' + parseFloat(context['framesPerSecond']) + '|' + parseInt(context['duration'])
+     + '|' + context['width'] + '|' + context['height'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
