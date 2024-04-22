@@ -12,6 +12,8 @@ sub new
     my $self = GrabzItBaseOptions->new(@_);
     $self->{"browserWidth"} = 0;
     $self->{"browserHeight"} = 0;
+    $self->{"width"} = 0;
+    $self->{"height"} = 0;    
     $self->{"start"} = 0;
     $self->{"duration"} = 10;
     $self->{"framesPerSecond"} = 0;
@@ -52,6 +54,32 @@ sub browserHeight
         $self->{"browserHeight"} = shift;
     }
     return $self->{"browserHeight"};
+}
+
+#
+# The width of the resulting video in pixels.
+#
+sub width
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"width"} = shift;
+    }
+    return $self->{"width"};
+}
+
+#
+# The height of the resulting video in pixels.
+#
+sub height
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"height"} = shift;
+    }
+    return $self->{"height"};
 }
 
 #
@@ -219,7 +247,7 @@ sub _getSignatureString($$;$)
     "|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->customWaterMarkId().
     "|".$self->start()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->waitForElement().
     "|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications().
-    "|".$self->clickElement()."|".$self->framesPerSecond()."|".$self->duration();
+    "|".$self->clickElement()."|".$self->framesPerSecond()."|".$self->duration()."|".$self->width()."|".$self->height();
 }
 
 sub _getParameters($$$$$)
@@ -240,6 +268,8 @@ sub _getParameters($$$$$)
     $params->{'nonotify'} = $self->noCookieNotifications();
     $params->{'address'} = $self->address();
     $params->{'click'} = $self->clickElement();
+    $params->{'width'} = $self->width();
+    $params->{'height'} = $self->height();   
 
     return $params;
 }

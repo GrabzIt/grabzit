@@ -7,7 +7,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME         => 'GrabzItClient',
     AUTHOR       => q{GrabzIt <support@grabz.it>},
-    VERSION => '3.5.6',
+    VERSION => '3.5.7',
     ABSTRACT     => 'GrabzIt enables allows you to programmatically convert web pages and HTML into images, DOCX, videos, rendered HTML, PDFs, CSVs and spreadsheets. Additionally GrabzIt allows you to convert online videos into animated GIFs',
     ( $ExtUtils::MakeMaker::VERSION >= 6.3002
         ? ( 'LICENSE' => 'perl' )
