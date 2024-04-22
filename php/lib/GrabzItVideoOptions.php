@@ -6,6 +6,8 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 	private $customWaterMarkId = null;
 	private $browserWidth = null;
 	private $browserHeight = null;
+	private $width = null;
+	private $height = null;	
 	private $start = null; 
 	private $duration = null;
 	private	$framesPerSecond = null;
@@ -94,6 +96,38 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 	public function getBrowserHeight()
 	{
 		return $this->browserHeight;
+	}	
+
+	/*
+	Set the width of the resulting video in pixels
+	*/
+	public function setWidth($value)
+	{
+		$this->width = $value;
+	}
+
+	/*
+	Get the width of the resulting video in pixels
+	*/
+	public function getWidth()
+	{
+		return $this->width;
+	}
+
+	/*
+	Set the height of the resulting video in pixels
+	*/
+	public function setHeight($value)
+	{
+		$this->height = $value;
+	}
+
+	/*
+	Get the height of the resulting video in pixels
+	*/
+	public function getHeight()
+	{
+		return $this->height;
 	}	
 
 	/*
@@ -226,9 +260,9 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		"|".$this->nullToEmpty($this->browserHeight)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".
 		$this->nullToEmpty($this->customWaterMarkId)."|".$this->nullToEmpty($this->start)."|".
 		$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->getExportURL())."|".
-		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey()."|".
+		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".
 		$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".
-		$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->duration));  
+		$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->duration)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->height);  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -236,6 +270,8 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		$params = $this->createParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue);		
 		$params['bwidth'] = $this->nullToEmpty($this->browserWidth);
 		$params['bheight'] = $this->nullToEmpty($this->browserHeight);
+		$params['width'] = $this->nullToEmpty($this->width);
+		$params['height'] = $this->nullToEmpty($this->height);		
 		$params['duration'] = $this->nullToEmpty($this->duration);
 		$params['waitfor'] = $this->nullToEmpty($this->waitForElement);
 		$params['customwatermarkid'] = $this->nullToEmpty($this->customWaterMarkId);
