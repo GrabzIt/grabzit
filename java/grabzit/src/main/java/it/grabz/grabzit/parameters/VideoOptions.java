@@ -28,11 +28,15 @@ public class VideoOptions extends BaseOptions{
     private BrowserType requestAs;
     private boolean noAds;    
     private boolean noCookieNotifications;
+    private int outputWidth;
+    private int outputHeight;    
 
     public VideoOptions()
     {
         this.browserHeight = 0;
         this.browserWidth = 0;
+        this.outputHeight = 0;
+        this.outputWidth = 0;        
         this.duration = 10;
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
@@ -210,6 +214,35 @@ public class VideoOptions extends BaseOptions{
     public void setClickElement(String clickElement) {
         this.clickElement = clickElement;
     }    
+    
+    /**
+     * @return the width of the resulting video in pixels.
+     */
+    public int getOutputWidth() {
+        return outputWidth;
+    }
+
+    /**
+     * @param outputWidth set the width of the resulting video in pixels.
+     */
+    public void setOutputWidth(int outputWidth) {
+        this.outputWidth = outputWidth;
+    }
+
+    /**
+     * @return get the height of the resulting video in pixels.
+     */
+    public int getOutputHeight() {
+        return outputHeight;
+    }
+
+    /**
+     * @param outputHeight set the height of the resulting video in pixels.
+     */
+    public void setOutputHeight(int outputHeight) {
+        this.outputHeight = outputHeight;
+    }
+    
 
     public String _getSignatureString(String applicationSecret, String callBackURL)
     {
@@ -236,7 +269,7 @@ public class VideoOptions extends BaseOptions{
         + "|" + start + "|" + requestAs.getValue() + "|" + getCountry().getValue()
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address  + "|" + ParameterUtility.toInt(noCookieNotifications)
-         + "|" + clickElement + "|" + ParameterUtility.toString(framesPerSecond)  + "|" + duration;
+         + "|" + clickElement + "|" + ParameterUtility.toString(framesPerSecond)  + "|" + duration + "|" + outputWidth + "|" + outputHeight;
     }    
 
     @Override
@@ -257,6 +290,8 @@ public class VideoOptions extends BaseOptions{
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));
+ 	params.put("width", String.valueOf(outputWidth));
+	params.put("height", String.valueOf(outputHeight));       
 
         return params;
     }    
