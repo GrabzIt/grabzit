@@ -4,7 +4,7 @@ use GrabzItClient;
 use Test::More;
 use Test::Exception;
 
-$grabzIt = GrabzItClient->new("c3VwcG9ydEBncmFiei5pdA==", "AD8/aT8/Pz8/Tz8/PwJ3Pz9sVSs/Pz8/Pz9DOzJodoi=");
+$grabzIt = GrabzItClient->new("YOUR APPLICATION KEY", "YOUR APPLICATION SECRET");
 
 $grabzIt->HTMLToImage("<h1>Hello World!</h1>");
 lives_ok {$grabzIt->Save() } 'HTML to Image';
