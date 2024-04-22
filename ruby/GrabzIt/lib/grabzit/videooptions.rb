@@ -9,6 +9,8 @@ module GrabzIt
 			super()
 			@browserWidth = nil
 			@browserHeight = nil
+			@width = nil
+			@height = nil			
 			@waitForElement = nil
 			@requestAs = 0
 			@customWaterMarkId = nil
@@ -46,6 +48,32 @@ module GrabzIt
 		def browserHeight=(value)
 			@browserHeight = value
 		end
+
+		# @return [Integer] get the width of the resulting video in pixels
+		def width
+			@width
+		end
+		
+		# Set the width of the resulting video in pixels
+		#
+		# @param value [Integer] the width
+		# @return [void]		
+		def width=(value)
+			@width = value
+		end			
+		
+		# @return [Integer] get the height of the resulting video in pixels
+		def height
+			@height
+		end
+		
+		# Set the height of the resulting video in pixels
+		#
+		# @param value [Integer] the height
+		# @return [void]		
+		def height=(value)
+			@height = value
+		end		
 		
 		# @return [String] get the CSS selector of the HTML element in the web page that must be visible before the capture is performed
 		def waitForElement
@@ -212,7 +240,9 @@ module GrabzIt
 			GrabzIt::Utility.b_to_str(@noCookieNotifications),
 			GrabzIt::Utility.nil_check(@clickElement),
 			GrabzIt::Utility.nil_float_check(@framesPerSecond),
-			GrabzIt::Utility.nil_int_check(@duration))
+			GrabzIt::Utility.nil_int_check(@duration),
+			GrabzIt::Utility.nil_int_check(@width),
+			GrabzIt::Utility.nil_int_check(@height))
 			
 			return items.join("|")
 		end
@@ -233,6 +263,8 @@ module GrabzIt
 			params['start'] = GrabzIt::Utility.nil_int_check(@start)
 			params['fps'] = GrabzIt::Utility.nil_float_check(@framesPerSecond)
 			params['duration'] = GrabzIt::Utility.nil_int_check(@duration)
+			params['width'] = GrabzIt::Utility.nil_int_check(@width)
+			params['height'] = GrabzIt::Utility.nil_int_check(@height)			
 
 			return params
 		end
