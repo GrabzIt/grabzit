@@ -9,6 +9,8 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
 
             browserWidth        the width of the browser in pixels
             browserHeight       the height of the browser in pixels
+            width               the width of the resulting video in pixels
+            height              the height of the resulting video in pixels
             start               set starting time of the web page that should be converted into a video
             duration            set length in seconds of the web page that should be converted into a video
             framesPerSecond     set number of frames per second that should be used to create the video. From a minimum of 0.2 to a maximum of 10
@@ -25,6 +27,8 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 GrabzItBaseOptions.GrabzItBaseOptions.__init__(self)
                 self.browserWidth = 0
                 self.browserHeight = 0
+                self.width = 0
+                self.height = 0                
                 self.start = 0
                 self.duration = 10
                 self.framesPerSecond = 0
@@ -40,6 +44,8 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
                 params["bwidth"] = int(self.browserWidth)
                 params["bheight"] = int(self.browserHeight)
+                params["width"] = int(self.width)
+                params["height"] = int(self.height)                
                 params["duration"] = int(self.duration) 
                 params["start"] = int(self.start) 
                 params["fps"] = self._toString(self.framesPerSecond)
@@ -66,7 +72,8 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.start))+"|"+str(int(self.requestAs)) + \
                 "|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy) + \
-                "|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.clickElement)+"|"+self._toString(self.framesPerSecond)+"|"+str(int(self.duration))
+                "|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.clickElement)+"|"+self._toString(self.framesPerSecond)+"|"+str(int(self.duration)) + \
+                "|"+str(int(self.width))+"|"+str(int(self.height))
 
         def _toString(self, value):
                 if ((value % 1) == 0):
