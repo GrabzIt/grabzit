@@ -1439,9 +1439,21 @@ namespace GrabzIt
         /// <returns>GrabzItFile - which represents the screenshot</returns>
         public GrabzItFile GetResult(string id)
         {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                if (!WriteResultToStream(id, ms))
+                {
+                    return null;
+                }
+                return new GrabzItFile(ms.ToArray());
+            }
+        }
+
+        public bool WriteResultToStream(string id, Stream outStream)
+        {
             if (string.IsNullOrEmpty(id))
             {
-                return null;
+                return false;
             }
 
             lock (thisLock)
@@ -1455,24 +1467,21 @@ namespace GrabzIt
                 {
                     if (response.ContentLength == 0)
                     {
-                        return null;
+                        return false;
                     }
 
                     using (Stream stream = response.GetResponseStream())
                     {
                         byte[] buffer = new byte[131072];
-                        using (MemoryStream ms = new MemoryStream())
+                        int read;
+                        while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
                         {
-                            int read;
-                            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                ms.Write(buffer, 0, read);
-                            }
-                            return new GrabzItFile(ms.ToArray());
+                            outStream.Write(buffer, 0, read);
                         }
                     }
                 }
             }
+            return true;
         }
 
 #if !ASYNCNOTALLOWED
@@ -1483,9 +1492,21 @@ namespace GrabzIt
         /// <returns>GrabzItFile - which represents the screenshot</returns>
         public async Task<GrabzItFile> GetResultAsync(string id)
         {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                if (!await WriteResultToStreamAsync(id, ms).ConfigureAwait(false))
+                {
+                    return null;
+                }
+                return new GrabzItFile(ms.ToArray());
+            }
+        }
+
+        public async Task<bool> WriteResultToStreamAsync(string id, Stream outStream)
+        {
             if (string.IsNullOrEmpty(id))
             {
-                return null;
+                return false;
             }
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
@@ -1497,23 +1518,21 @@ namespace GrabzIt
             {
                 if (response.ContentLength == 0)
                 {
-                    return null;
+                    return false;
                 }
 
                 using (Stream stream = response.GetResponseStream())
                 {
                     byte[] buffer = new byte[131072];
-                    using (MemoryStream ms = new MemoryStream())
+                    int read;
+                    while ((read = await stream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
                     {
-                        int read;
-                        while ((read = await stream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
-                        {
-                            await ms.WriteAsync(buffer, 0, read).ConfigureAwait(false);
-                        }
-                        return new GrabzItFile(ms.ToArray());
+                        await outStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
                     }
                 }
             }
+
+            return true;
         }
 #endif
 
