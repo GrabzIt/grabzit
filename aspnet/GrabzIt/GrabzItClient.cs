@@ -1433,10 +1433,10 @@ namespace GrabzIt
         }
 
         /// <summary>
-        /// This method returns the screenshot.
+        /// This method returns the capture.
         /// </summary>
-        /// <param name="id">The unique identifier of the screenshot, returned by the callback handler or the Save method</param>
-        /// <returns>GrabzItFile - which represents the screenshot</returns>
+        /// <param name="id">The unique identifier of the capture, returned by the callback handler or the Save method</param>
+        /// <returns>GrabzItFile - which represents the capture</returns>
         public GrabzItFile GetResult(string id)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -1449,9 +1449,15 @@ namespace GrabzIt
             }
         }
 
+        /// <summary>
+        /// This method writes the capture to the output stream.
+        /// </summary>
+        /// <param name="id">The unique identifier of the capture, returned by the callback handler or the Save method</param>
+        /// <param name="outStream">The output stream to write the capture to</param>
+        /// <returns>true if the capture is successfullly written</returns>
         public bool WriteResultToStream(string id, Stream outStream)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id) || outStream == null)
             {
                 return false;
             }
@@ -1486,10 +1492,10 @@ namespace GrabzIt
 
 #if !ASYNCNOTALLOWED
         /// <summary>
-        /// This method returns the screenshot.
+        /// This method returns the capture.
         /// </summary>
-        /// <param name="id">The unique identifier of the screenshot, returned by the callback handler or the Save method</param>
-        /// <returns>GrabzItFile - which represents the screenshot</returns>
+        /// <param name="id">The unique identifier of the capture, returned by the callback handler or the Save method</param>
+        /// <returns>GrabzItFile - which represents the capture</returns>
         public async Task<GrabzItFile> GetResultAsync(string id)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -1502,9 +1508,15 @@ namespace GrabzIt
             }
         }
 
+        /// <summary>
+        /// This method writes the capture to the output stream.
+        /// </summary>
+        /// <param name="id">The unique identifier of the capture, returned by the callback handler or the Save method</param>
+        /// <param name="outStream">The output stream to write the capture to</param>
+        /// <returns>true if the capture is successfullly written</returns>
         public async Task<bool> WriteResultToStreamAsync(string id, Stream outStream)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id) || outStream == null)
             {
                 return false;
             }
