@@ -9,4 +9,5 @@ from GrabzIt import GrabzItPDFOptions
 from GrabzIt import GrabzItDOCXOptions
 from GrabzIt import GrabzItTableOptions
 from GrabzIt import GrabzItHTMLOptions
+from GrabzIt import GrabzItVideoOptions
 from GrabzIt import GrabzItClient

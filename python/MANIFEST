@@ -9,6 +9,7 @@ GrabzIt\GrabzItCookie.py
 GrabzIt\GrabzItDOCXOptions.py
 GrabzIt\GrabzItException.py
 GrabzIt\GrabzItHTMLOptions.py
+GrabzIt\GrabzItVideoOptions.py
 GrabzIt\GrabzItImageOptions.py
 GrabzIt\GrabzItPDFOptions.py
 GrabzIt\GrabzItTableOptions.py
