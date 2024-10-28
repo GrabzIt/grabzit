@@ -5,7 +5,7 @@
    Description: Use a simple shortcode to screenshot a webpage or convert any text or HTML snippet into images, rendered HTML, PDF's, DOCX, Animated GIF's, CSV, JSON and more! To get started: activate the GrabzIt Web Capture and go to the GrabzIt API page to get your Application Key. 
    Version: 1.0.8
    Author: GrabzIt Limited
-   Author URI:   https://grabz.it/index.aspx
+   Author URI:   https://grabz.it/
    License: GPL2
    License URI:  https://www.gnu.org/licenses/gpl-2.0.html
    Text Domain: grabzit-web-capture
