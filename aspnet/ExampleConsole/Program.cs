@@ -1,20 +1,21 @@
-﻿using System;
-using System.Configuration;
-using System.Windows.Forms;
-using GrabzIt;
-using GrabzIt.Enums;
+﻿using GrabzIt;
+using Microsoft.Extensions.Configuration;
 
-namespace SampleConsole
+namespace ExampleConsole
 {
-    class Program
+    internal class Program
     {
         private static string PDF = "P";
         private static string DOCX = "D";
         private static string GIF = "G";
         private static string VIDEO = "V";
-
         static void Main(string[] args)
         {
+            var builder = new ConfigurationBuilder()
+                 .AddJsonFile($"appsettings.json", true, true);
+
+            var config = builder.Build();
+
             while (true)
             {
                 Console.WriteLine("Return Capture as PDF (P), DOCX (D), JPEG (J), Video (V) or Animated GIF (G)? Enter P, J, V or G.");
@@ -38,8 +39,8 @@ namespace SampleConsole
 
                 string inputData = Console.ReadLine();
 
-                GrabzItClient grabzIt = GrabzItClient.Create(ConfigurationManager.AppSettings["ApplicationKey"], 
-                                                                ConfigurationManager.AppSettings["ApplicationSecret"]);
+                GrabzItClient grabzIt = new GrabzItClient(config["ApplicationKey"],
+                                                                config["ApplicationSecret"]);
 
                 try
                 {
@@ -110,7 +111,7 @@ namespace SampleConsole
                         {
                             grabzIt.HTMLToImage(inputData);
                         }
-                    }                    
+                    }
                     if (grabzIt.SaveTo(filename))
                     {
                         if (formatType == GIF)
@@ -129,7 +130,7 @@ namespace SampleConsole
                         {
                             Console.WriteLine("Image has been saved to: " + filename);
                         }
-                    }                    
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -141,7 +142,6 @@ namespace SampleConsole
                 {
                     break;
                 }
-                Application.DoEvents();
             }
         }
     }

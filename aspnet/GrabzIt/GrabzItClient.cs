@@ -11,56 +11,24 @@ using GrabzIt.Cookies;
 using GrabzIt.Results;
 using GrabzIt.Enums;
 using GrabzIt.Screenshots;
-using GrabzIt.Net;
 using GrabzIt.COM;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using GrabzIt.Parameters;
-#if !ASYNCNOTALLOWED
+using System.Net.Http;
 using System.Threading.Tasks;
-#endif
+
 namespace GrabzIt
 {
     [ClassInterface(ClassInterfaceType.None)]
     public class GrabzItClient : IGrabzItClient
-    {
-        private static GrabzItClient grabzItClient;        
-
-        public delegate void ScreenShotHandler(object sender, ScreenShotEventArgs result);
-
-        private event ScreenShotHandler screenShotComplete;
-        /// <summary>
-        /// Only one screenshot event handler can be set, due to the possibility of multiple event handlers being assigned before a response is recieved. 
-        /// </summary>
-        public event ScreenShotHandler ScreenShotComplete
-        {
-            add
-            {
-                lock (eventLock)
-                {
-                    if ((screenShotComplete == null || screenShotComplete.GetInvocationList().Length == 0) && value.GetInvocationList().Length == 1)
-                    {
-                        screenShotComplete += value;
-                    }
-                }
-            }
-            remove
-            {
-                lock (eventLock)
-                {
-                    screenShotComplete -= value;
-                }
-            }
-        }
-
+    {        
         private GrabzItRequest request;
         private string protocol = "http";
-        private WebProxy proxy = null;
+        internal WebProxy Proxy { get; private set; } = null;
+        internal HttpClient HttpClient { get; private set; }
         private Object thisLock = new Object();
-        private Object eventLock = new Object();
-#if !ASYNCNOTALLOWED
         private SemaphoreSlim thisSlim = new SemaphoreSlim(1, 1);
-#endif
         public string ApplicationKey
         {
             get;
@@ -83,7 +51,7 @@ namespace GrabzIt
 
         //Required by COM
         public GrabzItClient()
-            : this(string.Empty, string.Empty, false)
+            : this(string.Empty, string.Empty, false, null)
         {
         }
 
@@ -92,23 +60,20 @@ namespace GrabzIt
         /// </summary>
         /// <param name="applicationKey">The application key of your GrabzIt account</param>
         /// <param name="applicationSecret">The application secret of your GrabzIt account</param>
-        public GrabzItClient(string applicationKey, string applicationSecret) : this(applicationKey, applicationSecret, false)
+        public GrabzItClient(string applicationKey, string applicationSecret, HttpClient client = null) : this(applicationKey, applicationSecret, false, client)
         {
         }
 
-        private GrabzItClient(string applicationKey, string applicationSecret, bool isStatic)
+        private GrabzItClient(string applicationKey, string applicationSecret, bool isStatic, HttpClient client)
         {
             this.ApplicationKey = applicationKey;
             this.ApplicationSecret = applicationSecret;
-            request = new GrabzItRequest(isStatic);
-        }
-
-        internal void OnScreenShotComplete(object sender, ScreenShotEventArgs result)
-        {
-            if (screenShotComplete != null)
+            if (client == null)
             {
-                screenShotComplete(this, result);
+                client = new HttpClient();
             }
+            this.HttpClient = client;
+            request = new GrabzItRequest();
         }
 
         /// <summary>
@@ -119,10 +84,10 @@ namespace GrabzIt
         {
             if (string.IsNullOrEmpty(proxyUrl))
             {
-                this.proxy = null;
+                this.Proxy = null;
                 return;
             }
-            this.proxy = new WebProxy(proxyUrl);
+            this.Proxy = new WebProxy(proxyUrl);
         }
 
         /// <summary>
@@ -794,7 +759,28 @@ namespace GrabzIt
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
         public string Save(string callBackURL)
         {
-            lock (thisLock)
+            return SaveAsync(callBackURL).Result;
+        }
+
+        /// <summary>
+        /// Calls the GrabzIt web service to take the screenshot
+        /// </summary>
+        /// <remarks>
+        /// This is the recommended method of saving a screenshot
+        /// 
+        /// The handler will be passed a URL with the following query string parameters:
+        ///  - message (is any error message associated with the screenshot)
+        ///  - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
+        ///  - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
+        ///  - filename (is the filename of the screenshot)
+        ///  - format (is the format of the screenshot)
+        /// </remarks>
+        /// <param name="callBackURL">The handler the GrabzIt web service should call after it has completed its work</param>
+        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
+        public async Task<string> SaveAsync(string callBackURL)
+        {
+            await thisSlim.WaitAsync().ConfigureAwait(false);
+            try
             {
                 if (this.request == null || this.request.Options == null)
                 {
@@ -802,11 +788,11 @@ namespace GrabzIt
                 }
                 string sig = Encrypt(request.Options.GetSignatureString(this.ApplicationSecret, callBackURL, request.TargetUrl));
 
-                TakePictureResult webResult = Take(callBackURL, sig);                
+                TakePictureResult webResult = await TakeAsync(callBackURL, sig);                
 
                 if (webResult == null)
                 {
-                    webResult = Take(callBackURL, sig);
+                    webResult = await TakeAsync(callBackURL, sig);
                 }
 
                 if (webResult == null)
@@ -816,18 +802,22 @@ namespace GrabzIt
 
                 return webResult.ID;
             }
+            finally
+            {
+                thisSlim.Release();
+            }
         }
 
-        private TakePictureResult Take(string callBackURL, string sig)
+        private async Task<TakePictureResult> TakeAsync(string callBackURL, string sig)
         {
             TakePictureResult webResult;
             if (request.IsPost)
             {
-                webResult = Post<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
+                webResult = await PostAsync<TakePictureResult>(request.WebServiceURL, request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "html", HttpUtility.UrlEncode(this.request.Data)));
             }
             else
             {
-                webResult = Get<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
+                webResult = await GetAsync<TakePictureResult>(request.WebServiceURL + "?" + request.Options.GetQueryString(this.ApplicationKey, sig, callBackURL, "url", this.request.Data));
             }
             CheckForException(webResult);
             return webResult;
@@ -842,43 +832,7 @@ namespace GrabzIt
         /// <returns>Returns a GrabzItFile object containing the screenshot data.</returns>
         public GrabzItFile SaveTo()
         {
-            lock (thisLock)
-            {
-                string id = Save();
-
-                if (string.IsNullOrEmpty(id))
-                {
-                    return null;
-                }
-
-                //Wait until it is possible to be ready
-                Thread.Sleep(3000 + request.Options.GetStartDelay());
-
-                //Wait for it to be ready.
-                while (true)
-                {
-                    Status status = GetStatus(id);
-
-                    if (!status.Cached && !status.Processing)
-                    {
-                        throw new GrabzItException("The capture did not complete with the error: " + status.Message, ErrorCode.RenderingError);
-                    }
-
-                    if (status.Cached)
-                    {
-                        GrabzItFile result = GetResult(id);
-
-                        if (result == null)
-                        {
-                            throw new GrabzItException("The capture could not be found on GrabzIt.", ErrorCode.RenderingMissingScreenshot);
-                        }
-
-                        return result;
-                    }
-
-                    Thread.Sleep(3000);
-                }
-            }
+            return SaveToAsync().Result;
         }
 
         /// <summary>
@@ -891,40 +845,9 @@ namespace GrabzIt
         /// <returns>Returns the true if it is successful otherwise it throws an exception.</returns>
         public bool SaveTo(string saveToFile)
         {
-            int attempt = 0;
-            while (true)
-            {
-                try
-                {
-                    GrabzItFile result = SaveTo();
-
-                    if (result == null)
-                    {
-                        return false;
-                    }
-
-                    result.Save(saveToFile);
-                    break;
-                }
-                catch (GrabzItException e)
-                {
-                    throw e;
-                }
-                catch (Exception ex)
-                {
-                    if (attempt < 3)
-                    {
-                        attempt++;
-                        continue;
-                    }
-                    throw new GrabzItException("An error occurred trying to save the capture to: " +
-                                        saveToFile, ErrorCode.FileSaveError, ex);
-                }
-            }
-            return true;
+            return SaveToAsync(saveToFile).Result;
         }
 
-#if !ASYNCNOTALLOWED
         /// <summary>
         /// Calls the GrabzIt web service to take the screenshot and saves it to the target path provided
         /// </summary>
@@ -974,11 +897,11 @@ namespace GrabzIt
         /// <returns>Returns a GrabzItFile object containing the screenshot data.</returns>
         public async Task<GrabzItFile> SaveToAsync()
         {
+            string id = await SaveAsync(string.Empty);
+
             await thisSlim.WaitAsync().ConfigureAwait(false);
             try
             {
-                string id = Save();
-
                 if (string.IsNullOrEmpty(id))
                 {
                     return null;
@@ -1020,53 +943,35 @@ namespace GrabzIt
 
         private async Task<T> GetAsync<T>(string url)
         {
-            using (QuickWebClient client = new QuickWebClient(this.proxy))
+            try
             {
-                try
-                {
-                    string result = await client.DownloadStringTaskAsync(url).ConfigureAwait(false);
-                    return DeserializeResult<T>(result);
-                }
-                catch (WebException e)
-                {
-                    HandleWebException(e);
-                    return default(T);
-                }
+                string result = await HttpClient.GetStringAsync(url).ConfigureAwait(false);
+                return DeserializeResult<T>(result);
             }
-        }
-#endif
-        private T Get<T>(string url)
-        {
-            using (QuickWebClient client = new QuickWebClient(this.proxy))
+            catch (WebException e)
             {
-                try
-                {
-                    string result = client.DownloadString(url);
-                    return DeserializeResult<T>(result);
-                }
-                catch (WebException e)
-                {
-                    HandleWebException(e);
-                    return default(T);
-                }
+                HandleWebException(e);
+                return default(T);
             }
         }
 
-        private T Post<T>(string url, string parameters)
+        private async Task<T> PostAsync<T>(string url, string parameters)
         {
-            using (QuickWebClient client = new QuickWebClient(this.proxy))
+            try
             {
-                try
+                using (StringContent content = new StringContent(parameters, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded"))
                 {
-                    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                    string result = client.UploadString(url, parameters);
-                    return DeserializeResult<T>(result);
+                    using (HttpResponseMessage response = await this.HttpClient.PostAsync(url, content))
+                    {
+                        string result = await response.Content.ReadAsStringAsync();
+                        return DeserializeResult<T>(result);
+                    }
                 }
-                catch (WebException e)
-                {
-                    HandleWebException(e);
-                    return default(T);
-                }
+            }
+            catch (WebException e)
+            {
+                HandleWebException(e);
+                return default(T);
             }
         }
 
@@ -1114,27 +1019,9 @@ namespace GrabzIt
         /// <returns>A Status object representing the screenshot</returns>
         public Status GetStatus(string id)
         {
-            lock (thisLock)
-            {
-                if (string.IsNullOrEmpty(id))
-                {
-                    return null;
-                }
-
-                string url = string.Format("{0}getstatus?id={1}",
-                                                          GetRootURL(), id);
-                GetStatusResult webResult = Get<GetStatusResult>(url);
-
-                if (webResult == null)
-                {
-                    return null;
-                }
-
-                return webResult.GetStatus();
-            }
+            return GetStatusAsync(id).Result;
         }
 
-#if !ASYNCNOTALLOWED
         /// <summary>
         /// Get the current status of a GrabzIt screenshot
         /// </summary>
@@ -1158,7 +1045,6 @@ namespace GrabzIt
 
             return webResult.GetStatus();
         }
-#endif
 
         /// <summary>
         /// Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
@@ -1167,14 +1053,25 @@ namespace GrabzIt
         /// <returns>A array of cookies</returns>
         public GrabzItCookie[] GetCookies(string domain)
         {
-            lock (thisLock)
+            return GetCookiesAsync(domain).Result;
+        }
+
+        /// <summary>
+        /// Get all the cookies that GrabzIt is using for a particular domain. This may include your user set cookies as well.
+        /// </summary>
+        /// <param name="domain">The domain to return cookies for.</param>
+        /// <returns>A array of cookies</returns>
+        public async Task<GrabzItCookie[]> GetCookiesAsync(string domain)
+        {
+            await thisSlim.WaitAsync().ConfigureAwait(false);
+            try
             {
                 string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, domain));
 
                 string url = string.Format("{0}getcookies?domain={1}&key={2}&sig={3}",
                                                           GetRootURL(), domain, ApplicationKey, sig);
 
-                GetCookiesResult webResult = Get<GetCookiesResult>(url);
+                GetCookiesResult webResult = await GetAsync<GetCookiesResult>(url);
 
                 if (webResult == null)
                 {
@@ -1185,86 +1082,10 @@ namespace GrabzIt
 
                 return webResult.Cookies;
             }
-        }
-
-        /// <summary>
-        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
-        /// cookie is overridden.
-        /// 
-        /// This can be useful if a websites functionality is controlled by cookies.
-        /// </summary>
-        /// <param name="name">The name of the cookie to set.</param>
-        /// <param name="domain">The domain of the website to set the cookie for.</param>
-        /// <returns>Returns true if the cookie was successfully set.</returns>
-        public bool SetCookie(string name, string domain)
-        {
-            return SetCookie(name, domain, string.Empty, string.Empty, false, null);
-        }
-
-        /// <summary>
-        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
-        /// cookie is overridden.
-        /// 
-        /// This can be useful if a websites functionality is controlled by cookies.
-        /// </summary>
-        /// <param name="name">The name of the cookie to set.</param>
-        /// <param name="domain">The domain of the website to set the cookie for.</param>
-        /// <param name="value">The value of the cookie.</param>
-        /// <returns>Returns true if the cookie was successfully set.</returns>
-        public bool SetCookie(string name, string domain, string value)
-        {
-            return SetCookie(name, domain, value, string.Empty, false, null);
-        }
-
-        /// <summary>
-        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
-        /// cookie is overridden.
-        /// 
-        /// This can be useful if a websites functionality is controlled by cookies.
-        /// </summary>
-        /// <param name="name">The name of the cookie to set.</param>
-        /// <param name="domain">The domain of the website to set the cookie for.</param>
-        /// <param name="value">The value of the cookie.</param>
-        /// <param name="path">The website path the cookie relates to.</param>
-        /// <returns>Returns true if the cookie was successfully set.</returns>
-        public bool SetCookie(string name, string domain, string value, string path)
-        {
-            return SetCookie(name, domain, value, path, false, null);
-        }
-
-        /// <summary>
-        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
-        /// cookie is overridden.
-        /// 
-        /// This can be useful if a websites functionality is controlled by cookies.
-        /// </summary>
-        /// <param name="name">The name of the cookie to set.</param>
-        /// <param name="domain">The domain of the website to set the cookie for.</param>
-        /// <param name="value">The value of the cookie.</param>
-        /// <param name="path">The website path the cookie relates to.</param>
-        /// <param name="httponly">Is the cookie only used on HTTP</param>
-        /// <returns>Returns true if the cookie was successfully set.</returns>
-        public bool SetCookie(string name, string domain, string value, string path, bool httponly)
-        {
-            return SetCookie(name, domain, value, path, httponly, null);
-        }
-
-        /// <summary>
-        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
-        /// cookie is overridden.
-        /// 
-        /// This can be useful if a websites functionality is controlled by cookies.
-        /// </summary>
-        /// <param name="name">The name of the cookie to set.</param>
-        /// <param name="domain">The domain of the website to set the cookie for.</param>
-        /// <param name="value">The value of the cookie.</param>
-        /// <param name="path">The website path the cookie relates to.</param>
-        /// <param name="httponly">Is the cookie only used on HTTP</param>
-        /// <param name="expires">When the cookie expires.</param>
-        /// <returns>Returns true if the cookie was successfully set.</returns>
-        public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime expires)
-        {
-            return SetCookie(name, domain, value, path, httponly, expires);
+            finally
+            {
+                thisSlim.Release();
+            }
         }
 
         /// <summary>
@@ -1280,9 +1101,28 @@ namespace GrabzIt
         /// <param name="httponly">Is the cookie only used on HTTP</param>
         /// <param name="expires">When the cookie expires. Pass a null value if it does not expire.</param>
         /// <returns>Returns true if the cookie was successfully set.</returns>
-        public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime? expires)
+        public bool SetCookie(string name, string domain, string value, string path, bool httponly, DateTime expires)
         {
-            lock (thisLock)
+            return SetCookieAsync(name, domain, value, path, httponly, expires).Result;
+        }
+
+        /// <summary>
+        /// Sets a new custom cookie on GrabzIt, if the custom cookie has the same name and domain as a global cookie the global
+        /// cookie is overridden.
+        /// 
+        /// This can be useful if a websites functionality is controlled by cookies.
+        /// </summary>
+        /// <param name="name">The name of the cookie to set.</param>
+        /// <param name="domain">The domain of the website to set the cookie for.</param>
+        /// <param name="value">The value of the cookie.</param>
+        /// <param name="path">The website path the cookie relates to.</param>
+        /// <param name="httponly">Is the cookie only used on HTTP</param>
+        /// <param name="expires">When the cookie expires. Pass a null value if it does not expire.</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public async Task<bool> SetCookieAsync(string name, string domain, string value = "", string path = "", bool httponly = false, DateTime? expires = null)
+        {
+            await thisSlim.WaitAsync().ConfigureAwait(false);
+            try
             {
                 string expiresStr = string.Empty;
                 if (expires.HasValue)
@@ -1296,7 +1136,7 @@ namespace GrabzIt
                 string url = string.Format("{0}setcookie?name={1}&domain={2}&value={3}&path={4}&httponly={5}&expires={6}&key={7}&sig={8}",
                                                            GetRootURL(), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), HttpUtility.UrlEncode(value), HttpUtility.UrlEncode(path), (httponly ? 1 : 0), HttpUtility.UrlEncode(expiresStr), ApplicationKey, sig);
 
-                GenericResult webResult = Get<GenericResult>(url);
+                GenericResult webResult = await GetAsync<GenericResult>(url);
 
                 if (webResult == null)
                 {
@@ -1306,6 +1146,10 @@ namespace GrabzIt
                 CheckForException(webResult);
 
                 return Convert.ToBoolean(webResult.Result);
+            }
+            finally
+            {
+                thisSlim.Release();
             }
         }
 
@@ -1317,18 +1161,34 @@ namespace GrabzIt
         /// <returns>Returns true if the cookie was successfully set.</returns>
         public bool DeleteCookie(string name, string domain)
         {
-            lock (thisLock)
+            return DeleteCookieAsync(name, domain).Result;
+        }
+
+        /// <summary>
+        /// Delete a custom cookie or block a global cookie from being used.
+        /// </summary>
+        /// <param name="name">The name of the cookie to delete</param>
+        /// <param name="domain">The website the cookie belongs to</param>
+        /// <returns>Returns true if the cookie was successfully set.</returns>
+        public async Task<bool> DeleteCookieAsync(string name, string domain)
+        {
+            await thisSlim.WaitAsync().ConfigureAwait(false);
+            try
             {
                 string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, name, domain, 1));
 
                 string url = string.Format("{0}setcookie?name={1}&domain={2}&delete=1&key={3}&sig={4}",
                                                           GetRootURL(), HttpUtility.UrlEncode(name), HttpUtility.UrlEncode(domain), ApplicationKey, sig);
 
-                GenericResult webResult = Get<GenericResult>(url);
+                GenericResult webResult = await GetAsync<GenericResult>(url);
 
                 CheckForException(webResult);
 
                 return Convert.ToBoolean(webResult.Result);
+            }
+            finally
+            {
+                thisSlim.Release();
             }
         }
 
@@ -1349,14 +1209,16 @@ namespace GrabzIt
 
             string sig = Encrypt(string.Format("{0}|{1}|{2}|{3}", ApplicationSecret, identifier, (int)xpos, (int)ypos));
 
-            string url = "http://grabz.it/services/addwatermark";
+            string url = string.Format("{0}addwatermark", GetRootURL());
 
-            NameValueCollection nvc = new NameValueCollection();
-            nvc.Add("key", ApplicationKey);
-            nvc.Add("identifier", identifier);
-            nvc.Add("xpos", ((int)xpos).ToString());
-            nvc.Add("ypos", ((int)ypos).ToString());
-            nvc.Add("sig", sig);
+            NameValueCollection nvc = new NameValueCollection
+            {
+                { "key", ApplicationKey },
+                { "identifier", identifier },
+                { "xpos", ((int)xpos).ToString() },
+                { "ypos", ((int)ypos).ToString() },
+                { "sig", sig }
+            };
 
             string result = HttpUploadFile(url, path, "watermark", "image/jpeg", nvc);
 
@@ -1374,13 +1236,23 @@ namespace GrabzIt
         /// <returns>Returns true if the watermark was successfully deleted.</returns>
         public bool DeleteWaterMark(string identifier)
         {
+            return DeleteWaterMarkAsync(identifier).Result;
+        }
+
+        /// <summary>
+        /// Delete a custom watermark.
+        /// <summary>
+        /// <param name="identifier">The identifier of the custom watermark you want to delete</param>
+        /// <returns>Returns true if the watermark was successfully deleted.</returns>
+        public async Task<bool> DeleteWaterMarkAsync(string identifier)
+        {
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}deletewatermark?key={1}&identifier={2}&sig={3}",
                                                           GetRootURL(), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
 
-            GenericResult webResult = Get<GenericResult>(url);
+            GenericResult webResult = await GetAsync<GenericResult>(url);
 
             CheckForException(webResult);
 
@@ -1393,7 +1265,7 @@ namespace GrabzIt
         /// <returns>Returns an array of WaterMark</returns>
         public WaterMark[] GetWaterMarks()
         {
-            return GetWaterMarks(string.Empty);
+            return GetWaterMarksAsync(string.Empty).Result;
         }
 
         /// <summary>
@@ -1403,7 +1275,17 @@ namespace GrabzIt
         /// <returns>Returns a WaterMark</returns>
         public WaterMark GetWaterMark(string identifier)
         {
-            WaterMark[] watermarks = GetWaterMarks(identifier);
+            return GetWaterMarkAsync(identifier).Result;
+        }
+
+        /// <summary>
+        /// Get a particular custom watermark.
+        /// </summary>
+        /// <param name="identifier">The identifier of a particular custom watermark you want to view</param>
+        /// <returns>Returns a WaterMark</returns>
+        public async Task<WaterMark> GetWaterMarkAsync(string identifier)
+        {
+            WaterMark[] watermarks = await GetWaterMarksAsync(identifier);
 
             if (watermarks != null && watermarks.Length == 1)
             {
@@ -1413,14 +1295,14 @@ namespace GrabzIt
             return null;
         }
 
-        private WaterMark[] GetWaterMarks(string identifier)
+        private async Task<WaterMark[]> GetWaterMarksAsync(string identifier)
         {
             string sig = Encrypt(string.Format("{0}|{1}", ApplicationSecret, identifier));
 
             string url = string.Format("{0}getwatermarks?key={1}&identifier={2}&sig={3}",
                                                           GetRootURL(), HttpUtility.UrlEncode(ApplicationKey), HttpUtility.UrlEncode(identifier), sig);
 
-            GetWatermarksResult webResult = Get<GetWatermarksResult>(url);
+            GetWatermarksResult webResult = await GetAsync<GetWatermarksResult>(url);
 
             if (webResult == null)
             {
@@ -1490,7 +1372,6 @@ namespace GrabzIt
             return true;
         }
 
-#if !ASYNCNOTALLOWED
         /// <summary>
         /// This method returns the capture.
         /// </summary>
@@ -1546,7 +1427,6 @@ namespace GrabzIt
 
             return true;
         }
-#endif
 
         private string GetRootURL()
         {
@@ -1632,7 +1512,7 @@ namespace GrabzIt
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
             HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
-            wr.Proxy = this.proxy;
+            wr.Proxy = this.Proxy;
             wr.ContentType = "multipart/form-data; boundary=" + boundary;
             wr.Method = "POST";
             wr.KeepAlive = true;
@@ -1687,27 +1567,6 @@ namespace GrabzIt
                 HandleWebException(e);
                 return string.Empty;
             }
-        }
-
-        /// <summary>
-        /// Create a new GrabzIt client. Note if you are not using the ScreenShotComplete event or you are using multiple threads to call this class, consider using the public constructor to improve performance.
-        /// </summary>
-        /// <param name="applicationKey">The application key of your GrabzIt account</param>
-        /// <param name="applicationSecret">The application secret of your GrabzIt account</param>
-        /// <returns>GrabzItClient</returns>
-        [ComVisible(false)]
-        public static GrabzItClient Create(string applicationKey, string applicationSecret)
-        {
-            if (grabzItClient == null)
-            {
-                Interlocked.CompareExchange(ref grabzItClient, new GrabzItClient(applicationKey, applicationSecret, true), null);
-            }
-            return grabzItClient;
-        }
-
-        internal static GrabzItClient WebClient
-        {
-            get { return grabzItClient; }
         }
     }
 }

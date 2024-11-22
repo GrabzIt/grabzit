@@ -7,27 +7,13 @@ namespace GrabzIt
 {
     internal class GrabzItRequest
     {
-        [ThreadStatic]
-        private static BaseOptions static_options;
         private BaseOptions instance_options;
-
-        [ThreadStatic]
-        private static bool static_post;
         private bool instance_post;
-
-        [ThreadStatic]
-        private static string static_ws_url;
         private string instance_ws_url;
-
-        [ThreadStatic]
-        private static string static_data;
         private string instance_data;
 
-        private bool isStatic;
-
-        internal GrabzItRequest(bool isStatic)
+        internal GrabzItRequest()
         {
-            this.isStatic = isStatic;
         }
 
         internal void Store(string wsUrl, bool post, BaseOptions options)
@@ -37,14 +23,6 @@ namespace GrabzIt
 
         internal void Store(string wsUrl, bool post, BaseOptions options, string data)
         {
-            if (isStatic)
-            {
-                static_ws_url = wsUrl;
-                static_post = post;
-                static_options = options;
-                static_data = data;
-                return;
-            }
             instance_ws_url = wsUrl;
             instance_post = post;
             instance_options = options;
@@ -55,22 +33,11 @@ namespace GrabzIt
         {
             get
             {
-                if (isStatic)
-                {
-                    return static_options;
-                }
                 return instance_options;
             }
             set
             {
-                if (isStatic)
-                {
-                    static_options = value;
-                }
-                else
-                {
-                    instance_options = value;
-                }
+                instance_options = value;
             }
         }
 
@@ -78,10 +45,6 @@ namespace GrabzIt
         {
             get
             {
-                if (isStatic)
-                {
-                    return static_post;
-                }
                 return instance_post;
             }
         }
@@ -90,10 +53,6 @@ namespace GrabzIt
         {
             get
             {
-                if (isStatic)
-                {
-                    return static_data;
-                }
                 return instance_data;
             }
         }
@@ -102,10 +61,6 @@ namespace GrabzIt
         {
             get
             {
-                if (isStatic)
-                {
-                    return static_ws_url;
-                }
                 return instance_ws_url;
             }
         }
