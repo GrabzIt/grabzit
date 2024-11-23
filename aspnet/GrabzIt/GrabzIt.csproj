@@ -41,15 +41,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>GrabzIt Limited</Company>
     <PackageProjectUrl>https://grabz.it/</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/GrabzIt/grabzit/master/aspnet/license.txt</PackageLicenseUrl>
     <PackageIconUrl>https://cdn.grabzit.com/images/icons/64x64.png</PackageIconUrl>
-    <Description>Use GrabzIt to take PDF, DOCX, Video, rendered HTML or image screenshots of websites. The screenshots are highly customizable options include altering quality, delay, size, browser type, geographic location and much more.
-
-You can even convert HTML directly into images, DOCX documents, PDF's, videos, or capture tables from web pages and convert them into a CSV, JSON or Excel documents.
-
-Additionally you can even convert online video's into animated GIF's.
-
-More documentation can be found at: https://grabz.it/api/aspnet</Description>
+    <Description>Need to capture website content? GrabzIt provides flexible solutions to download, convert, and archive online information. Easily create PDFs, DOCX files, or high-quality screenshots of web pages. Extract data from tables, convert HTML, and even turn online videos into animated GIFs.
+    
+    Explore all the possibilities at: https://grabz.it/api/aspnet</Description>
     <PackageReleaseNotes>
       - It now only supports .NET Standard 2.0
       - Support for HTTP Clients added
@@ -61,6 +56,7 @@ More documentation can be found at: https://grabz.it/api/aspnet</Description>
   </PropertyGroup>
   <PropertyGroup>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="" />

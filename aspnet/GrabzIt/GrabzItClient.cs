@@ -736,28 +736,9 @@ namespace GrabzIt
         ///  - filename (is the filename of the screenshot)
         ///  - format (is the format of the screenshot)
         /// </remarks>
-        /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
-        public string Save()
-        {
-            return Save(string.Empty);
-        }
-
-        /// <summary>
-        /// Calls the GrabzIt web service to take the screenshot
-        /// </summary>
-        /// <remarks>
-        /// This is the recommended method of saving a screenshot
-        /// 
-        /// The handler will be passed a URL with the following query string parameters:
-        ///  - message (is any error message associated with the screenshot)
-        ///  - customId (is a custom id you may have specified in the {#set_image_options}, {#set_table_options} or {#set_pdf_options} method)
-        ///  - id (is the unique id of the screenshot which can be used to retrieve the screenshot with the {#get_result} method)
-        ///  - filename (is the filename of the screenshot)
-        ///  - format (is the format of the screenshot)
-        /// </remarks>
         /// <param name="callBackURL">The handler the GrabzIt web service should call after it has completed its work</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
-        public string Save(string callBackURL)
+        public string Save(string callBackURL = "")
         {
             return SaveAsync(callBackURL).Result;
         }
@@ -777,7 +758,7 @@ namespace GrabzIt
         /// </remarks>
         /// <param name="callBackURL">The handler the GrabzIt web service should call after it has completed its work</param>
         /// <returns>The unique identifier of the screenshot. This can be used to get the screenshot with the GetResult method</returns>
-        public async Task<string> SaveAsync(string callBackURL)
+        public async Task<string> SaveAsync(string callBackURL = "")
         {
             await thisSlim.WaitAsync().ConfigureAwait(false);
             try
