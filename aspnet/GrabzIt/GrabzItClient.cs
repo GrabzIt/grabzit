@@ -1304,7 +1304,7 @@ namespace GrabzIt
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                if (!WriteResultToStream(id, ms))
+                if (!WriteResultToStreamAsync(id, ms).Result)
                 {
                     return null;
                 }
@@ -1320,37 +1320,7 @@ namespace GrabzIt
         /// <returns>true if the capture is successfullly written</returns>
         public bool WriteResultToStream(string id, Stream outStream)
         {
-            if (string.IsNullOrEmpty(id) || outStream == null)
-            {
-                return false;
-            }
-
-            lock (thisLock)
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
-                                                                                "{0}getfile?id={1}",
-                                                                                GetRootURL(), id));
-                request.KeepAlive = false;
-
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (response.ContentLength == 0)
-                    {
-                        return false;
-                    }
-
-                    using (Stream stream = response.GetResponseStream())
-                    {
-                        byte[] buffer = new byte[131072];
-                        int read;
-                        while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            outStream.Write(buffer, 0, read);
-                        }
-                    }
-                }
-            }
-            return true;
+            return WriteResultToStreamAsync(id, outStream).Result;
         }
 
         /// <summary>
@@ -1383,19 +1353,16 @@ namespace GrabzIt
                 return false;
             }
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format(
+            using (HttpResponseMessage response = await HttpClient.GetAsync(string.Format(
                                                                             "{0}getfile?id={1}",
-                                                                            GetRootURL(), id));
-            request.KeepAlive = false;
-
-            using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync().ConfigureAwait(false))
+                                                                            GetRootURL(), id)).ConfigureAwait(false))
             {
-                if (response.ContentLength == 0)
+                if (!response.IsSuccessStatusCode)
                 {
                     return false;
                 }
 
-                using (Stream stream = response.GetResponseStream())
+                using (Stream stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
                     byte[] buffer = new byte[131072];
                     int read;
