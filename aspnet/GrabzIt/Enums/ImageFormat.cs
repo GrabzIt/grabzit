@@ -9,6 +9,7 @@
         jpg,
         tiff,
         png,
+        svg,
         webp
     }
 }
