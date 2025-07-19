@@ -78,7 +78,7 @@ With the CreateInvisible method the capture is created but not shown on the webp
 
 The Encrypt method automatically makes a cryptographically secure key and passes it to GrabzIt's API to encrypt your capture. To access encrypted captures use the DataURI method, if a true is passed to the decrypt parameter of the DataURI method any encrypted data will be automatically decrypted using the key created in the Encrypt method.
 
-The options parameter takes all of the parameters found here (excluding the URL and application key parameters): https://grabz.it/api/javascript/parameters.aspx in the options object. For instance if you wanted to set the width and height to be 250 x 200 you could do this like so:
+The options parameter takes all of the parameters found here (excluding the URL and application key parameters): https://grabz.it/api/javascript/parameters/ in the options object. For instance if you wanted to set the width and height to be 250 x 200 you could do this like so:
 
 
 	GrabzIt("YOUR APPLICATION KEY").ConvertURL('http://www.bbc.com', {"width": 250, "height": 200}).AddTo('div_id');

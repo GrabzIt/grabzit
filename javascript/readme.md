@@ -100,7 +100,7 @@ automatically decrypted using the key created in the Encrypt method.
 
 The options parameter takes all of the parameters found here (excluding
 the URL and application key parameters):
-https://grabz.it/api/javascript/parameters.aspx in the options object.
+https://grabz.it/api/javascript/parameters/ in the options object.
 For instance if you wanted to set the width and height to be 250 x 200
 you could do this like so:
 
