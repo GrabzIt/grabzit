@@ -32,6 +32,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $address = null;
 	private $cssMediaType = null;
 	private $password = null;
+	private $jsCode = null;
 	
 	/*
 	Set the width of the resulting PDF in mm.
@@ -501,6 +502,22 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	}
 	
 	/*
+	Set the JavaScript Code to execute in the web page.
+	*/
+	public function setJavaScriptCode($value)
+	{
+		$this->jsCode = $value;
+	}
+
+	/*
+	Get the JavaScript Code to execute in the web page.
+	*/
+	public function getJavaScriptCode()
+	{
+		return $this->jsCode;
+	}	
+
+	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 	GrabzIt to perform a HTTP post.
 
@@ -548,7 +565,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
 		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->cssMediaType)."|".
-		$this->nullToEmpty($this->password)."|".$this->nullToEmpty($this->clickElement);
+		$this->nullToEmpty($this->password)."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -585,6 +602,7 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['media'] = $this->nullToEmpty($this->cssMediaType);
 		$params['password'] = $this->nullToEmpty($this->password);
 		$params['click'] = $this->nullToEmpty($this->clickElement);
+		$params['jscode'] = $this->nullToEmpty($this->jsCode);
 		
 		return $params;
 	}

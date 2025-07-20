@@ -16,6 +16,7 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	private $requestAs = 0;
 	private $quality = -1;
 	private $clickElement = null;
+	private $jsCode = null;
 	private $hideElement = null;
 	private $waitForElement = null;
 	private $noAds = false;
@@ -191,6 +192,22 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 	{
 		return $this->title;
 	}
+
+	/*
+	Set the JavaScript Code to execute in the web page.
+	*/
+	public function setJavaScriptCode($value)
+	{
+		$this->jsCode = $value;
+	}
+
+	/*
+	Get the JavaScript Code to execute in the web page.
+	*/
+	public function getJavaScriptCode()
+	{
+		return $this->jsCode;
+	}	
 	
 	/*
 	Set the CSS selector of the HTML element in the web page to click.
@@ -495,7 +512,8 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".$this->nullToEmpty($this->waitForElement)."|".
 		$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".
 		$this->nullToEmpty($this->targetElement)."|".$this->nullToEmpty($this->templateId)."|".$this->nullToEmpty($this->templateVariables)."|".
-		$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->password."|".$this->nullToEmpty($this->clickElement));
+		$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".
+		$this->nullToEmpty($this->password."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode));
 	}
 
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -529,6 +547,7 @@ class GrabzItDOCXOptions extends GrabzItBaseOptions
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['password'] = $this->nullToEmpty($this->password);
 		$params['click'] = $this->nullToEmpty($this->clickElement);
+		$params['jscode'] = $this->nullToEmpty($this->jsCode);
 		
 		return $params;
 	}

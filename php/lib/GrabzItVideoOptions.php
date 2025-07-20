@@ -16,7 +16,8 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 	private $clickElement = null;
 	private $noAds = false;
 	private $noCookieNotifications = false;
-	private $address = null;		
+	private $address = null;
+	private $jsCode = null;		
 	
 	/*
 	Set the number of frames per second that should be used to create the video. From a minimum of 0.2 to a maximum of 10.
@@ -242,6 +243,22 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		return $this->clickElement;
 	}	
 
+	/*
+	Set the JavaScript Code to execute in the web page.
+	*/
+	public function setJavaScriptCode($value)
+	{
+		$this->jsCode = $value;
+	}
+
+	/*
+	Get the JavaScript Code to execute in the web page.
+	*/
+	public function getJavaScriptCode()
+	{
+		return $this->jsCode;
+	}	
+
 	public function _getSignatureString($applicationSecret, $callBackURL, $url = null)
 	{
 		$urlParam = '';
@@ -262,7 +279,7 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".
 		$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".
-		$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->duration)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->height);  
+		$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->duration)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->jsCode);  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -283,6 +300,7 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		$params['address'] = $this->nullToEmpty($this->address);
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['click'] = $this->nullToEmpty($this->clickElement);
+		$params['jscode'] = $this->nullToEmpty($this->jsCode);
 		
 		return $params;
 	}
