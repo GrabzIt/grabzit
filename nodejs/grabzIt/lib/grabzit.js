@@ -418,7 +418,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'noCookieNotifications':false,
         'address': '',
 		'password': '',
-		'clickElement':''
+		'clickElement':'',
+        'jsCode':''
     };
 
     context = _extend(defaults, options);
@@ -475,7 +476,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'nonotify': _toInt(context['noCookieNotifications']),
         'address': context['address'],
 		'password': context['password'],
-		'click': context['clickElement']
+		'click': context['clickElement'],
+        'jscode': context['jsCode']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -487,7 +489,7 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
      + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
      + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId']
-     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) + '|' + context['password'] + '|' + context['clickElement'];
+     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) + '|' + context['password'] + '|' + context['clickElement'] + '|' + context['jsCode'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -529,7 +531,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'address': '',
         'cssMediaType': '',
 		'password': '',
-		'clickElement':''
+		'clickElement':'',
+        'jsCode':''
     };
 
     context = _extend(defaults, options);
@@ -589,7 +592,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'address': context['address'],
         'media': context['cssMediaType'],
 		'password': context['password'],
-		'click': context['clickElement']
+		'click': context['clickElement'],
+        'jscode': context['jsCode']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -601,7 +605,7 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
      + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
      + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications'])
-	 + '|' + context['cssMediaType'] + '|' + context['password'] + '|' + context['clickElement'];
+	 + '|' + context['cssMediaType'] + '|' + context['password'] + '|' + context['clickElement'] + '|' + context['jsCode'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -730,7 +734,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'proxy': '',
         'noCookieNotifications':false,
         'address': '',
-		'clickElement': ''
+		'clickElement': '',
+        'jsCode': ''
     };
 
     context = _extend(defaults, options);
@@ -767,6 +772,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'address': context['address'],
 		'hd': _toInt(context['hd']),
 		'click': context['clickElement'],
+        'jscode': context['jsCode']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -776,7 +782,7 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
      + '|' + context['customWaterMarkId'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) 
      + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + _toInt(context['transparent']) 
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']) + '|' + context['clickElement'];
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']) + '|' + context['clickElement'] + '|' + context['jsCode'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -802,7 +808,8 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
         'proxy': '',
         'noCookieNotifications':false,
         'address': '',
-		'clickElement': ''
+		'clickElement': '',
+        'jsCode': ''
     };
 
     context = _extend(defaults, options);
@@ -834,6 +841,7 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
         'nonotify': _toInt(context['noCookieNotifications']),
         'address': context['address'],
 		'click': context['clickElement'],
+        'jscode': context['jsCode'],
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -844,7 +852,7 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
      + '|' + context['waitForElement'] + '|' +  context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] 
      + '|' + context['proxy'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) 
      + '|' + context['clickElement'] + '|' + parseFloat(context['framesPerSecond']) + '|' + parseInt(context['duration'])
-     + '|' + context['width'] + '|' + context['height'];
+     + '|' + context['width'] + '|' + context['height'] + '|' + context['jsCode'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -865,7 +873,8 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'proxy': '',
         'noCookieNotifications':false,
         'address': '',
-		'clickElement': ''
+		'clickElement': '',
+        'jsCode': ''
     };
 
     context = _extend(defaults, options);
@@ -892,7 +901,8 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'proxy': context['proxy'],
         'nonotify': _toInt(context['noCookieNotifications']),
         'address': context['address'],
-		'click': context['clickElement']
+		'click': context['clickElement'],
+        'jscode': context['jsCode']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -902,7 +912,7 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement']
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-     + '|' + _toInt(context['noCookieNotifications']) + '|' + context['clickElement'];
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + context['clickElement'] + '|' + context['jsCode'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
