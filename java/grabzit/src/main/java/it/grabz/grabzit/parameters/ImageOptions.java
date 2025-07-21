@@ -34,6 +34,7 @@ public class ImageOptions extends BaseOptions {
     private String address;
     private boolean hd;
     private String clickElement;
+    private String jsCode;
 
     public ImageOptions()
     {
@@ -50,6 +51,7 @@ public class ImageOptions extends BaseOptions {
         this.quality = -1;
         this.address = "";
         this.clickElement = "";
+        this.jsCode = "";
     }
     
     /**
@@ -303,6 +305,20 @@ public class ImageOptions extends BaseOptions {
     public void setHd(boolean hd) {
         this.hd = hd;
     }    
+
+    /**
+     * @return get the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public String getJSCode() {
+        return jsCode;
+    }
+
+    /**
+     * @param jsCode set the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public void setJSCode(String jsCode) {
+        this.jsCode = jsCode;
+    }    
     
     /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -338,7 +354,7 @@ public class ImageOptions extends BaseOptions {
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent) + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications)
-        + "|" + ParameterUtility.toInt(hd) + "|" + clickElement;
+        + "|" + ParameterUtility.toInt(hd) + "|" + clickElement + "|" + jsCode;
     }    
     
     @Override
@@ -349,14 +365,14 @@ public class ImageOptions extends BaseOptions {
         params.put("hide", ParameterUtility.encode(ParameterUtility.nullCheck(hideElement)));
         params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));
-	params.put("width", String.valueOf(outputWidth));
-	params.put("height", String.valueOf(outputHeight));
-	params.put("format", format.getValue());
-	params.put("bwidth", String.valueOf(browserWidth));
-	params.put("customwatermarkid", ParameterUtility.encode(ParameterUtility.nullCheck(customWaterMarkId)));
-	params.put("bheight", String.valueOf(browserHeight));
-	params.put("delay", String.valueOf(delay));
-	params.put("quality", String.valueOf(quality));
+	    params.put("width", String.valueOf(outputWidth));
+	    params.put("height", String.valueOf(outputHeight));
+	    params.put("format", format.getValue());
+	    params.put("bwidth", String.valueOf(browserWidth));
+	    params.put("customwatermarkid", ParameterUtility.encode(ParameterUtility.nullCheck(customWaterMarkId)));
+	    params.put("bheight", String.valueOf(browserHeight));
+	    params.put("delay", String.valueOf(delay));
+	    params.put("quality", String.valueOf(quality));
         params.put("transparent", String.valueOf(ParameterUtility.toInt(transparent)));
         params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));        
@@ -364,6 +380,7 @@ public class ImageOptions extends BaseOptions {
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         params.put("hd", String.valueOf(ParameterUtility.toInt(hd)));
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
+        params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));
         
         return params;
     }    

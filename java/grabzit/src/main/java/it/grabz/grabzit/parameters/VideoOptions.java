@@ -29,7 +29,8 @@ public class VideoOptions extends BaseOptions{
     private boolean noAds;    
     private boolean noCookieNotifications;
     private int outputWidth;
-    private int outputHeight;    
+    private int outputHeight;   
+    private String jsCode; 
 
     public VideoOptions()
     {
@@ -41,6 +42,7 @@ public class VideoOptions extends BaseOptions{
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.customWaterMarkId = "";
         this.clickElement = "";
+        this.jsCode = "";
     }
     
     /**
@@ -243,6 +245,19 @@ public class VideoOptions extends BaseOptions{
         this.outputHeight = outputHeight;
     }
     
+    /**
+     * @return get the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public String getJSCode() {
+        return jsCode;
+    }
+
+    /**
+     * @param jsCode set the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public void setJSCode(String jsCode) {
+        this.jsCode = jsCode;
+    }    
 
     public String _getSignatureString(String applicationSecret, String callBackURL)
     {
@@ -269,7 +284,8 @@ public class VideoOptions extends BaseOptions{
         + "|" + start + "|" + requestAs.getValue() + "|" + getCountry().getValue()
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address  + "|" + ParameterUtility.toInt(noCookieNotifications)
-         + "|" + clickElement + "|" + ParameterUtility.toString(framesPerSecond)  + "|" + duration + "|" + outputWidth + "|" + outputHeight;
+        + "|" + clickElement + "|" + ParameterUtility.toString(framesPerSecond)  + "|" + duration
+        + "|" + outputWidth + "|" + outputHeight + "|" + jsCode;
     }    
 
     @Override
@@ -290,8 +306,9 @@ public class VideoOptions extends BaseOptions{
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));
- 	params.put("width", String.valueOf(outputWidth));
-	params.put("height", String.valueOf(outputHeight));       
+ 	    params.put("width", String.valueOf(outputWidth));
+	    params.put("height", String.valueOf(outputHeight));
+        params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));       
 
         return params;
     }    

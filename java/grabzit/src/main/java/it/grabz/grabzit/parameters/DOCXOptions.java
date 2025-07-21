@@ -44,6 +44,7 @@ public class DOCXOptions extends BaseOptions {
     private String address;
     private String password;
     private String clickElement;
+    private String jsCode;
     
     public DOCXOptions()
     {
@@ -71,6 +72,7 @@ public class DOCXOptions extends BaseOptions {
         this.address = "";
         this.password = "";
         this.clickElement = "";
+        this.jsCode = "";
     }
     
     /**
@@ -435,7 +437,21 @@ public class DOCXOptions extends BaseOptions {
      */
     public void setPassword(String password) {
         this.password = password;
-    }    
+    }
+
+    /**
+     * @return get the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public String getJSCode() {
+        return jsCode;
+    }
+
+    /**
+     * @param jsCode set the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public void setJSCode(String jsCode) {
+        this.jsCode = jsCode;
+    }        
     
     /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -485,7 +501,7 @@ public class DOCXOptions extends BaseOptions {
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey() + "|" + ParameterUtility.toInt(noAds) + "|" + post
         + "|" + getTargetElement() + "|" + getTemplateId() + "|" + templateVariables + "|" + height + "|" + width + "|" + browserWidth
         + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications)
-        + "|" + password + "|" + clickElement;
+        + "|" + password + "|" + clickElement + "|" + jsCode;
     }    
     
     @Override
@@ -520,7 +536,8 @@ public class DOCXOptions extends BaseOptions {
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         params.put("password", password);
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
-        
+        params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));
+
         return params;
     }    
 }

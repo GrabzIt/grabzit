@@ -23,6 +23,8 @@ public class HTMLOptions extends BaseOptions {
     private boolean noAds;
     private boolean noCookieNotifications;
     private String address;
+    private String clickElement;
+    private String jsCode;
 
     public HTMLOptions()
     {
@@ -31,6 +33,8 @@ public class HTMLOptions extends BaseOptions {
         this.waitForElement = "";
         this.requestAs = BrowserType.STANDARDBROWSER;
         this.address = "";
+        this.clickElement = "";
+        this.jsCode = "";
     }
     
     /**
@@ -74,6 +78,20 @@ public class HTMLOptions extends BaseOptions {
     public void setDelay(int delay) {
         this.delay = delay;
     }
+
+    /**
+     * @return get the CSS selector of the HTML element to click.
+     */
+    public String getClickElement() {
+        return clickElement;
+    }
+
+    /**
+     * @param clickElement set the CSS selector of the HTML element to click.
+     */
+    public void setClickElement(String clickElement) {
+        this.clickElement = clickElement;
+    }    
     
     /**
      * @return the waitForElement the CSS selector of the HTML element in the web page that must be visible before the capture is performed.
@@ -144,6 +162,20 @@ public class HTMLOptions extends BaseOptions {
     public void setAddress(String address) {
         this.address = address;
     }        
+
+    /**
+     * @return get the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public String getJSCode() {
+        return jsCode;
+    }
+
+    /**
+     * @param jsCode set the JavaScript code that will be execute in the web page before the capture is performed.
+     */
+    public void setJSCode(String jsCode) {
+        this.jsCode = jsCode;
+    }    
     
     /**
      * Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -177,7 +209,8 @@ public class HTMLOptions extends BaseOptions {
         + "|" + browserHeight + "|" + browserWidth + "|" + getCustomId() + "|" + delay 
         + "|" + requestAs.getValue() + "|" + getCountry().getValue()
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
-        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications);
+        + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address 
+        + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + clickElement + "|" + jsCode;
     }    
     
     @Override
@@ -186,14 +219,16 @@ public class HTMLOptions extends BaseOptions {
         HashMap<String, String> params = createParameters(applicationKey, sig, callBackURL, dataName, dataValue);		
         params.put("waitfor", ParameterUtility.encode(ParameterUtility.nullCheck(waitForElement)));
         params.put("requestmobileversion", String.valueOf(requestAs.getValue()));
-	params.put("bwidth", String.valueOf(browserWidth));
-	params.put("bheight", String.valueOf(browserHeight));
-	params.put("delay", String.valueOf(delay));
+	    params.put("bwidth", String.valueOf(browserWidth));
+	    params.put("bheight", String.valueOf(browserHeight));
+	    params.put("delay", String.valueOf(delay));
         params.put("noads", String.valueOf(ParameterUtility.toInt(noAds)));
         params.put("post", ParameterUtility.encode(ParameterUtility.nullCheck(post)));        
         params.put("nonotify", String.valueOf(ParameterUtility.toInt(noCookieNotifications)));
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
-        
+        params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
+        params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));
+
         return params;
     }    
 }
