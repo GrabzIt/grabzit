@@ -16,6 +16,8 @@ namespace GrabzIt.Parameters
             BrowserWidth = 0;
             BrowserHeight = 0;
             Address = string.Empty;
+            ClickElement = string.Empty;
+            JSCode = string.Empty;
         }
 
         /// <summary>
@@ -61,6 +63,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to click
+        /// </summary>
+        public string ClickElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Request the rendered HTML in different forms: Standard Browser, Mobile Browser and Search Engine
         /// </summary>
         public BrowserType RequestAs
@@ -97,6 +108,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The JavaScript code that will be execute in the web page before the capture is performed
+        /// </summary>
+        public string JSCode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -125,7 +145,8 @@ namespace GrabzIt.Parameters
             "|" + BrowserHeight
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country)
             + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey
-             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications);
+            + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications) 
+            + "|" + ClickElement + "|" + JSCode;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -140,6 +161,8 @@ namespace GrabzIt.Parameters
             parameters.Add("post", post);
             parameters.Add("address", Address);
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
+            parameters.Add("click", ClickElement);
+            parameters.Add("jscode", JSCode);
 
             return parameters;
         }

@@ -1,9 +1,10 @@
-﻿using GrabzIt.COM;
-using GrabzIt.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
+using GrabzIt.COM;
+using GrabzIt.Enums;
 
 namespace GrabzIt.Parameters
 {
@@ -33,6 +34,7 @@ namespace GrabzIt.Parameters
             Address = string.Empty;
             CSSMediaType = CSSMediaType.Screen;
             ClickElement = string.Empty;
+            JSCode = string.Empty;
         }
         /// <summary>
         /// If true the background of the web page should be included in the PDF
@@ -303,6 +305,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The JavaScript code that will be execute in the web page before the capture is performed
+        /// </summary>
+        public string JSCode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -343,7 +354,7 @@ namespace GrabzIt.Parameters
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
              + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address
-             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password + "|" + ClickElement;
+             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password + "|" + ClickElement + "|" + JSCode;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -380,6 +391,7 @@ namespace GrabzIt.Parameters
             parameters.Add("media", CSSMediaType.ToString().ToLower());
             parameters.Add("password", Password);
             parameters.Add("click", ClickElement);
+            parameters.Add("jscode", JSCode);
 
             return parameters;
         }

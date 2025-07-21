@@ -1,9 +1,10 @@
-﻿using GrabzIt.COM;
-using GrabzIt.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
+using GrabzIt.COM;
+using GrabzIt.Enums;
 
 namespace GrabzIt.Parameters
 {
@@ -19,6 +20,7 @@ namespace GrabzIt.Parameters
             Duration = 10;
             Address = string.Empty;
             ClickElement = string.Empty;
+            JSCode = string.Empty;
         }
 
         /// <summary>
@@ -148,6 +150,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The JavaScript code that will be execute in the web page before the capture is performed
+        /// </summary>
+        public string JSCode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
         /// GrabzIt to perform a HTTP post.
         /// </summary>
@@ -178,7 +189,7 @@ namespace GrabzIt.Parameters
             + "|" + CustomWaterMarkId + "|" + Start + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) 
             + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey
              + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications)
-             + "|" + ClickElement + "|" + FramesPerSecond + "|" + Duration + "|" + OutputWidth + "|" + OutputHeight;
+             + "|" + ClickElement + "|" + FramesPerSecond + "|" + Duration + "|" + OutputWidth + "|" + OutputHeight + "|" + JSCode;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -199,6 +210,7 @@ namespace GrabzIt.Parameters
             parameters.Add("duration", Duration.ToString());
             parameters.Add("width", OutputWidth.ToString());
             parameters.Add("height", OutputHeight.ToString());
+            parameters.Add("jscode", JSCode);
 
             return parameters;
         }
