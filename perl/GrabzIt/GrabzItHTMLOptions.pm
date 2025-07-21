@@ -18,6 +18,8 @@ sub new
     $self->{"noAds"} = 0;
     $self->{"address"} = '';
     $self->{"noCookieNotifications"} = 0;
+    $self->{"clickElement"} = '';
+    $self->{"jsCode"} = '';
 
     bless $self, $class;
 
@@ -61,6 +63,19 @@ sub delay
         $self->{"delay"} = shift;
     }
     return $self->{"delay"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to click
+#
+sub clickElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"clickElement"} = shift;
+    }
+    return $self->{"clickElement"};
 }
 
 #
@@ -129,6 +144,19 @@ sub address
 }
 
 #
+# The JavaScript code that will be execute in the web page before the capture is performed
+#
+sub jsCode
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"jsCode"} = shift;
+    }
+    return $self->{"jsCode"};
+}
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -161,7 +189,10 @@ sub _getSignatureString($$;$)
     
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
-    "|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications();
+    "|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->waitForElement().
+    "|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy().
+    "|".$self->address()."|".$self->noCookieNotifications()."|".$self->clickElement().
+    "|".$self->jsCode();
 }
 
 sub _getParameters($$$$$)
@@ -178,6 +209,8 @@ sub _getParameters($$$$$)
     $params->{'post'} = $self->{"post"};
     $params->{'nonotify'} = $self->noCookieNotifications();
     $params->{'address'} = $self->address();
+    $params->{'click'} = $self->clickElement();
+    $params->{'jscode'} = $self->jsCode();
     
     return $params;
 }

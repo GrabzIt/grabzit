@@ -37,6 +37,7 @@ sub new
 	$self->{"noCookieNotifications"} = 0;		
     $self->{"password"} = '';
     $self->{"clickElement"} = '';
+    $self->{"jsCode"} = '';
 	
     bless $self, $class;
 
@@ -382,6 +383,18 @@ sub targetElement
     return $self->{"targetElement"};
 }
 
+#
+# The JavaScript code that will be execute in the web page before the capture is performed
+#
+sub jsCode
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"jsCode"} = shift;
+    }
+    return $self->{"jsCode"};
+}
 
 #
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -431,7 +444,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
     $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
 	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password()."|".$self->clickElement();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password()."|".$self->clickElement()."|".$self->jsCode();
 }
 
 sub _getParameters($$$$$)
@@ -467,6 +480,7 @@ sub _getParameters($$$$$)
 	$params->{'address'} = $self->address();
 	$params->{'password'} = $self->password();
     $params->{'click'} = $self->clickElement();
+    $params->{'jscode'} = $self->jsCode();
     
     return $params;
 }

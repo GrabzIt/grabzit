@@ -24,6 +24,7 @@ sub new
     $self->{"address"} = '';
     $self->{"noCookieNotifications"} = 0;
     $self->{"clickElement"} = '';
+    $self->{"jsCode"} = '';
 
     bless $self, $class;
 
@@ -213,6 +214,19 @@ sub clickElement
 }
 
 #
+# The JavaScript code that will be execute in the web page before the capture is performed
+#
+sub jsCode
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"jsCode"} = shift;
+    }
+    return $self->{"jsCode"};
+}
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -247,7 +261,8 @@ sub _getSignatureString($$;$)
     "|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->customWaterMarkId().
     "|".$self->start()."|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->waitForElement().
     "|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications().
-    "|".$self->clickElement()."|".$self->framesPerSecond()."|".$self->duration()."|".$self->width()."|".$self->height();
+    "|".$self->clickElement()."|".$self->framesPerSecond()."|".$self->duration()."|".$self->width()."|".$self->height().
+    "|".$self->jsCode();
 }
 
 sub _getParameters($$$$$)
@@ -269,7 +284,8 @@ sub _getParameters($$$$$)
     $params->{'address'} = $self->address();
     $params->{'click'} = $self->clickElement();
     $params->{'width'} = $self->width();
-    $params->{'height'} = $self->height();   
+    $params->{'height'} = $self->height();
+    $params->{'jscode'} = $self->jsCode();   
 
     return $params;
 }

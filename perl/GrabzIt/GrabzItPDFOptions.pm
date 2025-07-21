@@ -40,6 +40,7 @@ sub new
 	$self->{"cssMediaType"} = '';
 	$self->{"password"} = '';
     $self->{"clickElement"} = '';
+    $self->{"jsCode"} = '';
         
     bless $self, $class;
 
@@ -425,6 +426,19 @@ sub address
 }
 
 #
+# The JavaScript code that will be execute in the web page before the capture is performed
+#
+sub jsCode
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"jsCode"} = shift;
+    }
+    return $self->{"jsCode"};
+}
+
+#
 #Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 #GrabzIt to perform a HTTP post.
 #
@@ -473,7 +487,7 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->templateId()."|".$self->hideElement().
     "|".$self->targetElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}.
     "|".$self->browserWidth()."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->{"templateVariables"}."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType()."|".$self->password()."|".$self->clickElement();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->cssMediaType()."|".$self->password()."|".$self->clickElement()."|".$self->jsCode();
 }
 
 sub _getParameters($$$$$)
@@ -512,6 +526,7 @@ sub _getParameters($$$$$)
 	$params->{'media'} = $self->cssMediaType();
 	$params->{'password'} = $self->password();
     $params->{'click'} = $self->clickElement();
+    $params->{'jscode'} = $self->jsCode();
 	
     return $params;
 }
