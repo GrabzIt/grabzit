@@ -51,3 +51,7 @@ nodejs/grabzIt/node_modules
 python/dist
 /aspnet/ExampleConsole/bin
 /aspnet/ExampleConsole/obj
+python/GrabzIt.egg-info/dependency_links.txt
+python/GrabzIt.egg-info/PKG-INFO
+python/GrabzIt.egg-info/SOURCES.txt
+python/GrabzIt.egg-info/top_level.txt

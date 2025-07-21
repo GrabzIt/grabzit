@@ -14,7 +14,9 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             requestAs           the user agent type should be used: Standard Browser = 0, Mobile Browser = 1, Search Engine = 2 and Fallback Browser = 3
             noAds               set to true if adverts should be automatically hidden
             address                 the URL to execute the HTML code in
-            noCookieNotifications   set to true if cookie notifications should be automatically hidden            
+            noCookieNotifications   set to true if cookie notifications should be automatically hidden
+            clickElement            the CSS selector of the HTML element in the web page to click
+            jsCode                  the JavaScript code to execute in the web page            
         """
 
         def __init__(self):
@@ -25,7 +27,9 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.requestAs = 0
                 self.noAds = False
                 self.noCookieNotifications = False
-                self.address = ''                
+                self.address = ''
+                self.clickElement = ''
+                self.jsCode = ''                
         
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -48,19 +52,24 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["post"] = str(self.post)
                 params["address"] = str(self.address)
                 params["nonotify"] = int(self.noCookieNotifications)
-                
+                params["click"] = str(self.clickElement)
+                params["jscode"] = str(self.jsCode)
+
                 return params
 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
-                urlParam = '';
+                urlParam = ''
                 if (url != None and url != ''):
                         urlParam = str(url)+"|"
 
-                callBackURLParam = '';
+                callBackURLParam = ''
                 if (callBackURL != None and callBackURL != ''):
                         callBackURLParam = str(callBackURL)
 
                 return applicationSecret +"|"+ urlParam + callBackURLParam + \
                 "|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+ \
-                "|"+str(int(self.delay))+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))
+                "|"+str(int(self.delay))+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+ \
+                "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+ \
+                "|"+str(self.proxy)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+ \
+                "|"+str(self.clickElement)+"|"+str(self.jsCode)
                 

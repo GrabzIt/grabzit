@@ -21,6 +21,7 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noAds               set to true if adverts should be automatically hidden
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             address                 the URL to execute the HTML code in
+            jsCode                  the JavaScript code to execute in the web page
         """
 
         def __init__(self):
@@ -39,6 +40,7 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.noAds = False
                 self.noCookieNotifications = False
                 self.address = ''
+                self.jsCode = ''
 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -57,15 +59,16 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["address"] = str(self.address)
                 params["nonotify"] = int(self.noCookieNotifications)
                 params["click"] = str(self.clickElement)
+                params["jscode"] = str(self.jsCode)
 
                 return params
 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
-                urlParam = '';
+                urlParam = ''
                 if (url != None and url != ''):
                         urlParam = str(url)+"|"
 
-                callBackURLParam = '';
+                callBackURLParam = ''
                 if (callBackURL != None and callBackURL != ''):
                         callBackURLParam = str(callBackURL)
 
@@ -73,7 +76,7 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.start))+"|"+str(int(self.requestAs)) + \
                 "|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy) + \
                 "|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.clickElement)+"|"+self._toString(self.framesPerSecond)+"|"+str(int(self.duration)) + \
-                "|"+str(int(self.width))+"|"+str(int(self.height))
+                "|"+str(int(self.width))+"|"+str(int(self.height))+"|"+str(self.jsCode)
 
         def _toString(self, value):
                 if ((value % 1) == 0):

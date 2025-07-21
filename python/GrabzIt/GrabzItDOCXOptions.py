@@ -33,6 +33,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             password                the password to protect the DOCX document with
             clickElement            the CSS selector of the HTML element in the web page to click
+            jsCode                  the JavaScript code to execute in the web page
         """
         
         def __init__(self):
@@ -63,6 +64,7 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.address = ''
                 self.password = ''
                 self.clickElement = ''
+                self.jsCode = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -113,15 +115,16 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["nonotify"] = int(self.noCookieNotifications)
                 params["password"] = str(self.password)
                 params["click"] = str(self.clickElement)
+                params["jscode"] = str(self.jsCode)
                 
                 return params
                 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
-                urlParam = '';
+                urlParam = ''
                 if (url != None and url != ''):
                         urlParam = str(url)+"|"
 
-                callBackURLParam = '';
+                callBackURLParam = ''
                 if (callBackURL != None and callBackURL != ''):
                         callBackURLParam = str(callBackURL)
 
@@ -132,4 +135,5 @@ class GrabzItDOCXOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+\
                 "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.targetElement)+"|"+str(self.templateId)+"|"+\
                 str(self.templateVariables)+"|"+str(int(self.pageHeight))+"|"+str(int(self.pageWidth))+"|"+str(int(self.browserWidth))+"|"+\
-                str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.password)+"|"+str(self.clickElement)
+                str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.password)+"|"+\
+                str(self.clickElement)+"|"+str(self.jsCode)

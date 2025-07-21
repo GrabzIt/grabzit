@@ -36,6 +36,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             cssMediaType            the css media type to use either 'Print' or 'Screen'
             password                the password to protect the PDF document with
             clickElement            the CSS selector of the HTML element in the web page to click
+            jsCode                  the JavaScript code to execute in the web page
         """
         
         def __init__(self):
@@ -69,6 +70,7 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.cssMediaType = ''
                 self.password = ''
                 self.clickElement = ''
+                self.jsCode = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -122,15 +124,16 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["media"] = str(self.cssMediaType)
                 params["password"] = str(self.password)
                 params["click"] = str(self.clickElement)
+                params["jscode"] = str(self.jsCode)
                 
                 return params
                 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
-                urlParam = '';
+                urlParam = ''
                 if (url != None and url != ''):
                         urlParam = str(url)+"|"
 
-                callBackURLParam = '';
+                callBackURLParam = ''
                 if (callBackURL != None and callBackURL != ''):
                         callBackURLParam = str(callBackURL)
 
@@ -140,4 +143,5 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.marginLeft))+"|"+str(int(self.marginBottom))+"|"+str(int(self.marginRight))+"|"+str(int(self.delay))+"|"+str(int(self.requestAs))+ \
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+\
                 "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))+"|"+str(int(self.pageHeight))+\
-                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.cssMediaType)+"|"+str(self.password)+"|"+str(self.clickElement)
+                "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+ \
+                "|"+str(self.cssMediaType)+"|"+str(self.password)+"|"+str(self.clickElement)+"|"+str(self.jsCode)
