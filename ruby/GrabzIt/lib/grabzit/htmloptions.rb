@@ -14,6 +14,8 @@ module GrabzIt
 			@noAds = false
 			@noCookieNotifications = false
 			@address = nil
+			@clickElement = nil
+			@jsCode = nil
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -67,6 +69,19 @@ module GrabzIt
 		def waitForElement=(value)
 			@waitForElement = value
 		end		
+
+		# @return [String] get the CSS selector of the HTML element in the web page that must clicked before the capture is performed
+		def clickElement
+			@clickElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must clicked before the capture is performed
+		#
+		# @param value [String] the element to click
+		# @return [void]		
+		def clickElement=(value)
+			@clickElement = value
+		end		
 		
 		# @return [Integer] get which user agent type should be used
 		def requestAs
@@ -119,6 +134,19 @@ module GrabzIt
 		def address=(value)
 			@address = value
 		end		
+
+		# @return [String] get the JavaScript code that will be execute in the web page before the capture is performed
+		def jsCode
+			@jsCode
+		end
+		
+		# Set the JavaScript code that will be execute in the web page before the capture is performed
+		#
+		# @param value [String] the javascript to execute
+		# @return [void]		
+		def jsCode=(value)
+			@jsCode = value
+		end		
 		
 		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 		# GrabzIt to perform a HTTP post.
@@ -137,7 +165,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.nil_check(@clickElement),GrabzIt::Utility.nil_check(@jsCode))
 			
 			return items.join("|")
 		end
@@ -154,6 +182,8 @@ module GrabzIt
 			params['post'] = GrabzIt::Utility.nil_check(@post)
 			params['address'] = GrabzIt::Utility.nil_check(@address)
 			params['nonotify'] = GrabzIt::Utility.b_to_str(@noCookieNotifications)
+			params['click'] = GrabzIt::Utility.nil_check(@clickElement)
+			params['jscode'] = GrabzIt::Utility.nil_check(@jsCode)
 			
 			return params
 		end

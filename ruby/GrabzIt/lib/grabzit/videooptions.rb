@@ -21,6 +21,7 @@ module GrabzIt
 			@start = 0
 			@duration = 10
 			@framesPerSecond = 0
+			@jsCode = nil
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -204,6 +205,19 @@ module GrabzIt
 		def framesPerSecond=(value)
 			@framesPerSecond = value
 		end			
+
+		# @return [String] get the JavaScript code that will be execute in the web page before the capture is performed
+		def jsCode
+			@jsCode
+		end
+		
+		# Set the JavaScript code that will be execute in the web page before the capture is performed
+		#
+		# @param value [String] the javascript to execute
+		# @return [void]		
+		def jsCode=(value)
+			@jsCode = value
+		end		
 		
 		# Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 		# GrabzIt to perform a HTTP post.
@@ -242,7 +256,8 @@ module GrabzIt
 			GrabzIt::Utility.nil_float_check(@framesPerSecond),
 			GrabzIt::Utility.nil_int_check(@duration),
 			GrabzIt::Utility.nil_int_check(@width),
-			GrabzIt::Utility.nil_int_check(@height))
+			GrabzIt::Utility.nil_int_check(@height),
+			GrabzIt::Utility.nil_check(@jsCode))
 			
 			return items.join("|")
 		end
@@ -265,7 +280,8 @@ module GrabzIt
 			params['duration'] = GrabzIt::Utility.nil_int_check(@duration)
 			params['width'] = GrabzIt::Utility.nil_int_check(@width)
 			params['height'] = GrabzIt::Utility.nil_int_check(@height)			
-
+			params['jscode'] = GrabzIt::Utility.nil_check(@jsCode)
+			
 			return params
 		end
 	end

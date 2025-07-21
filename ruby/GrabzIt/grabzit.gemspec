@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'grabzit'
-  s.version     = '3.5.4'
+  s.version     = '3.5.5'
   s.license = 'MIT'
   s.date        = %q{2024-02-07}
   s.summary     = "GrabzIt Ruby Client"

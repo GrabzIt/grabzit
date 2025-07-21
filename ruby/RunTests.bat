@@ -1,0 +1,2 @@
+cd GrabzIt
+rake test
