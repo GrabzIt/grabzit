@@ -2,7 +2,7 @@
 Contributors: grabzit
 Tags: screenshot,html to pdf,html to image,html to docx,video to animated gif
 Requires at least: 4.5.0
-Tested up to: 6.6.2
+Tested up to: 6.9.0
 Requires PHP: 5
 Stable tag: trunk
 License: GPL2
