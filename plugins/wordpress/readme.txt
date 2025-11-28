@@ -3,7 +3,7 @@ Contributors: grabzit
 Tags: screenshot,html to pdf,html to image,html to docx,video to animated gif
 Requires at least: 4.5.0
 Tested up to: 6.9.0
-Requires PHP: 5
+Requires PHP: 7.2.24
 Stable tag: trunk
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
