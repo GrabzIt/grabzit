@@ -18,6 +18,7 @@ namespace GrabzIt.Parameters
             Address = string.Empty;
             ClickElement = string.Empty;
             JSCode = string.Empty;
+            InlineHTML = false;
         }
 
         /// <summary>
@@ -99,6 +100,15 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// True if the HTML should be inlined.
+        /// </summary>
+        public bool InlineHTML
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The URL to execute the HTML code in.
         /// </summary>
         public string Address
@@ -146,7 +156,7 @@ namespace GrabzIt.Parameters
             + "|" + BrowserWidth + "|" + CustomId + "|" + delay + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country)
             + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey
             + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications) 
-            + "|" + ClickElement + "|" + JSCode;
+            + "|" + ClickElement + "|" + JSCode + "|" + Convert.ToInt32(InlineHTML);
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -163,6 +173,7 @@ namespace GrabzIt.Parameters
             parameters.Add("nonotify", Convert.ToInt32(NoCookieNotifications).ToString());
             parameters.Add("click", ClickElement);
             parameters.Add("jscode", JSCode);
+            parameters.Add("inlinehtml", Convert.ToInt32(InlineHTML).ToString());
 
             return parameters;
         }
