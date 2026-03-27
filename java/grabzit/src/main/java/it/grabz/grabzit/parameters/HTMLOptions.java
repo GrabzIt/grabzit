@@ -22,6 +22,7 @@ public class HTMLOptions extends BaseOptions {
     private BrowserType requestAs;
     private boolean noAds;
     private boolean noCookieNotifications;
+    private boolean inlineHtml;
     private String address;
     private String clickElement;
     private String jsCode;
@@ -148,6 +149,20 @@ public class HTMLOptions extends BaseOptions {
     public void setNoCookieNotifications(boolean noCookieNotifications) {
         this.noCookieNotifications = noCookieNotifications;
     }    
+
+     /**
+     * @return if true resources in the HTML should be automatically inlined.
+     */
+    public boolean isInlineHtml() {
+        return inlineHtml;
+    }
+
+    /**
+     * @param inlineHtml set to true if HTML should be automatically inlined.
+     */
+    public void setInlineHtml(boolean inlineHtml) {
+        this.inlineHtml = inlineHtml;
+    }       
     
     /**
      * @return the URL to execute the HTML code in.
@@ -210,7 +225,8 @@ public class HTMLOptions extends BaseOptions {
         + "|" + requestAs.getValue() + "|" + getCountry().getValue()
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address 
-        + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + clickElement + "|" + jsCode;
+        + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + clickElement + "|" + jsCode
+        + "|" + ParameterUtility.toInt(inlineHtml);
     }    
     
     @Override
@@ -228,6 +244,7 @@ public class HTMLOptions extends BaseOptions {
         params.put("address", ParameterUtility.encode(ParameterUtility.nullCheck(address)));
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
         params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));
+        params.put("inlinehtml", String.valueOf(ParameterUtility.toInt(inlineHtml)));
 
         return params;
     }    
