@@ -869,6 +869,7 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'exportUrl': '',
         'encryptionKey': '',
         'noAds':false,
+        'inlineHTML':false,
         'postData':'',
         'proxy': '',
         'noCookieNotifications':false,
@@ -900,6 +901,7 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'post': context['postData'],
         'proxy': context['proxy'],
         'nonotify': _toInt(context['noCookieNotifications']),
+        'inlinehtml': _toInt(context['inlineHTML']),
         'address': context['address'],
 		'click': context['clickElement'],
         'jscode': context['jsCode']
@@ -912,7 +914,8 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + parseInt(context['requestAs']) + '|' + context['country'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement']
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-     + '|' + _toInt(context['noCookieNotifications']) + '|' + context['clickElement'] + '|' + context['jsCode'];
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + context['clickElement'] + '|' + context['jsCode']
+     + '|' + _toInt(context['inlineHTML']);
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
