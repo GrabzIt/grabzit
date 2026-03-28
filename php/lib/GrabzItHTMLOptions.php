@@ -11,7 +11,8 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 	private $noCookieNotifications = false;
 	private $address = null;
 	private $clickElement = null;
-	private $jsCode = null;	
+	private $jsCode = null;
+	private $inlineHtml = false;	
 	
 	/*
 	Set the width of the browser in pixels.
@@ -126,6 +127,22 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 	}	
 
 	/*
+	Set to true if HTML should be inlined.
+	*/
+	public function setInlineHTML($value)
+	{
+		$this->inlineHtml = $value;
+	}
+
+	/*
+	Get if the HTML is inlined.
+	*/
+	public function getInlineHTML()
+	{
+		return $this->inlineHtml;
+	}			
+
+	/*
 	Set the URL to execute the HTML code in.
 	*/
 	public function setAddress($value)
@@ -204,7 +221,8 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 		."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->getCustomId())."|".$this->nullToEmpty($this->delay)."|".$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".
 		$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".
-		$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode);  
+		$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode)."|".
+		$this->nullToEmpty(intval($this->inlineHtml));  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -221,6 +239,7 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['click'] = $this->nullToEmpty($this->clickElement);
 		$params['jscode'] = $this->nullToEmpty($this->jsCode);
+		$params['inlinehtml'] = $this->nullToEmpty(intval($this->inlineHtml));
 
 		return $params;
 	}
