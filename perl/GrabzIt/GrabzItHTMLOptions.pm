@@ -20,6 +20,7 @@ sub new
     $self->{"noCookieNotifications"} = 0;
     $self->{"clickElement"} = '';
     $self->{"jsCode"} = '';
+    $self->{"inlineHTML"} = 0;
 
     bless $self, $class;
 
@@ -131,6 +132,19 @@ sub noCookieNotifications
 }
 
 #
+# True if the external resources in a web page should be inlined.
+#
+sub inlineHTML
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"inlineHTML"} = shift;
+    }
+    return $self->{"inlineHTML"};
+}
+
+#
 # The URL to execute the HTML code in.
 #
 sub address
@@ -192,7 +206,7 @@ sub _getSignatureString($$;$)
     "|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->waitForElement().
     "|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy().
     "|".$self->address()."|".$self->noCookieNotifications()."|".$self->clickElement().
-    "|".$self->jsCode();
+    "|".$self->jsCode()."|".$self->inlineHTML();
 }
 
 sub _getParameters($$$$$)
@@ -211,7 +225,8 @@ sub _getParameters($$$$$)
     $params->{'address'} = $self->address();
     $params->{'click'} = $self->clickElement();
     $params->{'jscode'} = $self->jsCode();
-    
+    $params->{'inlinehtml'} = $self->inlineHTML();
+
     return $params;
 }
 1;
