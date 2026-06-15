@@ -26,6 +26,8 @@ namespace GrabzIt.Parameters
             Address = string.Empty;
             ClickElement = string.Empty;
             JSCode = string.Empty;
+            HoverElement = string.Empty;
+            ScrollElement = string.Empty;
         }
 
         /// <summary>
@@ -92,6 +94,24 @@ namespace GrabzIt.Parameters
         /// The CSS selector(s) of the HTML element in the web page to click
         /// </summary>
         public string ClickElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to hover over
+        /// </summary>
+        public string HoverElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to scroll to
+        /// </summary>
+        public string ScrollElement
         {
             get;
             set;
@@ -236,7 +256,7 @@ namespace GrabzIt.Parameters
             + "|" + CustomWaterMarkId + "|" + ((int)RequestAs).ToString() + "|" + ConvertCountryToString(Country) + "|" +
             Quality + "|" + HideElement + "|" + ExportURL + "|" + WaitForElement + "|" + Convert.ToInt32(Transparent) + "|" + EncryptionKey
              + "|" + Convert.ToInt32(NoAds) + "|" + post + "|" + Proxy + "|" + Address + "|" + Convert.ToInt32(NoCookieNotifications)
-             + "|" + Convert.ToInt32(HD) + "|" + ClickElement + "|" + JSCode;
+             + "|" + Convert.ToInt32(HD) + "|" + ClickElement + "|" + JSCode + "|" + HoverElement + "|" + ScrollElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -262,6 +282,8 @@ namespace GrabzIt.Parameters
             parameters.Add("hd", Convert.ToInt32(HD).ToString());
             parameters.Add("click", ClickElement);
             parameters.Add("jscode", JSCode);
+            parameters.Add("hover", HoverElement);
+            parameters.Add("scroll", ScrollElement);
 
             return parameters;
         }

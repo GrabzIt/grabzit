@@ -35,6 +35,8 @@ namespace GrabzIt.Parameters
             CSSMediaType = CSSMediaType.Screen;
             ClickElement = string.Empty;
             JSCode = string.Empty;
+            HoverElement = string.Empty;
+            ScrollElement = string.Empty;
         }
         /// <summary>
         /// If true the background of the web page should be included in the PDF
@@ -233,6 +235,24 @@ namespace GrabzIt.Parameters
         }
 
         /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to hover over
+        /// </summary>
+        public string HoverElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The CSS selector(s) of the HTML element in the web page to scroll to
+        /// </summary>
+        public string ScrollElement
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// The CSS selector of the only HTML element in the web page to capture
         /// </summary>
         public string TargetElement
@@ -354,7 +374,8 @@ namespace GrabzIt.Parameters
             + MarginBottom + "|" + MarginRight + "|" + Delay + "|" + (int)RequestAs + "|" + ConvertCountryToString(Country) + "|" + Quality + "|" + TemplateId
              + "|" + HideElement + "|" + TargetElement + "|" + ExportURL + "|" + WaitForElement + "|" + EncryptionKey + "|" + Convert.ToInt32(NoAds) + "|" + post
              + "|" + BrowserWidth + "|" + PageHeight + "|" + PageWidth + "|" + templateVariables + "|" + Proxy + "|" + MergeId + "|" + Address
-             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password + "|" + ClickElement + "|" + JSCode;
+             + "|" + Convert.ToInt32(NoCookieNotifications) + "|" + CSSMediaType.ToString().ToLower() + "|" + Password + "|" + ClickElement + "|" + JSCode
+             + "|" + HoverElement + "|" + ScrollElement;
         }
 
         protected override Dictionary<string, string> GetParameters(string applicationKey, string signature, string callBackURL, string dataName, string dataValue)
@@ -392,6 +413,8 @@ namespace GrabzIt.Parameters
             parameters.Add("password", Password);
             parameters.Add("click", ClickElement);
             parameters.Add("jscode", JSCode);
+            parameters.Add("hover", HoverElement);
+            parameters.Add("scroll", ScrollElement);
 
             return parameters;
         }

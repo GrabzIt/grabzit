@@ -9,8 +9,8 @@
     <AssemblyTitle>GrabzIt</AssemblyTitle>
     <Product>GrabzIt - Capture the Web</Product>
     <Copyright>Copyright ©  2012-2026</Copyright>
-    <AssemblyVersion>3.6.2</AssemblyVersion>
-    <FileVersion>3.6.2</FileVersion>
+    <AssemblyVersion>3.6.3</AssemblyVersion>
+    <FileVersion>3.6.3</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -45,8 +45,10 @@
     <Description>Need to capture website content? GrabzIt provides flexible solutions to download, convert, and archive online information. Easily create PDFs, DOCX files, or high-quality screenshots of web pages. Extract data from tables, convert HTML, and even turn online videos into animated GIFs.
     
     Explore all the possibilities at: https://grabz.it/api/aspnet</Description>
-    <PackageReleaseNotes>- It can now inline rendered html into a single HTML page</PackageReleaseNotes>
-    <Version>3.6.2</Version>
+    <PackageReleaseNotes>- It can now inline rendered html into a single HTML page
+- Captures can now scroll to elements
+- Elements can now be hovered over</PackageReleaseNotes>
+    <Version>3.6.3</Version>
     <PackageTags>screenshots, web, api, pdf, docx, word, images, extract, tables, capture, videos, youtube, animated gifs, jpg, mp4, video, bmp, gif, png, tiff, svg, csv, xlsx, json, html conversion</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/GrabzIt/grabzit/tree/master/aspnet</RepositoryUrl>
