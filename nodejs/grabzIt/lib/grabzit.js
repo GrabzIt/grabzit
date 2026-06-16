@@ -83,6 +83,10 @@ function GrabzItClient(applicationKey, applicationSecret)
 		PARAMETER_INVALID_PASSWORD: 178,
 		PARAMETER_INVALID_MERGE: 179,
 		PARAMETER_INVALID_CLICK_VALUE: 180,
+		PARAMETER_DURATION_TOO_LARGE: 181,
+        PARAMETER_START_TOO_LARGE: 182,
+        PARAMETER_INVALID_SCROLL_VALUE: 183,
+        PARAMETER_INVALID_HOVER_VALUE: 184,
         NETWORK_SERVER_OFFLINE: 200,
         NETWORK_GENERAL_ERROR: 201,
         NETWORK_DDOS_ATTACK: 202,
@@ -419,7 +423,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'address': '',
 		'password': '',
 		'clickElement':'',
-        'jsCode':''
+        'jsCode':'',
+		'scrollElement':'',
+        'hoverElement':''
     };
 
     context = _extend(defaults, options);
@@ -477,7 +483,9 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
         'address': context['address'],
 		'password': context['password'],
 		'click': context['clickElement'],
-        'jscode': context['jsCode']
+        'jscode': context['jsCode'],
+		'scroll': context['scrollElement'],
+		'hover': context['hoverElement']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -489,7 +497,8 @@ function _getDOCXRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey']  + '|' + _toInt(context['noAds']) 
      + '|' + context['postData'] + '|' + context['targetElement'] + '|' + context['templateId'] + '|' + context['templateVariables']
      + '|' + context['pageHeight'] + '|' + context['pageWidth'] + '|' + context['browserWidth'] + '|' + context['proxy'] + '|' + context['mergeId']
-     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) + '|' + context['password'] + '|' + context['clickElement'] + '|' + context['jsCode'];
+     + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) + '|' + context['password'] + '|' + context['clickElement'] + '|' + context['jsCode']
+	 + '|' + context['hoverElement'] + '|' + context['scrollElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -532,7 +541,9 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'cssMediaType': '',
 		'password': '',
 		'clickElement':'',
-        'jsCode':''
+        'jsCode':'',
+		'scrollElement':'',
+        'hoverElement':''
     };
 
     context = _extend(defaults, options);
@@ -593,7 +604,9 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
         'media': context['cssMediaType'],
 		'password': context['password'],
 		'click': context['clickElement'],
-        'jscode': context['jsCode']
+        'jscode': context['jsCode'],
+		'scroll': context['scrollElement'],
+		'hover': context['hoverElement']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -605,7 +618,8 @@ function _getPDFRequestObject(applicationKey, applicationSecret, url, options, i
      + '|' + parseInt(context['quality']) + '|' + context['templateId'] + '|' + context['hideElement'] + '|' + context['targetElement'] 
      + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) 
      + '|' + context['postData']+ '|' + context['browserWidth']+ '|' + context['pageHeight']+ '|' + context['pageWidth']+ '|' + context['templateVariables']  + '|' + context['proxy'] + '|' + context['mergeId'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications'])
-	 + '|' + context['cssMediaType'] + '|' + context['password'] + '|' + context['clickElement'] + '|' + context['jsCode'];
+	 + '|' + context['cssMediaType'] + '|' + context['password'] + '|' + context['clickElement'] + '|' + context['jsCode']
+	 + '|' + context['hoverElement'] + '|' + context['scrollElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -735,7 +749,9 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'noCookieNotifications':false,
         'address': '',
 		'clickElement': '',
-        'jsCode': ''
+        'jsCode': '',
+		'scrollElement':'',
+        'hoverElement':''
     };
 
     context = _extend(defaults, options);
@@ -772,7 +788,9 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
         'address': context['address'],
 		'hd': _toInt(context['hd']),
 		'click': context['clickElement'],
-        'jscode': context['jsCode']
+        'jscode': context['jsCode'],
+		'scroll': context['scrollElement'],
+		'hover': context['hoverElement']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -782,7 +800,8 @@ function _getImageRequestObject(applicationKey, applicationSecret, url, options,
      + '|' + context['customWaterMarkId'] + '|' + parseInt(context['requestAs']) + '|' + context['country'] + '|' + parseInt(context['quality']) 
      + '|' + context['hideElement'] + '|' + context['exportUrl'] + '|' + context['waitForElement'] + '|' + _toInt(context['transparent']) 
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
-     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']) + '|' + context['clickElement'] + '|' + context['jsCode'];
+     + '|' + _toInt(context['noCookieNotifications']) + '|' + _toInt(context['hd']) + '|' + context['clickElement'] + '|' + context['jsCode']
+	 + '|' + context['hoverElement'] + '|' + context['scrollElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -809,7 +828,9 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
         'noCookieNotifications':false,
         'address': '',
 		'clickElement': '',
-        'jsCode': ''
+        'jsCode': '',
+		'scrollElement':'',
+        'hoverElement':''
     };
 
     context = _extend(defaults, options);
@@ -842,6 +863,8 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
         'address': context['address'],
 		'click': context['clickElement'],
         'jscode': context['jsCode'],
+		'scroll': context['scrollElement'],
+		'hover': context['hoverElement']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -852,7 +875,8 @@ function _getVideoRequestObject(applicationKey, applicationSecret, url, options,
      + '|' + context['waitForElement'] + '|' +  context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] 
      + '|' + context['proxy'] + '|' + context['address'] + '|' + _toInt(context['noCookieNotifications']) 
      + '|' + context['clickElement'] + '|' + parseFloat(context['framesPerSecond']) + '|' + parseInt(context['duration'])
-     + '|' + context['width'] + '|' + context['height'] + '|' + context['jsCode'];
+     + '|' + context['width'] + '|' + context['height'] + '|' + context['jsCode']
+	 + '|' + context['hoverElement'] + '|' + context['scrollElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }
@@ -875,7 +899,9 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'noCookieNotifications':false,
         'address': '',
 		'clickElement': '',
-        'jsCode': ''
+        'jsCode': '',
+		'scrollElement':'',
+        'hoverElement':''
     };
 
     context = _extend(defaults, options);
@@ -904,7 +930,9 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
         'inlinehtml': _toInt(context['inlineHTML']),
         'address': context['address'],
 		'click': context['clickElement'],
-        'jscode': context['jsCode']
+        'jscode': context['jsCode'],
+		'scroll': context['scrollElement'],
+		'hover': context['hoverElement']
     };
 
     requestParams = _addTargetToRequest(requestParams, isPost, target);
@@ -915,7 +943,7 @@ function _getHTMLRequestObject(applicationKey, applicationSecret, url, options, 
      + '|' + context['exportUrl'] + '|' + context['waitForElement']
      + '|' + context['encryptionKey'] + '|' + _toInt(context['noAds']) + '|' + context['postData'] + '|' + context['proxy'] + '|' + context['address'] 
      + '|' + _toInt(context['noCookieNotifications']) + '|' + context['clickElement'] + '|' + context['jsCode']
-     + '|' + _toInt(context['inlineHTML']);
+     + '|' + _toInt(context['inlineHTML']) + '|' + context['hoverElement'] + '|' + context['scrollElement'];
 
     return new Request(url, requestParams, _createFirstSignature(applicationSecret, target, isPost), signaturePartTwo, isPost, startDelay, target);
 }

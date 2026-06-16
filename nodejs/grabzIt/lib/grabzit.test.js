@@ -33,3 +33,17 @@ test('html converts to video', done => {
     client.html_to_video("<h1>Hello world</h1>");    
     client.save(null, callback);
 }, 10000);
+
+test('url converts to video', done => {
+    function callback(error, id){
+        try {
+            expect(error).toBeNull();
+            done();
+        } catch (error) {
+            done(error);
+        }
+    }
+
+    client.url_to_video("https://grabz.it/tests/hover.html", {"scrollElement":".demo-card","duration":"10"});    
+    client.save(null, callback);
+}, 10000);
