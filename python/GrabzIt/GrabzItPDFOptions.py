@@ -37,6 +37,8 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             password                the password to protect the PDF document with
             clickElement            the CSS selector of the HTML element in the web page to click
             jsCode                  the JavaScript code to execute in the web page
+            hoverElement            the CSS selector of the HTML element in the web page to hover over
+            scrollElement            the CSS selector of the HTML element in the web page to scroll to            
         """
         
         def __init__(self):
@@ -71,6 +73,8 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.password = ''
                 self.clickElement = ''
                 self.jsCode = ''
+                self.hoverElement = ''
+                self.scrollElement = ''
                 
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -125,6 +129,8 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["password"] = str(self.password)
                 params["click"] = str(self.clickElement)
                 params["jscode"] = str(self.jsCode)
+                params["hover"] = str(self.hoverElement)
+                params["scroll"] = str(self.scrollElement)
                 
                 return params
                 
@@ -144,4 +150,4 @@ class GrabzItPDFOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.country)+"|"+str(int(self.quality))+"|"+str(self.templateId)+"|"+str(self.hideElement)+"|"+str(self.targetElement)+"|"+str(self.exportURL)+\
                 "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(int(self.browserWidth))+"|"+str(int(self.pageHeight))+\
                 "|"+str(int(self.pageWidth))+"|"+str(self.templateVariables)+"|"+str(self.proxy)+"|"+str(self.mergeId)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+ \
-                "|"+str(self.cssMediaType)+"|"+str(self.password)+"|"+str(self.clickElement)+"|"+str(self.jsCode)
+                "|"+str(self.cssMediaType)+"|"+str(self.password)+"|"+str(self.clickElement)+"|"+str(self.jsCode)+"|"+str(self.hoverElement)+"|"+str(self.scrollElement)

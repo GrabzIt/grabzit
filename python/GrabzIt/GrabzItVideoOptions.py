@@ -22,6 +22,8 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             address                 the URL to execute the HTML code in
             jsCode                  the JavaScript code to execute in the web page
+            hoverElement            the CSS selector of the HTML element in the web page to hover over
+            scrollElement            the CSS selector of the HTML element in the web page to scroll to            
         """
 
         def __init__(self):
@@ -41,6 +43,8 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.noCookieNotifications = False
                 self.address = ''
                 self.jsCode = ''
+                self.hoverElement = ''
+                self.scrollElement = ''                
 
         def _getParameters(self, applicationKey, sig, callBackURL, dataName, dataValue):
                 params = self._createParameters(applicationKey, sig, callBackURL, dataName, dataValue)
@@ -60,7 +64,9 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["nonotify"] = int(self.noCookieNotifications)
                 params["click"] = str(self.clickElement)
                 params["jscode"] = str(self.jsCode)
-
+                params["hover"] = str(self.hoverElement)
+                params["scroll"] = str(self.scrollElement)                
+                
                 return params
 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
@@ -76,7 +82,7 @@ class GrabzItVideoOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.browserHeight))+"|"+str(int(self.browserWidth))+"|"+str(self.customId)+"|"+str(self.customWaterMarkId)+"|"+str(int(self.start))+"|"+str(int(self.requestAs)) + \
                 "|"+str(self.country)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy) + \
                 "|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+"|"+str(self.clickElement)+"|"+self._toString(self.framesPerSecond)+"|"+str(int(self.duration)) + \
-                "|"+str(int(self.width))+"|"+str(int(self.height))+"|"+str(self.jsCode)
+                "|"+str(int(self.width))+"|"+str(int(self.height))+"|"+str(self.jsCode)+"|"+str(self.hoverElement)+"|"+str(self.scrollElement)
 
         def _toString(self, value):
                 if ((value % 1) == 0):

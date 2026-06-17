@@ -17,7 +17,9 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             clickElement            the CSS selector of the HTML element in the web page to click
             jsCode                  the JavaScript code to execute in the web page
-            inlineHTML           set to true if external resources in a web page should be inlined            
+            inlineHTML           set to true if external resources in a web page should be inlined
+            hoverElement            the CSS selector of the HTML element in the web page to hover over
+            scrollElement            the CSS selector of the HTML element in the web page to scroll to            
         """
 
         def __init__(self):
@@ -32,6 +34,8 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.clickElement = ''
                 self.jsCode = ''                
                 self.inlineHTML = False
+                self.hoverElement = ''
+                self.scrollElement = ''
         
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -57,7 +61,9 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["click"] = str(self.clickElement)
                 params["jscode"] = str(self.jsCode)
                 params['inlinehtml'] = int(self.inlineHTML)
-
+                params["hover"] = str(self.hoverElement)
+                params["scroll"] = str(self.scrollElement)
+                
                 return params
 
         def _getSignatureString(self, applicationSecret, callBackURL, url = ''):
@@ -74,5 +80,5 @@ class GrabzItHTMLOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(int(self.delay))+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(self.exportURL)+ \
                 "|"+str(self.waitForElement)+"|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+ \
                 "|"+str(self.proxy)+"|"+str(self.address)+"|"+str(int(self.noCookieNotifications))+ \
-                "|"+str(self.clickElement)+"|"+str(self.jsCode)+"|"+str(int(self.inlineHTML))
+                "|"+str(self.clickElement)+"|"+str(self.jsCode)+"|"+str(int(self.inlineHTML))+"|"+str(self.hoverElement)+"|"+str(self.scrollElement)
                 

@@ -25,7 +25,9 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
             address                 the URL to execute the HTML code in
             noCookieNotifications   set to true if cookie notifications should be automatically hidden
             clickElement            the CSS selector of the HTML element in the web page to click
-            jsCode                  the JavaScript code to execute in the web page            
+            jsCode                  the JavaScript code to execute in the web page  
+            hoverElement            the CSS selector of the HTML element in the web page to hover over
+            scrollElement            the CSS selector of the HTML element in the web page to scroll to            
         """
 
         def __init__(self):
@@ -47,7 +49,9 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 self.noCookieNotifications = False
                 self.address = ''
                 self.clickElement = ''
-                self.jsCode = ''                
+                self.jsCode = ''
+                self.hoverElement = ''
+                self.scrollElement = ''                
         
         #
         # Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
@@ -81,6 +85,8 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 params["nonotify"] = int(self.noCookieNotifications)
                 params["click"] = str(self.clickElement)
                 params["jscode"] = str(self.jsCode)
+                params["hover"] = str(self.hoverElement)
+                params["scroll"] = str(self.scrollElement)
                 
                 return params
 
@@ -99,5 +105,6 @@ class GrabzItImageOptions(GrabzItBaseOptions.GrabzItBaseOptions):
                 "|"+str(self.customWaterMarkId)+"|"+str(int(self.requestAs))+"|"+str(self.country)+"|"+str(int(self.quality))+ \
                 "|"+str(self.hideElement)+"|"+str(self.exportURL)+"|"+str(self.waitForElement)+"|"+str(int(self.transparent))+ \
                 "|"+str(self.encryptionKey)+"|"+str(int(self.noAds))+"|"+str(self.post)+"|"+str(self.proxy)+"|"+str(self.address)+ \
-                "|"+str(int(self.noCookieNotifications))+"|"+str(int(self.hd))+"|"+str(self.clickElement)+"|"+str(self.jsCode)
+                "|"+str(int(self.noCookieNotifications))+"|"+str(int(self.hd))+"|"+str(self.clickElement)+"|"+str(self.jsCode)+ \
+                "|"+str(self.hoverElement)+"|"+str(self.scrollElement)
                 

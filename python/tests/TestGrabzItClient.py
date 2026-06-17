@@ -2,6 +2,7 @@
 
 import unittest
 from GrabzIt import GrabzItClient
+from GrabzIt import GrabzItPDFOptions
 
 class TestGrabzItClient(unittest.TestCase):
     def setUp(self):
@@ -17,7 +18,14 @@ class TestGrabzItClient(unittest.TestCase):
 
     def test_url_to_video(self):
         self.client.URLToVideo("https://grabz.it")
-        self.assertNotEqual(self.client.Save(), "", "URL not converted")         
+        self.assertNotEqual(self.client.Save(), "", "URL not converted")   
+
+    def test_url_to_pdf(self):
+        options = GrabzItPDFOptions.GrabzItPDFOptions();
+        options.delay = 5000
+        options.hoverElement = ".demo-card"
+        self.client.URLToPDF("https://grabz.it/tests/hover.html", options)
+        self.assertNotEqual(self.client.Save(), "", "URL not converted")           
 
 if __name__ == '__main__':
     unittest.main()
