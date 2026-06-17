@@ -25,6 +25,8 @@ module GrabzIt
 			@hd = false
 			@clickElement = nil
 			@jsCode = nil
+			@scrollElement = nil
+			@hoverElement = nil
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -155,6 +157,32 @@ module GrabzIt
 		# @return [void]		
 		def clickElement=(value)
 			@clickElement = value
+		end		
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must scroll to before the capture is performed
+		def scrollElement
+			@scrollElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must scroll to before the capture is performed
+		#
+		# @param value [String] the element to scroll to
+		# @return [void]		
+		def scrollElement=(value)
+			@scrollElement = value
+		end
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must hovered over before the capture is performed
+		def hoverElement
+			@hoverElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must hovered over before the capture is performed
+		#
+		# @param value [String] the element to hover over
+		# @return [void]		
+		def hoverElement=(value)
+			@hoverElement = value
 		end		
 		
 		# @return [Integer] get which user agent type should be used
@@ -291,7 +319,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.b_to_str(@transparent),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.b_to_str(@hd),GrabzIt::Utility.nil_check(@clickElement),GrabzIt::Utility.nil_check(@jsCode))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@format),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserHeight),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@customWaterMarkId),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.b_to_str(@transparent),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.b_to_str(@hd),GrabzIt::Utility.nil_check(@clickElement),GrabzIt::Utility.nil_check(@jsCode),GrabzIt::Utility.nil_check(@hoverElement),GrabzIt::Utility.nil_check(@scrollElement))
 			
 			return items.join("|")
 		end
@@ -319,6 +347,8 @@ module GrabzIt
 			params['hd'] = GrabzIt::Utility.b_to_str(@hd)
 			params['click'] = GrabzIt::Utility.nil_check(@clickElement)
 			params['jscode'] = GrabzIt::Utility.nil_check(@jsCode)
+			params['hover'] = GrabzIt::Utility.nil_check(@hoverElement)
+			params['scroll'] = GrabzIt::Utility.nil_check(@scrollElement)
 			
 			return params
 		end

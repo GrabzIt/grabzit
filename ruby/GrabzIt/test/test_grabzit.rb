@@ -261,6 +261,17 @@ class GrabzItTest < Test::Unit::TestCase
 		end	
 	end	
 	
+	def test_take_video_hover
+		assert_nothing_raised "An error occured when trying to take a video" do
+			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)
+			options = GrabzIt::VideoOptions.new()
+			options.hoverElement = ".demo-card"
+			options.duration = 10
+			grabzItClient.url_to_video("https://grabz.it/tests/hover.html", options)
+			assert_not_nil(grabzItClient.save(), "Failed to take video using test_take_video_hover method")
+		end	
+	end		
+	
 	def test_take_unicode_url_image
 		assert_nothing_raised "An error occured when trying to take a image screenshot with a unicode URL" do
 			grabzItClient = GrabzIt::Client.new(@applicationKey, @applicationSecret)

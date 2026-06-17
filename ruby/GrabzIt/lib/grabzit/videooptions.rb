@@ -22,6 +22,8 @@ module GrabzIt
 			@duration = 10
 			@framesPerSecond = 0
 			@jsCode = nil
+			@scrollElement = nil
+			@hoverElement = nil
 		end
 		
 		# @return [Integer] the width of the browser in pixels
@@ -100,6 +102,32 @@ module GrabzIt
 		# @return [void]		
 		def clickElement=(value)
 			@clickElement = value
+		end		
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must scroll to before the capture is performed
+		def scrollElement
+			@scrollElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must scroll to before the capture is performed
+		#
+		# @param value [String] the element to scroll to
+		# @return [void]		
+		def scrollElement=(value)
+			@scrollElement = value
+		end
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must hovered over before the capture is performed
+		def hoverElement
+			@hoverElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must hovered over before the capture is performed
+		#
+		# @param value [String] the element to hover over
+		# @return [void]		
+		def hoverElement=(value)
+			@hoverElement = value
 		end		
 		
 		# @return [Integer] get which user agent type should be used
@@ -257,7 +285,9 @@ module GrabzIt
 			GrabzIt::Utility.nil_int_check(@duration),
 			GrabzIt::Utility.nil_int_check(@width),
 			GrabzIt::Utility.nil_int_check(@height),
-			GrabzIt::Utility.nil_check(@jsCode))
+			GrabzIt::Utility.nil_check(@jsCode),
+			GrabzIt::Utility.nil_check(@hoverElement),
+			GrabzIt::Utility.nil_check(@scrollElement))
 			
 			return items.join("|")
 		end
@@ -281,6 +311,8 @@ module GrabzIt
 			params['width'] = GrabzIt::Utility.nil_int_check(@width)
 			params['height'] = GrabzIt::Utility.nil_int_check(@height)			
 			params['jscode'] = GrabzIt::Utility.nil_check(@jsCode)
+			params['hover'] = GrabzIt::Utility.nil_check(@hoverElement)
+			params['scroll'] = GrabzIt::Utility.nil_check(@scrollElement)
 			
 			return params
 		end

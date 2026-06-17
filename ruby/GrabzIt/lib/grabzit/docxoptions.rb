@@ -34,6 +34,8 @@ module GrabzIt
 			@password = nil
 			@clickElement = nil
 			@jsCode = nil
+			@scrollElement = nil
+			@hoverElement = nil
 		end
 		
 		# @return [Boolean] true if the background images of the web page should be included in the DOCX
@@ -310,6 +312,32 @@ module GrabzIt
 		def clickElement=(value)
 			@clickElement = value
 		end
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must scroll to before the capture is performed
+		def scrollElement
+			@scrollElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must scroll to before the capture is performed
+		#
+		# @param value [String] the element to scroll to
+		# @return [void]		
+		def scrollElement=(value)
+			@scrollElement = value
+		end
+		
+		# @return [String] get the CSS selector of the HTML element in the web page that must hovered over before the capture is performed
+		def hoverElement
+			@hoverElement
+		end
+		
+		# Set the CSS selector of the HTML element in the web page that must hovered over before the capture is performed
+		#
+		# @param value [String] the element to hover over
+		# @return [void]		
+		def hoverElement=(value)
+			@hoverElement = value
+		end
 
 		# @return [String] get the ID of a capture that should be merged at the beginning of the new DOCX document
 		def mergeId
@@ -415,7 +443,7 @@ module GrabzIt
 				items.push(GrabzIt::Utility.nil_check(url))
 			end
 			
-			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.b_to_str(@includeImages),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@mergeId),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.nil_check(@password),GrabzIt::Utility.nil_check(@clickElement),GrabzIt::Utility.nil_check(@jsCode))
+			items.push(GrabzIt::Utility.nil_check(callBackURL),GrabzIt::Utility.nil_check(@customId),GrabzIt::Utility.b_to_str(@includeBackground),@pagesize ,@orientation,GrabzIt::Utility.b_to_str(@includeImages),GrabzIt::Utility.b_to_str(@includeLinks),GrabzIt::Utility.nil_check(@title),GrabzIt::Utility.nil_int_check(@marginTop),GrabzIt::Utility.nil_int_check(@marginLeft),GrabzIt::Utility.nil_int_check(@marginBottom),GrabzIt::Utility.nil_int_check(@marginRight),GrabzIt::Utility.nil_int_check(@delay),GrabzIt::Utility.nil_int_check(@requestAs),GrabzIt::Utility.nil_check(@country),GrabzIt::Utility.nil_int_check(@quality),GrabzIt::Utility.nil_check(@hideElement),GrabzIt::Utility.nil_check(@exportURL),GrabzIt::Utility.nil_check(@waitForElement),GrabzIt::Utility.nil_check(@encryptionKey),GrabzIt::Utility.b_to_str(@noAds),GrabzIt::Utility.nil_check(@post),GrabzIt::Utility.nil_check(@targetElement),GrabzIt::Utility.nil_check(@templateId),GrabzIt::Utility.nil_check(@templateVariables),GrabzIt::Utility.nil_int_check(@height),GrabzIt::Utility.nil_int_check(@width),GrabzIt::Utility.nil_int_check(@browserWidth),GrabzIt::Utility.nil_check(@proxy),GrabzIt::Utility.nil_check(@mergeId),GrabzIt::Utility.nil_check(@address),GrabzIt::Utility.b_to_str(@noCookieNotifications),GrabzIt::Utility.nil_check(@password),GrabzIt::Utility.nil_check(@clickElement),GrabzIt::Utility.nil_check(@jsCode),GrabzIt::Utility.nil_check(@hoverElement),GrabzIt::Utility.nil_check(@scrollElement))
 			return items.join("|")
 		end
 		
@@ -451,6 +479,8 @@ module GrabzIt
 			params['password'] = GrabzIt::Utility.nil_check(@password)
 			params['click'] = GrabzIt::Utility.nil_check(@clickElement)
 			params['jscode'] = GrabzIt::Utility.nil_check(@jsCode)
+			params['hover'] = GrabzIt::Utility.nil_check(@hoverElement)
+			params['scroll'] = GrabzIt::Utility.nil_check(@scrollElement)
 			
 			return params;
 		end		
