@@ -33,6 +33,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	private $cssMediaType = null;
 	private $password = null;
 	private $jsCode = null;
+	private $scrollElement = null;
+	private $hoverElement = null;
 	
 	/*
 	Set the width of the resulting PDF in mm.
@@ -244,6 +246,38 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 	{
 		return $this->clickElement;
 	}		
+	
+	/*
+	Set the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function setScrollElement($value)
+	{
+		$this->scrollElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function getScrollElement()
+	{
+		return $this->scrollElement;
+	}	
+
+	/*
+	Set the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function setHoverElement($value)
+	{
+		$this->hoverElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function getHoverElement()
+	{
+		return $this->hoverElement;
+	}			
 	
 	/*
 	Set the CSS selector of the only HTML element in the web page to capture.
@@ -565,7 +599,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".
 		$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->browserWidth)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->width)."|".
 		$this->nullToEmpty($this->templateVariables)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->mergeId)."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->cssMediaType)."|".
-		$this->nullToEmpty($this->password)."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode);
+		$this->nullToEmpty($this->password)."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode)."|".
+		$this->nullToEmpty($this->hoverElement)."|".$this->nullToEmpty($this->scrollElement);
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -603,6 +638,8 @@ class GrabzItPDFOptions extends GrabzItBaseOptions
 		$params['password'] = $this->nullToEmpty($this->password);
 		$params['click'] = $this->nullToEmpty($this->clickElement);
 		$params['jscode'] = $this->nullToEmpty($this->jsCode);
+		$params['scroll'] = $this->nullToEmpty($this->scrollElement);
+		$params['hover'] = $this->nullToEmpty($this->hoverElement);
 		
 		return $params;
 	}

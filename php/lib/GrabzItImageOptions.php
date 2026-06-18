@@ -21,6 +21,8 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	private $address = null;
 	private $hd = false;
 	private $jsCode = null;
+	private $scrollElement = null;
+	private $hoverElement = null;
 	
 	/*
 	Set the width of the browser in pixels.
@@ -117,6 +119,38 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 	{
 		return $this->clickElement;
 	}	
+	
+	/*
+	Set the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function setScrollElement($value)
+	{
+		$this->scrollElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function getScrollElement()
+	{
+		return $this->scrollElement;
+	}	
+
+	/*
+	Set the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function setHoverElement($value)
+	{
+		$this->hoverElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function getHoverElement()
+	{
+		return $this->hoverElement;
+	}			
 
 	/*
 	Set the CSS selector of the only HTML element in the web page to capture.
@@ -359,7 +393,7 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->quality)."|".$this->nullToEmpty($this->hideElement)."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty(intval($this->transparent))."|".$this->nullToEmpty($this->getEncryptionKey())."|".
 		$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".
-		$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty(intval($this->hd))."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode);  
+		$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty(intval($this->hd))."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode)."|".$this->nullToEmpty($this->hoverElement)."|".$this->nullToEmpty($this->scrollElement);  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -385,6 +419,8 @@ class GrabzItImageOptions extends GrabzItBaseOptions
 		$params['hd'] = $this->nullToEmpty(intval($this->hd));
 		$params['click'] = $this->nullToEmpty($this->clickElement);
 		$params['jscode'] = $this->nullToEmpty($this->jsCode);
+		$params['scroll'] = $this->nullToEmpty($this->scrollElement);
+		$params['hover'] = $this->nullToEmpty($this->hoverElement);
 		
 		return $params;
 	}

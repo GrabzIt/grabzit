@@ -18,6 +18,8 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 	private $noCookieNotifications = false;
 	private $address = null;
 	private $jsCode = null;		
+	private $scrollElement = null;
+	private $hoverElement = null;
 	
 	/*
 	Set the number of frames per second that should be used to create the video. From a minimum of 0.2 to a maximum of 10.
@@ -242,6 +244,38 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 	{
 		return $this->clickElement;
 	}	
+	
+	/*
+	Set the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function setScrollElement($value)
+	{
+		$this->scrollElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function getScrollElement()
+	{
+		return $this->scrollElement;
+	}	
+
+	/*
+	Set the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function setHoverElement($value)
+	{
+		$this->hoverElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function getHoverElement()
+	{
+		return $this->hoverElement;
+	}			
 
 	/*
 	Set the JavaScript Code to execute in the web page.
@@ -279,7 +313,8 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		$this->nullToEmpty(intval($this->requestAs))."|".$this->nullToEmpty($this->getCountry())."|".$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".
 		$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".
-		$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->duration)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->jsCode);  
+		$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->framesPerSecond)."|".$this->nullToEmpty($this->duration)."|".$this->nullToEmpty($this->width)."|".$this->nullToEmpty($this->height)."|".$this->nullToEmpty($this->jsCode)."|".
+		$this->nullToEmpty($this->hoverElement)."|".$this->nullToEmpty($this->scrollElement);  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -301,6 +336,8 @@ class GrabzItVideoOptions extends GrabzItBaseOptions
 		$params['nonotify'] = $this->nullToEmpty(intval($this->noCookieNotifications));
 		$params['click'] = $this->nullToEmpty($this->clickElement);
 		$params['jscode'] = $this->nullToEmpty($this->jsCode);
+		$params['scroll'] = $this->nullToEmpty($this->scrollElement);
+		$params['hover'] = $this->nullToEmpty($this->hoverElement);
 		
 		return $params;
 	}

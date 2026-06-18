@@ -13,6 +13,8 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 	private $clickElement = null;
 	private $jsCode = null;
 	private $inlineHtml = false;	
+	private $scrollElement = null;
+	private $hoverElement = null;
 	
 	/*
 	Set the width of the browser in pixels.
@@ -191,6 +193,38 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 	}	
 	
 	/*
+	Set the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function setScrollElement($value)
+	{
+		$this->scrollElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to scroll to.
+	*/
+	public function getScrollElement()
+	{
+		return $this->scrollElement;
+	}	
+
+	/*
+	Set the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function setHoverElement($value)
+	{
+		$this->hoverElement = $value;
+	}
+
+	/*
+	Get the CSS selector of the HTML element in the web page to hover over.
+	*/
+	public function getHoverElement()
+	{
+		return $this->hoverElement;
+	}			
+	
+	/*
 	Define a HTTP Post parameter and optionally value, this method can be called multiple times to add multiple parameters. Using this method will force 
 	GrabzIt to perform a HTTP post.
 
@@ -222,7 +256,7 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 		$this->nullToEmpty($this->getExportURL())."|".
 		$this->nullToEmpty($this->waitForElement)."|".$this->nullToEmpty($this->getEncryptionKey())."|".$this->nullToEmpty(intval($this->noAds))."|".$this->nullToEmpty($this->post)."|".$this->nullToEmpty($this->getProxy())."|".
 		$this->nullToEmpty($this->address)."|".$this->nullToEmpty(intval($this->noCookieNotifications))."|".$this->nullToEmpty($this->clickElement)."|".$this->nullToEmpty($this->jsCode)."|".
-		$this->nullToEmpty(intval($this->inlineHtml));  
+		$this->nullToEmpty(intval($this->inlineHtml)."|".$this->nullToEmpty($this->hoverElement)."|".$this->nullToEmpty($this->scrollElement));  
 	}
 	
 	public function _getParameters($applicationKey, $sig, $callBackURL, $dataName, $dataValue)
@@ -240,6 +274,8 @@ class GrabzItHTMLOptions extends GrabzItBaseOptions
 		$params['click'] = $this->nullToEmpty($this->clickElement);
 		$params['jscode'] = $this->nullToEmpty($this->jsCode);
 		$params['inlinehtml'] = $this->nullToEmpty(intval($this->inlineHtml));
+		$params['scroll'] = $this->nullToEmpty($this->scrollElement);
+		$params['hover'] = $this->nullToEmpty($this->hoverElement);
 
 		return $params;
 	}
