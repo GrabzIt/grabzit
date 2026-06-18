@@ -31,6 +31,8 @@ public class VideoOptions extends BaseOptions{
     private int outputWidth;
     private int outputHeight;   
     private String jsCode; 
+    private String scrollElement;
+    private String hoverElement;
 
     public VideoOptions()
     {
@@ -40,9 +42,13 @@ public class VideoOptions extends BaseOptions{
         this.outputWidth = 0;        
         this.duration = 10;
         this.requestAs = BrowserType.STANDARDBROWSER;
+        this.address = "";
+        this.waitForElement = "";
         this.customWaterMarkId = "";
         this.clickElement = "";
         this.jsCode = "";
+        this.scrollElement = "";
+        this.hoverElement = "";
     }
     
     /**
@@ -99,7 +105,6 @@ public class VideoOptions extends BaseOptions{
      * @param start the starting time of the web page that should be converted into a video.
      */
     public void setStart(int start) {
-        this.delay = start;
         this.start = start;
     }
 
@@ -215,7 +220,35 @@ public class VideoOptions extends BaseOptions{
      */
     public void setClickElement(String clickElement) {
         this.clickElement = clickElement;
-    }    
+    }   
+
+    /**
+     * @return get the CSS selector of the HTML element to scroll to.
+     */
+    public String getScrollElement() {
+        return scrollElement;
+    }
+
+    /**
+     * @param scrollElement set the CSS selector of the HTML element to scroll to.
+     */
+    public void setScrollElement(String scrollElement) {
+        this.scrollElement = scrollElement;
+    }        
+
+    /**
+     * @return get the CSS selector of the HTML element to hover over.
+     */
+    public String getHoverElement() {
+        return hoverElement;
+    }
+
+    /**
+     * @param hoverElement set the CSS selector of the HTML element to hover over.
+     */
+    public void setHoverElement(String hoverElement) {
+        this.hoverElement = hoverElement;
+    }     
     
     /**
      * @return the width of the resulting video in pixels.
@@ -285,7 +318,7 @@ public class VideoOptions extends BaseOptions{
         + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address  + "|" + ParameterUtility.toInt(noCookieNotifications)
         + "|" + clickElement + "|" + ParameterUtility.toString(framesPerSecond)  + "|" + duration
-        + "|" + outputWidth + "|" + outputHeight + "|" + jsCode;
+        + "|" + outputWidth + "|" + outputHeight + "|" + jsCode + "|" + hoverElement + "|" + scrollElement;
     }    
 
     @Override
@@ -309,6 +342,8 @@ public class VideoOptions extends BaseOptions{
  	    params.put("width", String.valueOf(outputWidth));
 	    params.put("height", String.valueOf(outputHeight));
         params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));       
+        params.put("scroll", ParameterUtility.encode(ParameterUtility.nullCheck(scrollElement)));
+        params.put("hover", ParameterUtility.encode(ParameterUtility.nullCheck(hoverElement)));
 
         return params;
     }    

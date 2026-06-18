@@ -35,6 +35,8 @@ public class ImageOptions extends BaseOptions {
     private boolean hd;
     private String clickElement;
     private String jsCode;
+    private String scrollElement;
+    private String hoverElement;
 
     public ImageOptions()
     {
@@ -52,6 +54,8 @@ public class ImageOptions extends BaseOptions {
         this.address = "";
         this.clickElement = "";
         this.jsCode = "";
+        this.scrollElement = "";
+        this.hoverElement = "";
     }
     
     /**
@@ -151,6 +155,34 @@ public class ImageOptions extends BaseOptions {
     public void setClickElement(String clickElement) {
         this.clickElement = clickElement;
     }     
+
+    /**
+     * @return get the CSS selector of the HTML element to scroll to.
+     */
+    public String getScrollElement() {
+        return scrollElement;
+    }
+
+    /**
+     * @param scrollElement set the CSS selector of the HTML element to scroll to.
+     */
+    public void setScrollElement(String scrollElement) {
+        this.scrollElement = scrollElement;
+    }        
+
+    /**
+     * @return get the CSS selector of the HTML element to hover over.
+     */
+    public String getHoverElement() {
+        return hoverElement;
+    }
+
+    /**
+     * @param hoverElement set the CSS selector of the HTML element to hover over.
+     */
+    public void setHoverElement(String hoverElement) {
+        this.hoverElement = hoverElement;
+    }    
     
     /**
      * @return get the CSS selector of the only HTML element in the web page to capture.
@@ -354,7 +386,7 @@ public class ImageOptions extends BaseOptions {
         + "|" + requestAs.getValue() + "|" + getCountry().getValue() + "|" + quality + "|" + hideElement
         + "|" + getExportURL() + "|" + waitForElement + "|" + ParameterUtility.toInt(transparent) + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + getProxy() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications)
-        + "|" + ParameterUtility.toInt(hd) + "|" + clickElement + "|" + jsCode;
+        + "|" + ParameterUtility.toInt(hd) + "|" + clickElement + "|" + jsCode + "|" + hoverElement + "|" + scrollElement;
     }    
     
     @Override
@@ -381,7 +413,9 @@ public class ImageOptions extends BaseOptions {
         params.put("hd", String.valueOf(ParameterUtility.toInt(hd)));
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
         params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));
-        
+        params.put("scroll", ParameterUtility.encode(ParameterUtility.nullCheck(scrollElement)));
+        params.put("hover", ParameterUtility.encode(ParameterUtility.nullCheck(hoverElement)));
+                
         return params;
     }    
 }

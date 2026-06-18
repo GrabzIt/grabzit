@@ -49,7 +49,9 @@ public class PDFOptions extends BaseOptions {
     private String password;
     private String clickElement;
     private String jsCode;
-    
+    private String scrollElement;
+    private String hoverElement;
+
     public PDFOptions()
     {
         this.includeBackground = true;
@@ -80,6 +82,8 @@ public class PDFOptions extends BaseOptions {
         this.password = "";
         this.clickElement = "";
         this.jsCode = "";
+        this.scrollElement = "";
+        this.hoverElement = "";
     }
     
     /**
@@ -375,6 +379,34 @@ public class PDFOptions extends BaseOptions {
     public void setClickElement(String clickElement) {
         this.clickElement = clickElement;
     }     
+
+    /**
+     * @return get the CSS selector of the HTML element to scroll to.
+     */
+    public String getScrollElement() {
+        return scrollElement;
+    }
+
+    /**
+     * @param scrollElement set the CSS selector of the HTML element to scroll to.
+     */
+    public void setScrollElement(String scrollElement) {
+        this.scrollElement = scrollElement;
+    }        
+
+    /**
+     * @return get the CSS selector of the HTML element to hover over.
+     */
+    public String getHoverElement() {
+        return hoverElement;
+    }
+
+    /**
+     * @param hoverElement set the CSS selector of the HTML element to hover over.
+     */
+    public void setHoverElement(String hoverElement) {
+        this.hoverElement = hoverElement;
+    }    
     
     /**
      * @return get the CSS selector of the only HTML element in the web page to capture.
@@ -550,7 +582,7 @@ public class PDFOptions extends BaseOptions {
         + "|" + targetElement + "|" + getExportURL() + "|" + waitForElement + "|" + getEncryptionKey()
         + "|" + ParameterUtility.toInt(noAds) + "|" + post + "|" + browserWidth + "|" + height + "|" + width + "|" + templateVariables
         + "|" + getProxy() + "|" + getMergeId() + "|" + address + "|" + ParameterUtility.toInt(noCookieNotifications) + "|" + cssMediaType.getValue()
-        + "|" + password + "|" + clickElement + "|" + jsCode;
+        + "|" + password + "|" + clickElement + "|" + jsCode + "|" + hoverElement + "|" + scrollElement;
     }    
     
     @Override
@@ -589,7 +621,9 @@ public class PDFOptions extends BaseOptions {
         params.put("password", password);
         params.put("click", ParameterUtility.encode(ParameterUtility.nullCheck(clickElement)));
         params.put("jscode", ParameterUtility.encode(ParameterUtility.nullCheck(jsCode)));
-        
+        params.put("scroll", ParameterUtility.encode(ParameterUtility.nullCheck(scrollElement)));
+        params.put("hover", ParameterUtility.encode(ParameterUtility.nullCheck(hoverElement)));
+                
         return params;
     }    
 }

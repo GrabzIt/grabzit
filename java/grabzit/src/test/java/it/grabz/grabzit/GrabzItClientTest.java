@@ -8,6 +8,7 @@ import it.grabz.grabzit.enums.HorizontalPosition;
 import it.grabz.grabzit.enums.VerticalPosition;
 import it.grabz.grabzit.parameters.ImageOptions;
 import it.grabz.grabzit.parameters.PDFOptions;
+import it.grabz.grabzit.parameters.VideoOptions;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -142,7 +143,10 @@ public class GrabzItClientTest {
     {
         try
         {
-            client.URLToImage("https://grabz.it/upgrade/#Settings");
+            VideoOptions options = new VideoOptions();
+            options.setHoverElement(".demo-card");
+            options.setDuration(5);
+            client.URLToVideo("https://grabz.it/tests/hover.html", options);
             Assert.assertNotNull("Failed to take video using URLToVideo method", client.Save());
         }
         catch(Exception ex)

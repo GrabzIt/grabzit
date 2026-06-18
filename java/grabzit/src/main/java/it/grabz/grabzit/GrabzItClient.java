@@ -318,8 +318,23 @@ public class GrabzItClient {
      */
     public void URLToVideo(String url) throws UnsupportedEncodingException
     {
-        URLToImage(url, null);
-    }    
+        URLToVideo(url, null);
+    }
+
+    /**
+     * This method specifies the URL that should be converted into a video.
+     * @param url The URL to convert into a video.
+     * @param options A instance of the VideoOptions class that defines any special options to use when creating the video.
+     * @throws UnsupportedEncodingException
+     */
+    public void URLToVideo(String url, VideoOptions options) throws UnsupportedEncodingException
+    {
+        if (options == null)
+        {
+            options = new VideoOptions();
+        }
+        this.request = new Request(getRootURL() + TAKE_VIDEO, false, options, url);
+    }        
     
     /**
      * This method specifies the HTML that should be converted into a video.
