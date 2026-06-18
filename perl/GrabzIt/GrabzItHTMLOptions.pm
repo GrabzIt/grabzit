@@ -21,6 +21,8 @@ sub new
     $self->{"clickElement"} = '';
     $self->{"jsCode"} = '';
     $self->{"inlineHTML"} = 0;
+	$self->{"hoverElement"} = '';
+	$self->{"scrollElement"} = '';	
 
     bless $self, $class;
 
@@ -77,6 +79,32 @@ sub clickElement
         $self->{"clickElement"} = shift;
     }
     return $self->{"clickElement"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to hover over
+#
+sub hoverElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"hoverElement"} = shift;
+    }
+    return $self->{"hoverElement"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to scroll to
+#
+sub scrollElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"scrollElement"} = shift;
+    }
+    return $self->{"scrollElement"};
 }
 
 #
@@ -206,7 +234,8 @@ sub _getSignatureString($$;$)
     "|".$self->requestAs()."|".$self->country()."|".$self->exportURL()."|".$self->waitForElement().
     "|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy().
     "|".$self->address()."|".$self->noCookieNotifications()."|".$self->clickElement().
-    "|".$self->jsCode()."|".$self->inlineHTML();
+    "|".$self->jsCode()."|".$self->inlineHTML().
+	"|".$self->hoverElement()."|".$self->scrollElement();
 }
 
 sub _getParameters($$$$$)
@@ -226,6 +255,8 @@ sub _getParameters($$$$$)
     $params->{'click'} = $self->clickElement();
     $params->{'jscode'} = $self->jsCode();
     $params->{'inlinehtml'} = $self->inlineHTML();
+	$params->{'scroll'} = $self->scrollElement();
+	$params->{'hover'} = $self->hoverElement();
 
     return $params;
 }

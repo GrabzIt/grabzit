@@ -29,6 +29,8 @@ sub new
     $self->{"hd"} = 0;
     $self->{"clickElement"} = '';
     $self->{"jsCode"} = '';
+	$self->{"hoverElement"} = '';
+	$self->{"scrollElement"} = '';
 
     bless $self, $class;
 
@@ -124,6 +126,32 @@ sub clickElement
         $self->{"clickElement"} = shift;
     }
     return $self->{"clickElement"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to hover over
+#
+sub hoverElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"hoverElement"} = shift;
+    }
+    return $self->{"hoverElement"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to scroll to
+#
+sub scrollElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"scrollElement"} = shift;
+    }
+    return $self->{"scrollElement"};
 }
 
 #
@@ -316,7 +344,8 @@ sub _getSignatureString($$;$)
     return $applicationSecret."|". $urlParam . $callBackURLParam .
     "|".$self->format()."|".$self->height()."|".$self->width()."|".$self->browserHeight()."|".$self->browserWidth()."|".$self->customId()."|".$self->delay().
     "|".$self->targetElement()."|".$self->customWaterMarkId()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".$self->waitForElement()."|".$self->transparent()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->proxy()."|".$self->address()."|".$self->noCookieNotifications()."|".$self->hd().
-    "|".$self->clickElement()."|".$self->jsCode();
+    "|".$self->clickElement()."|".$self->jsCode().
+	"|".$self->hoverElement()."|".$self->scrollElement();
 }
 
 sub _getParameters($$$$$)
@@ -344,6 +373,8 @@ sub _getParameters($$$$$)
     $params->{'hd'} = $self->hd();
     $params->{'click'} = $self->clickElement();
     $params->{'jscode'} = $self->jsCode();
+	$params->{'scroll'} = $self->scrollElement();
+	$params->{'hover'} = $self->hoverElement();
     
     return $params;
 }

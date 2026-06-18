@@ -38,6 +38,8 @@ sub new
     $self->{"password"} = '';
     $self->{"clickElement"} = '';
     $self->{"jsCode"} = '';
+	$self->{"hoverElement"} = '';
+	$self->{"scrollElement"} = '';
 	
     bless $self, $class;
 
@@ -225,6 +227,32 @@ sub clickElement
         $self->{"clickElement"} = shift;
     }
     return $self->{"clickElement"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to hover over
+#
+sub hoverElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"hoverElement"} = shift;
+    }
+    return $self->{"hoverElement"};
+}
+
+#
+# The CSS selector of the HTML element in the web page to scroll to
+#
+sub scrollElement
+{
+    my $self = shift;   
+    if (scalar(@_) == 1)
+    {
+        $self->{"scrollElement"} = shift;
+    }
+    return $self->{"scrollElement"};
 }
 
 #
@@ -444,7 +472,8 @@ sub _getSignatureString($$;$)
     "|".$self->delay()."|".$self->requestAs()."|".$self->country()."|".$self->quality()."|".$self->hideElement()."|".$self->exportURL()."|".
     $self->waitForElement()."|".$self->encryptionKey()."|".$self->noAds()."|".$self->{"post"}."|".$self->targetElement()."|".$self->templateId()."|".
 	$self->{"templateVariables"}."|".$self->pageHeight()."|".$self->pageWidth()."|".$self->browserWidth()."|".$self->proxy()."|".$self->mergeId().
-	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password()."|".$self->clickElement()."|".$self->jsCode();
+	"|".$self->address()."|".$self->noCookieNotifications()."|".$self->password()."|".$self->clickElement()."|".$self->jsCode().
+	"|".$self->hoverElement()."|".$self->scrollElement();
 }
 
 sub _getParameters($$$$$)
@@ -481,6 +510,8 @@ sub _getParameters($$$$$)
 	$params->{'password'} = $self->password();
     $params->{'click'} = $self->clickElement();
     $params->{'jscode'} = $self->jsCode();
+	$params->{'scroll'} = $self->scrollElement();
+	$params->{'hover'} = $self->hoverElement();
     
     return $params;
 }
