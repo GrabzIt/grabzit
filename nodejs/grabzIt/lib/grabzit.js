@@ -1240,7 +1240,7 @@ GrabzItClient.prototype.save_to = function (saveToFile, oncomplete) {
                                 }
                             }
 
-                            if (saveToFile == '') {
+                            if (saveToFile == '' || saveToFile == null) {
                                 if (oncompleteEvent != null) {
                                     oncompleteEvent(null, result)
                                 }
